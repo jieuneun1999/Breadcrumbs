@@ -1,154 +1,87 @@
 # BREADCRUMBS — MASTER IMPLEMENTATION PLAN v1.2
-**Status:** FROZEN ARCHITECTURE BASELINE — REVISION v1.2  
-**Date:** 2026-10-22  
-**Implementation language:** Java 17+ (JDK only for the academic core)  
-**Interface:** CLI / terminal only, permanently  
-**Source of this specification:** The user-supplied 42-page report, *Breadcrumbs: Research-Backed Product, Architecture, DSA, and Implementation Blueprint*, combined with the agreed Breadcrumbs master plan and explicit user overrides.  
-**Document purpose:** Partner-friendly project introduction, authoritative build specification, milestone tracker, risk register, reusable-technology register, and future-feature backlog.
-**Revision notes:** v1.2 formalizes three zero-history onboarding routes, legacy agent-context ingestion, strict first-import evidence contracts, cross-source conflict review, and B0 vs native checkpoint semantics. v1.1's partner overview and M7A Trie + Inverted Index remain. The research, primary DLL baseline, source provenance, and permanent CLI-only scope are preserved.
+**Status:** FROZEN ARCHITECTURE BASELINE — EDITORIAL REVIEW 2026-10-22  
+**Architecture revision:** v1.2 (no change to the approved baseline in this editorial pass)  
+**Implementation language:** Java 17+; JDK-only academic core  
+**Interface:** Terminal / console only, including future integration modes  
+**Operating model:** Local-first, offline-capable, evidence-backed, read-only project inspection  
+**Document class:** Normative implementation specification and milestone acceptance baseline  
+**Basis:** *Breadcrumbs: Research-Backed Product, Architecture, DSA, and Implementation Blueprint*, plus subsequently documented architecture decisions, requirements, and first-import contracts.  
+**Maintained companion:** `BREADCRUMBS_FIRST_IMPORT_CONTRACT_V1.2.md` specifies cold-start, legacy-import, and B0-to-checkpoint review behavior.
 
-
-> Change-control rule: “Frozen” means decisions cannot silently drift. Bugs, discovered constraints, and approved refinements may change the design through a documented architecture decision record (ADR). This is a specification, not a claim that the software has already been implemented or tested.
-
+> **Change control.** The architecture is frozen at v1.2. The present editorial revision clarifies purpose, constraints, workstreams, and source provenance; it does not silently authorize or implement additional features. Any changes to required behavior, academic scope, persistent formats, or core invariants require a separately recorded Architecture Decision Record (ADR). This document describes intended behavior; it does not certify that implementation, testing, or instructor approval has occurred.
 
 ---
 
+## IMPLEMENTATION OVERVIEW — PURPOSE, SCOPE, AND OPERATING MODEL
 
-## START HERE — PROJECT OVERVIEW & PARTNER PITCH
+### 1. Product definition and operating problem
 
+**Breadcrumbs is a Java console application for maintaining reliable continuity across interrupted, resumed, and transferred work.** A workspace may consist of research documents, planning records, source code, task files, or other supported local artifacts. Breadcrumbs inventories the available evidence, separates documented statements from direct observations, asks the operator to resolve important gaps, and retains user-approved checkpoints for subsequent comparison. Its reports explain what is documented, what changed, what remains unknown, and which actions were explicitly recorded.
 
-### What is Breadcrumbs?
+Work can become difficult to resume even when the project files remain available. The missing information is often contextual rather than physical: which objective is active, which recorded decision applies, what was blocked, whether prior instructions were executed, and which next action is actionable. A file browser exposes files; version control exposes changes; a task board exposes tracked tasks. Breadcrumbs combines **local evidence, explicit decisions, checkpoint chronology, source-linked audits, and change detection** without claiming to replace those systems.
 
+The product is deliberately **not a general-purpose autonomous coding agent, project-management platform, test certification system, or semantic understanding engine**. It never translates file existence, checked boxes, timestamps, or agent-generated summaries into unverified completion claims. A statement such as “tests passed” in a handoff is a recorded statement; it is not proof that tests passed in the current environment.
 
-**Breadcrumbs is a Java console application that helps people understand, resume, and hand off unfinished work.** It can begin with an empty new project, an existing folder that has never used Breadcrumbs, or an existing project with legacy `state.md` and handoff files. It reads only *available supported evidence*, asks the user to verify missing or conflicting context, establishes a current-state baseline, then maintains confirmed checkpoints and explains later changes.
+### 2. Supported operating contexts
 
+The canonical domain model supports four selectable project profiles, each with different context-audit applicability. Profile detection is advisory and requires user confirmation:
 
-Think of it as a **continuity companion for ongoing projects**: when you return after days or weeks, you do not need to reconstruct everything from scattered notes, documents, and memory.
+- **GENERAL:** self-directed, administrative, or mixed-format projects that require objective, current state, decisions, and a next action.
+- **ACADEMIC:** research, papers, and other coursework where drafts, revisions, advisor feedback, and evidence references matter.
+- **OPERATIONS:** event coordination, suppliers, assignments, approvals, schedules, blockers, and explicitly recorded task dependencies.
+- **SOFTWARE:** repositories, workflow definitions, source code, and agent handoff notes. The Inspector is evidence-oriented; merely identifying source files does not establish runtime behavior or successful deployment.
 
+An individual can use Breadcrumbs without an existing project-history file, Git repository, language model, online account, or established agent workflow. A multi-person handoff is supported by portable reports, but no remote collaboration, automatic synchronization, or permission federation is part of the academic core.
 
-**One-sentence pitch:** “Breadcrumbs helps you leave reliable context behind today so you—or a teammate—can pick up work tomorrow without guessing.”
+### 3. First-use entry modes and truth boundaries
 
-
-**Why the name?** Breadcrumbs are small, intentional traces that help someone find their way back. In this application, those traces are checkpoints, evidence references, decisions, blockers, and next actions.
-
-
-### The problem we want to solve
-
-
-A student pauses a thesis, an event organizer changes teammates, or a developer returns to a half-finished application. The files still exist, but the useful *working context* may not: What were we trying to finish? Which draft is current? Why did we choose this approach? Are we waiting on someone? What should happen next?
-
-
-Existing tools solve pieces of this: Git tracks file history, task boards track tasks, and notes preserve what someone wrote. Breadcrumbs combines **documented project evidence + human decisions + continuity checkpoints + freshness checks** in a guided, offline-first CLI. It does **not** replace those tools or claim to know facts that were never recorded.
-
-
-### Who can use it?
-
-
-- **Students and researchers:** resume papers, track adviser feedback, distinguish an actual next revision from a pile of draft files.
-- **Event and operations teams:** capture decisions, owners, supplier blockers, and explicitly declared task dependencies.
-- **Developers:** preserve why code changed, which tests were *documented* as run, and what needs review after new edits.
-- **Solo workers or handoff partners:** record a clear next action and share a source-linked summary without requiring Git or an AI service.
-
-
-### First-time onboarding: three valid entry points
-
-| Entry path | User starts with | Immediate benefit | Historical limitation |
+| Entry mode | Starting condition | First-use behavior | Historical truth boundary |
 |---|---|---|---|
-| `NEW_EMPTY` | A new or empty folder and a project goal | Guided objective, deliverable, owner if relevant, first action; establish B0 | No earlier history exists |
-| `IMPORT_FOLDER` | An existing folder without Breadcrumbs records | Read-only inventory, supported evidence extraction, gap audit, suggested next actions, B0 | No verified pre-import chronology |
-| `IMPORT_LEGACY_CONTEXT` | Existing `state.md`, `HANDOFF.md`, `tasks.md`, `AGENTS.md`, ADR notes, etc. | Legacy evidence review, contradictions, first confirmed baseline, optional draft checkpoint | Agent-reported progress is not implementation verification; dates do not prove history |
+| `NEW_EMPTY` | Newly created or empty workspace | Capture user-stated objective, deliverable, current status and next action; establish B0 with no invented file evidence | No prior events or checkpoint chronology exist |
+| `IMPORT_FOLDER` | Existing local files without Breadcrumbs state | Scan within bounded read-only policy; extract supported fields; show coverage, gaps and candidate next actions | First observation is not a reconstruction of earlier progress |
+| `IMPORT_LEGACY_CONTEXT` | Existing `state.md`, `HANDOFF.md`, `AGENTS.md`, task notes, decisions, and similar Markdown | Classify artifact roles, parse recognized explicit fields, retain locators, flag contradictions, request current-state review | Source-reported statuses and claimed dates do not prove completed work or verified chronology |
 
-**No existing Breadcrumbs checkpoint or agentic workflow is required.** The importer should automatically *suggest* the legacy route when context files are found, but the user always confirms the selected project and import scope. A B0 baseline is a present-time observed snapshot; it is **not** CP-000001. The first approved checkpoint is a separate user-confirmed event.
+All routes converge on **WorkspaceState**; no parallel database or per-entry-mode truth store is introduced. **B0** records the first observable snapshot and reviewed context under a specified scan policy. It is not a Doubly Linked List node and not a historical checkpoint. **CP-000001** is created only after the operator previews and explicitly confirms the first native checkpoint. Where local persistence is not permitted, the program must describe B0 and all checkpoint state as session-local.
 
-### A concrete example — messy thesis folder
+At first import the application must disclose file coverage and limits, show documented claims with their original paths and locators, distinguish missing documentation from unknown real-world status, and permit the operator to confirm, reject, or defer each consequential current-state claim. It can emit a **baseline context report** before any native checkpoint exists; it must not label that output “resume from a previous checkpoint.”
 
+### 4. Representative evidence-based workflow
 
-Suppose a project folder contains research-proposal.docx, chapter-3-notes.md, references.pdf, and revisions.txt.
+A research folder might contain a DOCX proposal, Markdown revision notes, text meeting notes, and a PDF source list. The read-only scanner extracts supported content from DOCX, Markdown, and text, while the dependency-free academic core records the PDF as metadata-only. The audit identifies an explicitly documented objective and missing or conflicting continuation details. The operator confirms the current next action and blocker state, creating B0. If a first checkpoint is approved, the custom DLL stores CP-000001. At a later session or snapshot, SHA-256 comparisons report changed, added, deleted, or ambiguous files; the resume/handoff view presents changed references and current uncertainties without claiming academic correctness.
 
+For an existing agentic software workspace, the same flow recognizes `README.md` as project intent, `AGENTS.md` or `CLAUDE.md` as **instructions**, and `state.md`/`HANDOFF.md` as **reported status or next actions**. Source code and n8n/Docker definitions can be inventoried within approved adapters, but runtime success, external service availability, test execution, and deployment status cannot be concluded from their presence. Contradictory statements remain distinct, traceable source claims until independently reviewed.
 
-1. **Import:** Breadcrumbs scans safely. It extracts supported text from DOCX, Markdown, and TXT; the PDF is recorded as present but its contents are **not** interpreted in the dependency-free core.
-2. **Inspect and audit:** It finds an objective and revision notes, but cannot find a confirmed next action or whether adviser feedback has been addressed. It reports *unknown* instead of inventing an answer.
-3. **Search (planned M7A):** Typing “meth” offers “methodology” as a Trie suggestion. Choosing the term returns indexed evidence locations through the inverted index. This searches extracted text only, not the PDF's hidden contents.
-4. **Checkpoint:** The student explicitly records: “Revised methodology draft; waiting for adviser response; next: review comments when received.” The checkpoint is linked into the custom Doubly Linked List.
-5. **Return later:** Breadcrumbs compares saved file fingerprints with the current folder, warns if referenced material changed, and displays the checkpoint plus relevant evidence.
-6. **Handoff:** It produces a readable summary of the documented state, decisions, blockers, next actions, sources, and uncertainties.
+### 5. Core subsystems and ownership
 
-
-**What it does not do:** It does not claim the thesis is “82% complete,” certify that the methodology is correct, read unsupported PDF text, or reconstruct history before the first import.
-
-
-### What the user actually sees — CLI only
-
-
-~~~text
-BREADCRUMBS — Leave context behind. Pick up where work stopped.
-
-
-[1] Continue a project
-[2] Add or create a project (first-time guided setup)
-[3] Check project context
-[4] Save a progress checkpoint
-[5] Create a handoff
-[6] View checkpoint history
-[7] Review tasks and dependencies
-[8] View changes since last checkpoint
-[9] Project settings and DSA diagnostics
-[10] Search project context (planned, if approved)
-[0] Exit
-~~~
-
-
-The interface uses numbered choices, readable explanations, Back/Cancel, and targeted questions. It is intentionally **not a GUI**; even future enhancements remain terminal-based.
-
-
-### Why the data structures matter to the product
-
-
-| Structure | Real user benefit | Implementation status |
+| Subsystem | Responsibility | Main integration / constraint |
 |---|---|---|
-| Custom Doubly Linked List | Reliable chronological checkpoint history; forward/backward browsing | Academic primary DSA |
-| Custom Directed Graph | See which declared tasks may be affected by a blocked prerequisite | Planned M6; professor approval required |
-| Custom Hash Table | Fast exact lookup of checkpoints, tasks, evidence, paths, and search postings | Planned M7; professor approval required |
-| Custom Trie (Prefix Tree) | Suggest indexed terms from partial queries | Proposed M7A; professor approval required |
-| Inverted Index (Hash-backed posting lists) | Show which supported evidence records/checkpoints contain a term | Proposed M7A; shares M7 Hash Table |
+| **Guided CLI** | Project selection, validation, navigation, review, user confirmations, DSA demonstration | Console-only; accessible keyboard operation; no GUI dependency |
+| **Project Bootstrap Service** | Route new, existing, and legacy-context inputs through a common first-import lifecycle | B0 and review dispositions; no automatic historical fabrication |
+| **Project Inspector** | Safe discovery, bounded format extraction, SHA-256 snapshots, scan diagnostics | Read-only imported roots; skipped/unsupported files disclosed |
+| **Evidence Normalizer and Context Audit** | Provenance, explicit claim extraction, source-based rule evaluation, gaps, conflicts, continuation coverage | Explainable deterministic rules; human confirmation separate from observation |
+| **Continuity Engine** | Immutable checkpoint chronology, retrieval, drift, resume and portable handoff | Custom DLL is authoritative for chronological active ordering |
+| **Optional task-dependency Graph** | Explicit prerequisite edges, impact and cycle detection | Conditional M6; no inferred dependencies |
+| **Optional Hash Table** | Fast secondary ID/path/term lookups | Conditional M7; canonical state remains authoritative |
+| **Optional Context Search Engine** | Trie prefix discovery and Hash-backed inverted evidence postings | Conditional M7A; lexical-only; sensitivity and freshness checks |
+| **Optional persistence** | Versioned local checkpoint and baseline recovery | Conditional M8; safe in-memory fallback if disallowed |
 
+The dependency direction remains **CLI → application services → canonical domain, DSA, inspection, and audit**. Additional data structures are complementary indexes or projections, never independently authoritative stores.
 
-**Important:** The Trie and Inverted Index are complementary: *term discovery* versus *source retrieval*. They form **one search subsystem**, not two unrelated databases. Search is an index of canonical evidence, never a replacement for evidence or a new source of truth.
+### 6. Academic delivery boundary and extension policy
 
+The **minimum demonstrable academic application** covers Java/JDK-only compilation, a custom DLL with six or more visible operations, at least five clearly synthetic demonstration records containing three or more fields, a functioning guided console, bounded first-import inspection, explainable audits, checkpoints, snapshot drift, handoff, defensive input validation, and required documentation. The staged minimum remains M0–M5 plus M9, with an in-memory fallback for persistence.
 
-### What we would build together
+Graph (M6), Hash Table (M7), Trie/Inverted Index (M7A), and local persistence (M8) retain their *existing* conditional approval and scheduling constraints. These structures must not displace the DLL implementation or conceal the time complexity of the actual operations. Approval and demonstration constraints are tracked in M0 and acceptance records, not implied by inclusion in the design.
 
+The future backlog (M10) may evaluate opt-in language-model assistance and conversational voice access. Such a mode would require separate audio input/output and network/API authorization, bounded function dispatch, privacy consent, and explicit confirmation before mutations. **Voice-to-text, LLM orchestration, and AI text-to-speech remain non-normative future options**, not required functions of the offline academic core. Future audio must not introduce a graphical interface or unrestricted shell execution.
 
-The project is intentionally split into deliverable milestones: first the JDK-only CLI and core DLL, then safe inspection, audit, checkpoints, drift, and handoff; next the Graph, Hash Table, and Context Search Engine **if approved and within schedule**; finally persistence, security, tests, documentation, and demo readiness.
+### 7. Implementation reading order and traceability
 
+Begin with Sections **0–5** for constraints, contracts and state ownership; **6–8** for scanning and evidence rules; **9–11A** for core/conditional DSAs; **13–16** for workflows, storage and security; **17–20** for class responsibilities, milestones, verification and risk; and **21–27** for dependencies, research provenance, deferred enhancements, ADRs and acceptance. The separate **First-Import Implementation Contract v1.2** supplies exact first-use field mapping, review dispositions, and acceptance cases. Both files must remain consistent when implementing onboarding.
 
-Possible partner work split (to agree on, not pre-assigned):
-- **Track A — Evidence and user experience:** safe folder scanning, text adapters, audit explanations, guided CLI, handoff formatting, nontechnical testing.
-- **Track B — Continuity and algorithms:** checkpoint DLL, Graph, Hash Table, Trie/inverted index, drift algorithms, invariants, persistence/recovery.
-- **Shared integration:** domain contracts, test fixtures, security, documentation, and final defense. Both partners should understand and be able to explain all DSAs.
-
-
-**Minimum viable academic success:** A user can create an empty project or import an existing folder (including common Markdown context artifacts), distinguish evidence from claims, establish B0, confirm CP-000001, compare later changes, resume, and hand off through a clean Java console application, with six or more DLL operations. Additional DSAs must not endanger that baseline. A full generic legacy-format migration engine is *not* a prerequisite.
-
-
-### 45-second partner pitch
-
-
-> “Breadcrumbs is a Java CLI tool that makes unfinished projects easier to resume. You don't need previous Breadcrumbs checkpoints or an AI setup to start. For an existing thesis or codebase it inspects supported files and existing handoff notes, shows what is documented versus unknown or contradictory, and lets the user confirm a reliable starting baseline. From there it records checkpoints in a custom Doubly Linked List, detects file changes, and creates traceable handoffs. Approved Graph, Hash Table, and Trie-plus-Inverted-Index features add dependency insight and search. It's offline-first and doesn't pretend documented claims prove the software works.”
-
-
-### What we need to decide as partners
-
-
-1. Confirm Sir's actual approved DSA list and whether multiple custom structures, local file persistence, and optional libraries are allowed.
-2. Agree on the academic baseline versus approved stretch milestones; protect the 10-minute demo.
-3. Choose realistic test folders: thesis/research, operations/events, software, and unstructured/folderless.
-4. Divide ownership without splitting the canonical data model into incompatible implementations.
-5. Treat search, Graph, and Hash Table as purposeful integrations—not requirements to inflate the DSA count.
-
+A change is accepted only when its scope, invariant impact, academic constraints, updated acceptance tests, and any new external dependency are recorded. Documentation alone is not completion evidence; milestone status must cite implementation artifacts, executable tests, and review results.
 
 ---
-
 
 ## 0. Executive implementation decision
 
@@ -466,10 +399,10 @@ BaselineB0:
   selectedPolicyVersion, userConfirmedAtOptional
 ~~~ 
 
-`BaselineB0` is a conceptual record attached to the first snapshot/review, **not a Checkpoint node**. Avoid a second persistence truth source: record baseline metadata through WorkspaceState + initial Snapshot/Audit/ReviewEvent structures. The `sourceStatedAt` field is an asserted timestamp when parsed from text; it is *not* verified historical chronology. Imported source file contents are never overwritten or executed. Human confirmation may mark a **current assessment** USER_CONFIRMED but does not retroactively verify any old implementation or test result.
+`BaselineB0` is a conceptual record attached to the first snapshot/review, **not a Checkpoint node**. Avoid a second persistence truth source: record baseline metadata through WorkspaceState + initial Snapshot/Audit/review-disposition events when persistence is approved. The `sourceStatedAt` field is an asserted timestamp when parsed from text; it is *not* verified historical chronology. Imported source file contents are never overwritten or executed. Human confirmation may mark a **current assessment** USER_CONFIRMED but does not retroactively verify any old implementation or test result.
 
 
-### 5.5 Search projection contracts (M7A, conditional)
+### 5.6 Search projection contracts (M7A, conditional)
 
 
 ~~~text
@@ -686,7 +619,7 @@ The audit consumes ClaimCandidates and source EvidenceRecords; it **does not** e
 **Scores and labels:** No native checkpoints on B0 is a separate *history availability* flag, not a penalty proving poor documentation. `CTX-FRESH` is NOT_APPLICABLE on first import without a prior comparable snapshot. Checklists are claims, not test verification; the score is continuity readiness, not progress completion.
 
 
-### 8.6 Checkpoint completeness is separate
+### 8.7 Checkpoint completeness is separate
 Evaluate objective, progress, blocker status, next action, decision rationale when relevant, and evidence references for the proposed checkpoint. Ask at most one or two high-value missing-context questions at a time. Never block all checkpoint saving merely because an optional field is unknown; mark uncertainty explicitly.
 
 
@@ -1098,7 +1031,7 @@ A first import displays scan limits, supported/unsupported counts, identified fi
 | Menu | Controller | Main methods | DSA / algorithm |
 |---|---|---|---|
 | 1 | ResumeController | resumeLatest, compareReferencedEvidence | DLL tail, drift, optional Hash |
-| 2 | WorkspaceController | importFolder, scan, suggestProfile | DFS, adapters, SHA-256 |
+| 2 | BootstrapController | chooseEntryMode, importFolder, scan, reviewB0 | Inspector, legacy adapter, SHA-256 |
 | 3 | AuditController | evaluate, showSources, answerGap | deterministic rules |
 | 4 | CheckpointController | propose, validate, confirm, append | DLL append, optional Hash |
 | 5 | HandoffController | build, preview, export | DLL retrieval, Graph, audit |
@@ -1446,7 +1379,7 @@ README must include Windows and Unix-compatible instructions and avoid requiring
 
 
 ### M0 — Academic alignment and frozen contracts (Week 1)
-Deliverables: professor question list; requirements checklist; repo skeleton; ADR-001..012; domain enums; CLI shell; five synthetic checkpoints; basic DLL prototype. Confirm whether multiple custom DSAs (specifically Graph, Hash Table, Trie, and posting-list inverted index), local file writes, DOCX ZIP/XML extraction, Git, and external dependencies are permitted. Freeze the three entry-mode bootstrap contracts, B0-vs-CP semantics, and legacy-safe parsing whitelist.  
+Deliverables: professor question list; requirements checklist; repo skeleton; ADR-001..012; domain enums; CLI shell; five synthetic checkpoints; basic DLL prototype. Confirm whether multiple custom DSAs (specifically Graph, Hash Table, Trie, and posting-list inverted index), local checkpoint persistence, JDK file/DOCX ZIP/XML inspection, and external dependencies are permitted. Separately seek a ruling on optional bonus voice interaction (STT, LLM-guided allowlisted function calling, and TTS), without making it part of M0 acceptance. Freeze the three entry-mode bootstrap contracts, B0-vs-CP semantics, and legacy-safe parsing whitelist.  
 Acceptance: JDK-only compile/run, six+ menu operations mapped, seed records have ≥3 fields, initial DLL append/traverse works, architecture reviewed.  
 Fallback: disable unapproved modules without breaking baseline.
 
@@ -1503,7 +1436,7 @@ Acceptance: all four scenarios complete inspect → audit → checkpoint → dri
 
 
 ### M10 — Future product extensions (not required for academic completion)
-JGit, commonmark-java, POI/Tika, java-diff-utils, JavaParser, Gitleaks, WatchService, JSON/noninteractive CLI, AGENTS.md-compatible handoff, optional LLM, cross-workspace indexing, team sync, undo, priority queue, incremental search-index updates, phrase/boolean search, typo tolerance, and semantic search (separately consented/approved). Each requires a separate ADR and maintenance/security review. No GUI.
+JGit, commonmark-java, POI/Tika, java-diff-utils, JavaParser, Gitleaks, WatchService, JSON/noninteractive CLI, AGENTS.md-compatible handoff, optional LLM, cross-workspace indexing, team sync, undo, priority queue, incremental search-index updates, phrase/boolean search, typo tolerance, semantic search, and optional STT → allowlisted LLM function calls → TTS voice interaction (all separately consented/approved). Each requires a separate ADR and maintenance/security review. No GUI.
 
 
 ### 18.1 Milestone status template
@@ -1627,7 +1560,7 @@ When M7A is approved, repeat each scenario with prefix suggestions, exact-term e
 | Partial/corrupt persistence | Medium / High | Versioning, generation commits, backups |
 | LLM hallucination | Future / High | AI_PROPOSED, citations, human confirmation |
 | Agent cannot consume CLI output | Medium / Medium | Future JSON and noninteractive mode |
-| Overengineered DSA count | Medium / High | DLL chronology, Graph dependency, Hash indexing only |
+| Overengineered DSA count | Medium / High | Protect DLL chronology; Graph/Hash/M7A remain conditional and purposeful |
 | Unknown score misrepresented as confidence | High / High | Assessable coverage, N/A and conservative readiness |
 | Historical state silently changes | Medium / High | Immutable checkpoints and graph revisions |
 | Terminal escape injection | Medium / High | Sanitize imported content before rendering |
@@ -1772,7 +1705,9 @@ All links above are preserved from the uploaded research's reference section or 
 **Security:** optional Gitleaks during packaging/release; not an extra install required of ordinary users.
 
 
-**AI:** user-opt-in, selected sanitized evidence only, draft current state/decisions/blockers/next actions, evidence ID per proposed claim, AI_PROPOSED status, user approval; no invented dependencies or direct mutations.
+**AI (optional):** user-opt-in, selected sanitized evidence only, draft current state/decisions/blockers/next actions, evidence ID per proposed claim, AI_PROPOSED status, user approval; no invented dependencies or direct mutations.
+
+**Conversational voice assistant (conditional future integration):** optionally accept microphone audio through a speech-to-text (STT) adapter, route the transcript to a consented LLM for *proposed* function calls, validate them through an allowlisted Java dispatcher, execute only approved application-service actions (with explicit confirmation for state-changing operations), and optionally speak grounded responses through text-to-speech (TTS). Spoken commands and responses do not create new evidence authority or bypass DSA/service validation. Users must retain full keyboard/console control, local-only mode, and the ability to disable or revoke audio/network/API access. Costs, latency, provider retention, audio handling, and instructor permission require separate assessment; no integration is considered implemented or approved here.
 
 
 **Team / multi-workspace:** cross-workspace indexing, collaboration and synchronization only after conflict resolution, permissions, and persistence are mature.
@@ -1855,7 +1790,7 @@ The previous “gates” are **now tracked as milestones**:
 | M10 Future evolution | Documented optional integrations, each separately approved |
 
 
-**Academic minimum release:** M0–M5 and M9 including `NEW_EMPTY` and `IMPORT_FOLDER`, bounded supported legacy Markdown parsing, B0 review, and user-confirmed checkpoint initiation; M8 has an explicit in-memory fallback when file writes are not authorized.  
+**Academic minimum release:** M0–M5 and M9 including `NEW_EMPTY`, `IMPORT_FOLDER`, and a narrowly scoped `IMPORT_LEGACY_CONTEXT` review of supported Markdown, B0 review, and user-confirmed checkpoint initiation; M8 has an explicit in-memory fallback when file writes are not authorized.  
 **Full frozen implementation target:** M0–M9, plus M7A when approved; M6/M7/M7A are integrated but explicitly conditional on instructor approval, schedule, and passing core acceptance. M10 remains a maintained backlog.  
 **No unapproved dependency may block the minimum release.**
 
@@ -1864,7 +1799,7 @@ The previous “gates” are **now tracked as milestones**:
 > Breadcrumbs is a Java, local-first, CLI-only work-continuity application that bootstraps new or existing projects without prior Breadcrumbs checkpoints; safely inspects supported files and legacy agent handoffs as evidence, reconciles documented gaps and contradictions, establishes a truthful first-observation B0, and creates native DLL history only from explicitly accepted checkpoints. It audits continuation readiness through explainable rules, detects later drift through snapshots, and produces source-linked baseline-context and resume/handoff reports. A custom Directed Graph explains downstream effects of explicitly declared task dependencies; a custom Hash Table accelerates lookup while preserving one canonical project model. A proposed custom Trie plus Hash-backed Inverted Index makes supported evidence and checkpoints discoverable by prefix and exact term, with source locations and safe rebuilds. The application remains usable for technical and nontechnical projects, offline, without Git or AI. Milestones and ADRs control delivery and changes.
 
 
-**Next implementation artifact:** A separate code-level contract pack (exact Java classes/interfaces/enums, serializer grammar, test fixtures, and pseudocode) may be generated from this document without changing its product decisions. M7A's detailed Trie/posting-list contracts and acceptance tests are now part of this master specification.
+**Potential supporting implementation artifact:** A separate code-level contract pack (exact Java classes/interfaces/enums, serializer grammar, test fixtures, and pseudocode) may be generated from this document without changing its product decisions. M7A's detailed Trie/posting-list contracts and acceptance tests are now part of this master specification.
 
 
 ---
@@ -1876,15 +1811,15 @@ The previous “gates” are **now tracked as milestones**:
 This document intentionally preserves the uploaded report's: problem evidence; competitor categories; open-source shortlists and license caveats; Inspector architecture; supported-file matrix; DOCX/Java/JDK feasibility; snapshot/rename/Git/WatchService recommendations; EvidenceRecord and provenance model; four-dimension audit; nine rules and score treatment; four worked workspace scenarios; DLL/Graph/Hash/Stack/Heap/BST prioritization; CLI UX; handoff format; persistence; security; four implementation priorities; acceptance tests; risk register; and public-product extension suggestions.
 
 
-**Explicit user override:** The report recommended a possible future GUI. That suggestion is **not adopted**. All academic and future product work stays CLI-only.
+**Documented architecture override (ADR-001):** Although the research considered a possible graphical interface, the adopted architecture is permanently terminal-only. All academic and future product work stays CLI-only.
 
 
 **Implementation elaborations beyond the report:** Canonical WorkspaceState, Graph revision references, collision/ambiguous-rename handling, audit assessable-coverage safeguard, detailed Java APIs, generation-based persistence, exact milestone statuses, and ADR-013..015 are design recommendations added to make the frozen architecture cohesive and testable. They are not claims that the original research empirically validated those choices.
 
 
-**v1.1 additions (user-directed, not findings from the uploaded research):** Partner-facing project overview, concrete thesis-folder journey, short pitch, collaboration discussion, proposed Context Search Engine using Trie + inverted index + existing Hash Table, M7A, new search contracts/risks/tests, and ADR-016..017. The proposed search enhancement is not silently elevated to professor-approved or minimum-release scope.
+**v1.1 design additions (distinct from research findings):** Implementation overview and example journeys, the proposed Context Search Engine using Trie plus an inverted index supported by the existing Hash Table, M7A, dedicated search contracts/risks/tests, and ADR-016..017. These decisions are documented design proposals, not evidence of instructor approval or a minimum-release obligation.
 
-**v1.2 additions (user-directed design refinement, not findings from the uploaded research):** Three-entry Project Bootstrap Service, explicit B0 versus CP semantics, controlled legacy state/handoff/agent-context Markdown parsing, artifact-role and provenance distinctions, deterministic conflict policy, source-backed next actions, first-use baseline report, security requirements, acceptance fixtures, and ADR-018..022. No code implementation, verified integrations, restored historical timeline, or professor approval is claimed.
+**v1.2 design additions (distinct from research findings):** Three-entry Project Bootstrap Service, explicit B0 versus CP semantics, controlled legacy state/handoff/agent-context Markdown parsing, artifact-role and provenance distinctions, deterministic conflict policy, source-backed next actions, first-use baseline report, security requirements, acceptance fixtures, and ADR-018..022. No code implementation, verified integrations, restored historical timeline, or professor approval is claimed.
 
 
 **Final warning:** This document is an implementation plan, not a verified dependency license audit, a completed software test report, or a professor approval record. Track those as milestone evidence.
