@@ -1,0 +1,7 @@
+Disposable prior same-project reload ordering. Original full suite passes; the targeted behavior assertion rejects this defect. Probe predates three additional storage-reference assertions; final suite was rerun afterward.
+Mutated ProjectConsole SHA256: D621184CD36D6E025716CB652BA699ADD13308C3CE868CCA58E1BA045EA46468
+Exception in thread "main" java.lang.AssertionError: saving before reopening same project retains the newly saved checkpoint in active state
+	at breadcrumbs.cli.ProjectConsoleTest.require(ProjectConsoleTest.java:114)
+	at breadcrumbs.cli.ProjectConsoleTest.retrySaveAndOpenSameProject(ProjectConsoleTest.java:105)
+	at breadcrumbs.cli.ProjectConsoleTest.run(ProjectConsoleTest.java:68)
+	at breadcrumbs.AllTests.main(AllTests.java:21)

@@ -1,0 +1,858 @@
+Captured scenario: a-new-create-save
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 0
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ADD OR CREATE PROJECT
+[1] Start a new empty project
+[2] Import an existing folder
+[3] Import existing notes / handoff context
+[0] Back. /cancel at any prompt discards the proposal.
+Entry mode: Project display name: Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: Objective (blank = UNKNOWN): Intended deliverable (blank = UNKNOWN): Current next action (blank = UNKNOWN): Optional owner (blank = UNKNOWN): Optional blockers (blank = UNKNOWN; enter none only if stated): Optional existing EMPTY directory (blank = no directory observation):
+BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | School Planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:48.552152600Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Write report [USER_SUPPLIED, PENDING, EV-W-86d82f7579f6436fb659565e89ca5e67-000001]
+  DELIVERABLE: Report [USER_SUPPLIED, PENDING, EV-W-86d82f7579f6436fb659565e89ca5e67-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review scope [USER_SUPPLIED, PENDING, EV-W-86d82f7579f6436fb659565e89ca5e67-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No native checkpoint was created.
+
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | School Planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:48.552152600Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Write report [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000001]
+  DELIVERABLE: Report [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review scope [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+Confirmed at: 2026-10-30T12:45:48.624150800Z
+Save this workspace to local app storage? Type yes; Enter keeps session-only: Saved. Verified local file readback.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: a-new-restart
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 1
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | School Planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:48.552152600Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Write report [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000001]
+  DELIVERABLE: Report [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review scope [USER_SUPPLIED, CONFIRMED, EV-W-86d82f7579f6436fb659565e89ca5e67-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+Confirmed at: 2026-10-30T12:45:48.624150800Z
+Show paged file inventory and source claims? Type yes, or Enter to return:
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > Profile: ACADEMIC | Mode: NEW_EMPTY
+Next native number: 1
+Source freshness UNKNOWN. B0 is a saved observation, never a native checkpoint.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: b-readme-import
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 1
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ADD OR CREATE PROJECT
+[1] Start a new empty project
+[2] Import an existing folder
+[3] Import existing notes / handoff context
+[0] Back. /cancel at any prompt discards the proposal.
+Entry mode: Project display name: Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: Existing local project directory: READ-ONLY inspection. Imported files are never executed or written.
+Links/reparse points, sensitive names and generated folders are skipped.
+TXT/Markdown/CSV only. Other formats receive metadata/fingerprints, not content understanding.
+Limits: ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Use a quiescent LOCAL folder. Portable JDK checks are not an OS sandbox against hostile filesystem races.
+Approve bounded read-only scan? Type yes:
+BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
+Workspace: W-db3a89555f4c4827805131671b107b26 | Imported Thesis
+Entry mode: IMPORT_FOLDER | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:50.486878500Z | Scan: SCAN-W-db3a89555f4c4827805131671b107b26
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 2 (files and skipped directories)
+SUPPORTED: 1
+SKIPPED: 1
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 57 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Documented context and present assessments:
+  OBJECTIVE: Write a thesis. [SOURCE_REPORTED, PENDING, EV-W-db3a89555f4c4827805131671b107b26-000001]
+  DELIVERABLE: UNKNOWN (no accepted current fact is inferred)
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review outline. [SOURCE_REPORTED, PENDING, EV-W-db3a89555f4c4827805131671b107b26-000002]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+.env | SKIPPED | METADATA_ONLY | role: UNKNOWN
+  Size: -1 | Modified metadata: null
+  SHA-256: NOT_AVAILABLE
+  Excluded sensitive or generated name; contents not read.
+README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
+  Size: 57 | Modified metadata: 2026-10-30T12:45:50.043565600Z
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+  Bounded extraction completed.
+EV-W-db3a89555f4c4827805131671b107b26-000001 | OBJECTIVE |
+  SOURCE_REPORTED | EXPLICIT | source verification: UNVERIFIED | review: PENDING
+  Source: README.md line 2 [Objective] | UNKNOWN
+  Literal: Write a thesis.
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: EV-W-db3a89555f4c4827805131671b107b26-000002 | NEXT_ACTION |
+  SOURCE_REPORTED | EXPLICIT | source verification: UNVERIFIED | review: PENDING
+  Source: README.md line 4 [Next Steps] | UNKNOWN
+  Literal: Review outline.
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]:
+BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
+Workspace: W-db3a89555f4c4827805131671b107b26 | Imported Thesis
+Entry mode: IMPORT_FOLDER | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:50.486878500Z | Scan: SCAN-W-db3a89555f4c4827805131671b107b26
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 2 (files and skipped directories)
+SUPPORTED: 1
+SKIPPED: 1
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 57 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Documented context and present assessments:
+  OBJECTIVE: Write a thesis. [SOURCE_REPORTED, CONFIRMED, EV-W-db3a89555f4c4827805131671b107b26-000001]
+  DELIVERABLE: UNKNOWN (no accepted current fact is inferred)
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review outline. [SOURCE_REPORTED, LEFT_UNKNOWN, EV-W-db3a89555f4c4827805131671b107b26-000002]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+.env | SKIPPED | METADATA_ONLY | role: UNKNOWN
+  Size: -1 | Modified metadata: null
+  SHA-256: NOT_AVAILABLE
+  Excluded sensitive or generated name; contents not read.
+README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
+  Size: 57 | Modified metadata: 2026-10-30T12:45:50.043565600Z
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+  Bounded extraction completed.
+Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No native checkpoint was created.
+
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W-db3a89555f4c4827805131671b107b26 | Imported Thesis
+Entry mode: IMPORT_FOLDER | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:50.486878500Z | Scan: SCAN-W-db3a89555f4c4827805131671b107b26
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 2 (files and skipped directories)
+SUPPORTED: 1
+SKIPPED: 1
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 57 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Documented context and present assessments:
+  OBJECTIVE: Write a thesis. [SOURCE_REPORTED, CONFIRMED, EV-W-db3a89555f4c4827805131671b107b26-000001]
+  DELIVERABLE: UNKNOWN (no accepted current fact is inferred)
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review outline. [SOURCE_REPORTED, LEFT_UNKNOWN, EV-W-db3a89555f4c4827805131671b107b26-000002]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+Confirmed at: 2026-10-30T12:45:50.525878900Z
+Save this workspace to local app storage? Type yes; Enter keeps session-only: Saved. Verified local file readback.
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: b-readme-restart-source-gone
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+[2] Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W-db3a89555f4c4827805131671b107b26 | Imported Thesis
+Entry mode: IMPORT_FOLDER | Profile: ACADEMIC
+Observed at: 2026-10-30T12:45:50.486878500Z | Scan: SCAN-W-db3a89555f4c4827805131671b107b26
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 2 (files and skipped directories)
+SUPPORTED: 1
+SKIPPED: 1
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 57 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Documented context and present assessments:
+  OBJECTIVE: Write a thesis. [SOURCE_REPORTED, CONFIRMED, EV-W-db3a89555f4c4827805131671b107b26-000001]
+  DELIVERABLE: UNKNOWN (no accepted current fact is inferred)
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review outline. [SOURCE_REPORTED, LEFT_UNKNOWN, EV-W-db3a89555f4c4827805131671b107b26-000002]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Saved observation only. Source freshness UNKNOWN; see project storage status.
+Confirmed at: 2026-10-30T12:45:50.525878900Z
+Show paged file inventory and source claims? Type yes, or Enter to return: .env | SKIPPED | METADATA_ONLY | role: UNKNOWN
+  Size: -1 | Modified metadata: null
+  SHA-256: NOT_AVAILABLE
+  Excluded sensitive or generated name; contents not read.
+README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
+  Size: 57 | Modified metadata: 2026-10-30T12:45:50.043565600Z
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+  Bounded extraction completed.
+EV-W-db3a89555f4c4827805131671b107b26-000001 | OBJECTIVE |
+  SOURCE_REPORTED | EXPLICIT | source verification: UNVERIFIED | review: CONFIRMED
+  Source: README.md line 2 [Objective] | UNKNOWN
+  Literal: Write a thesis.
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+EV-W-db3a89555f4c4827805131671b107b26-000002 | NEXT_ACTION |
+  SOURCE_REPORTED | EXPLICIT | source verification: UNVERIFIED | review: LEFT_UNKNOWN
+  Source: README.md line 4 [Next Steps] | UNKNOWN
+  Literal: Review outline.
+  SHA-256: e0606798dc67bca293509aae8ecd3a9d844867d8f857f5dbe0f4dc9ac22806e4
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > Profile: ACADEMIC | Mode: IMPORT_FOLDER
+Next native number: 1
+Source freshness UNKNOWN. B0 is a saved observation, never a native checkpoint.
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: c-checkpoint-save
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 1
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > Human present-context statements only. Blank optional fields stay UNKNOWN. /cancel returns.
+Checkpoint title: Progress summary: Objective: Blockers [UNKNOWN, NONE_REPORTED, BLOCKED]: Blocker details: Next actions: Decisions / rationale: Owner: Available B0 evidence (source-reported claims are not independent verification):
+EV-W-86d82f7579f6436fb659565e89ca5e67-000001 | OBJECTIVE | USER_SUPPLIED | CONFIRMED
+EV-W-86d82f7579f6436fb659565e89ca5e67-000002 | DELIVERABLE | USER_SUPPLIED | CONFIRMED
+EV-W-86d82f7579f6436fb659565e89ca5e67-000003 | NEXT_ACTION | USER_SUPPLIED | CONFIRMED
+EV-W-86d82f7579f6436fb659565e89ca5e67-000004 | OWNER | USER_SUPPLIED | CONFIRMED
+EV-W-86d82f7579f6436fb659565e89ca5e67-000005 | BLOCKERS | USER_SUPPLIED | CONFIRMED
+Evidence IDs separated by commas (blank = none): CHECKPOINT PREVIEW. No mutation yet.
+CP-000001 | 2026-10-30T12:45:49.458194500Z | First confirmed work
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | snapshot: B0-NO-SCAN
+Objective: Write report
+Progress: Draft ready
+Blocker state: UNKNOWN | UNKNOWN
+Next actions: Review draft
+Decisions: Choose short sections
+Owner: Student
+Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.
+Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.
+Create this native checkpoint? Type yes: Confirmed CP-000001
+DLL structure: NULL <- [CP-000001] -> NULL
+Integrity: true
+Core append O(n) including duplicate check; latest O(1); traversal O(n).
+Structure diagnostic O(n); full integrity O(n^2) including uniqueness.
+Saved. Verified local file readback.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: c-checkpoint-restart
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 1
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > CP-000001 | 2026-10-30T12:45:49.458194500Z | First confirmed work
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | snapshot: B0-NO-SCAN
+Objective: Write report
+Progress: Draft ready
+Blocker state: UNKNOWN | UNKNOWN
+Next actions: Review draft
+Decisions: Choose short sections
+Owner: Student
+Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.
+Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > History forward:
+CP-000001 | 2026-10-30T12:45:49.458194500Z | First confirmed work
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | snapshot: B0-NO-SCAN
+Objective: Write report
+Progress: Draft ready
+Blocker state: UNKNOWN | UNKNOWN
+Next actions: Review draft
+Decisions: Choose short sections
+Owner: Student
+Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.
+Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.
+History backward:
+CP-000001
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > DLL structure: NULL <- [CP-000001] -> NULL
+Integrity: true
+Core append O(n) including duplicate check; latest O(1); traversal O(n).
+Structure diagnostic O(n); full integrity O(n^2) including uniqueness.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > Profile: ACADEMIC | Mode: NEW_EMPTY
+Next native number: 2
+Source freshness UNKNOWN. B0 is a saved observation, never a native checkpoint.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: d-switch-workspaces
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+[2] Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > CP-000001 | 2026-10-30T12:45:49.458194500Z | First confirmed work
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | snapshot: B0-NO-SCAN
+Objective: Write report
+Progress: Draft ready
+Blocker state: UNKNOWN | UNKNOWN
+Next actions: Review draft
+Decisions: Choose short sections
+Owner: Student
+Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.
+Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+[2] Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > No native checkpoint. Review B0 for baseline context, not historical resume.
+
+ACTIVE PROJECT | Imported Thesis | W-db3a89555f4c4827805131671b107b26
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: e-corrupt-load
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+WARNING: an unreadable saved workspace is retained for recovery.
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+[2] Unavailable | W-db3a89555f4c4827805131671b107b26 | UNAVAILABLE
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > [1] School Planner | W-86d82f7579f6436fb659565e89ca5e67
+[2] Unavailable | W-db3a89555f4c4827805131671b107b26 | UNAVAILABLE
+Project number (0 = cancel): Storage/input operation failed. Active project preserved. Check path, format and permissions; retry Save.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs >
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project > CP-000001 | 2026-10-30T12:45:49.458194500Z | First confirmed work
+Workspace: W-86d82f7579f6436fb659565e89ca5e67 | snapshot: B0-NO-SCAN
+Objective: Write report
+Progress: Draft ready
+Blocker state: UNKNOWN | UNKNOWN
+Next actions: Review draft
+Decisions: Choose short sections
+Owner: Student
+Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.
+Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.
+
+ACTIVE PROJECT | School Planner | W-86d82f7579f6436fb659565e89ca5e67
+Storage status: SAVED
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[0] Back
+project >
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.

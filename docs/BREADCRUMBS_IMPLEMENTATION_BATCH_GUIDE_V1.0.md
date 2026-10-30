@@ -92,6 +92,18 @@ After B0 and core DLL contracts stabilize, add explicit user-reviewed first nati
 
 **Exit:** Create → close → relaunch → restore → traverse/resume with identical checkpoint order; no evidence claims invented.
 
+**B3 implementation update (2026-10-30): DEMO_READY on owner-accepted Windows/JDK
+25 with Java 17-target compilation.** Branded startup, optional bread-gold ANSI,
+saved-workspace discovery, explicitly confirmed project checkpoints, versioned
+UTF-8 state, custom DLL reconstruction and safe switching are implemented.
+The junction-enabled run passes 3,780 B1 + 192 B2 + 138 B3 assertions. Separate
+Java-process demos prove B0/CP restart, source-gone README restoration, workspace
+isolation and corrupt-load preservation. Source claims retain original provenance.
+No source rescan or auto-imported history occurs. Atomic single-file replacement
+is required; unsupported providers fail closed. This is basic B3 storage, not
+full M8 recovery or release acceptance. [B3 execution and evidence](B3_EXECUTION.md)
+and [format/limits](B3_STORAGE_FORMAT.md) record the boundary. B4-B7 remain NOT_STARTED.
+
 ## B4 — Audits, drift and handoffs
 
 Combine M2/M4/M5 only once inspection and durable checkpoints exist. Reconcile literal claims by explicit IDs; distinguish OBSERVED, SOURCE_REPORTED, USER_CONFIRMED, DERIVED, UNKNOWN, UNSUPPORTED, CONFLICTING and STALE. Do not promote timestamps, checkboxes, old handoff text, or agent instructions into verified outcomes. Compare fingerprinted snapshots; report modified/added/deleted/unchanged and ambiguous renames honestly. Export human-readable source-linked resumption and handoff summaries without leaking sensitive paths/values.
@@ -126,7 +138,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | --- | --- | --- |
 | B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
 | B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [192 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md), [stacked PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) |
-| B3 | NOT_STARTED | — |
+| B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
 | B4 | NOT_STARTED | — |
 | B5 | NOT_STARTED | — |
 | B6 | NOT_STARTED | — |

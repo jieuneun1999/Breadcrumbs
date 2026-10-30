@@ -2,9 +2,9 @@
 
 **Leave context behind. Pick up where work stopped.**
 
-Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1 and B2 provide a checkpoint sandbox and safe initial-project baseline. Later batches add durable checkpoints, drift comparison, and source-backed handoffs.
+Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1-B3 provide a custom DLL sandbox, safe initial-project baseline, confirmed project checkpoints and local restart continuity. Later batches add drift comparison and portable handoffs.
 
-> **Status: B2 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The original 3,780 B1 assertions and 192 B2 assertions pass in the junction-enabled Windows run. Three actual console bootstrap/import workflows pass. See [B2 execution and evidence](docs/B2_EXECUTION.md) and [B1 evidence](docs/B1_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B3-B7 remain unimplemented.
+> **Status: B3 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The junction-enabled run passes 3,780 B1, 192 B2 and 138 B3 assertions. Separate Java processes demonstrate B0/checkpoint restart, source-gone import restoration, workspace isolation and corrupt-load handling. See [B3 execution and evidence](docs/B3_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B4-B7 remain unimplemented. Feature PRs remain unmerged.
 
 ## Build, run, and test
 
@@ -14,7 +14,9 @@ Gradle, database, IDE, or external dependency is required. From Windows CMD:
 ```bat
 run.bat
 scripts\test.bat
-run.bat < tests\cli-demo-input.txt
+run.bat --dsa < tests\cli-demo-input.txt
+run.bat --no-color
+run.bat "--storage-root=C:\Temp\Breadcrumbs Demo" --color=always
 ```
 
 Both batch launchers resolve their own location. You can invoke them by full
@@ -44,15 +46,96 @@ PowerShell and writes transcripts and source hashes under `build/verification`:
 ```text
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-windows.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b2-windows.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b3-windows.ps1
 ```
 
 The execution policy override applies only to that process. The application and
 its Java test suite do not require PowerShell. See the evidence record for actual
 commands, Windows results, and the JDK 17 runtime verification limit.
 
+## Resume and record project context
+
+The normal startup shows a compact ASCII breadcrumb trail and the real number of
+saved workspaces. Choose **1** to open a saved project, **2** to create/import,
+**3** for the active project, **4** for the independent DSA sandbox, or **0** to exit.
+No recent-selection record is maintained; select a workspace explicitly.
+Unavailable/corrupt saved projects are disclosed and retained for manual recovery.
+Opening a project never scans its original folder or executes source commands.
+
+The active-project menu offers B0/source details, checkpoint creation, latest
+checkpoint, forward/backward history, Save, switching, information and DLL diagnostics.
+Creation collects objective, progress, an explicit `UNKNOWN`/`NONE_REPORTED`/`BLOCKED`
+blocker state, next actions, decisions/rationale, owner and selected B0 evidence IDs.
+Blank optional fields stay `UNKNOWN`. Review the preview and type `yes` to append.
+Declining leaves the DLL and next ID unchanged. The first ID is `CP-000001`.
+IDs continue from a persisted high-water counter, independently of list size.
+There is no project-level deletion/edit/archive in B3; historical corrections
+and archival are deferred. Sandbox deletion remains available.
+
+Each checkpoint contains its immutable project context directly in the DLL value.
+Its workspace, original snapshot, previous checkpoint and evidence IDs are validated.
+Source-reported claims retain their original verification, locators and SHA-256
+even when a person confirms their present assessment. Saving a checkpoint does
+not run tests or rehash source files. Restored context is a **saved observation**;
+source freshness remains `UNKNOWN`, including when its original folder disappears.
+Drift checks and portable handoff export belong to B4.
+
+## Storage and terminal appearance
+
+Default local storage is `${user.home}/.breadcrumbs/workspaces/<workspaceId>/state.txt`.
+Each file is self-contained; there is no required manifest to become inconsistent.
+Use `--storage-root=<path>` for separate demo/test storage. Relative overrides
+resolve against the Java working directory; `run.bat` sets that to the repository.
+Drive/network roots and linked/reparse storage paths are rejected. Storage cannot
+be inside the imported project. Tests always inject disposable `build` locations.
+
+After B0 confirmation, consent enables auto-save after confirmed checkpoints.
+Explicit Save can enable persistence later. Failed saves remain visibly `UNSAVED`
+and retain the in-memory state for retry. Switching and exit require Save or an
+explicit discard when dirty. EOF tries an enabled save and warns if unsaved state
+will be lost. In session-only mode, nothing survives shutdown.
+
+The [versioned UTF-8 codec](docs/B3_STORAGE_FORMAT.md) preserves baseline, policy,
+inventory, original claims, reviews, native chronology and next ID. It uses Base64
+fields and SHA-256 integrity, not Java object serialization. It is **not encrypted
+or authenticated**. Store only appropriate local context. Conservative sensitive
+markers are rejected, but that is not a universal secret detector. Original
+documents, binaries, credentials and unrestricted snippets are never copied.
+Writes validate the complete data, use a temporary sibling, require atomic file
+replacement and verify readback. Unsupported atomic moves fail without the weaker
+replacement fallback. No power-loss durability, backup rotation, concurrent writer
+coordination, or multi-file crash recovery is claimed. Those are B7 work.
+
+The brand uses warm amber-gold ANSI color `38;5;214` for headings and prompts.
+Green/yellow/red mark fixed success/warning/error labels. User/source text stays
+in the default foreground and control characters are escaped. Labels also spell
+out their meaning. `--no-color`, `NO_COLOR`, redirected output, `TERM=dumb`, and
+uncertain Windows CMD environments use plain text. `--color=always` opts into
+ANSI even when redirected; `--no-color` and `NO_COLOR` take precedence. Auto color
+needs an interactive console and a known terminal; on Windows this includes
+Windows Terminal/ANSICON. Terminal palettes can vary. The narrow layout splits
+the tagline. No artificial delays, shell VT setup, animation or GUI is required.
+
+```text
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+Storage: Ready
+Saved projects: 0
+```
+
+The B3 Windows harness records actual separate-process scenarios A-F, ANSI/no-color
+and `NO_COLOR`, quoted launcher paths, ACL denial and junction rejection. The B3
+suite adds corruption/encoding/reference tests, Unicode/multiline round trips,
+checkpoint cancellation, dirty-save recovery and same-workspace switching.
+The [execution record](docs/B3_EXECUTION.md) binds results to source hashes.
+Reconstructing n checkpoints uses public append with duplicate checking, so it is
+O(n²), as is full integrity validation. Serialization adds linear byte I/O and
+bounded evidence/inventory reference checks; it is not an O(1) DLL operation.
+
 ## Start a project and establish B0
 
-Run `run.bat`, then select **13** to add or create a project:
+Run `run.bat`, then select **2** to add or create a project:
 
 1. Choose `NEW_EMPTY`, `IMPORT_FOLDER`, or `IMPORT_LEGACY_CONTEXT`.
 2. Enter a display name and select `GENERAL`, `ACADEMIC`, `OPERATIONS`, or
@@ -68,7 +151,7 @@ Run `run.bat`, then select **13** to add or create a project:
 6. Type `yes` at the final B0 confirmation prompt. Cancellation preserves the
    previously active workspace and creates no checkpoint.
 
-Option **14** shows the confirmed B0 report, with optional paged inventory and
+Choose **3** at startup to open the active project menu, then **1** for B0 with optional paged inventory and
 source-claim details. It works with zero native checkpoints. `/cancel` discards a
 pending proposal. Scans offer continuation/cancellation after each 25 visited
 entries. The time budget includes these pauses; delayed continuation can yield
@@ -77,10 +160,11 @@ an explicitly partial scan. There is no background watcher.
 All modes converge on one `WorkspaceState`. `BaselineB0` is a separate immutable
 type with observation/review timestamps, profile/mode, scan policy, snapshot,
 claims, and conflict dispositions. It is never a DLL node. The project's custom
-`CheckpointList` stays empty throughout bootstrap. Options 1-12 retain the B1
+`CheckpointList` stays empty throughout bootstrap. The DSA demonstration retains the B1
 sandbox separately; sandbox CP records are not source-linked B3 project history.
 
-No files are saved between runs. A B0 report is **not a historical resume**.
+After B0 confirmation, explicitly opt into local storage or keep session-only mode.
+A B0 report is **not a historical resume**.
 Import never automatically creates `CP-000001` or recreates old handoff events.
 Confirming an imported claim records a person's present assessment while keeping
 its original source verification and fingerprint intact.
@@ -139,7 +223,7 @@ Unknowns remain distinct from unsupported or conflicting evidence.
 
 ## B2 safety and verification limits
 
-The application has no imported-file write, network, or subprocess calls. It
+The inspector has no imported-file write, network, or subprocess calls. It
 rejects UNC/drive roots and linked/reparse roots, skips symlinks and special entries,
 checks resolved containment, and opens eligible files with `NOFOLLOW_LINKS`.
 Detected size/time/creation-metadata changes discard the fingerprint and claims
@@ -163,7 +247,8 @@ required for testing.
 
 ## Use the B1 menu
 
-The application starts with an empty custom list. Option 12 loads five explicitly
+Choose startup option **4**, or launch `run.bat --dsa`, for the separate B1 menu.
+It starts with an empty custom list. Option 12 loads five explicitly
 synthetic checkpoints for a fictional study planner journey. Repeated loading
 skips existing fixture IDs without replacing records. These fixtures do not
 describe Breadcrumbs development progress.
@@ -200,7 +285,7 @@ Native creation is append-only. Synthetic positional exercises illustrate link
 order, not verified event chronology. The tail is latest in list order, which can
 differ from timestamp order when synthetic records are inserted or loaded.
 
-**Nothing is saved between program runs.** B2 adds directory inspection and B0
+**Nothing in the DSA sandbox is saved between runs.** B2 adds directory inspection and B0
 through options 13/14. The B1 checkpoint sandbox does not attach source evidence
 or implement the complete B3 workflow. Human confirmation in that sandbox records
 a current session statement without linking it to the active project.
@@ -256,7 +341,7 @@ Class files target Java 17 major version 61. Actual JDK 17 runtime execution,
 Unix execution, and the instructor's laptop remain unverified. This is the B1
 academic DLL foundation, not completion of M0-M9 or product release acceptance.
 Directory inspection/B0 and limited explicit-ID first-import review are available
-in B2 as described above. Persistence, full reconciliation/audit scoring, drift,
+in B2 as described above. B3 adds basic persistence described below. Full reconciliation/audit scoring, drift,
 handoff, Graph/Hash/Trie, advanced document parsers, Git integration, AI, voice,
 and crash recovery remain in later batches. There are no known failing B1 tests.
 
@@ -291,7 +376,7 @@ The **team-approved implementation sequence** is [Batch Guide v1.0](docs/BREADCR
 | --- | --- | --- |
 | **B1** | Java 17 CLI scaffold, manually implemented Doubly Linked List, five DEMO checkpoints, six+ operations and tests | PASS / DEMO_READY on owner-accepted Windows/JDK 25; B2 foundation ready |
 | **B2** | Three entry modes, read-only project folder inspection and B0 baseline | DEMO_READY on Windows/JDK 25; platform limits disclosed |
-| **B3** | User-confirmed checkpoints, basic local TXT save/load and restart continuity | NOT_STARTED |
+| **B3** | User-confirmed checkpoints, local TXT save/load, restart continuity and branded startup | DEMO_READY on Windows/JDK 25; basic persistence only |
 | **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | NOT_STARTED |
 | **B5** | Manually implemented Directed Graph and Hash Table in separate testable units | NOT_STARTED |
 | **B6** | Custom Trie + Hash-backed Inverted Index | NOT_STARTED |
