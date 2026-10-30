@@ -18,8 +18,8 @@ Result is **B1 PASS / DEMO_READY** for that environment. On 2026-10-30 the owner
 accepted use of the installed JDK 25 runtime. Actual JDK 17 runtime execution is
 still unverified, but is no longer a B2 blocker under that explicit adaptation.
 Fresh mixed-operation, CLI-state, and test-sensitivity checks passed. See the
-[execution record and source-bound evidence](B1_EXECUTION.md). B2-B7 remain
-NOT_STARTED.
+[execution record and source-bound evidence](B1_EXECUTION.md). At that B1
+checkpoint, B2-B7 remained NOT_STARTED.
 
 **Academic delivery:** Java 17+, CLI/terminal-only, JDK-only launchable core, no IDE/database/internet/Docker required. All **graded DSA operations** must use manually written node/algorithm implementations; do not delegate to `LinkedList`, `HashMap`, `TreeMap`, a graph package, a Trie package, or a search engine. Standard JDK primitives, arrays, strings and I/O utilities are for supporting operations, not substitutes for DSAs. Validate Windows CMD portability. The team has chosen to pursue the full architecture; this is **not an assertion of formal instructor authorization**. Protect a compliant, independent DLL-based academic core if permitted scope later changes.
 
@@ -74,6 +74,17 @@ Implement the three explicit entry modes and record a **B0 first-observation bas
 
 **Exit:** Empty folder, README-only, mixed files, symlink traversal, secrets, and legacy handoff fixtures produce truthful, source-located output. First scan creates B0 but **not CP-000001**.
 
+**B2 implementation update (2026-10-30): DEMO_READY on owner-accepted Windows/JDK
+25 with Java 17-target compilation.** All three console routes converge on one
+confirmed WorkspaceState/B0. The original B1 suite passes unchanged, plus 191 B2
+assertions in the junction-enabled run. Actual new-empty, README-only and legacy
+conflict imports pass; imported fixture bytes remain unchanged and no native
+checkpoint is created. Actual Windows junction/ACL tests pass. Symbolic-link
+creation was denied by the environment and remains unverified; portable traversal
+is not an OS sandbox against hostile concurrent filesystem changes. See
+[B2 execution, commands, source hashes and limits](B2_EXECUTION.md).
+PR base is the still-unmerged B1 branch. B3-B7 remain NOT_STARTED.
+
 ## B3 — Checkpoint creation, TXT persistence and restart
 
 After B0 and core DLL contracts stabilize, add explicit user-reviewed first native `CP-000001`; checkpoint insertion remains DLL-owned. Define a documented, escaped/versioned local text storage codec and safe application data directory separate from the read-only imported root. Read checkpoints from files and **rebuild the custom DLL** on startup; never use storage records as the in-memory DSA. Test empty state, ordered round-trip, duplicate/corrupt rows, partial files and error reporting. B3 provides basic working continuity, but does **not** promise crash-safe atomic multi-file transactions (B7).
@@ -113,7 +124,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | Batch | Status | Evidence |
 | --- | --- | --- |
 | B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
-| B2 | NOT_STARTED | — |
+| B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [191 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md) |
 | B3 | NOT_STARTED | — |
 | B4 | NOT_STARTED | — |
 | B5 | NOT_STARTED | — |

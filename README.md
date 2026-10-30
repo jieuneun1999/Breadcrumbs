@@ -2,11 +2,11 @@
 
 **Leave context behind. Pick up where work stopped.**
 
-Breadcrumbs is a proposed **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. It helps users inspect a new or existing workspace, identify documented facts and missing context, create confirmed checkpoints, compare later file changes, and produce source-backed handoffs.
+Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1 and B2 provide a checkpoint sandbox and safe initial-project baseline. Later batches add durable checkpoints, drift comparison, and source-backed handoffs.
 
-> **Status: B1 PASS / DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The runnable session-local CLI and custom DLL pass 3,780 assertions. Deeper mixed-operation and fault-injection checks also pass. Actual JDK 17 runtime execution remains unverified and is no longer a B2 blocker after owner acceptance of the installed runtime. See [B1 execution and evidence](docs/B1_EXECUTION.md). The academic core is terminal-only and JDK-only; no GUI, network, Git, or AI subscription is required. B2-B7 remain unimplemented.
+> **Status: B2 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The original 3,780 B1 assertions and 191 B2 assertions pass in the junction-enabled Windows run. Three actual console bootstrap/import workflows pass. See [B2 execution and evidence](docs/B2_EXECUTION.md) and [B1 evidence](docs/B1_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B3-B7 remain unimplemented.
 
-## Build, run, and test B1
+## Build, run, and test
 
 Install or use an existing JDK 17+ with `java` and `javac` on PATH. No Maven,
 Gradle, database, IDE, or external dependency is required. From Windows CMD:
@@ -43,11 +43,123 @@ PowerShell and writes transcripts and source hashes under `build/verification`:
 
 ```text
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-windows.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b2-windows.ps1
 ```
 
 The execution policy override applies only to that process. The application and
 its Java test suite do not require PowerShell. See the evidence record for actual
 commands, Windows results, and the JDK 17 runtime verification limit.
+
+## Start a project and establish B0
+
+Run `run.bat`, then select **13** to add or create a project:
+
+1. Choose `NEW_EMPTY`, `IMPORT_FOLDER`, or `IMPORT_LEGACY_CONTEXT`.
+2. Enter a display name and select `GENERAL`, `ACADEMIC`, `OPERATIONS`, or
+   `SOFTWARE`. A blank profile selects `GENERAL`.
+3. For a new project, enter objective, deliverable, next action, optional owner,
+   and blockers. Blank information stays `UNKNOWN`. An existing empty directory
+   is optional; the program does not create directories or invent file evidence.
+4. For imports, provide a local directory and type `yes` to approve the displayed
+   read-only scan policy. A README-only folder and an empty folder are valid.
+5. Review the inventory, coverage, source-reported claims, unknowns, and explicit-ID
+   conflicts. Use `c` to confirm a present assessment, `r` to reject, `u` or Enter
+   to leave unknown, or `s` to defer the remaining candidates.
+6. Type `yes` at the final B0 confirmation prompt. Cancellation preserves the
+   previously active workspace and creates no checkpoint.
+
+Option **14** shows the confirmed B0 report, with optional paged inventory and
+source-claim details. It works with zero native checkpoints. `/cancel` discards a
+pending proposal. Scans offer continuation/cancellation after each 25 visited
+entries. The time budget includes these pauses; delayed continuation can yield
+an explicitly partial scan. There is no background watcher.
+
+All modes converge on one `WorkspaceState`. `BaselineB0` is a separate immutable
+type with observation/review timestamps, profile/mode, scan policy, snapshot,
+claims, and conflict dispositions. It is never a DLL node. The project's custom
+`CheckpointList` stays empty throughout bootstrap. Options 1-12 retain the B1
+sandbox separately; sandbox CP records are not source-linked B3 project history.
+
+No files are saved between runs. A B0 report is **not a historical resume**.
+Import never automatically creates `CP-000001` or recreates old handoff events.
+Confirming an imported claim records a person's present assessment while keeping
+its original source verification and fingerprint intact.
+
+## Inspection policy and supported extraction
+
+The inspector reads bounded UTF-8 TXT, Markdown, and CSV. Metadata and SHA-256
+fingerprints are observations, not proof of successful work. PDF, Office files,
+images, archives, source code, and unfamiliar formats are metadata-only in B2.
+No imported code, command, or agent instruction is executed.
+
+| Policy field | Default |
+| --- | --- |
+| Directory depth below root | 5 |
+| Visited filesystem entries, including directories | 300 |
+| Bytes per eligible file | 65,536 |
+| Total bytes read | 2,097,152 |
+| Text characters per file | 65,536 |
+| Characters per source line or CSV field | 1,000 |
+| Extracted claims | 200 |
+| CSV columns | 16 |
+| CSV rows, including header | 201 |
+| Cooperative scan duration | 5,000 milliseconds |
+
+These values are configurable through the validated `ScanPolicy` constructor.
+Inventory reports `SUPPORTED`, `SKIPPED`, `UNSUPPORTED`, `FAILED`, and `UNSTABLE`
+separately. Ordinary traversed directories consume the entry budget; skipped
+directories appear in the inventory, and their hidden descendant count is unknown.
+Partial traversal never claims to cover every file. An empty SHA-256 field means
+no trustworthy hash was obtained; an empty file has its real SHA-256 value.
+
+Excluded names include `.git`, dependency/generated/cache directories, `.env*`,
+`.ssh`, `.aws`, `.azure`, credential/secret/password/token names, common private
+key/keystore extensions, temporary files, and `.breadcrumbs` storage. Matching is
+case-insensitive and deliberately conservative. Sensitive-looking text markers
+suppress extraction. This is not a universal secret detector.
+
+Markdown recognizes the frozen context headings, explicit labels, strict task
+checkboxes, and explicit `TASK-*` or `T-*` identifiers. Code fences are not parsed
+as project claims. `AGENTS.md` and `CLAUDE.md` are classified as instructions and
+produce no completion claims. State, handoff, task, and decision filenames suggest
+artifact roles only. Claimed dates and "tests passed" remain source-reported.
+
+CSV supports quoted commas, escaped quotes, quoted newlines, headers, and strict
+row/column validation. Only configured headers create claims: `task_id` supplies
+an explicit identity, `status` supplies task status when that identity is valid,
+and recognized context headers such as `objective`, `next_action`, `owner`, and
+`blockers` map to their literal fields. Arbitrary columns create no inferred facts.
+TXT extraction accepts explicit recognized labels such as `Objective:`.
+
+Conflicts require the same explicit entity ID and field, with differing literal
+comparison values. Similar words, filename precedence, and newest modification
+time do not select winners. Rejected/deferred candidates retain source paths,
+line/section locators, fingerprints, source roles and original verification.
+Unknowns remain distinct from unsupported or conflicting evidence.
+
+## B2 safety and verification limits
+
+The application has no imported-file write, network, or subprocess calls. It
+rejects UNC/drive roots and linked/reparse roots, skips symlinks and special entries,
+checks resolved containment, and opens eligible files with `NOFOLLOW_LINKS`.
+Detected size/time/creation-metadata changes discard the fingerprint and claims
+as `UNSTABLE`. Controls and invisible formatting cannot enter terminal snippets;
+reports and source detail pages have bounded output.
+
+Actual Windows junction and ACL read-denial fixtures pass. Ordinary symbolic-link
+creation was denied by this environment, so that actual fixture remains unverified.
+Use quiescent local folders. Portable path checks are not an OS sandbox against
+hostile concurrent parent replacement, hard-link aliases, or same-metadata rewrites.
+The deadline is cooperative between JDK calls and cannot terminate a blocked OS
+operation. Actual JDK 17, Unix, and instructor-machine execution remain unverified.
+
+Run `scripts/verify-b2-windows.ps1` with the command above to generate synthetic
+fixtures and reproduce new-empty, README-only, and legacy-conflict workflows.
+It checks source-file byte preservation, secret exclusion, instruction inertness,
+and zero automatic native checkpoints. Fixture inputs and raw logs stay under
+ignored `build/b2-verification`. [Retained evidence](docs/B2_EXECUTION.md) binds
+the observed results to source hashes. No real user project or credential is
+required for testing.
 
 ## Use the B1 menu
 
@@ -69,6 +181,8 @@ describe Breadcrumbs development progress.
 | 10 | Display size and empty state |
 | 11 | Check boundaries, reciprocal links, counts, cycles, and ID uniqueness |
 | 12 | Load or replenish the five synthetic fixtures |
+| 13 | Add/create a project and review its initial B0 |
+| 14 | View B0, inventory, source locators and review dispositions |
 | 0 | Exit and discard the session |
 
 Enter `/cancel` at a prompt to return to the menu. Only `yes` confirms creation
@@ -86,9 +200,10 @@ Native creation is append-only. Synthetic positional exercises illustrate link
 order, not verified event chronology. The tail is latest in list order, which can
 differ from timestamp order when synthetic records are inserted or loaded.
 
-**Nothing is saved between program runs.** B1 does not scan a directory, generate
-B0, import old files, attach source evidence, or implement the complete B3
-checkpoint workflow. Human confirmation here records a current session statement.
+**Nothing is saved between program runs.** B2 adds directory inspection and B0
+through options 13/14. The B1 checkpoint sandbox does not attach source evidence
+or implement the complete B3 workflow. Human confirmation in that sandbox records
+a current session statement without linking it to the active project.
 
 ## Custom DLL and complexity
 
@@ -140,9 +255,10 @@ spaces. Missing JDK and compiler-failure paths return exit 1.
 Class files target Java 17 major version 61. Actual JDK 17 runtime execution,
 Unix execution, and the instructor's laptop remain unverified. This is the B1
 academic DLL foundation, not completion of M0-M9 or product release acceptance.
-Persistence, directory inspection/B0, source reconciliation, drift, handoff,
-Graph/Hash/Trie, document parsers, Git integration, AI, voice, and crash recovery
-remain in their later batches. There are no known failing B1 automated tests.
+Directory inspection/B0 and limited explicit-ID first-import review are available
+in B2 as described above. Persistence, full reconciliation/audit scoring, drift,
+handoff, Graph/Hash/Trie, advanced document parsers, Git integration, AI, voice,
+and crash recovery remain in later batches. There are no known failing B1 tests.
 
 ## Start here
 
@@ -159,7 +275,7 @@ After an interruption, the files for a thesis, operations plan, or software proj
 
 ## Day-one experience
 
-Three proposed entry modes:
+Three supported B2 entry modes:
 
 - **NEW_EMPTY:** start a project and record its stated objective and first-observation baseline.
 - **IMPORT_FOLDER:** safely inspect an existing folder even when no Breadcrumbs checkpoints exist.
@@ -174,7 +290,7 @@ The **team-approved implementation sequence** is [Batch Guide v1.0](docs/BREADCR
 | Batch | Deliverable | Status |
 | --- | --- | --- |
 | **B1** | Java 17 CLI scaffold, manually implemented Doubly Linked List, five DEMO checkpoints, six+ operations and tests | PASS / DEMO_READY on owner-accepted Windows/JDK 25; B2 foundation ready |
-| **B2** | Three entry modes, read-only project folder inspection and B0 baseline | NOT_STARTED |
+| **B2** | Three entry modes, read-only project folder inspection and B0 baseline | DEMO_READY on Windows/JDK 25; platform limits disclosed |
 | **B3** | User-confirmed checkpoints, basic local TXT save/load and restart continuity | NOT_STARTED |
 | **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | NOT_STARTED |
 | **B5** | Manually implemented Directed Graph and Hash Table in separate testable units | NOT_STARTED |

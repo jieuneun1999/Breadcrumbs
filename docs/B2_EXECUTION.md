@@ -246,5 +246,10 @@ continuity claim is made.
 
 ## Publication
 
-Pending scoped commits, stacked PR creation, final base/head readback and clean
-working-tree verification. B1 branch and main must remain untouched.
+Implementation/evidence commit `22c64e0` contains the tested B2 source, integration,
+academic DLL comments, regression additions and source-bound evidence. Staged
+byte identity, whitespace checks and narrow token/key/private-key scanning passed.
+Retained console prompt trailing whitespace was normalized before commit; the
+failed whitespace gate prevented an earlier commit and no source fix was needed.
+README/status updates, stacked PR creation, remote base/head readback and final
+clean-tree verification follow. B1 branch and main must remain untouched.
