@@ -215,3 +215,246 @@ and main d1f13c2. [PR #3](https://github.com/jieuneun1999/Breadcrumbs/pull/3) wa
 created open/non-draft with the correct B2 base and verified head. This receipt
 is a documentation-only follow-up. Final readback follows its push.
 No merges, tags, releases, deployments or unrelated external messages occurred.
+
+## Terminal visual follow-up packet (2026-10-30)
+
+Owner supplied the final terminal visual brief and requested implementation plus
+a sample walkthrough or short recording. Baseline is clean B3 head 447e64e on
+feat/b3-persistent-project-continuity. STANDARD local presentation refinement;
+one owner/writer, no agents/worktrees, frozen specs and persistence/DSA algorithms
+preserved. Scope is symbol-built lettering, bitten-loaf/crumb motif, calm startup
+status, menu spacing, narrow/plain fallback, affected tests and a local demo.
+This follow-up does not authorize commits, pushes, merges, releases or messages.
+Six repair iterations maximum, two per hypothesis. Recover through scoped edits.
+
+Reloaded installed Pstack 1.16 router completely in its dedicated call, then
+Feature in its own call. Reused already loaded how, architect, model-the-domain,
+prove-it-works, test-behavior-not-implementation and Codex mapping. Relevant Manual
+01, Workflow 02, Routing 05 and Craft 06 sections read. Impeccable entrypoint and
+context had run earlier in this session against this existing CLI; now read its
+polish and craft-floor references. Owner's exact ASCII/amber brief is visual
+authority. Adapt web-specific workflows to terminal columns and real output;
+no raster art, new GUI, fonts, global setup, browser detector or new orchestrator.
+
+Feature plan:
+
+1. `how` over the affected subsystem. Main chooses color/width; BrandRenderer
+   prints the header; ProjectConsole currently mixes startup status/menu strings
+   with operations. TerminalTheme owns SGR. Existing behavior tests pin old art.
+2. `architect` for parallel design exploration. Adapted to direct comparison of
+   compact side-by-side and stacked symbol wordmarks under single-owner policy.
+3. Write the throughput checkpoint as four todo items.
+   - Blocking first steps. Brief, current clean baseline, authority and call sites.
+   - Independent workstreams. n/a: one coupled terminal presentation change.
+   - Shared mutable state. n/a: renderer owns no project or persistence state.
+   - Smallest safe decomposition. Artwork/layout, status/menu, output invariants,
+     real runtime walkthrough, one batched visual inspection and correction.
+4. Delegate code-writing through provider dispatch. Adapted to direct owner work.
+5. Verify on the matching surface. Java/Windows checks and actual-output replay
+   completed below. Native terminal visual acceptance remains unverified.
+6. Rebase into small, ordered commits. Skip: no new Git publication authorization.
+7. If the design is contested, `interrogate` before shipping. Direct-owner
+   adaptation: compare actual renders and owner feedback; no panel or shipping.
+8. Run **Opening a PR**. Skip protected writes; leave reviewable local diff.
+
+The requested sample will use captured real Java CLI states in a local interactive
+walkthrough, clearly labeled as a replay rather than a desktop recording. It adds
+no application GUI or runtime dependency. Hyperframes entrypoint was inspected;
+film production, package installation and invented video content are unnecessary
+for this user-authorized sample option. No video-framework execution is claimed.
+
+### Reference refinement and rejected approach
+
+The owner supplied a realistic gold loaf/wordmark reference and then rejected the
+half-block refinement as pixelated, crowded and unnatural. That visual gate FAILED;
+passing structure/runtime tests do not change the owner's visual verdict.
+Loaded Pstack attack-the-premise completely in a dedicated read. Failed premise:
+"More filled color cells and deeper letter shadows will make 80-column text look
+more like the realistic reference." Actual output has large square tiles and
+crowded counters, and the owner's feedback rejects those same properties.
+Change the representation to fine contours/texture and lighter lettering, with
+more separation at 100+ columns. Keep basic/narrow ASCII output and inspect a
+new actual-output sample. Do not promote the rejected sample as accepted art.
+
+The owner then clarified that the font and bread must retain the reference's
+three-dimensional appearance. The thin-outline approach overcorrected and is
+also not accepted. Current candidate restores shaded crust, scored crown, pale
+cut face, missing bite, front-face highlights and down-right letter extrusion.
+It uses fine ASCII texture in a 160-column rich layout instead of filled block
+characters. The extra width is an explicit tradeoff for detail and spacing;
+smaller terminals retain compact ASCII. It is character art, not a claim of
+photorealism or an exact visual match. Visual state: **WIP / OWNER REVIEW PENDING**.
+
+Final representation decision: the procedural candidate still invented a different
+font/loaf. Transcribe the approved reference itself into fixed ASCII marks and
+twelve warm lighting bands. This retains its silhouette, scored crust, pale bite
+face, bevel, extrusion and original crumb curve. The optional Pillow maintenance
+script reads pixels only to generate Java text data; no edited image or runtime
+image asset is produced. It excludes browser chrome, the reference's sample
+status/menu/version and raster caption. Real readable caption/status/menu remain
+Java strings. Input is the supplied 1920x1050 reference (an initial 1080-height
+assumption was rejected by the recipe's guard and corrected after inspecting its
+actual dimensions). Reference SHA-256:
+0ce72c26c9e912c8cc122081ad59242d86cd028e6cecbfc65e9b987e384bcc6b.
+Foreground highlights are lifted to compensate for glyph coverage; this is a
+terminal adaptation, not pixel-identical reproduction. No screenshot/browser
+chrome/private account data is bundled with the application.
+
+### Current implementation and observed verification
+
+BrandRenderer chooses the width/mode. RichBrandRenderer prints fixed marks and
+palette rows from ReferenceBrandArt; TerminalTheme owns SGR. StartupRenderer
+owns truthful status and menu layout. Main accepts --rich-brand and explicitly
+writes UTF-8 for that color mode. --no-color and NO_COLOR override it. There is
+no image protocol, external font, fullscreen state, delay, subprocess, network
+call or new application dependency. ProjectConsole only delegates presentation
+and moves the long storage path to project information. Checkpoint, DLL, import,
+codec and storage algorithms, original B1/B2 tests and frozen specs are unchanged.
+
+Exact executed commands after the final application change:
+
+```text
+python scripts/capture-cli-walkthrough.py
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b3-windows.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-windows.ps1
+```
+
+The helper was invoked using the installed Python313 executable. It recompiles
+with `javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build/app
+-sourcepath src src/breadcrumbs/Main.java`, then drives real Java processes.
+The final B3 harness began 23:49:36+08 on Windows 10/JDK 25 and passed **4,263
+assertions**: 3,780 B1 + 192 B2 + 138 B3 continuity/CLI + 153 presentation.
+Both junction fixtures and Windows ACL denial passed. The ordinary suite passes
+4,261 assertions, omitting the two optional junction assertions. Direct
+`cmd.exe /d /c scripts\test.bat` also passed during implementation.
+
+Fifteen separate Java processes cover prior B3 restart/import/switch/corruption
+flows plus plain, gold, 160-column rich, 80-column rich fallback, redirected rich,
+--no-color and NO_COLOR overrides. All exit 0. The real external-path run.bat
+with quoted storage path also passes. The final launcher harness passes
+root/external/spaced-path launches and copied fixture tests (23:51:22 to 23:51:58+08);
+missing JDK and deliberate compiler failure return 1 without stale execution.
+Both final harnesses have identical source/test/script manifests.
+
+The final captured walkthrough is under ignored
+build/launch-walkthrough/f6adcfe0a7a54644b203535d000e531a. It contains real first
+launch, B0 confirmation/save, CP-000001 confirmation/save, process restart,
+restoration of next action, DLL integrity, plain and narrow states. Captured app
+and helper hashes match current files. Input echoes are explicitly labeled.
+PNG is a rendering of captured text, not a native terminal screenshot.
+
+An isolated Edge profile exercised the replay: **18 browser checks PASS** for
+all eight frames, Previous/Next, step buttons, real Left-key navigation, stored
+context and dependency-free offline markup. Screenshots were inspected.
+Initial CDP navigation timed out despite the requested local page being present.
+The replay verifier now waits for document readiness in the existing page rather than
+starting a second navigation. The bounded readiness/action checks passed. CUA
+initialization was unavailable; no global repair,
+installation or user browser-profile access was attempted. These browser checks
+verify the replay, not Windows Terminal's native font/ANSI appearance.
+
+Retained final evidence (earlier B1-B3 evidence is preserved):
+
+- [Windows assertions and process scenarios](evidence/terminal-visual-windows-summary.txt).
+- [Launcher checks](evidence/terminal-visual-launcher-summary.txt).
+- [Source/test/script manifest](evidence/terminal-visual-source-sha256.txt).
+- [Replay navigation checks](evidence/terminal-visual-browser-summary.txt).
+
+Specification self-review: presentation boundaries and runtime requirements PASS;
+reference fidelity remains WIP pending owner judgment. Engineering self-review:
+PASS for this local change; no independent review claimed. Actual JDK 17, Unix,
+instructor machine, symbolic-link creation and native-terminal visual rendering
+remain unverified. B3's prior functional DEMO_READY is preserved. This visual
+follow-up is local and uncommitted/unpushed; no new PR update, message, merge or
+release occurred. B4-B7 status is unchanged.
+
+## Visual checkpoint publication packet (2026-10-31)
+
+The owner accepted the current visual result "for now" and explicitly requested
+saving progress, publishing the PR update without merging, and a brief Alagad ni
+Mae dev update with the latest CLI state images. This authorizes scoped commits,
+a normal push of feat/b3-persistent-project-continuity, PR #3 metadata updates,
+and one image update in the existing Breadcrumbs dev-updates channel. It does
+not authorize merging, changing main or earlier branches, release, deployment,
+mentions or B4 implementation. This supersedes the earlier local-only packet
+for these named actions. Current visual state is ACCEPTED_FOR_CHECKPOINT, with
+further refinement possible. Native terminal fidelity remains unverified.
+
+Baseline is 447e64e. GitHub readback confirms PR #3 is open, non-draft and unmerged
+with the unchanged B2 base c7567fd. Main and B1 also retain their recorded heads.
+Read relevant Manual 01 protection/completion, Workflow 02 publication, Routing
+05 Pstack boundaries and Craft 06 source-binding/forge sections. Reloaded the
+complete installed Pstack router and Opening a PR playbook in dedicated calls.
+Read deslop, no-comments, technical-writing, unslop and prove-it-works.
+
+Opening a PR checklist, adapted to this existing accepted checkpoint:
+
+1. Worktree. Reuse the correct current branch; no new worktree, reset or rebase.
+2. Commits. Separate source/test/helper changes from documentation and captures.
+3. PRs. Review the scoped diff, preserve meaningful academic comments, and write
+   the PR briefing. Direct-owner adaptation of no-comments; no subagent or panel.
+4. Forge. Use the available GitHub connector for PR operations and ordinary Git
+   for the local commit/push. This overrides the playbook's CLI default under the
+   runtime connector preference. Canonical repository is jieuneun1999/Breadcrumbs.
+5. Size and stacks. Update existing PR #3 on its current B2 base. No retarget.
+6. Readiness. Preserve open/non-draft state. This is a checkpoint, not a release.
+7. Babysit. Skip; no CI-repair or merge request was made.
+8. Verify remote commit/tree, PR state and image-message readback.
+
+Throughput checkpoint: blocking steps are source/evidence identity and exact
+destination discovery. One writer owns Git and documentation. Source publication,
+PR metadata and Discord posting run sequentially. No code behavior changes are
+planned. All 53 final source/test/script SHA-256 entries match current files.
+The 2026-10-30 runtime results retain their original timestamps; no new test run
+is implied. Local diff inspection and documentation checks supplement them.
+
+Preserved launch PNG, restored-checkpoint replay screenshot, narrow PNG and the
+self-contained eight-state HTML replay under docs/evidence/terminal-visual.
+PNG hashes match the original captured files. The standalone HTML normalizes
+CRLF to LF and changes its footer's log-location sentence. All captured frames and navigation behavior stay
+unchanged. No generated build trees or
+synthetic state.txt files enter Git. Frozen specifications remain unchanged.
+
+Alagad ni Mae discovery confirms the existing BREADCRUMBS category and its
+dev-updates channel 1565415507421691934. The bot can attach images and read back
+messages. The owner's requested summary covers this accepted visual checkpoint,
+B3 persistence, 4,263 assertions, the unmerged PR and B4 awaiting its next prompt.
+Screenshots are labeled as captured-output/replay views, not native terminal
+captures. No pings, channel changes or unrelated messages are in scope.
+
+### Publication checks and implementation commit
+
+Fresh `cmd.exe /d /c scripts\test.bat` passed 4,261 assertions before commit.
+The staged whitespace gate then detected CRLF in the generated art and mixed
+line endings in two new files. Normalize only generate-reference-brand.py,
+ReferenceBrandArt.java and RichBrandRenderer.java. The recipe now writes UTF-8
+bytes instead of Windows-translated text. No global Git setting or attributes
+changed. Academic comments remain; direct-owner comment/style review found no
+behavioral changes to make in the accepted implementation.
+
+Reran the full Windows B3 command after that change, starting
+2026-10-31 00:13:33+08. It passes all 4,263 assertions, both junction fixtures,
+Windows ACL checks, 15 separate Java-process scenarios and the real external
+launcher. All 53 new source/test/script hashes are bound to this run. All 53
+application class hashes match the pre-normalization build. Regenerating from
+the supplied reference produces byte-identical LF artwork. These checks preserve
+the validity of the accepted screenshots without relabeling them as new captures.
+
+Implementation commit is 78edafff56e0bc82fc9df7f90d50b06f139e6398. Its 14 staged
+paths matched their working Git blobs, passed whitespace and narrow credential
+pattern checks, and exclude build data. No code comment deletions or independent
+review are claimed. Source-bound verification remains distinct from owner visual
+acceptance and from release approval.
+
+Publication evidence supplements, rather than replaces, the historical records:
+
+- [Fresh ordinary suite](evidence/terminal-visual-publication-tests.txt).
+- [Fresh Windows verification](evidence/terminal-visual-publication-windows-summary.txt).
+- [Current source hashes](evidence/terminal-visual-publication-source-sha256.txt).
+- [Bytecode identity and recipe checks](evidence/terminal-visual-publication-bytecode.txt).
+- [Launch, restored checkpoint, narrow fallback and replay](evidence/terminal-visual/README.md).
+
+The reviewable state remains B3 DEMO_READY with the visual checkpoint accepted
+for now. B4 awaits the owner's next prompt. PR #3 remains the publication target;
+remote/PR/image-message receipts are checked after the push and kept in the local
+build/publication-20261031 receipt. No automatic merge is permitted.

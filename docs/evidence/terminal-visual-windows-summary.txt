@@ -1,0 +1,39 @@
+Started: 2026-10-30T23:49:36.3163927+08:00
+OS: Microsoft Windows NT 10.0.19045.0
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+PASS: B3 actual storage junction rejection
+PASS: B3 continuity/storage (65 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+java version "25" 2025-09-16 LTS
+Java(TM) SE Runtime Environment (build 25+37-LTS-3491)
+Java HotSpot(TM) 64-Bit Server VM (build 25+37-LTS-3491, mixed mode, sharing)
+PASS: a-new-create-save | separate Java process exit 0
+PASS: a-new-restart | separate Java process exit 0
+PASS: c-checkpoint-save | separate Java process exit 0
+PASS: c-checkpoint-restart | separate Java process exit 0
+PASS: b-readme-import | separate Java process exit 0
+PASS: b-readme-restart-source-gone | separate Java process exit 0
+PASS: d-switch-workspaces | separate Java process exit 0
+PASS: e-corrupt-load | separate Java process exit 0
+PASS: f-plain-startup | separate Java process exit 0
+PASS: f-gold-startup | separate Java process exit 0
+PASS: f-rich-startup | separate Java process exit 0
+PASS: f-rich-narrow | separate Java process exit 0
+PASS: f-rich-redirected | separate Java process exit 0
+PASS: f-no-color-override | separate Java process exit 0
+PASS: f-no-color-environment | separate Java process exit 0
+PASS: actual run.bat from external directory with quoted storage path and --no-color.
+PASS: source hashes unchanged; no imported file writes; source-gone restart passed.
+Actual JDK 17, Unix, instructor machine and symbolic-link creation remain unverified.

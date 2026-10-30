@@ -4,7 +4,7 @@
 
 Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1-B3 provide a custom DLL sandbox, safe initial-project baseline, confirmed project checkpoints and local restart continuity. Later batches add drift comparison and portable handoffs.
 
-> **Status: B3 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The junction-enabled run passes 3,780 B1, 192 B2 and 138 B3 assertions. Separate Java processes demonstrate B0/checkpoint restart, source-gone import restoration, workspace isolation and corrupt-load handling. See [B3 execution and evidence](docs/B3_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B4-B7 remain unimplemented. Feature PRs remain unmerged.
+> **Status: B3 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17.** The 2026-10-31 publication check passes 4,263 assertions with junction fixtures. Separate Java processes demonstrate B0/checkpoint restart, source-gone import restoration, workspace isolation and corrupt-load handling. On 2026-10-31 the owner accepted the current terminal visual checkpoint for saving and PR review, with further refinement possible. See [B3 execution and evidence](docs/B3_EXECUTION.md) and [CLI screenshots and replay](docs/evidence/terminal-visual/README.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B4-B7 remain unimplemented. Feature PRs remain unmerged.
 
 ## Build, run, and test
 
@@ -55,7 +55,7 @@ commands, Windows results, and the JDK 17 runtime verification limit.
 
 ## Resume and record project context
 
-The normal startup shows a compact ASCII breadcrumb trail and the real number of
+The normal startup shows a symbol-built wordmark, bitten loaf and the real number of
 saved workspaces. Choose **1** to open a saved project, **2** to create/import,
 **3** for the active project, **4** for the independent DSA sandbox, or **0** to exit.
 No recent-selection record is maintained; select a workspace explicitly.
@@ -106,23 +106,72 @@ replacement and verify readback. Unsupported atomic moves fail without the weake
 replacement fallback. No power-loss durability, backup rotation, concurrent writer
 coordination, or multi-file crash recovery is claimed. Those are B7 work.
 
-The brand uses warm amber-gold ANSI color `38;5;214` for headings and prompts.
+The brand uses warm amber-gold ANSI color `38;5;214` for headings and prompts,
+lighter dough-gold highlights and muted crust/secondary tones.
 Green/yellow/red mark fixed success/warning/error labels. User/source text stays
 in the default foreground and control characters are escaped. Labels also spell
 out their meaning. `--no-color`, `NO_COLOR`, redirected output, `TERM=dumb`, and
 uncertain Windows CMD environments use plain text. `--color=always` opts into
 ANSI even when redirected; `--no-color` and `NO_COLOR` take precedence. Auto color
 needs an interactive console and a known terminal; on Windows this includes
-Windows Terminal/ANSICON. Terminal palettes can vary. The narrow layout splits
-the tagline. No artificial delays, shell VT setup, animation or GUI is required.
+Windows Terminal/ANSICON. Terminal palettes can vary. No artificial delays,
+shell VT setup, animation or GUI is required.
+
+Normal output uses ASCII only. Below 80 columns, the wordmark stacks; below 48,
+the name becomes plain text. Trusted startup labels wrap down to 28 columns.
+`COLUMNS` requests the layout width; unknown dimensions use 80. This is not live
+window-size detection. Long project details/history are not a full-screen layout.
+
+For a wide truecolor terminal, `--rich-brand` selects a character transcription
+of the owner's reference: crust/cut-face shading, beveled lettering and crumb trail
+at 160+ columns. The wider layout preserves space between the shapes. In Windows CMD:
+
+```bat
+set COLUMNS=160
+run.bat --color=always --rich-brand
+```
+
+In PowerShell:
+
+```powershell
+$env:COLUMNS = '160'
+.\run.bat --color=always --rich-brand
+```
+
+Use a terminal at least that wide. The art consists of printed characters, with
+no image protocol, font download or library. It is an approximation of the visual
+reference, not photorealistic rendering. Rich output explicitly writes UTF-8;
+the terminal must support that encoding. The art itself uses ASCII. Narrower layouts,
+`--no-color`, `NO_COLOR`, or unforced redirected output retain ASCII. The first
+menu row is the highlighted primary action; use numbered input, not arrow keys.
+The full app-storage path is available in active-project information (option 7).
 
 ```text
-o -- . -- o    B R E A D C R U M B S
-Leave context behind. Pick up where work stopped.
-
-Storage: Ready
-Saved projects: 0
+[v] Storage: Ready
+[v] Saved projects: 0
+[i] Persistence: opt-in per workspace.
+[i] Opening saved work never scans or executes source projects.
 ```
+
+An optional developer helper captures real create/save/checkpoint/restart/resume
+interactions into an eight-step, offline HTML replay:
+
+```text
+python scripts/capture-cli-walkthrough.py
+```
+
+It recompiles the Java app, uses disposable synthetic storage under ignored
+`build/launch-walkthrough`, and records stdout, input events and source SHA-256.
+Python is only for this evidence helper; the application/tests remain JDK-only.
+HTML needs Python's standard library; PNG previews additionally use existing
+Pillow/Consolas if available. The replay includes input echoes and is not a native
+desktop screen recording. No package installation is required or performed.
+
+Artwork is fixed Java character/palette data in `ReferenceBrandArt`. Its optional
+maintenance recipe is `python scripts/generate-reference-brand.py <reference>`
+and needs Pillow only when regenerating that data. It reads the approved 1920x1050
+reference's logo region, excludes browser chrome/sample status, and records the
+reference SHA-256. The source screenshot is not bundled or needed to compile/run.
 
 The B3 Windows harness records actual separate-process scenarios A-F, ANSI/no-color
 and `NO_COLOR`, quoted launcher paths, ACL denial and junction rejection. The B3
