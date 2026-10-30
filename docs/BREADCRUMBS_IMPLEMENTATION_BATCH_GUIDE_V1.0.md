@@ -11,6 +11,14 @@ This guide translates the M0–M10 product milestone roadmap into **reviewable C
 
 **Current observed repository status (2026-10-30):** documentation-only: README, master Markdown/PDF, first-import contract. No Java source, tests, or launch scripts were present at assessment. All batches below are **NOT_STARTED** until code/tests/evidence establish otherwise.
 
+**B1 implementation update (2026-10-30):** session-local Java CLI, custom DLL,
+five synthetic records, tests, and Windows launchers are implemented.
+Windows/JDK 25 execution passes 3,780 assertions with `--release 17` compilation.
+Result is **DEMO_READY** for that environment. Actual JDK 17 runtime execution is
+still unverified, so full B1 acceptance is not asserted. See the
+[execution record and source-bound evidence](B1_EXECUTION.md). B2-B7 remain
+NOT_STARTED.
+
 **Academic delivery:** Java 17+, CLI/terminal-only, JDK-only launchable core, no IDE/database/internet/Docker required. All **graded DSA operations** must use manually written node/algorithm implementations; do not delegate to `LinkedList`, `HashMap`, `TreeMap`, a graph package, a Trie package, or a search engine. Standard JDK primitives, arrays, strings and I/O utilities are for supporting operations, not substitutes for DSAs. Validate Windows CMD portability. The team has chosen to pursue the full architecture; this is **not an assertion of formal instructor authorization**. Protect a compliant, independent DLL-based academic core if permitted scope later changes.
 
 ## Batch order at a glance
@@ -44,12 +52,12 @@ This guide translates the M0–M10 product milestone roadmap into **reviewable C
 **Do not implement in B1:** folder ingestion, legacy parsing, storage/persistence, PDFs, external Java dependencies, Directed Graph, Hash Table, Trie, voice AI, network services, or a huge framework. Interfaces may be documented but avoid nonfunctional placeholder subsystems.
 
 **B1 acceptance checklist:**
-- [ ] Clean JDK 17 compile and execution without Maven/Gradle, database, network, or IDE.
-- [ ] All required DLL node/link logic is custom; no built-in collection replaces required operations.
-- [ ] Five synthetic records with >=3 fields; >=6 CLI DSA operations.
-- [ ] Visible structure + accurate complexity after operations.
-- [ ] All specified edge-case tests pass; actual output/screenshots are recorded.
-- [ ] No claim of directory import, B0 persistence, or resume functionality yet.
+- [ ] Clean JDK 17 compile and execution without Maven/Gradle, database, network, or IDE. Java 17 target compilation and Windows execution on JDK 25 pass; actual JDK 17 runtime is unverified.
+- [x] All required DLL node/link logic is custom; no built-in collection replaces required operations.
+- [x] Five synthetic records with >=3 fields; >=6 CLI DSA operations.
+- [x] Visible structure + accurate complexity after operations. Duplicate checks make public append/prepend O(n); full pairwise uniqueness diagnostics are O(n²).
+- [x] All specified edge-case tests pass; actual output is recorded in [B1 evidence](B1_EXECUTION.md).
+- [x] No claim of directory import, B0 persistence, or resume functionality yet.
 - [ ] Codex opens a reviewable PR instead of directly pushing the implementation into `main`.
 
 ## B2 — Project entry and safe inspector
@@ -96,7 +104,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 
 | Batch | Status | Evidence |
 | --- | --- | --- |
-| B1 | NOT_STARTED | Documentation-approved scope only |
+| B1 | DEMO_READY on Windows/JDK 25; full acceptance pending JDK 17 runtime | [3,780 passing assertions, CMD demo, source hashes and verification limits](B1_EXECUTION.md) |
 | B2 | NOT_STARTED | — |
 | B3 | NOT_STARTED | — |
 | B4 | NOT_STARTED | — |

@@ -1,0 +1,655 @@
+B1 session-local DSA foundation. Checkpoints are not saved between runs.
+B0 baseline/import and full B3 continuity are not implemented.
+DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Menu input
+Result: Rejected: Invalid menu option. Choose 0-12.
+DLL structure: NULL (empty)
+Time complexity: O(n) upper bound
+Explanation: Validation rejects the request before mutation; duplicate lookup can scan the list.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Checkpoint ID: Operation: Search by ID
+Result: Rejected: Identifier must not be blank.
+DLL structure: NULL (empty)
+Time complexity: O(n) upper bound
+Explanation: Validation rejects the request before mutation; duplicate lookup can scan the list.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Position (0-based, 0-0): Operation: Insert at position
+Result: Rejected: Position must be between 0 and 0.
+DLL structure: NULL (empty)
+Time complexity: O(n) upper bound
+Explanation: Validation rejects the request before mutation; duplicate lookup can scan the list.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: No checkpoints.
+Operation: Traverse forward
+Result: Success
+DLL structure: NULL (empty)
+Time complexity: O(n)
+Explanation: Visit nodes in link order; O(n) result array.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: No checkpoints.
+Operation: Traverse backward
+Result: Success
+DLL structure: NULL (empty)
+Time complexity: O(n)
+Explanation: Visit nodes in link order; O(n) result array.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: View latest checkpoint
+Result: No latest checkpoint
+DLL structure: NULL (empty)
+Time complexity: O(1)
+Explanation: Read the tail; latest means list position, not maximum timestamp.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Display structure
+Result: Success
+DLL structure: NULL (empty)
+Time complexity: O(n)
+Explanation: Render each node once.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Inspect list size
+Result: Size: 0; empty: true
+DLL structure: NULL (empty)
+Time complexity: O(1)
+Explanation: Read stored size.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Validate integrity
+Result: Integrity valid
+DLL structure: NULL (empty)
+Time complexity: O(n^2)
+Explanation: O(n) links/cycle/count checks; O(n^2) pairwise ID checks; O(1) extra space.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Load DEMO checkpoints
+Result: Loaded 5 SYNTHETIC checkpoints; skipped 0
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Five fixed fixtures, each using linear duplicate checks.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Load DEMO checkpoints
+Result: Loaded 0 SYNTHETIC checkpoints; skipped 5
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Five fixed fixtures, each using linear duplicate checks.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: DEMO-000001 | Project initialization
+  COMPLETED | 2026-01-01T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Created a study planner outline. Next: define requirements.
+DEMO-000002 | Requirements definition
+  COMPLETED | 2026-01-02T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Listed planner use cases. Next: sketch component responsibilities.
+DEMO-000003 | Initial architecture
+  COMPLETED | 2026-01-03T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Sketched planner modules. Next: implement a small feature.
+DEMO-000004 | First implementation
+  COMPLETED | 2026-01-04T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Drafted planner entry flow. Next: run fixture tests.
+DEMO-000005 | Testing and review
+  COMPLETED | 2026-01-05T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Reviewed planner fixtures. Next: request human feedback.
+Operation: Traverse forward
+Result: Success
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Visit nodes in link order; O(n) result array.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: DEMO-000005 | Testing and review
+  COMPLETED | 2026-01-05T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Reviewed planner fixtures. Next: request human feedback.
+DEMO-000004 | First implementation
+  COMPLETED | 2026-01-04T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Drafted planner entry flow. Next: run fixture tests.
+DEMO-000003 | Initial architecture
+  COMPLETED | 2026-01-03T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Sketched planner modules. Next: implement a small feature.
+DEMO-000002 | Requirements definition
+  COMPLETED | 2026-01-02T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Listed planner use cases. Next: sketch component responsibilities.
+DEMO-000001 | Project initialization
+  COMPLETED | 2026-01-01T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Created a study planner outline. Next: define requirements.
+Operation: Traverse backward
+Result: Success
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Visit nodes in link order; O(n) result array.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Checkpoint ID: DEMO-000003 | Initial architecture
+  COMPLETED | 2026-01-03T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Sketched planner modules. Next: implement a small feature.
+Operation: Search by ID
+Result: Found DEMO-000003
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Linear search by ID.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: DEMO-000005 | Testing and review
+  COMPLETED | 2026-01-05T09:00:00Z | DEMO (SYNTHETIC)
+  SYNTHETIC: Reviewed planner fixtures. Next: request human feedback.
+Operation: View latest checkpoint
+Result: Success
+DLL structure: NULL <- [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(1)
+Explanation: Read the tail; latest means list position, not maximum timestamp.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Synthetic checkpoint ID (DEMO-*): Title (required, max 120): Summary (blank = UNKNOWN, max 600): Status [PLANNED, IN_PROGRESS, COMPLETED, BLOCKED, UNKNOWN]: Preview. User statements only; no file evidence or baseline is attached.
+DEMO-HEAD | Synthetic head exercise
+  PLANNED | 2026-10-30T08:47:27.357721100Z | DEMO (SYNTHETIC)
+  SYNTHETIC list positioning only
+Confirm creation? Type yes (anything else cancels): Operation: Prepend checkpoint
+Result: Success: DEMO-HEAD
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Linear duplicate check; O(1) pointer insertion once located. insertAt also locates position.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Position (0-based, 0-6): Synthetic checkpoint ID (DEMO-*): Title (required, max 120): Summary (blank = UNKNOWN, max 600): Status [PLANNED, IN_PROGRESS, COMPLETED, BLOCKED, UNKNOWN]: Preview. User statements only; no file evidence or baseline is attached.
+DEMO-MIDDLE | Synthetic middle exercise
+  IN_PROGRESS | 2026-10-30T08:47:27.358720800Z | DEMO (SYNTHETIC)
+  SYNTHETIC list positioning only
+Confirm creation? Type yes (anything else cancels): Operation: Insert at position
+Result: Success: DEMO-MIDDLE
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-MIDDLE] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Linear duplicate check; O(1) pointer insertion once located. insertAt also locates position.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Synthetic checkpoint ID (DEMO-*): Title (required, max 120): Summary (blank = UNKNOWN, max 600): Status [PLANNED, IN_PROGRESS, COMPLETED, BLOCKED, UNKNOWN]: Preview. User statements only; no file evidence or baseline is attached.
+DEMO-HEAD | Duplicate fixture
+  UNKNOWN | 2026-10-30T08:47:27.358720800Z | DEMO (SYNTHETIC)
+  Must be rejected
+Confirm creation? Type yes (anything else cancels): Operation: Prepend checkpoint
+Result: Rejected: Duplicate checkpoint ID.
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-MIDDLE] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n) upper bound
+Explanation: Validation rejects the request before mutation; duplicate lookup can scan the list.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Checkpoint ID to delete: Remove from this session? Type yes (anything else cancels): Operation: Delete by ID
+Result: Deleted DEMO-MIDDLE
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] -> NULL
+Time complexity: O(n)
+Explanation: Linear search plus O(1) pointer unlink.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Title (required, max 120): Summary (blank = UNKNOWN, max 600): Status [PLANNED, IN_PROGRESS, COMPLETED, BLOCKED, UNKNOWN]: Preview. User statements only; no file evidence or baseline is attached.
+CP-000001 | Human checkpoint
+  IN_PROGRESS | 2026-10-30T08:47:27.372719600Z | USER_CONFIRMED
+  Session-only current user statement
+Confirm creation? Type yes (anything else cancels): Operation: Append checkpoint
+Result: Success: CP-000001
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] <-> [CP-000001] -> NULL
+Time complexity: O(n)
+Explanation: Linear duplicate check; O(1) pointer insertion once located. insertAt also locates position.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: CP-000001 | Human checkpoint
+  IN_PROGRESS | 2026-10-30T08:47:27.372719600Z | USER_CONFIRMED
+  Session-only current user statement
+Operation: View latest checkpoint
+Result: Success
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] <-> [CP-000001] -> NULL
+Time complexity: O(1)
+Explanation: Read the tail; latest means list position, not maximum timestamp.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Inspect list size
+Result: Size: 7; empty: false
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] <-> [CP-000001] -> NULL
+Time complexity: O(1)
+Explanation: Read stored size.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Operation: Validate integrity
+Result: Integrity valid
+DLL structure: NULL <- [DEMO-HEAD] <-> [DEMO-000001] <-> [DEMO-000002] <-> [DEMO-000003] <-> [DEMO-000004] <-> [DEMO-000005] <-> [CP-000001] -> NULL
+Time complexity: O(n^2)
+Explanation: O(n) links/cycle/count checks; O(n^2) pairwise ID checks; O(1) extra space.
+Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append confirmed native checkpoint
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Goodbye. Session-local records are discarded.
