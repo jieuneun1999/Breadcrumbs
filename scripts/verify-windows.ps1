@@ -37,6 +37,7 @@ try {
     $report.Add($compiler.Trim())
     $suite = Invoke-Check 'tests' 'scripts\test.bat'
     Require-Text $suite 'PASS: all B1 test groups'
+    Require-Text $suite 'PASS: all B2 test groups'
     $report.Add($suite.Trim())
     $demo = Invoke-Check 'demo-root' 'run.bat < tests\cli-demo-input.txt'
     foreach ($fragment in @('Invalid menu option', 'Identifier must not be blank',
@@ -67,6 +68,7 @@ try {
     Require-Text $spaces 'Goodbye'
     $spacesSuite = Invoke-Check 'tests-spaces' "`"$fixture\scripts\test.bat`""
     Require-Text $spacesSuite 'PASS: all B1 test groups'
+    Require-Text $spacesSuite 'PASS: all B2 test groups'
     $savedPath = $env:PATH
     try {
         $env:PATH = Join-Path $env:SystemRoot 'System32'

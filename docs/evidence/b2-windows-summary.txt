@@ -1,0 +1,20 @@
+Started: 2026-10-30T17:39:49.7640702+08:00
+Repository source: 8f09b99414dc4618a2bb03d6368e1ceb7a5ab3aa plus recorded working inputs
+PASS: tests | exit 0 | scripts\test.bat
+PASS: junction-tests | exit 0 | java -Dbreadcrumbs.junction.fixture="C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b2-verification\e2ed0253135940e7ad8543adf1cfaa07\junction-root" -cp build\test breadcrumbs.AllTests
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (38 assertions)
+PASS: all B2 test groups
+PASS: new-empty-demo | exit 0 | run.bat < "C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b2-verification\new-input.txt"
+PASS: readme-demo | exit 0 | run.bat < "C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b2-verification\readme-input.txt"
+PASS: legacy-demo | exit 0 | run.bat < "C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b2-verification\legacy-input.txt"
+PASS: all imported fixture bytes unchanged; synthetic secret not echoed; injected instruction remained inert.
+Runtime: actual Windows/JDK 25, compiled with --release 17. JDK 17 runtime and instructor machine NOT VERIFIED.
+Finished: 2026-10-30T17:40:05.9438021+08:00

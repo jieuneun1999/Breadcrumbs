@@ -8,6 +8,7 @@ public final class CheckpointList {
     private int size;
 
     public void append(Checkpoint checkpoint) {
+        // Finding a duplicate is O(n); the following tail-link changes are O(1).
         requireUnique(checkpoint);
         CheckpointNode node = new CheckpointNode(checkpoint);
         node.previous = tail;
@@ -24,6 +25,7 @@ public final class CheckpointList {
         requireUnique(checkpoint);
         CheckpointNode node = new CheckpointNode(checkpoint);
         node.next = head;
+        // Empty insertion sets both endpoints. Otherwise the former head must point back to this node.
         if (head == null) {
             tail = node;
         } else {
@@ -53,6 +55,7 @@ public final class CheckpointList {
         CheckpointNode node = new CheckpointNode(checkpoint);
         node.previous = following.previous;
         node.next = following;
+        // Splice between two existing nodes: repair both neighbors before increasing the count.
         following.previous.next = node;
         following.previous = node;
         size++;
@@ -68,6 +71,7 @@ public final class CheckpointList {
         if (node == null) {
             return false;
         }
+        // Each missing neighbor identifies an endpoint; interior removal repairs the two surviving links.
         if (node.previous == null) {
             head = node.next;
         } else {
@@ -78,6 +82,7 @@ public final class CheckpointList {
         } else {
             node.next.previous = node.previous;
         }
+        // Detach the removed node so no stale link continues to represent active list membership.
         node.previous = null;
         node.next = null;
         size--;
@@ -144,6 +149,7 @@ public final class CheckpointList {
         }
         CheckpointNode slow = head;
         CheckpointNode fast = head;
+        // Floyd's two-speed traversal detects cycles without an auxiliary collection.
         while (fast != null && fast.next != null) {
             slow = slow.next;
             fast = fast.next.next;
@@ -157,6 +163,7 @@ public final class CheckpointList {
             if (node.previous != previous || node.checkpoint == null || ++count > size) {
                 return false;
             }
+            // Pairwise uniqueness makes this complete diagnostic O(n^2), despite linear link checks.
             for (CheckpointNode other = node.next; other != null; other = other.next) {
                 if (other.checkpoint == null
                         || node.checkpoint.checkpointId().equals(other.checkpoint.checkpointId())) {

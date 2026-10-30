@@ -4,6 +4,7 @@ import breadcrumbs.demo.DemoData;
 import breadcrumbs.domain.Checkpoint;
 import breadcrumbs.domain.Checkpoint.Origin;
 import breadcrumbs.domain.Checkpoint.Status;
+import breadcrumbs.domain.WorkspaceState;
 import breadcrumbs.dsa.dll.CheckpointList;
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -16,17 +17,22 @@ import java.util.Locale;
 public final class ConsoleMenu {
     private final BufferedReader input;
     private final PrintStream output;
+    // This classroom sandbox is not the active project's source-linked checkpoint history.
     private final CheckpointList list = new CheckpointList();
+    private final WorkspaceState workspaceState = new WorkspaceState();
+    private final BootstrapConsole bootstrapConsole;
     private int nextNativeId = 1;
 
     public ConsoleMenu(Reader input, PrintStream output) {
         this.input = new BufferedReader(input);
         this.output = output;
+        bootstrapConsole = new BootstrapConsole(this::read, output, workspaceState);
     }
 
     public void run() throws IOException {
         output.println("B1 session-local DSA foundation. Checkpoints are not saved between runs.");
-        output.println("B0 baseline/import and full B3 continuity are not implemented.");
+        output.println("B2 bootstrap is available in option 13. Full B3 persistence/continuity is not implemented.");
+        output.println("Options 1-12 are the B1 checkpoint sandbox, separate from the active project's B0/history.");
         output.println("DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.");
         try {
             boolean running = true;
@@ -76,7 +82,9 @@ public final class ConsoleMenu {
                             report(operation, "Loaded " + added + " SYNTHETIC checkpoints; skipped " + (5 - added),
                                     "O(n)", "Five fixed fixtures, each using linear duplicate checks.");
                         }
-                        default -> throw new IllegalArgumentException("Invalid menu option. Choose 0-12.");
+                        case "13" -> bootstrapConsole.bootstrap();
+                        case "14" -> bootstrapConsole.showBaseline();
+                        default -> throw new IllegalArgumentException("Invalid menu option. Choose 0-14.");
                     }
                 } catch (IllegalArgumentException invalid) {
                     report(operation, "Rejected: " + invalid.getMessage(), "O(n) upper bound",
@@ -224,6 +232,8 @@ public final class ConsoleMenu {
             case "10" -> "Inspect list size";
             case "11" -> "Validate integrity";
             case "12" -> "Load DEMO checkpoints";
+            case "13" -> "Project bootstrap";
+            case "14" -> "View project baseline";
             default -> "Menu input";
         };
     }
@@ -233,7 +243,7 @@ public final class ConsoleMenu {
         output.println("              BREADCRUMBS");
         output.println("       Project Checkpoint Management");
         output.println("========================================");
-        output.println("[1] Create / append confirmed native checkpoint");
+        output.println("[1] Create / append session-only CP (B1 sandbox)");
         output.println("[2] Prepend SYNTHETIC checkpoint");
         output.println("[3] Insert SYNTHETIC checkpoint at position");
         output.println("[4] Search checkpoint by ID");
@@ -245,6 +255,8 @@ public final class ConsoleMenu {
         output.println("[10] View list size");
         output.println("[11] Validate DLL integrity");
         output.println("[12] Load five SYNTHETIC DEMO checkpoints");
+        output.println("[13] Add or create a project / establish B0");
+        output.println("[14] View B0 and paged inventory / claims");
         output.println("[0] Exit");
         output.println("Enter /cancel at any prompt to return here. Confirmations accept only yes.");
     }
