@@ -58,7 +58,7 @@ NOT_STARTED.
 - [x] Visible structure + accurate complexity after operations. Duplicate checks make public append/prepend O(n); full pairwise uniqueness diagnostics are O(n²).
 - [x] All specified edge-case tests pass; actual output is recorded in [B1 evidence](B1_EXECUTION.md).
 - [x] No claim of directory import, B0 persistence, or resume functionality yet.
-- [ ] Codex opens a reviewable PR instead of directly pushing the implementation into `main`.
+- [x] Codex opens a reviewable PR instead of directly pushing the implementation into `main`. [PR #1](https://github.com/jieuneun1999/Breadcrumbs/pull/1), unmerged.
 
 ## B2 — Project entry and safe inspector
 

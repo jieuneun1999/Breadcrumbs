@@ -69,7 +69,7 @@ are not relevant. Existing GitHub connector is used for PR operations.
 7. If the design is contested, `interrogate` before shipping.
    n/a: no contested design or independent-review acceptance requirement.
 8. Run **Opening a PR**.
-   Pending after tests, source/diff review, documentation, and publication checks.
+   Done. [PR #1](https://github.com/jieuneun1999/Breadcrumbs/pull/1) is open and unmerged.
 
 ## Decisions
 
@@ -182,4 +182,10 @@ The two frozen v1.2 Markdown specifications match main exactly.
 
 Documentation/evidence commit `1616dc2` and implementation commit were pushed to
 `origin/feat/m0-dll-foundation`. Remote readback matched `1616dc2` and main remained
-`d1f13c2`. PR creation and final tip readback are pending. No merge is authorized.
+`d1f13c2`. Commit `093410d` normalizes retained evidence line endings.
+[PR #1](https://github.com/jieuneun1999/Breadcrumbs/pull/1) was created open and
+ready for review against main, with those three commits and 21 changed files.
+The PR records the actual JDK 17 runtime gap, decisions, complexities, commands,
+and demo output. This publication receipt updates only the two B1 documentation
+files after PR creation. Final tip readback follows its push. No merge, release,
+deployment, tag, force-push, or unrelated external message was performed.
