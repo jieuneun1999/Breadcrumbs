@@ -14,8 +14,10 @@ This guide translates the M0–M10 product milestone roadmap into **reviewable C
 **B1 implementation update (2026-10-30):** session-local Java CLI, custom DLL,
 five synthetic records, tests, and Windows launchers are implemented.
 Windows/JDK 25 execution passes 3,780 assertions with `--release 17` compilation.
-Result is **DEMO_READY** for that environment. Actual JDK 17 runtime execution is
-still unverified, so full B1 acceptance is not asserted. See the
+Result is **B1 PASS / DEMO_READY** for that environment. On 2026-10-30 the owner
+accepted use of the installed JDK 25 runtime. Actual JDK 17 runtime execution is
+still unverified, but is no longer a B2 blocker under that explicit adaptation.
+Fresh mixed-operation, CLI-state, and test-sensitivity checks passed. See the
 [execution record and source-bound evidence](B1_EXECUTION.md). B2-B7 remain
 NOT_STARTED.
 
@@ -49,10 +51,16 @@ NOT_STARTED.
 5. Tests for empty/single/multi-node, head/middle/tail insertion and deletion, duplicate IDs, missing IDs, both traversal orders, null boundary links, size, no cycles, invalid console input.
 6. Document precise `javac`/`java` commands and demonstrate a **clean JDK 17 Windows CMD launch**. Compile/run and tests must be reported with actual commands and outcomes, not assumed.
 
+**Owner-approved B1 runtime adaptation (2026-10-30):** the owner stated "its fine
+that we have the latest version" during B1 acceptance review. The available JDK
+25 runtime is accepted with Java 17-target compilation. This satisfies the B1
+runtime gate for proceeding to B2. It does not assert execution on JDK 17 or the
+instructor's machine, or change either frozen v1.2 specification.
+
 **Do not implement in B1:** folder ingestion, legacy parsing, storage/persistence, PDFs, external Java dependencies, Directed Graph, Hash Table, Trie, voice AI, network services, or a huge framework. Interfaces may be documented but avoid nonfunctional placeholder subsystems.
 
 **B1 acceptance checklist:**
-- [ ] Clean JDK 17 compile and execution without Maven/Gradle, database, network, or IDE. Java 17 target compilation and Windows execution on JDK 25 pass; actual JDK 17 runtime is unverified.
+- [x] JDK-only compile and execution under the owner-approved runtime adaptation above. Java 17 target compilation and Windows execution on accepted JDK 25 pass; actual JDK 17 runtime is unverified.
 - [x] All required DLL node/link logic is custom; no built-in collection replaces required operations.
 - [x] Five synthetic records with >=3 fields; >=6 CLI DSA operations.
 - [x] Visible structure + accurate complexity after operations. Duplicate checks make public append/prepend O(n); full pairwise uniqueness diagnostics are O(n²).
@@ -104,7 +112,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 
 | Batch | Status | Evidence |
 | --- | --- | --- |
-| B1 | DEMO_READY on Windows/JDK 25; full acceptance pending JDK 17 runtime | [3,780 passing assertions, CMD demo, source hashes and verification limits](B1_EXECUTION.md) |
+| B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
 | B2 | NOT_STARTED | — |
 | B3 | NOT_STARTED | — |
 | B4 | NOT_STARTED | — |

@@ -4,7 +4,7 @@
 
 Breadcrumbs is a proposed **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. It helps users inspect a new or existing workspace, identify documented facts and missing context, create confirmed checkpoints, compare later file changes, and produce source-backed handoffs.
 
-> **Status: B1 DEMO_READY on Windows with JDK 25, targeting Java 17 (2026-10-30).** The runnable session-local CLI and custom DLL pass 3,780 assertions. Actual JDK 17 runtime execution remains unverified. See [B1 execution and evidence](docs/B1_EXECUTION.md). The academic core is terminal-only and JDK-only; no GUI, network, Git, or AI subscription is required. B2-B7 remain unimplemented.
+> **Status: B1 PASS / DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The runnable session-local CLI and custom DLL pass 3,780 assertions. Deeper mixed-operation and fault-injection checks also pass. Actual JDK 17 runtime execution remains unverified and is no longer a B2 blocker after owner acceptance of the installed runtime. See [B1 execution and evidence](docs/B1_EXECUTION.md). The academic core is terminal-only and JDK-only; no GUI, network, Git, or AI subscription is required. B2-B7 remain unimplemented.
 
 ## Build, run, and test B1
 
@@ -173,7 +173,7 @@ The **team-approved implementation sequence** is [Batch Guide v1.0](docs/BREADCR
 
 | Batch | Deliverable | Status |
 | --- | --- | --- |
-| **B1** | Java 17 CLI scaffold, manually implemented Doubly Linked List, five DEMO checkpoints, six+ operations and tests | DEMO_READY on Windows/JDK 25; actual JDK 17 runtime check open |
+| **B1** | Java 17 CLI scaffold, manually implemented Doubly Linked List, five DEMO checkpoints, six+ operations and tests | PASS / DEMO_READY on owner-accepted Windows/JDK 25; B2 foundation ready |
 | **B2** | Three entry modes, read-only project folder inspection and B0 baseline | NOT_STARTED |
 | **B3** | User-confirmed checkpoints, basic local TXT save/load and restart continuity | NOT_STARTED |
 | **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | NOT_STARTED |

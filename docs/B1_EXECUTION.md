@@ -165,11 +165,75 @@ handling. No independent review is claimed. Deslop/no-comments checks found no
 application comments, extra dependencies, collection wrappers, or future modules
 to remove. Static forbidden-collection scan has no matches under src/tests.
 
-Result is DEMO_READY for the demonstrated Windows/JDK 25 environment. No failing
-B1 automated tests remain. Actual JDK 17 runtime, Unix, instructor-machine and
-owner acceptance are unverified. Full B1 closure and B2 execution should wait
-for the literal JDK 17 check or an explicit owner acceptance of the JDK 25 /
-Java 17-target evidence. No B2 code has begun. No product RELEASE_READY claim.
+At initial publication, result was DEMO_READY for Windows/JDK 25 with no failing
+B1 automated tests. Closure was held for a literal JDK 17 check or explicit owner
+acceptance of JDK 25 / Java 17-target evidence. The reassessment and owner runtime
+acceptance below supersede that hold. Actual JDK 17, Unix and instructor-machine
+execution remain unverified. No product RELEASE_READY claim.
+
+## B1-to-B2 reassessment and owner acceptance, 2026-10-30
+
+Owner asked whether hard testing and relevant Poteto skills support a B1 pass.
+Loaded the installed Pstack 1.16.0 router in a dedicated complete read, then the
+Investigation playbook, `how`, `blast-radius`, `principle-prove-it-works`,
+`principle-test-behavior-not-implementation`, and `principle-explain-the-number`.
+Also loaded `verification-before-completion`. Prior technical-writing and unslop
+instructions remain applicable. Throughput checkpoint: n/a, read-only
+investigation. Grounded live branch `6a84b77`, clean tracked state, published input
+hashes, actual DLL/domain/CLI/test sources, B2 requirements, and first-import rules.
+Craft Guide single-owner adaptation still applies; no independent review claimed.
+
+Material application separated specification compliance from engineering quality.
+Prove It Works required a fresh full Windows harness, not a reread of old logs.
+Test Behavior Not Implementation led to a separate array oracle and assertions
+on exact resulting CLI structure, rather than only matching success strings.
+Blast Radius focused on the B2 safety fact: B0 and imported source claims must not
+be automatically represented as DLL checkpoint history. The current program has
+no import path, starts empty, rejects B0 as an ID, and labels every demo value.
+B2 must preserve that separation when it adds WorkspaceState/bootstrap services.
+
+Fresh `powershell.exe -NoProfile -ExecutionPolicy Bypass -File
+scripts/verify-windows.ps1` passed the original 3,780 assertions, actual CMD demo,
+external-directory and spaced-path launches, copied-fixture suite, missing-JDK
+exit 1, compiler-error exit 1, and before/after source hash checks.
+See [fresh Windows results](evidence/b1-reassessment-windows.txt).
+
+An ignored scratch probe at `build/b1-assessment/HardCheck.java` was compiled with
+`javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d
+build/b1-assessment/classes -sourcepath "src;build/b1-assessment"
+build/b1-assessment/HardCheck.java`, then run using
+`java -cp build/b1-assessment/classes HardCheck`.
+It passed 100 deterministic seeds of 500 mixed steps each, then 9,184 removals
+to drain the lists. An independently updated bounded array supplied expected
+order, values, endpoints, count, and structure after every attempted operation.
+It also checked rejected mutations, traversal snapshot isolation, confirmed
+creation, cancellation, ID non-reuse, field bounds, B0 rejection and demo origin.
+The 6,188,877 assertion count includes repeated per-node checks across those
+bounded scenarios. It is not that many distinct tests or exhaustive state coverage.
+
+Five disposable source copies under ignored build output injected missing append
+backlinks, disabled uniqueness, wrong tail removal, wrong insertion backlink,
+and an always-true integrity checker. Each compiled successfully. The original
+suite rejected every faulty copy with AssertionError and exit 1. No mutation
+was applied to tracked source. This establishes sensitivity to those five chosen
+faults, not a complete mutation-testing score. See [probe and fault results](evidence/b1-reassessment.txt).
+Scratch probe code is local exploratory evidence, not an additional committed
+test suite. The existing committed verification harness remains rerunnable.
+All exercised tracked inputs still match the published SHA-256 manifest.
+
+The owner then stated "its fine that we have the latest version". This explicitly
+accepts the installed JDK 25 runtime for the B1 gate while retaining `--release
+17`. It supersedes the literal JDK 17 runtime hold; it is not a claim that JDK 17
+execution happened. No runtime source, tests, launcher, dependencies, or frozen
+v1.2 specification changed during reassessment. Only acceptance documentation and
+retained evidence are updated after this owner clarification.
+
+Specification-compliance verdict: PASS for owner-accepted B1 scope.
+Engineering-quality verdict: PASS for the exercised foundation, with no blocking
+defect found. B1 result: COMPLETE for this batch / DEMO_READY.
+B1-to-B2 technical readiness: PASS. B2 can begin under its own bounded packet,
+preserving baseline/history separation and one canonical state owner. B2 remains
+NOT_STARTED. This does not authorize merging PR #1, deployment, or product release.
 
 ## Publication
 
