@@ -13,13 +13,13 @@ public final class ProjectConsoleTest {
         Path base = Files.createDirectories(Path.of("build", "b3-cli-fixtures"));
         Path root = Files.createTempDirectory(base, "storage-");
         String empty = session(root, "x\n1\n3\n0\n", false, 80);
-        contains(empty, "B R E A D C R U M B S", "Leave context behind. Pick up where work stopped.",
+        contains(empty, "Breadcrumbs / project continuity", "Leave context behind. Pick up where work stopped.",
                 "Saved projects: 0", "No saved workspaces", "No active workspace", "Choose 0-4", "Goodbye");
         require(!empty.contains("\u001b"), "plain fallback emits no ANSI escapes");
         String narrow = session(root, "0\n", false, 30);
-        contains(narrow, "o . o  BREADCRUMBS", "Leave context behind.\nPick up where work stopped.");
+        contains(narrow, "BREADCRUMBS", "Leave context behind.\n  Pick up where work stopped.");
         String colored = session(root, "0\n", true, 80);
-        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32mStorage: Ready\u001b[0m");
+        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32m[v] Storage: Ready\u001b[0m");
         require(!TerminalTheme.enabled(true, true, true, false, "xterm", false, true), "no-color wins explicit always");
         require(!TerminalTheme.enabled(false, true, true, true, "xterm", false, true), "NO_COLOR wins always");
         require(!TerminalTheme.enabled(false, false, false, false, "xterm", false, true), "redirected suppresses color");

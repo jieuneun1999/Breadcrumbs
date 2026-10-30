@@ -14,7 +14,7 @@ function Require-Text([string] $Text, [string] $Fragment) {
     if (-not $Text.Contains($Fragment)) { throw "Expected output missing: $Fragment" }
 }
 
-function Invoke-App([string] $Name, [string] $InputText, [string] $Extra = '--no-color', [bool] $NoColorEnvironment = $false) {
+function Invoke-App([string] $Name, [string] $InputText, [string] $Extra = '--no-color', [bool] $NoColorEnvironment = $false, [int] $Columns = 80) {
     $info = [Diagnostics.ProcessStartInfo]::new()
     $info.FileName = 'java'
     $info.WorkingDirectory = $repository
@@ -25,6 +25,7 @@ function Invoke-App([string] $Name, [string] $InputText, [string] $Extra = '--no
     $info.RedirectStandardOutput = $true
     $info.RedirectStandardError = $true
     $info.StandardOutputEncoding = [Text.Encoding]::UTF8
+    $info.EnvironmentVariables['COLUMNS'] = [string]$Columns
     $info.EnvironmentVariables.Remove('NO_COLOR')
     if ($NoColorEnvironment) { $info.EnvironmentVariables['NO_COLOR'] = '1' }
     $process = [Diagnostics.Process]::Start($info)
@@ -115,12 +116,29 @@ try {
     $color = Invoke-App 'f-gold-startup' "0`n" '--color=always'
     Require-Text $color "$([char]27)[1;38;5;214m"
     Require-Text $color "$([char]27)[0m"
-    $override = Invoke-App 'f-no-color-override' "0`n" '--color=always --no-color'
-    if ($override.Contains([string][char]27)) { throw '--no-color did not override always' }
-    $noColorEnvironment = Invoke-App 'f-no-color-environment' "0`n" '--color=always' $true
-    if ($noColorEnvironment.Contains([string][char]27)) { throw 'NO_COLOR did not override always' }
+    $rich = Invoke-App 'f-rich-startup' "0`n" '--color=always --rich-brand' $false 160
+    Require-Text $rich "$([char]27)[1;38;2;"
+    Require-Text $rich 'Leave context behind. Pick up where work stopped.'
+    Require-Text $rich 'Saved projects: 2'
+    $richNarrow = Invoke-App 'f-rich-narrow' "0`n" '--color=always --rich-brand'
+    Require-Text $richNarrow "$([char]27)[1;38;5;214m"
+    if ($richNarrow.Contains("$([char]27)[1;38;2;")) {
+        throw 'Narrow rich request did not fall back to ASCII'
+    }
+    $richRedirected = Invoke-App 'f-rich-redirected' "0`n" '--rich-brand' $false 160
+    if ($richRedirected.Contains([string][char]27)) {
+        throw 'Redirected rich request did not fall back to plain ASCII'
+    }
+    $override = Invoke-App 'f-no-color-override' "0`n" '--color=always --rich-brand --no-color' $false 160
+    if ($override.Contains([string][char]27)) {
+        throw '--no-color did not override always and rich art'
+    }
+    $noColorEnvironment = Invoke-App 'f-no-color-environment' "0`n" '--color=always --rich-brand' $true 160
+    if ($noColorEnvironment.Contains([string][char]27)) {
+        throw 'NO_COLOR did not override always and rich art'
+    }
     $exitInput = Join-Path $fixtures 'exit-input.txt'
-    [IO.File]::WriteAllText($exitInput, "0`n")
+    [IO.File]::WriteAllText($exitInput, "1`n$firstIndex`n3`n7`n0`n0`n")
     Push-Location $fixtures
     try {
         $launcherLog = Join-Path $fixtures 'launcher-project.txt'

@@ -7,6 +7,7 @@ import breadcrumbs.storage.WorkspaceStore;
 import java.nio.file.Path;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.nio.charset.StandardCharsets;
 
 public final class Main {
@@ -14,14 +15,15 @@ public final class Main {
 
     public static void main(String[] args) {
         try {
-            boolean noColor = false, always = false, dsa = false;
+            boolean noColor = false, always = false, dsa = false, richBrand = false;
             Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
             for (String arg : args) {
                 if (arg.equals("--no-color")) { noColor = true; }
                 else if (arg.equals("--color=always")) { always = true; }
+                else if (arg.equals("--rich-brand")) { richBrand = true; }
                 else if (arg.equals("--dsa")) { dsa = true; }
                 else if (arg.startsWith("--storage-root=") && arg.length() > 15) { storage = Path.of(arg.substring(15)); }
-                else { throw new IllegalArgumentException("Use --no-color, --color=always, --dsa or --storage-root=<path>."); }
+                else { throw new IllegalArgumentException("Unknown option."); }
             }
             var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
             if (dsa) { new ConsoleMenu(input, System.out).run(); }
@@ -33,13 +35,17 @@ public final class Main {
                 int width = 80;
                 try { width = Math.max(28, Integer.parseInt(System.getenv("COLUMNS"))); }
                 catch (NumberFormatException ignored) { /* Unknown dimensions use the compact 80-column layout. */ }
-                new ProjectConsole(input, System.out, new WorkspaceStore(storage), new TerminalTheme(color), width).run();
+                // Rich symbols have a fixed UTF-8 encoding; no console settings are changed.
+                PrintStream output = richBrand && color
+                        ? new PrintStream(System.out, true, StandardCharsets.UTF_8) : System.out;
+                new ProjectConsole(input, output, new WorkspaceStore(storage),
+                        new TerminalTheme(color, richBrand), width).run();
             }
         } catch (IOException failure) {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
             System.exit(1);
         } catch (IllegalArgumentException invalid) {
-            System.err.println("Invalid application arguments. Use --no-color, --color=always, --dsa or --storage-root=<path>.");
+            System.err.println("Invalid application arguments. Use --no-color, --color=always, --rich-brand, --dsa or --storage-root=<path>.");
             System.exit(1);
         }
     }

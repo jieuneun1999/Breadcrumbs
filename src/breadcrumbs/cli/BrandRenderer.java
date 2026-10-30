@@ -2,19 +2,77 @@ package breadcrumbs.cli;
 
 import java.io.PrintStream;
 
-/** Compact ordinary ASCII survives CMD, redirected logs, and narrow terminal windows. */
+/** Selects a bounded text-only splash; ordinary terminals keep the complete ASCII fallback. */
 public final class BrandRenderer {
+    private static final String[] LOAF = {
+        "     .-~~~~-.",
+        "   .' / / /  '.",
+        "  / .-====-.  _)",
+        " | :######:  (_  .",
+        " | :######:   _)   .",
+        "  '---------'  .  ."
+    };
+    private static final String[] WORDMARK = {
+        " _   _   _   _   _   _   _            _   __",
+        "|_) |_) |_  |_| | \\ /   |_) | | |\\/| |_) (_",
+        "|_) | \\ |_  | | |_/ \\_  | \\ |_| |  | |_) __)"
+    };
+    private static final String SIGNATURE = "Breadcrumbs / project continuity";
+
     private BrandRenderer() { }
+
     public static void render(PrintStream out, TerminalTheme theme, int width) {
+        int columns = Math.max(28, width);
         out.println();
-        out.println(theme.label(TerminalTheme.Tone.BREAD_GOLD,
-                width >= 52 ? "o -- . -- o    B R E A D C R U M B S" : "o . o  BREADCRUMBS"));
-        if (width >= 52) {
-            out.println("Leave context behind. Pick up where work stopped.");
+        if (theme.richBrandEnabled() && columns >= 160) {
+            RichBrandRenderer.render(out, theme);
+            out.println();
+            return;
+        }
+        if (columns >= 80) {
+            // Fixed cell padding keeps both pieces aligned even when SGR adds nonprinting bytes.
+            for (int row = 0; row < LOAF.length; row++) {
+                String icon = "  " + loafRow(theme, LOAF[row]);
+                String gap = " ".repeat(22 - LOAF[row].length());
+                String lettering = row == 0 ? theme.label(TerminalTheme.Tone.SECONDARY, SIGNATURE)
+                        : row >= 2 && row <= 4 ? theme.label(TerminalTheme.Tone.BREAD_GOLD, WORDMARK[row - 2]) : "";
+                out.println((icon + gap + lettering).stripTrailing());
+            }
+        } else if (columns >= 48) {
+            gold(out, theme, "   .-~~-.");
+            gold(out, theme, " /      _)  .");
+            gold(out, theme, " '-----'  .  .");
+            for (String line : WORDMARK) { gold(out, theme, line); }
+            out.println("  " + theme.label(TerminalTheme.Tone.SECONDARY, SIGNATURE));
         } else {
-            out.println("Leave context behind.");
-            out.println("Pick up where work stopped.");
+            gold(out, theme, "   .-~~-.");
+            gold(out, theme, " /      _)  BREADCRUMBS");
+            gold(out, theme, " '-----'  .  .");
+        }
+        if (columns >= "  Leave context behind. Pick up where work stopped.".length()) {
+            out.println("  Leave context behind. Pick up where work stopped.");
+        } else {
+            out.println("  Leave context behind.");
+            if (columns >= "  Pick up where work stopped.".length()) {
+                out.println("  Pick up where work stopped.");
+            } else {
+                out.println("  Pick up where work");
+                out.println("  stopped.");
+            }
         }
         out.println();
+    }
+
+    private static void gold(PrintStream out, TerminalTheme theme, String line) {
+        out.println("  " + theme.label(TerminalTheme.Tone.BREAD_GOLD, line));
+    }
+
+    private static String loafRow(TerminalTheme theme, String trustedArt) {
+        int crumbStart = trustedArt.indexOf('#');
+        if (crumbStart < 0) { return theme.label(TerminalTheme.Tone.BREAD_GOLD, trustedArt); }
+        int crumbEnd = trustedArt.lastIndexOf('#') + 1;
+        return theme.label(TerminalTheme.Tone.BREAD_GOLD, trustedArt.substring(0, crumbStart))
+                + theme.label(TerminalTheme.Tone.BREAD_LIGHT, trustedArt.substring(crumbStart, crumbEnd))
+                + theme.label(TerminalTheme.Tone.BREAD_GOLD, trustedArt.substring(crumbEnd));
     }
 }

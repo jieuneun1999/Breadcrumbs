@@ -17,6 +17,7 @@ public final class ProjectConsole {
     private final WorkspaceStore store;
     private final TerminalTheme theme;
     private final int width;
+    private final StartupRenderer startup;
     private final WorkspaceState state = new WorkspaceState();
     private final ProjectCheckpointService checkpoints = new ProjectCheckpointService();
     private boolean persistence;
@@ -25,17 +26,16 @@ public final class ProjectConsole {
     public ProjectConsole(Reader input, PrintStream output, WorkspaceStore store, TerminalTheme theme, int width) {
         this.input = input instanceof BufferedReader buffered ? buffered : new BufferedReader(input);
         this.output = output; this.store = store; this.theme = theme; this.width = width;
+        startup = new StartupRenderer(output, theme, width);
     }
 
     public void run() throws IOException {
         BrandRenderer.render(output, theme, width);
-        output.println("App storage: " + safe(store.root().toString()));
         refresh();
-        output.println("Opening saved work never scans or executes source projects.");
         try {
             boolean running = true;
             while (running) {
-                output.println("\n[1] Open / switch saved project\n[2] Create or import project\n[3] Active project / history\n[4] DSA demonstration\n[0] Exit");
+                startup.menu();
                 try {
                     switch (read("breadcrumbs > ")) {
                         case "0" -> running = !leave();
@@ -64,15 +64,14 @@ public final class ProjectConsole {
     private void refresh() {
         try {
             WorkspaceStore.SavedWorkspace[] saved = store.list(); storageReady = true;
-            output.println(theme.label(TerminalTheme.Tone.SUCCESS, "Storage: Ready"));
-            output.println("Saved projects: " + saved.length);
+            int unavailable = 0;
             for (var item : saved) {
-                if (!item.problem().isEmpty()) { output.println("WARNING: an unreadable saved workspace is retained for recovery."); }
+                if (!item.problem().isEmpty()) { unavailable++; }
             }
-            output.println("Recent project: no selection record. Choose Open to resume.");
+            startup.ready(saved.length, unavailable);
         } catch (IOException | IllegalArgumentException unavailable) {
             storageReady = false;
-            output.println(theme.label(TerminalTheme.Tone.WARNING, "Storage: Unavailable. Session-only mode remains available."));
+            startup.unavailable();
         }
     }
 
@@ -138,6 +137,7 @@ public final class ProjectConsole {
                     }
                     case "6" -> { open(); back = true; }
                     case "7" -> {
+                        output.println("App storage: " + safe(store.root().toString()));
                         output.println("Profile: " + state.activeBaseline().profile() + " | Mode: " + state.activeBaseline().entryMode());
                         output.println("Next native number: " + state.nextCheckpointNumber());
                         output.println("Source freshness UNKNOWN. B0 is a saved observation, never a native checkpoint.");
