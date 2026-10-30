@@ -4,7 +4,7 @@
 
 Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1 and B2 provide a checkpoint sandbox and safe initial-project baseline. Later batches add durable checkpoints, drift comparison, and source-backed handoffs.
 
-> **Status: B2 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The original 3,780 B1 assertions and 191 B2 assertions pass in the junction-enabled Windows run. Three actual console bootstrap/import workflows pass. See [B2 execution and evidence](docs/B2_EXECUTION.md) and [B1 evidence](docs/B1_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B3-B7 remain unimplemented.
+> **Status: B2 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17 (2026-10-30).** The original 3,780 B1 assertions and 192 B2 assertions pass in the junction-enabled Windows run. Three actual console bootstrap/import workflows pass. See [B2 execution and evidence](docs/B2_EXECUTION.md) and [B1 evidence](docs/B1_EXECUTION.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B3-B7 remain unimplemented.
 
 ## Build, run, and test
 

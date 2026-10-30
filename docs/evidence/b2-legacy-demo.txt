@@ -38,7 +38,7 @@ Approve bounded read-only scan? Type yes:
 BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
 Workspace: W001 | Legacy study planner
 Entry mode: IMPORT_LEGACY_CONTEXT | Profile: SOFTWARE
-Observed at: 2026-10-30T09:40:05.700549200Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:03.229708800Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 6 (files and skipped directories)
 SUPPORTED: 5
@@ -67,23 +67,23 @@ Session-local: not saved after exit. No automatic CP-000001 or imported history.
   SHA-256: NOT_AVAILABLE
   Excluded sensitive or generated name; contents not read.
 AGENTS.md | SUPPORTED | MARKDOWN | role: INSTRUCTIONS
-  Size: 184 | Modified metadata: 2026-10-30T09:39:49.584492200Z
-  SHA-256: 7787f39415e75e5e637a5c41ced6d2eabb0d74809d96fe227f42bd4850f0e115
+  Size: 184 | Modified metadata: 2026-10-30T09:51:49.355535400Z
+  SHA-256: 59cd8d213892060e5b8a0c2ff6da936c5335716fafffeffc2ba2ceaf2473f38f
   Instruction artifact fingerprinted; instructions are not progress claims.
 HANDOFF.md | SUPPORTED | MARKDOWN | role: HANDOFF
-  Size: 58 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 58 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 273752cd146775844846a68c648b8def698d66be47932610b134a670c4cd2d09
   Bounded extraction completed.
 README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 48 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 48 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 4b82705c375d483751992e1c69059112a2d926f4582e8d71eb6d394bdb45b9c1
   Bounded extraction completed.
 state.md | SUPPORTED | MARKDOWN | role: CURRENT_STATE
-  Size: 29 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 29 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 3b737025bf29e3af838b28d9dea14e134baea18dbbbe726b7a2160a9cac5817e
   Bounded extraction completed.
 tasks.md | SUPPORTED | MARKDOWN | role: TASK_LIST
-  Size: 30 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 30 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 1c32774b8323975e26ef2f761e1718b0948eb7f5491af9dd4f4e2aeef4b03243
   Bounded extraction completed.
 EV-W001-000001 | NEXT_ACTION |
@@ -96,7 +96,7 @@ Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer
 BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
 Workspace: W001 | Legacy study planner
 Entry mode: IMPORT_LEGACY_CONTEXT | Profile: SOFTWARE
-Observed at: 2026-10-30T09:40:05.700549200Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:03.229708800Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 6 (files and skipped directories)
 SUPPORTED: 5
@@ -125,23 +125,23 @@ Session-local: not saved after exit. No automatic CP-000001 or imported history.
   SHA-256: NOT_AVAILABLE
   Excluded sensitive or generated name; contents not read.
 AGENTS.md | SUPPORTED | MARKDOWN | role: INSTRUCTIONS
-  Size: 184 | Modified metadata: 2026-10-30T09:39:49.584492200Z
-  SHA-256: 7787f39415e75e5e637a5c41ced6d2eabb0d74809d96fe227f42bd4850f0e115
+  Size: 184 | Modified metadata: 2026-10-30T09:51:49.355535400Z
+  SHA-256: 59cd8d213892060e5b8a0c2ff6da936c5335716fafffeffc2ba2ceaf2473f38f
   Instruction artifact fingerprinted; instructions are not progress claims.
 HANDOFF.md | SUPPORTED | MARKDOWN | role: HANDOFF
-  Size: 58 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 58 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 273752cd146775844846a68c648b8def698d66be47932610b134a670c4cd2d09
   Bounded extraction completed.
 README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 48 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 48 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 4b82705c375d483751992e1c69059112a2d926f4582e8d71eb6d394bdb45b9c1
   Bounded extraction completed.
 state.md | SUPPORTED | MARKDOWN | role: CURRENT_STATE
-  Size: 29 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 29 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 3b737025bf29e3af838b28d9dea14e134baea18dbbbe726b7a2160a9cac5817e
   Bounded extraction completed.
 tasks.md | SUPPORTED | MARKDOWN | role: TASK_LIST
-  Size: 30 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 30 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 1c32774b8323975e26ef2f761e1718b0948eb7f5491af9dd4f4e2aeef4b03243
   Bounded extraction completed.
 Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No native checkpoint was created.
@@ -149,7 +149,7 @@ Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No 
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | Legacy study planner
 Entry mode: IMPORT_LEGACY_CONTEXT | Profile: SOFTWARE
-Observed at: 2026-10-30T09:40:05.700549200Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:03.229708800Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 6 (files and skipped directories)
 SUPPORTED: 5
@@ -173,7 +173,7 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:40:05.865548800Z
+Confirmed at: 2026-10-30T09:52:03.300212800Z
 
 ========================================
               BREADCRUMBS
@@ -199,7 +199,7 @@ Choose an option:
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | Legacy study planner
 Entry mode: IMPORT_LEGACY_CONTEXT | Profile: SOFTWARE
-Observed at: 2026-10-30T09:40:05.700549200Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:03.229708800Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 6 (files and skipped directories)
 SUPPORTED: 5
@@ -223,29 +223,29 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:40:05.865548800Z
+Confirmed at: 2026-10-30T09:52:03.300212800Z
 Show paged file inventory and source claims? Type yes, or Enter to return: .env | SKIPPED | METADATA_ONLY | role: UNKNOWN
   Size: -1 | Modified metadata: null
   SHA-256: NOT_AVAILABLE
   Excluded sensitive or generated name; contents not read.
 AGENTS.md | SUPPORTED | MARKDOWN | role: INSTRUCTIONS
-  Size: 184 | Modified metadata: 2026-10-30T09:39:49.584492200Z
-  SHA-256: 7787f39415e75e5e637a5c41ced6d2eabb0d74809d96fe227f42bd4850f0e115
+  Size: 184 | Modified metadata: 2026-10-30T09:51:49.355535400Z
+  SHA-256: 59cd8d213892060e5b8a0c2ff6da936c5335716fafffeffc2ba2ceaf2473f38f
   Instruction artifact fingerprinted; instructions are not progress claims.
 HANDOFF.md | SUPPORTED | MARKDOWN | role: HANDOFF
-  Size: 58 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 58 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 273752cd146775844846a68c648b8def698d66be47932610b134a670c4cd2d09
   Bounded extraction completed.
 README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 48 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 48 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 4b82705c375d483751992e1c69059112a2d926f4582e8d71eb6d394bdb45b9c1
   Bounded extraction completed.
 state.md | SUPPORTED | MARKDOWN | role: CURRENT_STATE
-  Size: 29 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 29 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 3b737025bf29e3af838b28d9dea14e134baea18dbbbe726b7a2160a9cac5817e
   Bounded extraction completed.
 tasks.md | SUPPORTED | MARKDOWN | role: TASK_LIST
-  Size: 30 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 30 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 1c32774b8323975e26ef2f761e1718b0948eb7f5491af9dd4f4e2aeef4b03243
   Bounded extraction completed.
 EV-W001-000001 | NEXT_ACTION |

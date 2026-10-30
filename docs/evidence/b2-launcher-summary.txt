@@ -1,4 +1,4 @@
-Started: 2026-10-30T17:40:06.8611540+08:00
+Started: 2026-10-30T17:52:03.6602767+08:00
 OS: Microsoft Windows NT 10.0.19045.0
 Repository: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs
 java-version | exit 0 | java -version
@@ -16,7 +16,7 @@ PASS: actual Windows ACL read-denial fixture
 SKIP: junction fixture not supplied; run the Windows B2 harness
 PASS: B2 inspector (90 assertions)
 PASS: B2 bootstrap/review (62 assertions)
-PASS: B2 CLI (38 assertions)
+PASS: B2 CLI (39 assertions)
 PASS: all B2 test groups
 demo-root | exit 0 | run.bat < tests\cli-demo-input.txt
 demo-external | exit 0 | "C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\run.bat" < "C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\verification\exit-input.txt"
@@ -28,4 +28,4 @@ PASS: source SHA-256 hashes unchanged across verification.
 PASS: root, external-directory, and paths-with-spaces CMD launch.
 PASS: missing JDK and compilation failure return exit 1 without starting stale classes.
 JDK 17 runtime execution NOT VERIFIED. Compilation targets --release 17.
-Finished: 2026-10-30T17:40:33.7465594+08:00
+Finished: 2026-10-30T17:52:27.4574797+08:00

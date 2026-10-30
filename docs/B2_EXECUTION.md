@@ -76,7 +76,8 @@ algorithms, safety decisions and truth boundaries without repeating obvious code
 7. If the design is contested, `interrogate` before shipping.
    Conditional. No contested design currently; no panel is implied.
 8. Run **Opening a PR**.
-   Pending. Stacked PR, never automatic merge.
+   Done. [PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) is open against
+   the unmerged B1 branch. No automatic merge.
 
 ## Architecture decisions
 
@@ -157,12 +158,12 @@ PASS: actual Windows ACL read-denial fixture
 PASS: actual Windows junction fixture
 PASS: B2 inspector (91 assertions)
 PASS: B2 bootstrap/review (62 assertions)
-PASS: B2 CLI (38 assertions)
+PASS: B2 CLI (39 assertions)
 PASS: all B2 test groups
 ```
 
-That is 3,780 original B1 assertions plus 191 B2 assertions in the junction-enabled
-run, not 3,971 distinct scenarios. The normal suite reports 90 inspector assertions
+That is 3,780 original B1 assertions plus 192 B2 assertions in the junction-enabled
+run, not 3,972 distinct scenarios. The normal suite reports 90 inspector assertions
 and a junction skip unless the harness supplies the fixture property. The separate
 junction-enabled run closes that skip. Windows denied ordinary symbolic-link
 creation; that actual symlink fixture remains unverified. No privilege, trust,
@@ -198,12 +199,23 @@ text and source fingerprint values are unchanged.
 - [Actual README-only import output](evidence/b2-readme-demo.txt).
 - [Actual legacy conflict import output](evidence/b2-legacy-demo.txt).
 - [Exercised source/test/script SHA-256 manifest](evidence/b2-source-sha256.txt).
+- [Regression assertion detecting the previous project-error handler](evidence/b2-error-regression.txt).
 
 The manifest was captured before both final harnesses and matched afterward.
 It includes all relevant initially untracked implementation inputs, excluding
 generated fixtures/classes and documentation. Documentation-only follow-ups do
 not change those exercised inputs. Historical B1 evidence retains its own source
 and date limits. No claim is made that old B1 manifests match these B2 changes.
+
+Final quality review found that project-form rejection/cancellation reached the
+B1 error renderer, which printed an irrelevant DLL complexity explanation.
+Fix Root Causes traced that output to the shared menu error boundary. Project
+operations now have their own rejection message; B1 error behavior is preserved.
+The new assertion fails against a disposable copy of the previously published
+ConsoleMenu, then passes against the fixed source. Both complete Windows harnesses
+were rerun afterward, producing the retained final counts above. The previous
+3,971-assertion evidence remains in the earlier Git revision and is superseded
+for the final source, not relabeled as a run of the fix.
 
 ## Compliance and quality review
 
@@ -251,5 +263,10 @@ academic DLL comments, regression additions and source-bound evidence. Staged
 byte identity, whitespace checks and narrow token/key/private-key scanning passed.
 Retained console prompt trailing whitespace was normalized before commit; the
 failed whitespace gate prevented an earlier commit and no source fix was needed.
-README/status updates, stacked PR creation, remote base/head readback and final
-clean-tree verification follow. B1 branch and main must remain untouched.
+Documentation commit `15a1f6a` adds README workflows, limits and B2 status.
+[PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) was opened against
+`feat/m0-dll-foundation`, dependent on unmerged PR #1. The final quality fix,
+refreshed source-bound evidence and this receipt follow in a scoped commit.
+Final remote base/head readback and clean-tree verification follow its push.
+B1 branch and main must remain untouched. No merge, release, tag, deployment or
+unrelated external communication was performed.

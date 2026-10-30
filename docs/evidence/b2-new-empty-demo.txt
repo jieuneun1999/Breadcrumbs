@@ -33,7 +33,7 @@ Entry mode: Project display name: Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWA
 BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
 Workspace: W001 | New study planner
 Entry mode: NEW_EMPTY | Profile: ACADEMIC
-Observed at: 2026-10-30T09:39:59.636863400Z | Scan: NONE
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 0 (files and skipped directories)
 SUPPORTED: 0
@@ -62,7 +62,7 @@ Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No 
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | New study planner
 Entry mode: NEW_EMPTY | Profile: ACADEMIC
-Observed at: 2026-10-30T09:39:59.636863400Z | Scan: NONE
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 0 (files and skipped directories)
 SUPPORTED: 0
@@ -86,7 +86,7 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:39:59.740379100Z
+Confirmed at: 2026-10-30T09:51:58.251197500Z
 
 ========================================
               BREADCRUMBS
@@ -112,7 +112,7 @@ Choose an option:
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | New study planner
 Entry mode: NEW_EMPTY | Profile: ACADEMIC
-Observed at: 2026-10-30T09:39:59.636863400Z | Scan: NONE
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 0 (files and skipped directories)
 SUPPORTED: 0
@@ -136,7 +136,7 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:39:59.740379100Z
+Confirmed at: 2026-10-30T09:51:58.251197500Z
 Show paged file inventory and source claims? Type yes, or Enter to return: EV-W001-000001 | OBJECTIVE |
   USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
   Source: (user input) line 0 [Guided present assessment] | UNKNOWN

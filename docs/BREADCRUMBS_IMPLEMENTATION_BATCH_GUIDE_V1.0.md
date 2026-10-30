@@ -76,14 +76,15 @@ Implement the three explicit entry modes and record a **B0 first-observation bas
 
 **B2 implementation update (2026-10-30): DEMO_READY on owner-accepted Windows/JDK
 25 with Java 17-target compilation.** All three console routes converge on one
-confirmed WorkspaceState/B0. The original B1 suite passes unchanged, plus 191 B2
+confirmed WorkspaceState/B0. The original B1 suite passes unchanged, plus 192 B2
 assertions in the junction-enabled run. Actual new-empty, README-only and legacy
 conflict imports pass; imported fixture bytes remain unchanged and no native
 checkpoint is created. Actual Windows junction/ACL tests pass. Symbolic-link
 creation was denied by the environment and remains unverified; portable traversal
 is not an OS sandbox against hostile concurrent filesystem changes. See
 [B2 execution, commands, source hashes and limits](B2_EXECUTION.md).
-PR base is the still-unmerged B1 branch. B3-B7 remain NOT_STARTED.
+[PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) targets the still-unmerged
+B1 branch. Neither PR is merged. B3-B7 remain NOT_STARTED.
 
 ## B3 — Checkpoint creation, TXT persistence and restart
 
@@ -124,7 +125,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | Batch | Status | Evidence |
 | --- | --- | --- |
 | B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
-| B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [191 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md) |
+| B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [192 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md), [stacked PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) |
 | B3 | NOT_STARTED | — |
 | B4 | NOT_STARTED | — |
 | B5 | NOT_STARTED | — |

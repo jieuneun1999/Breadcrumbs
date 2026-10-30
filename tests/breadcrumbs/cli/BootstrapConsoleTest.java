@@ -22,7 +22,9 @@ public final class BootstrapConsoleTest {
         contains(sandbox, "Loaded 5", "Project native checkpoints: 0", "Size: 5");
         String cancelled = session(guided.replace("\nyes\n", "\nno\n") + "14\n0\n");
         contains(cancelled, "Proposal discarded", "No confirmed B0");
-        contains(session("13\n1\nPartial\n/cancel\n14\n0\n"), "Cancelled", "No confirmed B0");
+        String cancelledProject = session("13\n1\nPartial\n/cancel\n14\n0\n");
+        contains(cancelledProject, "Cancelled", "No confirmed B0");
+        require(!cancelledProject.contains("Time complexity:"), "project errors are not reported as DLL operations");
         contains(session("13\n0\n0\n"), "Goodbye");
         Path fixtures = Files.createDirectories(Path.of("build", "b2-fixtures"));
         Path readme = Files.createTempDirectory(fixtures, "cli-readme-").toAbsolutePath();

@@ -87,8 +87,14 @@ public final class ConsoleMenu {
                         default -> throw new IllegalArgumentException("Invalid menu option. Choose 0-14.");
                     }
                 } catch (IllegalArgumentException invalid) {
-                    report(operation, "Rejected: " + invalid.getMessage(), "O(n) upper bound",
-                            "Validation rejects the request before mutation; duplicate lookup can scan the list.");
+                    if (operation.equals("Project bootstrap") || operation.equals("View project baseline")) {
+                        // Bootstrap is not a DLL operation, so a rejected form must not claim DLL complexity.
+                        output.println("Project operation rejected: " + invalid.getMessage());
+                        output.println("Returned to the main menu.");
+                    } else {
+                        report(operation, "Rejected: " + invalid.getMessage(), "O(n) upper bound",
+                                "Validation rejects the request before mutation; duplicate lookup can scan the list.");
+                    }
                 }
             }
         } catch (EOFException end) {

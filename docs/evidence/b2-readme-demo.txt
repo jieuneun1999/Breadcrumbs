@@ -38,7 +38,7 @@ Approve bounded read-only scan? Type yes:
 BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
 Workspace: W001 | Reading tracker
 Entry mode: IMPORT_FOLDER | Profile: GENERAL
-Observed at: 2026-10-30T09:40:02.930540900Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:00.683721600Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 1 (files and skipped directories)
 SUPPORTED: 1
@@ -62,7 +62,7 @@ B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
 README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 37 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 37 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 5c3f390efd51f4dd959218ed6d78fe88f6ead07ba79d824940c715885aa004d9
   Bounded extraction completed.
 EV-W001-000001 | OBJECTIVE |
@@ -74,7 +74,7 @@ Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer
 BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
 Workspace: W001 | Reading tracker
 Entry mode: IMPORT_FOLDER | Profile: GENERAL
-Observed at: 2026-10-30T09:40:02.930540900Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:00.683721600Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 1 (files and skipped directories)
 SUPPORTED: 1
@@ -98,7 +98,7 @@ B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
 README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 37 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 37 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 5c3f390efd51f4dd959218ed6d78fe88f6ead07ba79d824940c715885aa004d9
   Bounded extraction completed.
 Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No native checkpoint was created.
@@ -106,7 +106,7 @@ Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No 
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | Reading tracker
 Entry mode: IMPORT_FOLDER | Profile: GENERAL
-Observed at: 2026-10-30T09:40:02.930540900Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:00.683721600Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 1 (files and skipped directories)
 SUPPORTED: 1
@@ -129,7 +129,7 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:40:03.000536300Z
+Confirmed at: 2026-10-30T09:52:00.786719900Z
 
 ========================================
               BREADCRUMBS
@@ -155,7 +155,7 @@ Choose an option:
 BREADCRUMBS - INITIAL PROJECT BASELINE B0
 Workspace: W001 | Reading tracker
 Entry mode: IMPORT_FOLDER | Profile: GENERAL
-Observed at: 2026-10-30T09:40:02.930540900Z | Scan: SCAN-W001
+Observed at: 2026-10-30T09:52:00.683721600Z | Scan: SCAN-W001
 Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
 Inventory entries: 1 (files and skipped directories)
 SUPPORTED: 1
@@ -178,9 +178,9 @@ Project native checkpoints: 0
 B0 is the first observed baseline. This is not a historical resume.
 Human confirmation does not independently verify source claims or past tests.
 Session-local: not saved after exit. No automatic CP-000001 or imported history.
-Confirmed at: 2026-10-30T09:40:03.000536300Z
+Confirmed at: 2026-10-30T09:52:00.786719900Z
 Show paged file inventory and source claims? Type yes, or Enter to return: README.md | SUPPORTED | MARKDOWN | role: UNKNOWN
-  Size: 37 | Modified metadata: 2026-10-30T09:39:49.575805800Z
+  Size: 37 | Modified metadata: 2026-10-30T09:51:49.346854900Z
   SHA-256: 5c3f390efd51f4dd959218ed6d78fe88f6ead07ba79d824940c715885aa004d9
   Bounded extraction completed.
 EV-W001-000001 | OBJECTIVE |
