@@ -143,6 +143,11 @@ Retained evidence:
 - [SHA-256 of all exercised source, tests and launcher scripts](evidence/b1-source-sha256.txt).
 - [Deterministic menu input](../tests/cli-demo-input.txt).
 
+Retained text evidence normalizes CRLF to LF for Git whitespace checks. No output
+content or source-hash values changed. Original captures remain in ignored build
+output. The documentation commit initially retained CRLF; final review caught
+and corrected that in a follow-up without rewriting published history.
+
 The manifest binds verification to file bytes, including initially untracked
 implementation inputs. Generated outputs are excluded. Documentation updates do
 not alter those exercised inputs. The report records local time with UTC offset.
@@ -175,5 +180,6 @@ commit. `git diff --cached --check` passed. Narrow key/token/private-key pattern
 scan of the staged diff found no matches. Build outputs are ignored.
 The two frozen v1.2 Markdown specifications match main exactly.
 
-Documentation/evidence commit, feature-branch push, PR creation and remote
-readback are pending. Main must remain unchanged by this run.
+Documentation/evidence commit `1616dc2` and implementation commit were pushed to
+`origin/feat/m0-dll-foundation`. Remote readback matched `1616dc2` and main remained
+`d1f13c2`. PR creation and final tip readback are pending. No merge is authorized.
