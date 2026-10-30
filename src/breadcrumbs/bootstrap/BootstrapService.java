@@ -27,9 +27,15 @@ public final class BootstrapService {
     private final ProjectInspector inspector;
     private final ScanPolicy policy;
     private int nextWorkspaceId = 1;
+    private final java.util.function.Supplier<String> workspaceIds;
 
     public BootstrapService(ScanPolicy policy) {
+        this(policy, null);
+    }
+
+    public BootstrapService(ScanPolicy policy, java.util.function.Supplier<String> workspaceIds) {
         this.policy = policy;
+        this.workspaceIds = workspaceIds;
         inspector = new ProjectInspector();
     }
 
@@ -47,7 +53,8 @@ public final class BootstrapService {
         if (root == null && entryMode != EntryMode.NEW_EMPTY) {
             throw new IllegalArgumentException("An existing local directory is required for import.");
         }
-        String workspaceId = String.format(Locale.ROOT, "W%03d", nextWorkspaceId++);
+        String workspaceId = workspaceIds == null ? String.format(Locale.ROOT, "W%03d", nextWorkspaceId++)
+                : workspaceIds.get();
         ScanResult scan = root == null
                 ? new ScanResult(null, "", Instant.now(), policy, new SnapshotEntry[0], new EvidenceClaim[0],
                         new String[] {"No directory was supplied; no file observation is claimed."}, true, 0)

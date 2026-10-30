@@ -3,9 +3,15 @@ package breadcrumbs.domain;
 import java.time.Instant;
 
 public record Checkpoint(String checkpointId, String title, String summary,
-                         Status status, Instant createdAt, Origin origin) {
+                         Status status, Instant createdAt, Origin origin, ProjectContext project) {
     public enum Status { PLANNED, IN_PROGRESS, COMPLETED, BLOCKED, UNKNOWN }
     public enum Origin { USER_CONFIRMED, DEMO }
+
+    /** B1 sandbox values have no project context and cannot be persisted as project history. */
+    public Checkpoint(String checkpointId, String title, String summary,
+                      Status status, Instant createdAt, Origin origin) {
+        this(checkpointId, title, summary, status, createdAt, origin, null);
+    }
 
     public Checkpoint {
         checkpointId = text(checkpointId, "Identifier", 45, true);
@@ -21,6 +27,9 @@ public record Checkpoint(String checkpointId, String title, String summary,
             throw new IllegalArgumentException(origin == Origin.DEMO
                     ? "Synthetic IDs must use DEMO- followed by 1-40 uppercase letters, digits, or hyphens."
                     : "Native IDs must use CP-000001 through CP-999999.");
+        }
+        if (project != null && (origin != Origin.USER_CONFIRMED || !createdAt.equals(project.confirmedAt()))) {
+            throw new IllegalArgumentException("Project checkpoints require matching confirmation metadata.");
         }
     }
 

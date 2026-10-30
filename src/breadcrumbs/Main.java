@@ -1,6 +1,10 @@
 package breadcrumbs;
 
 import breadcrumbs.cli.ConsoleMenu;
+import breadcrumbs.cli.ProjectConsole;
+import breadcrumbs.cli.TerminalTheme;
+import breadcrumbs.storage.WorkspaceStore;
+import java.nio.file.Path;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
@@ -10,9 +14,32 @@ public final class Main {
 
     public static void main(String[] args) {
         try {
-            new ConsoleMenu(new InputStreamReader(System.in, StandardCharsets.UTF_8), System.out).run();
+            boolean noColor = false, always = false, dsa = false;
+            Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
+            for (String arg : args) {
+                if (arg.equals("--no-color")) { noColor = true; }
+                else if (arg.equals("--color=always")) { always = true; }
+                else if (arg.equals("--dsa")) { dsa = true; }
+                else if (arg.startsWith("--storage-root=") && arg.length() > 15) { storage = Path.of(arg.substring(15)); }
+                else { throw new IllegalArgumentException("Use --no-color, --color=always, --dsa or --storage-root=<path>."); }
+            }
+            var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
+            if (dsa) { new ConsoleMenu(input, System.out).run(); }
+            else {
+                boolean color = TerminalTheme.enabled(noColor, always, System.console() != null,
+                        System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
+                        System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null
+                                || System.getenv("ANSICON") != null);
+                int width = 80;
+                try { width = Math.max(28, Integer.parseInt(System.getenv("COLUMNS"))); }
+                catch (NumberFormatException ignored) { /* Unknown dimensions use the compact 80-column layout. */ }
+                new ProjectConsole(input, System.out, new WorkspaceStore(storage), new TerminalTheme(color), width).run();
+            }
         } catch (IOException failure) {
-            System.err.println("Console input failed. Session-local records were not saved.");
+            System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
+            System.exit(1);
+        } catch (IllegalArgumentException invalid) {
+            System.err.println("Invalid application arguments. Use --no-color, --color=always, --dsa or --storage-root=<path>.");
             System.exit(1);
         }
     }

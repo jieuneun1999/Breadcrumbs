@@ -15,9 +15,15 @@ import java.io.PrintStream;
 /** Bounded terminal views keep source reports separate from current human assessments. */
 final class BaselineRenderer {
     private final PrintStream output;
+    private final boolean projectShell;
 
     BaselineRenderer(PrintStream output) {
+        this(output, false);
+    }
+
+    BaselineRenderer(PrintStream output, boolean projectShell) {
         this.output = output;
+        this.projectShell = projectShell;
     }
 
     void summary(String workspaceId, String name, ProjectProfile profile, EntryMode entryMode, ScanResult scan,
@@ -74,7 +80,8 @@ final class BaselineRenderer {
         output.println("Project native checkpoints: " + checkpoints);
         output.println("B0 is the first observed baseline. This is not a historical resume.");
         output.println("Human confirmation does not independently verify source claims or past tests.");
-        output.println("Session-local: not saved after exit. No automatic CP-000001 or imported history.");
+        output.println(projectShell ? "Saved observation only. Source freshness UNKNOWN; see project storage status."
+                : "Session-local: not saved after exit. No automatic CP-000001 or imported history.");
     }
 
     void claim(EvidenceClaim claim) {

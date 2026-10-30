@@ -6,7 +6,7 @@ if errorlevel 1 (
     popd
     exit /b 1
 )
-java -cp build\app breadcrumbs.Main
+java -cp build\app breadcrumbs.Main %*
 set "breadcrumbs_exit=%errorlevel%"
 popd
 exit /b %breadcrumbs_exit%

@@ -24,14 +24,14 @@ public final class ConsoleMenu {
     private int nextNativeId = 1;
 
     public ConsoleMenu(Reader input, PrintStream output) {
-        this.input = new BufferedReader(input);
+        this.input = input instanceof BufferedReader buffered ? buffered : new BufferedReader(input);
         this.output = output;
         bootstrapConsole = new BootstrapConsole(this::read, output, workspaceState);
     }
 
     public void run() throws IOException {
         output.println("B1 session-local DSA foundation. Checkpoints are not saved between runs.");
-        output.println("B2 bootstrap is available in option 13. Full B3 persistence/continuity is not implemented.");
+        output.println("B2 bootstrap is available in option 13. Use the project shell for B3 persistence/continuity.");
         output.println("Options 1-12 are the B1 checkpoint sandbox, separate from the active project's B0/history.");
         output.println("DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.");
         try {

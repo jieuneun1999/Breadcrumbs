@@ -28,14 +28,20 @@ final class BootstrapConsole {
     private final Prompt input;
     private final PrintStream output;
     private final WorkspaceState workspaceState;
-    private final BootstrapService service = new BootstrapService(ScanPolicy.defaults());
+    private final BootstrapService service;
     private final BaselineRenderer renderer;
 
     BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState) {
+        this(input, output, workspaceState, new BootstrapService(ScanPolicy.defaults()), false);
+    }
+
+    BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState,
+                     BootstrapService service, boolean projectShell) {
         this.input = input;
         this.output = output;
         this.workspaceState = workspaceState;
-        renderer = new BaselineRenderer(output);
+        this.service = service;
+        renderer = new BaselineRenderer(output, projectShell);
     }
 
     void bootstrap() throws IOException {

@@ -38,8 +38,9 @@ try {
     $suite = Invoke-Check 'tests' 'scripts\test.bat'
     Require-Text $suite 'PASS: all B1 test groups'
     Require-Text $suite 'PASS: all B2 test groups'
+    Require-Text $suite 'PASS: all B3 test groups'
     $report.Add($suite.Trim())
-    $demo = Invoke-Check 'demo-root' 'run.bat < tests\cli-demo-input.txt'
+    $demo = Invoke-Check 'demo-root' 'run.bat --dsa < tests\cli-demo-input.txt'
     foreach ($fragment in @('Invalid menu option', 'Identifier must not be blank',
             'Position must be between', 'Loaded 5', 'Loaded 0', 'Duplicate checkpoint ID',
             'Deleted DEMO-MIDDLE', 'Success: CP-000001', 'USER_CONFIRMED',
@@ -50,7 +51,7 @@ try {
     [IO.File]::WriteAllText($blank, "0`r`n")
     Push-Location $evidence
     try {
-        $external = Invoke-Check 'demo-external' "`"$repository\run.bat`" < `"$blank`""
+        $external = Invoke-Check 'demo-external' "`"$repository\run.bat`" --dsa < `"$blank`""
         Require-Text $external 'Goodbye'
     } finally {
         Pop-Location
@@ -64,11 +65,12 @@ try {
         Get-ChildItem -LiteralPath $sourceFolder | Copy-Item -Destination $destinationFolder -Recurse -Force
     }
     Copy-Item -LiteralPath (Join-Path $repository 'run.bat') -Destination $fixture -Force
-    $spaces = Invoke-Check 'demo-spaces' "`"$fixture\run.bat`" < `"$blank`""
+    $spaces = Invoke-Check 'demo-spaces' "`"$fixture\run.bat`" --dsa < `"$blank`""
     Require-Text $spaces 'Goodbye'
     $spacesSuite = Invoke-Check 'tests-spaces' "`"$fixture\scripts\test.bat`""
     Require-Text $spacesSuite 'PASS: all B1 test groups'
     Require-Text $spacesSuite 'PASS: all B2 test groups'
+    Require-Text $spacesSuite 'PASS: all B3 test groups'
     $savedPath = $env:PATH
     try {
         $env:PATH = Join-Path $env:SystemRoot 'System32'
@@ -79,7 +81,7 @@ try {
     }
     $brokenMain = Join-Path $fixture 'src/breadcrumbs/Main.java'
     [IO.File]::WriteAllText($brokenMain, 'deliberately invalid Java')
-    $broken = Invoke-Check 'compile-failure' "`"$fixture\run.bat`" < `"$blank`"" 1
+    $broken = Invoke-Check 'compile-failure' "`"$fixture\run.bat`" --dsa < `"$blank`"" 1
     Require-Text $broken 'Compilation failed'
     if ($broken.Contains('Project Checkpoint Management')) {
         throw 'Launcher ran stale classes after a compiler failure.'

@@ -17,5 +17,8 @@ public final class AllTests {
         BootstrapTest.run();
         BootstrapConsoleTest.run();
         System.out.println("PASS: all B2 test groups");
+        breadcrumbs.storage.ContinuityTest.run();
+        breadcrumbs.cli.ProjectConsoleTest.run();
+        System.out.println("PASS: all B3 test groups");
     }
 }
