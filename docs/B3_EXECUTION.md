@@ -55,7 +55,8 @@ Comments follow the owner's academic requirement. No independent review claimed.
    scenarios A-F passed. Final refreshed evidence follows review below.
 6. Rebase into small, ordered commits. New focused commits, no published rewrite.
 7. If the design is contested, `interrogate` before shipping. Conditional.
-8. Run **Opening a PR**. Pending verified implementation.
+8. Run **Opening a PR**. [PR #3](https://github.com/jieuneun1999/Breadcrumbs/pull/3)
+   is open, non-draft and unmerged against the verified B2 branch.
 
 ## Design decisions
 
@@ -207,3 +208,10 @@ assertions, and the complete final suite was rerun by both later harnesses.
 GitHub connector is the selected forge interface under the runtime preference for
 the available service plugin. Scoped Git push publishes only the B3 branch.
 PR targets the unchanged B2 branch; no earlier branch or main is written.
+
+Documentation/evidence commit `79b9293` follows implementation `13f6f65`.
+Remote readback matched that published head and preserved B2 c7567fd, B1 8f09b99
+and main d1f13c2. [PR #3](https://github.com/jieuneun1999/Breadcrumbs/pull/3) was
+created open/non-draft with the correct B2 base and verified head. This receipt
+is a documentation-only follow-up. Final readback follows its push.
+No merges, tags, releases, deployments or unrelated external messages occurred.

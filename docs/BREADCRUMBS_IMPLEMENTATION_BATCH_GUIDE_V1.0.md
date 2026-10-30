@@ -102,7 +102,9 @@ isolation and corrupt-load preservation. Source claims retain original provenanc
 No source rescan or auto-imported history occurs. Atomic single-file replacement
 is required; unsupported providers fail closed. This is basic B3 storage, not
 full M8 recovery or release acceptance. [B3 execution and evidence](B3_EXECUTION.md)
-and [format/limits](B3_STORAGE_FORMAT.md) record the boundary. B4-B7 remain NOT_STARTED.
+and [format/limits](B3_STORAGE_FORMAT.md) record the boundary.
+[PR #3](https://github.com/jieuneun1999/Breadcrumbs/pull/3) is open/unmerged,
+stacked on B2. B4-B7 remain NOT_STARTED.
 
 ## B4 — Audits, drift and handoffs
 
