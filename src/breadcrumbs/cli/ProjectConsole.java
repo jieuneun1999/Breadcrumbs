@@ -19,6 +19,7 @@ public final class ProjectConsole {
     private final int width;
     private final StartupRenderer startup;
     private final WorkspaceState state = new WorkspaceState();
+    private breadcrumbs.search.ContextSearchIndex search = new breadcrumbs.search.ContextSearchIndex(state);
     private final ProjectCheckpointService checkpoints = new ProjectCheckpointService();
     private boolean persistence;
     private boolean storageReady;
@@ -83,7 +84,7 @@ public final class ProjectConsole {
         new BootstrapConsole(this::read, output, candidate, bootstrap, true).bootstrap();
         if (candidate.activeBaseline() == null) { return; }
         boolean consent = read("Save this workspace to local app storage? Type yes; Enter keeps session-only: ").equalsIgnoreCase("yes");
-        state.replaceWith(candidate); persistence = consent;
+        state.replaceWith(candidate); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = consent;
         if (persistence) { save(); }
         status();
     }
@@ -106,7 +107,7 @@ public final class ProjectConsole {
         if (!leave()) { return; }
         // Leaving may save this same workspace. Reload that newly saved state, not the earlier preview.
         WorkspaceState loaded = store.load(saved[index].id());
-        state.replaceWith(loaded); persistence = true;
+        state.replaceWith(loaded); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true;
         output.println("Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.");
         status();
     }
@@ -118,6 +119,7 @@ public final class ProjectConsole {
             status();
             output.println("[16] Work items / explicit dependencies");
             output.println("[17] Hash demonstration / canonical indexes");
+            output.println("[18] Search project context");
             output.println("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[0] Back");
             try {
                 String choice = read("project > ");
@@ -150,10 +152,11 @@ public final class ProjectConsole {
                     case "8" -> diagnostics();
                     case "16" -> new DependencyConsole(this::read, output, state).run();
                     case "17" -> new HashConsole(this::read, output, state).run();
+                    case "18" -> new SearchConsole(this::read, output, search, width).run();
                     case "9", "10", "11", "12", "13", "14", "15" -> {
                         new ContextConsole(this::read, output, state, store.root()).perform(choice);
                     }
-                    default -> output.println("Choose 0-15.");
+                    default -> output.println("Choose 0-18.");
                 }
             } catch (IllegalArgumentException invalid) { output.println("Operation cancelled or rejected. " + safe(invalid.getMessage())); }
         }

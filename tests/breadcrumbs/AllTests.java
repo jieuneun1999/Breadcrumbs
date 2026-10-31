@@ -34,5 +34,11 @@ public final class AllTests {
         breadcrumbs.b5.HashCliTest.run();
         breadcrumbs.b5.CorruptionTest.run();
         System.out.println("PASS: all B5 groups (" + (breadcrumbs.b4.Checks.count() - b5Start) + " assertions)");
+        int b6Start = breadcrumbs.b4.Checks.count();
+        breadcrumbs.b6.TrieTest.run();
+        breadcrumbs.b6.SearchTest.run();
+        breadcrumbs.b6.BoundsTest.run();
+        breadcrumbs.b6.SearchCliTest.run();
+        System.out.println("PASS: all B6 groups (" + (breadcrumbs.b4.Checks.count() - b6Start) + " assertions)");
     }
 }
