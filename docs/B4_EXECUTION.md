@@ -62,7 +62,7 @@ Save upgrade the record; genuine v1 fixture is protected under tests/fixtures.
 - [x] Drift/freshness and nine-rule audit, formula/uncertainty tests.
 - [x] Retrieval, resume/handoff/export and guided CLI integration.
 - [x] A–F runtime scenarios, full regression, safety/quality review.
-- [ ] Documentation, focused commits, remote readback and stacked PR.
+- [x] Documentation, focused commits, remote readback and stacked PR.
 
 Blocking work: reference schema and compatibility before reporting. Independent
 workstreams: none delegated; coupled service units verified sequentially. Shared
@@ -181,10 +181,24 @@ the stacked PRs unmerged. Publication/session checkpoint follows below.
 ## Session checkpoint
 
 Functional commit: `e981c5bc43f27fdb3b505b100350db22a2219e9a`.
-Implementation is complete and locally verified. The documentation/evidence commit
-preserves the exact exercised source hashes and A–F transcripts. B4 publication is
-in progress on `feat/b4-context-audit-drift-handoff`, stacked on B3's verified
-`5000974f2fb005b262ad5b9f125bc986050992f8`. No merge is authorized.
+Implementation is complete and verified. Evidence/session commit
+`9b52a98999dacc81aa530a79529ecdab4b4dbf6b` preserves the exact exercised source
+hashes and A–F transcripts. [PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4)
+is open, non-draft and unmerged, with GitHub reporting mergeable. It targets B3's
+verified `5000974f2fb005b262ad5b9f125bc986050992f8`. Remote readback matches the
+published checkpoint; main remains `d1f13c2bb84c9e0841e3b204e32cdbc403b78613`.
+No merge is authorized. This final documentation-only follow-up records those side effects.
+
+The owner's requested brief progress summary was posted through Alagad ni Mae to
+the existing Breadcrumbs dev-updates channel at 2026-10-31T05:05:30.995Z, with no
+mentions. Readback returned the exact message and link:
+[Discord B4 update](https://discord.com/channels/1565343957708181586/1565415507421691934/1565954853023391815).
+No channel, permission, milestone topic or unrelated message was changed.
+
+Final state: **B4 DEMO_READY**, self-reviewed, no unresolved failing local gates.
+Unverified platform/release boundaries above remain explicit. No B5 work began.
+Owner choices are CONTINUE with the next scoped B5 prompt, CHANGE after review,
+RELEASE through a separately authorized release packet, or STOP with this saved checkpoint.
 
 For the next chat: read README, Batch Guide, this record and B4_POLICY_AND_STORAGE,
 then verify live branch/PR heads before starting the owner's next batch. B5 Graph

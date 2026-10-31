@@ -8,6 +8,10 @@ Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ consol
 
 ## Build, run, and test
 
+[Review B4 in PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4), stacked on
+the unmerged B3 branch. The [session checkpoint](docs/B4_EXECUTION.md#session-checkpoint)
+records verified state, limits and the next-batch handoff.
+
 Install or use an existing JDK 17+ with `java` and `javac` on PATH. No Maven,
 Gradle, database, IDE, or external dependency is required. From Windows CMD:
 

@@ -125,6 +125,8 @@ creation, JDK 17 runtime, Unix and instructor-machine execution remain unverifie
 Accepted branding and frozen v1.2 specs are unchanged. [B4 execution](B4_EXECUTION.md),
 [policy/schema](B4_POLICY_AND_STORAGE.md) and [evidence](evidence/b4/README.md) record
 decisions and limitations. B5–B7 remain NOT_STARTED; no release/merge acceptance.
+[PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4) is open/unmerged and
+stacked on B3. Functional commit `e981c5b`; source-bound evidence/session `9b52a98`.
 
 ## B5 — Graph and Hash (separate internal PRs)
 
