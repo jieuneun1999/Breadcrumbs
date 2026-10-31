@@ -1,0 +1,22 @@
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+PASS: B3 actual storage junction rejection
+PASS: B3 continuity/storage (65 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+PASS: B4 audit policy and scoring
+PASS: B4 drift classification and uncertainty
+PASS: B4 actual Windows export junction rejection
+PASS: B4 workflow, references, storage migration and safe export
+PASS: B4 actual project CLI flows
+PASS: all B4 test groups (187 assertions)

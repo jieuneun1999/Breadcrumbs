@@ -112,6 +112,20 @@ Combine M2/M4/M5 only once inspection and durable checkpoints exist. Reconcile l
 
 **Exit:** Deterministic fixtures with conflicting same-ID status, unknowns, drift, and handoff provenance.
 
+**B4 implementation update (2026-10-31): DEMO_READY on Windows/JDK 25 with
+Java 17-target compilation.** Nine-rule audit and separate coverage/readiness,
+guided present reviews, immutable consented later observations, reliable/ambiguous/
+unknown drift, checkpoint-referenced freshness, explained native DLL retrieval
+and previewed create-only Markdown/text handoff are implemented. Version 1 remains
+readable; genuine pre-B4 fixtures prove explicit version-2 upgrade without reference
+or high-water loss. Final Windows verification passes 4,450 suite assertions
+(4,263 unchanged B1–B3 + 187 B4), plus 55 assertions across separate-process A–F
+scenarios. Junction/ACL and external-directory CMD launch pass. Symbolic-link
+creation, JDK 17 runtime, Unix and instructor-machine execution remain unverified.
+Accepted branding and frozen v1.2 specs are unchanged. [B4 execution](B4_EXECUTION.md),
+[policy/schema](B4_POLICY_AND_STORAGE.md) and [evidence](evidence/b4/README.md) record
+decisions and limitations. B5–B7 remain NOT_STARTED; no release/merge acceptance.
+
 ## B5 — Graph and Hash (separate internal PRs)
 
 Implement custom Graph nodes, directed adjacency, declared task dependencies, BFS/DFS, cycle handling, and impact analyses. Test isolated/disconnected/diamond/cycle/cross-workspace cases. Then implement custom Hash Table buckets and chaining, collision, negative hashing, resize, lookup/removal, and index rebuild. Graph/Hash are derived/support structures: they must not diverge from canonical workspace/checkpoint state. **Do not merge both untested implementations into a single opaque Codex change.**
@@ -141,7 +155,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
 | B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [192 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md), [stacked PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) |
 | B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
-| B4 | NOT_STARTED | — |
+| B4 | DEMO_READY on Windows/JDK 25; evidence-driven context, drift and handoff | [4,450 suite + 55 A–F assertions, original v1 compatibility and platform limits](B4_EXECUTION.md) |
 | B5 | NOT_STARTED | — |
 | B6 | NOT_STARTED | — |
 | B7 | NOT_STARTED | — |

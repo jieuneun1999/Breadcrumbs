@@ -1,0 +1,23 @@
+
+       .-~~~~-.         Breadcrumbs / project continuity
+     .' / / /  '.
+    / .-====-.  _)       _   _   _   _   _   _   _            _   __
+   | :######:  (_  .    |_) |_) |_  |_| | \ /   |_) | | |\/| |_) (_
+   | :######:   _)   .  |_) | \ |_  | | |_/ \_  | \ |_| |  | |_) __)
+    '---------'  .  .
+  Leave context behind. Pick up where work stopped.
+
+  [v] Storage: Ready
+  [v] Saved projects: 0
+  [i] Persistence: opt-in per workspace.
+  [i] Opening saved work never scans or executes source projects.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+breadcrumbs > Goodbye.

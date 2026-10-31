@@ -1,0 +1,43 @@
+Started: 2026-10-31T12:57:18.0870773+08:00
+OS: Microsoft Windows NT 10.0.19045.0
+PASS: Windows CMD production build | exit 0
+PASS: Strict Java 17 test compilation | exit 0
+PASS: Synthetic Windows junction creation | exit 0
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+PASS: B3 actual storage junction rejection
+PASS: B3 continuity/storage (65 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+PASS: B4 audit policy and scoring
+PASS: B4 drift classification and uncertainty
+PASS: B4 actual Windows export junction rejection
+PASS: B4 workflow, references, storage migration and safe export
+PASS: B4 actual project CLI flows
+PASS: all B4 test groups (187 assertions)
+B4 AûF process verification
+Started: 2026-10-31T04:57:33.375352400Z
+OS: Windows 10 | Java: 25
+PASS A: new-empty B0, nine-rule audit, baseline-only report, zero checkpoints.
+PASS B: same-ID conflict, both locators, skip/cancel, no fabricated winner/outcome; source hashes unchanged.
+PASS C: native CP save/restart, no automatic scan, consented scans, unrelated FRESH versus referenced STALE; source bytes unchanged by app.
+PASS D: real duplicate-hash two-to-two rename remains AMBIGUOUS_RENAME.
+PASS E: three native DLL checkpoints, deterministic explained ranking and exact preview export with original source references/warnings.
+PASS F: genuine pre-B4 imported v1 fixture, read-only open, explicit v2 save, separate-process restart; B0/CP/evidence/counter retained.
+Assertions: 55
+Fixtures/output: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b4-scenarios\run-5155024042723035543
+Completed: 2026-10-31T04:57:40.794353900Z
+
+PASS: Windows launcher by absolute path from external directory | exit 0
+PASS: source/test/script hashes unchanged during verification
+Completed: 2026-10-31T12:57:44.6213756+08:00

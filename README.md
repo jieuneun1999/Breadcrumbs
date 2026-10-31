@@ -2,9 +2,9 @@
 
 **Leave context behind. Pick up where work stopped.**
 
-Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1-B3 provide a custom DLL sandbox, safe initial-project baseline, confirmed project checkpoints and local restart continuity. Later batches add drift comparison and portable handoffs.
+Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1–B4 provide a custom DLL sandbox, safe initial-project baseline, confirmed checkpoints, local restart continuity, evidence audit, consented drift comparison and portable handoffs.
 
-> **Status: B3 DEMO_READY on Windows with owner-accepted JDK 25, targeting Java 17.** The 2026-10-31 publication check passes 4,263 assertions with junction fixtures. Separate Java processes demonstrate B0/checkpoint restart, source-gone import restoration, workspace isolation and corrupt-load handling. On 2026-10-31 the owner accepted the current terminal visual checkpoint for saving and PR review, with further refinement possible. See [B3 execution and evidence](docs/B3_EXECUTION.md) and [CLI screenshots and replay](docs/evidence/terminal-visual/README.md). Actual JDK 17 runtime and instructor-machine execution remain unverified. B4-B7 remain unimplemented. Feature PRs remain unmerged.
+> **Status: B4 DEMO_READY on Windows/JDK 25, targeting Java 17.** The final Windows harness passes **4,450 assertions** across unchanged B1–B3 tests and B4, plus **55 separate-process A–F assertions**. B4 adds audit, immutable later observations, referenced freshness, deterministic retrieval and previewed handoff export with genuine B3 storage compatibility. See [B4 execution](docs/B4_EXECUTION.md), [retained evidence](docs/evidence/b4/README.md) and [policy/storage contract](docs/B4_POLICY_AND_STORAGE.md). The accepted [CLI artwork/screenshots](docs/evidence/terminal-visual/README.md) are preserved. Actual JDK 17 runtime, Unix and instructor-machine execution remain unverified. B5–B7 are not implemented. Feature PRs remain unmerged.
 
 ## Build, run, and test
 
@@ -14,6 +14,7 @@ Gradle, database, IDE, or external dependency is required. From Windows CMD:
 ```bat
 run.bat
 scripts\test.bat
+scripts\test-b4.bat
 run.bat --dsa < tests\cli-demo-input.txt
 run.bat --no-color
 run.bat "--storage-root=C:\Temp\Breadcrumbs Demo" --color=always
@@ -47,6 +48,7 @@ PowerShell and writes transcripts and source hashes under `build/verification`:
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-windows.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b2-windows.ps1
 powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b3-windows.ps1
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File scripts/verify-b4-windows.ps1
 ```
 
 The execution policy override applies only to that process. The application and
@@ -65,7 +67,7 @@ Opening a project never scans its original folder or executes source commands.
 The active-project menu offers B0/source details, checkpoint creation, latest
 checkpoint, forward/backward history, Save, switching, information and DLL diagnostics.
 Creation collects objective, progress, an explicit `UNKNOWN`/`NONE_REPORTED`/`BLOCKED`
-blocker state, next actions, decisions/rationale, owner and selected B0 evidence IDs.
+blocker state, next actions, decisions/rationale, owner and selected current-observation evidence IDs.
 Blank optional fields stay `UNKNOWN`. Review the preview and type `yes` to append.
 Declining leaves the DLL and next ID unchanged. The first ID is `CP-000001`.
 IDs continue from a persisted high-water counter, independently of list size.
@@ -77,8 +79,71 @@ Its workspace, original snapshot, previous checkpoint and evidence IDs are valid
 Source-reported claims retain their original verification, locators and SHA-256
 even when a person confirms their present assessment. Saving a checkpoint does
 not run tests or rehash source files. Restored context is a **saved observation**;
-source freshness remains `UNKNOWN`, including when its original folder disappears.
-Drift checks and portable handoff export belong to B4.
+live source freshness remains `UNKNOWN` until an explicitly consented scan.
+Saved observations support B4 comparisons without touching the source folder.
+
+## Audit, review, drift and handoff (B4)
+
+The active-project menu adds:
+
+| Option | Behavior |
+| --- | --- |
+| 9 Context audit | Nine deterministic source-linked findings, priority gap, four dimensions, context score, assessable coverage and readiness |
+| 10 Guided review | At most two targeted context/conflict/next-action questions; confirm/reject/skip/cancel; original evidence remains intact |
+| 11 Consent and rescan | Bounded read-only B2 inspector; append immutable later observation; never replace B0 or old checkpoint references |
+| 12 Compare observations | B0 or selected checkpoint versus latest saved observation; modified/added/deleted/unchanged/exact/ambiguous/unknown results |
+| 13 Relevant checkpoints | Explained deterministic evidence-overlap, freshness and recency ranking derived from the custom DLL |
+| 14 Resume / handoff | Latest/selected checkpoint or B0; terminal preview, optional explicit safe create-only .md/.txt export |
+| 15 Applicability | Explicit solo/team coordination setting; no profile silently assumes solo work |
+
+**This does not measure project completion or quality.** The nine rule weights
+total 100; dimensions use 40/25/20/15. UNKNOWN/UNSUPPORTED reduce assessable
+coverage and are excluded from score, while N/A is excluded from applicability.
+Coverage below 60% yields INSUFFICIENT_EVIDENCE. A score of at least 80 can mean
+READY_TO_RESUME only without critical drift/conflict/next-action or native freshness
+gaps. Initial B0 freshness is N/A; absence of native history is a separate fact.
+See [exact formulas, thresholds and schema](docs/B4_POLICY_AND_STORAGE.md).
+
+Unreviewed literal source context is PARTIAL. A source saying tests passed stays
+SOURCE_REPORTED even after current-context confirmation. Unchecked task markers
+and literal Next Steps supply candidate continuations. Confirming `NOT_DOCUMENTED`
+records a documentation gap; blank or unrecognized input stays UNKNOWN. No owners,
+dependencies, urgency or successful outcomes are invented.
+
+Opening never rescans. Option 11 explains the root and scan limits and needs
+`yes`. Save B4 observations/reviews explicitly with option 5; dirty exit/switch
+guards still apply. Existing consented checkpoint/EOF saves also retain them.
+Checkpoint-referenced freshness is separate from workspace drift: an unrelated
+changed file does not stale a checkpoint. Equal unmatched hashes establish a
+rename only for a unique one-to-one match. Partial coverage cannot prove deletion.
+
+Without a selected checkpoint, the report says **Baseline context report — not a
+historical resume**. Historical reports show immutable recorded context, original
+locators/hashes, present assessment, later changes, uncertainty and audit. Raw
+imported snippets are INTERNAL and omitted by default; the optional reviewed
+snippet preview includes only explicitly confirmed claims. Export needs a reviewed
+preview, existing absolute destination outside imported root/app state, safe filename
+and final `yes`. No overwrite is offered; links, traversal, stale previews and
+unsafe destinations are rejected. The terminal copy works without file writes.
+
+For reproducible A–F demonstrations and retained output:
+
+```text
+scripts\test-b4.bat
+```
+
+The JDK-only manual equivalent, after building production classes into `build/app`:
+
+```text
+javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build/test -sourcepath "src;tests" tests/breadcrumbs/b4/B4Tests.java tests/breadcrumbs/b4/B4Scenarios.java
+java -cp build/test breadcrumbs.b4.B4Tests
+java -cp build/test breadcrumbs.b4.B4Scenarios
+```
+
+Separate `Main` processes prove baseline-only reports, same-ID conflicts,
+checkpoint restart with consented drift, duplicate-hash rename ambiguity, relevant
+retrieval/export and genuine pre-B4 version-1 read/upgrade/restart. Fixtures and
+raw process transcripts are retained under `build/b4-scenarios`.
 
 ## Storage and terminal appearance
 
@@ -95,12 +160,18 @@ and retain the in-memory state for retry. Switching and exit require Save or an
 explicit discard when dirty. EOF tries an enabled save and warns if unsaved state
 will be lost. In session-only mode, nothing survives shutdown.
 
-The [versioned UTF-8 codec](docs/B3_STORAGE_FORMAT.md) preserves baseline, policy,
+The [versioned UTF-8 codec](docs/B4_POLICY_AND_STORAGE.md) preserves baseline, policy,
 inventory, original claims, reviews, native chronology and next ID. It uses Base64
 fields and SHA-256 integrity, not Java object serialization. It is **not encrypted
 or authenticated**. Store only appropriate local context. Conservative sensitive
 markers are rejected, but that is not a universal secret detector. Original
 documents, binaries, credentials and unrestricted snippets are never copied.
+Valid B3 version-1 records remain readable and are never upgraded on load. B4
+mutations enable version 2; the next explicit/consented save persists observations
+and current reviews while retaining original B0/checkpoint references. Up to 20
+later observations and 2,000 reviews are supported within the existing 8 MiB total
+file bound. [Two genuine original v1 fixtures](tests/fixtures/b3-v1/README.md) protect
+compatibility rather than regenerating old data with a new writer.
 Writes validate the complete data, use a temporary sibling, require atomic file
 replacement and verify readback. Unsupported atomic moves fail without the weaker
 replacement fallback. No power-loss durability, backup rotation, concurrent writer
@@ -117,7 +188,7 @@ needs an interactive console and a known terminal; on Windows this includes
 Windows Terminal/ANSICON. Terminal palettes can vary. No artificial delays,
 shell VT setup, animation or GUI is required.
 
-Normal output uses ASCII only. Below 80 columns, the wordmark stacks; below 48,
+Startup artwork uses ASCII in normal mode; context/source text uses UTF-8. Below 80 columns, the wordmark stacks; below 48,
 the name becomes plain text. Trusted startup labels wrap down to 28 columns.
 `COLUMNS` requests the layout width; unknown dimensions use 80. This is not live
 window-size detection. Long project details/history are not a full-screen layout.
@@ -390,9 +461,10 @@ Class files target Java 17 major version 61. Actual JDK 17 runtime execution,
 Unix execution, and the instructor's laptop remain unverified. This is the B1
 academic DLL foundation, not completion of M0-M9 or product release acceptance.
 Directory inspection/B0 and limited explicit-ID first-import review are available
-in B2 as described above. B3 adds basic persistence described below. Full reconciliation/audit scoring, drift,
-handoff, Graph/Hash/Trie, advanced document parsers, Git integration, AI, voice,
-and crash recovery remain in later batches. There are no known failing B1 tests.
+in B2 as described above. B3 adds basic persistence; B4 adds audit, current review,
+drift, retrieval and portable handoff. Graph/Hash/Trie, advanced document parsers,
+Git integration, AI, voice and full crash recovery remain in later batches.
+There are no known failing B1 tests.
 
 ## Start here
 
@@ -426,7 +498,7 @@ The **team-approved implementation sequence** is [Batch Guide v1.0](docs/BREADCR
 | **B1** | Java 17 CLI scaffold, manually implemented Doubly Linked List, five DEMO checkpoints, six+ operations and tests | PASS / DEMO_READY on owner-accepted Windows/JDK 25; B2 foundation ready |
 | **B2** | Three entry modes, read-only project folder inspection and B0 baseline | DEMO_READY on Windows/JDK 25; platform limits disclosed |
 | **B3** | User-confirmed checkpoints, local TXT save/load, restart continuity and branded startup | DEMO_READY on Windows/JDK 25; basic persistence only |
-| **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | NOT_STARTED |
+| **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | DEMO_READY on Windows/JDK 25; 4,450 suite + 55 process assertions; limits disclosed |
 | **B5** | Manually implemented Directed Graph and Hash Table in separate testable units | NOT_STARTED |
 | **B6** | Custom Trie + Hash-backed Inverted Index | NOT_STARTED |
 | **B7** | Full crash recovery, end-to-end hardening and selectively packaged optional integrations | NOT_STARTED |
