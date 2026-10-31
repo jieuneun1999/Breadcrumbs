@@ -1,0 +1,5 @@
+ts	phase	decision	why	evidence	result
+2026-11-01T02:20:00+08:00	frame	Use five gated stages from the clean B6 head	Storage and provenance must pass before dependent workflows	docs/B7_EXECPLAN.md	implementation pending
+2026-11-01T02:35:07.2515837+08:00	frame	The first row's time was an approximate label; this is the observed ledger timestamp	Do not treat the earlier timestamp as measured evidence	docs/B7_DECISIONS.tsv	first-row timestamp superseded
+2026-11-01T02:35:07.2515837+08:00	owner-steer	Add shared theme colors and truthful operation feedback before recording	Owner supplied an additive requirement without replacing B7	docs/B7_EXECPLAN.md	queued after B7A correctness gate
+2026-11-01T02:37:29.5338070+08:00	B7A	Recovery stage passed full prior regression and actual interrupted-process recovery	Later workflows may now depend on generation saves	docs/evidence/b7/a/tests.txt	VERIFIED for synthetic Windows/JDK25

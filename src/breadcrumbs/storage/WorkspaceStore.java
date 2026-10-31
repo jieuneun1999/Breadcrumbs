@@ -8,16 +8,28 @@ import java.io.InputStream;
 
 /** App-owned files only. No method inspects or executes the saved source-root reference. */
 public final class WorkspaceStore {
+    public enum RecoveryPoint { BEFORE_STAGE, DURING_WRITE, BEFORE_VALIDATION, BEFORE_PROMOTION, AFTER_PROMOTION, DURING_POINTER, STARTUP_READ, CORRUPT_READ, PRUNING }
+    @FunctionalInterface public interface RecoveryFault { void at(RecoveryPoint point) throws IOException; }
+    public record RecoveryCandidate(String generation, java.time.Instant recordedAt, boolean valid, int checkpoints, String problem) { }
+    public RecoveryCandidate[] recoveryCandidates(String id) throws IOException { return new GenerationStore(this).candidates(id); }
+    public WorkspaceState readRecovery(String id, String generation) throws IOException { return new GenerationStore(this).read(id, generation); }
+    public WorkspaceState recover(String id, String generation, boolean approved) throws IOException { return new GenerationStore(this).recover(id, generation, approved); }
+    public void prune(String id, int keep, boolean approved) throws IOException { new GenerationStore(this).prune(id, keep, approved); }
     public record SavedWorkspace(String id, String name, String problem) { }
     private final Path root;
+    private final RecoveryFault fault;
 
-    public WorkspaceStore(Path root) {
+    public WorkspaceStore(Path root) { this(root, point -> { }); }
+    public WorkspaceStore(Path root, RecoveryFault fault) {
+        if (fault == null) { throw new IllegalArgumentException("Recovery fault observer required."); }
+        this.fault = fault;
         this.root = root.toAbsolutePath().normalize();
         if (this.root.getParent() == null || this.root.toString().startsWith("\\\\")) {
             throw new IllegalArgumentException("Choose a local app storage subdirectory, not a drive/network root.");
         }
     }
     public Path root() { return root; }
+    void at(RecoveryPoint point) throws IOException { fault.at(point); }
 
     public void initialize() throws IOException {
         checkAncestors(root);
@@ -58,7 +70,11 @@ public final class WorkspaceStore {
     }
 
     public WorkspaceState load(String id) throws IOException {
-        Path file = stateFile(id);
+        at(RecoveryPoint.STARTUP_READ);
+        return new GenerationStore(this).load(id);
+    }
+    WorkspaceState readState(Path file, String id) throws IOException {
+        at(RecoveryPoint.CORRUPT_READ);
         checkAncestors(file);
         BasicFileAttributes attrs = attributes(file);
         if (!attrs.isRegularFile() || attrs.size() > WorkspaceCodec.MAX_BYTES) { throw new IOException("Invalid workspace file type or size."); }
@@ -72,6 +88,9 @@ public final class WorkspaceStore {
     }
 
     public void save(WorkspaceState state) throws IOException {
+        save(state, false);
+    }
+    void save(WorkspaceState state, boolean recovery) throws IOException {
         state.markUnsaved();
         byte[] bytes = WorkspaceCodec.encode(state);
         // Validate the exact transport before it can replace an existing record.
@@ -88,35 +107,24 @@ public final class WorkspaceStore {
         }
         Files.createDirectories(target.getParent());
         checkDirectory(target.getParent());
-        if (Files.exists(target, LinkOption.NOFOLLOW_LINKS)) {
+        if (!recovery && (Files.exists(target, LinkOption.NOFOLLOW_LINKS)
+                || Files.exists(target.getParent().resolve("current.txt"), LinkOption.NOFOLLOW_LINKS)
+                || Files.exists(target.getParent().resolve("recovery"), LinkOption.NOFOLLOW_LINKS))) {
             // A corrupt previous file requires manual recovery; do not silently erase its evidence.
             load(state.activeBaseline().workspaceId());
         }
-        Path temp = Files.createTempFile(target.getParent(), "state-", ".tmp");
-        try {
-            Files.write(temp, bytes, StandardOpenOption.WRITE, StandardOpenOption.TRUNCATE_EXISTING, LinkOption.NOFOLLOW_LINKS);
-            checkAncestors(target);
-            try {
-                Files.move(temp, target, StandardCopyOption.ATOMIC_MOVE, StandardCopyOption.REPLACE_EXISTING);
-            } catch (AtomicMoveNotSupportedException unsupported) {
-                // B3 fails closed instead of deleting the last good file with a weaker fallback.
-                throw new IOException("Atomic replacement unavailable. Workspace remains unsaved; use another filesystem.");
-            }
-            if (!WorkspaceCodec.digest(bytes).equals(WorkspaceCodec.digest(readExact(target)))) {
-                throw new IOException("Save readback mismatch. Workspace remains unsaved.");
-            }
-            state.markSaved();
-        } finally { Files.deleteIfExists(temp); }
+        new GenerationStore(this).commit(state.activeBaseline().workspaceId(), bytes);
+        state.markSaved();
     }
 
-    private byte[] readExact(Path target) throws IOException {
+    byte[] readExact(Path target) throws IOException {
         checkAncestors(target);
         try (InputStream in = Files.newInputStream(target, LinkOption.NOFOLLOW_LINKS)) {
             return in.readNBytes(WorkspaceCodec.MAX_BYTES + 1);
         }
     }
 
-    private Path stateFile(String id) {
+    Path stateFile(String id) {
         validateId(id);
         return root.resolve("workspaces").resolve(id).resolve("state.txt");
     }
@@ -127,15 +135,15 @@ public final class WorkspaceStore {
         }
     }
 
-    private static BasicFileAttributes attributes(Path path) throws IOException {
+    static BasicFileAttributes attributes(Path path) throws IOException {
         BasicFileAttributes attrs = Files.readAttributes(path, BasicFileAttributes.class, LinkOption.NOFOLLOW_LINKS);
         if (attrs.isSymbolicLink() || attrs.isOther()) { throw new IOException("Linked/reparse storage paths are not allowed."); }
         return attrs;
     }
-    private static void checkDirectory(Path path) throws IOException {
+    static void checkDirectory(Path path) throws IOException {
         if (!attributes(path).isDirectory()) { throw new IOException("Storage path is not a directory."); }
     }
-    private static void checkAncestors(Path path) throws IOException {
+    static void checkAncestors(Path path) throws IOException {
         Path current = path.getRoot();
         for (Path part : path) {
             current = current.resolve(part);

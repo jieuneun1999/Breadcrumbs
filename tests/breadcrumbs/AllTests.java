@@ -40,5 +40,8 @@ public final class AllTests {
         breadcrumbs.b6.BoundsTest.run();
         breadcrumbs.b6.SearchCliTest.run();
         System.out.println("PASS: all B6 groups (" + (breadcrumbs.b4.Checks.count() - b6Start) + " assertions)");
+        int b7Start = breadcrumbs.b4.Checks.count();
+        breadcrumbs.storage.B7RecoveryTest.run();
+        System.out.println("PASS: B7A recovery (" + (breadcrumbs.b4.Checks.count() - b7Start) + " assertions)");
     }
 }

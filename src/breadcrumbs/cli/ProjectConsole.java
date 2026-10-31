@@ -37,6 +37,8 @@ public final class ProjectConsole {
             boolean running = true;
             while (running) {
                 startup.menu();
+                output.println("[5] Inspect / recover saved generations");
+                output.println("[6] Continue active project in memory");
                 try {
                     switch (read("breadcrumbs > ")) {
                         case "0" -> running = !leave();
@@ -44,7 +46,15 @@ public final class ProjectConsole {
                         case "2" -> create();
                         case "3" -> project();
                         case "4" -> new ConsoleMenu(input, output).run();
-                        default -> output.println("Choose 0-4.");
+                        case "5" -> {
+                            WorkspaceState recovered = new RecoveryConsole(this::read, output, store).run(this::leave);
+                            if (recovered != null) { state.replaceWith(recovered); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true; status(); }
+                        }
+                        case "6" -> {
+                            persistence = false;
+                            output.println("Explicit in-memory mode. Active context retained; unsaved changes will not survive exit. Choose Create/import if no project is active.");
+                        }
+                        default -> output.println("Choose 0-4 for project tools, 5 for recovery, or 6 for in-memory operation.");
                     }
                 } catch (IllegalArgumentException invalid) {
                     output.println("Operation cancelled or rejected. " + safe(invalid.getMessage()));
