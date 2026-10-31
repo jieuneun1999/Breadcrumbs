@@ -4,9 +4,51 @@
 
 Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1–B4 provide a custom DLL sandbox, safe initial-project baseline, confirmed checkpoints, local restart continuity, evidence audit, consented drift comparison and portable handoffs.
 
-> **Status: B4 DEMO_READY on Windows/JDK 25, targeting Java 17.** The final Windows harness passes **4,450 assertions** across unchanged B1–B3 tests and B4, plus **55 separate-process A–F assertions**. B4 adds audit, immutable later observations, referenced freshness, deterministic retrieval and previewed handoff export with genuine B3 storage compatibility. See [B4 execution](docs/B4_EXECUTION.md), [retained evidence](docs/evidence/b4/README.md) and [policy/storage contract](docs/B4_POLICY_AND_STORAGE.md). The accepted [CLI artwork/screenshots](docs/evidence/terminal-visual/README.md) are preserved. Actual JDK 17 runtime, Unix and instructor-machine execution remain unverified. B5–B7 are not implemented. Feature PRs remain unmerged.
+> **Status: B4 DEMO_READY on Windows/JDK 25, targeting Java 17.** The final Windows harness passes **4,450 assertions** across unchanged B1–B3 tests and B4, plus **55 separate-process A–F assertions**. B4 adds audit, immutable later observations, referenced freshness, deterministic retrieval and previewed handoff export with genuine B3 storage compatibility. See [B4 execution](docs/B4_EXECUTION.md), [retained evidence](docs/evidence/b4/README.md) and [policy/storage contract](docs/B4_POLICY_AND_STORAGE.md). The accepted [CLI artwork/screenshots](docs/evidence/terminal-visual/README.md) are preserved. Actual JDK 17 runtime, Unix and instructor-machine execution remain unverified. B5A/B5B are implemented; B6–B7 remain unimplemented. Feature PRs remain unmerged.
 
 ## Build, run, and test
+
+B5A and B5B add explicitly confirmed work items/dependencies and manually coded
+Graph/Hash structures. [B5A PR #5](https://github.com/jieuneun1999/Breadcrumbs/pull/5)
+is stacked on B4. [B5A execution](docs/B5A_EXECUTION.md),
+[B5B execution](docs/B5B_EXECUTION.md), [format3](docs/B5_STORAGE.md) and
+[actual CLI evidence](docs/evidence/b5/README.md) describe the independently tested
+stages. The final direct-JDK Windows run passes5540 suite assertions plus10 B5
+and55 original B4 separate-process assertions. The recovered CMD batch path and direct JDK commands below pass.
+
+Project option16 opens WorkItems/Dependencies. Create records, explicitly confirm
+prerequisite→dependent links, remove links, inspect adjacency, BFS/DFS, potential
+impact and validate. Source checkboxes never automatically create tasks or edges.
+Each mutation previews identities and requires confirmation. Save explicitly before
+exiting. Graph changes retain immutable revisions; checkpoints remember their revision.
+Old checkpoints report NOT RECORDED. No task edit/delete/status-update UI is offered.
+
+Project option17 opens the synthetic Hash sandbox and canonical-index diagnostics.
+Insert/update/get/remove, demonstrate Aa/BB collisions and resizing, inspect buckets,
+validate, compare canonical/indexed checkpoint lookup and disable/rebuild indexing.
+Demo values never enter actual project history. Manual separate chaining uses
+load threshold0.75; expected lookup/insert/delete O(1), collision worst O(n),
+resize O(n), table validation worst O(n²). Graph traversal O(V+E), plus start
+lookup O(V) linear or expected O(1) indexed. Rebuild and canonical validation costs
+are disclosed in the execution records. The DLL remains authoritative for chronology.
+
+New tasks/edges opt into storage version3 only when saved. Valid genuine v1/v2
+records remain readable without silent upgrade. Max100 tasks,500 edges and100
+immutable revisions apply within the existing8MiB total bound. No Graph status
+propagation, dependency inference, Graph-owned task store or persisted Hash cache.
+
+To reproduce B5 through JDK tools, build Main as below, then:
+
+```text
+javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build/test -sourcepath "src;tests" tests/breadcrumbs/AllTests.java tests/breadcrumbs/b5/ProcessScenarios.java tests/breadcrumbs/b4/B4Scenarios.java
+java -cp build/test breadcrumbs.AllTests
+java -cp build/test breadcrumbs.b5.ProcessScenarios
+java -cp build/test breadcrumbs.b4.B4Scenarios
+```
+
+`scripts\test-b5.bat` contains the same commands plus production compilation.
+B6 search structures and B7 recovery remain unimplemented. Accepted branding and
+frozen v1.2 specifications are unchanged. No merge/release/Discord update performed.
 
 [Review B4 in PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4), stacked on
 the unmerged B3 branch. The [session checkpoint](docs/B4_EXECUTION.md#session-checkpoint)
@@ -503,7 +545,7 @@ The **team-approved implementation sequence** is [Batch Guide v1.0](docs/BREADCR
 | **B2** | Three entry modes, read-only project folder inspection and B0 baseline | DEMO_READY on Windows/JDK 25; platform limits disclosed |
 | **B3** | User-confirmed checkpoints, local TXT save/load, restart continuity and branded startup | DEMO_READY on Windows/JDK 25; basic persistence only |
 | **B4** | Evidence audit, drift detection, checkpoint retrieval and handoff | DEMO_READY on Windows/JDK 25; 4,450 suite + 55 process assertions; limits disclosed |
-| **B5** | Manually implemented Directed Graph and Hash Table in separate testable units | NOT_STARTED |
+| **B5** | Manually implemented Directed Graph and Hash Table in separate testable units | B5A/B5B DEMO_READY via direct JDK; platform limits disclosed |
 | **B6** | Custom Trie + Hash-backed Inverted Index | NOT_STARTED |
 | **B7** | Full crash recovery, end-to-end hardening and selectively packaged optional integrations | NOT_STARTED |
 

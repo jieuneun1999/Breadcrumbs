@@ -14,6 +14,10 @@ public final class WorkspaceState {
     private ContextReview[] reviews = new ContextReview[0];
     private boolean versionTwo;
     private boolean soloOwner;
+    private long epoch;
+    private final breadcrumbs.index.WorkspaceIndexes indexes = new breadcrumbs.index.WorkspaceIndexes(this);
+    public breadcrumbs.index.WorkspaceIndexes indexes() { return indexes; }
+    public long epoch() { return epoch; }
     private DependencyState dependencies = new DependencyState(this);
     public DependencyState dependencies() { return dependencies; }
 
@@ -40,11 +44,12 @@ public final class WorkspaceState {
         versionTwo = false;
         soloOwner = false;
         dependencies = new DependencyState(this);
+        epoch++;
     }
 
     public int nextCheckpointNumber() { return nextCheckpointNumber; }
     public boolean dirty() { return dirty; }
-    public void markUnsaved() { dirty = true; }
+    public void markUnsaved() { dirty = true; epoch++; }
     public void markSaved() { dirty = false; }
 
     /** Only a completely validated detached state may replace the active workspace. */
@@ -53,6 +58,7 @@ public final class WorkspaceState {
         checkpoints = validated.checkpoints;
         nextCheckpointNumber = validated.nextCheckpointNumber;
         dirty = validated.dirty;
+        epoch++;
         laterObservations = validated.laterObservations.clone();
         reviews = validated.reviews.clone();
         versionTwo = validated.versionTwo;
@@ -69,7 +75,7 @@ public final class WorkspaceState {
 
     /** Explicit setting; no project profile silently implies that coordination is unnecessary. */
     public void setSoloOwner(boolean solo) { soloOwner = solo; enableVersionTwo(); }
-    public void enableVersionTwo() { versionTwo = true; dirty = true; }
+    public void enableVersionTwo() { versionTwo = true; markUnsaved(); }
 
     public String currentObservationId() {
         String id = currentObservation().scanId();
@@ -146,6 +152,7 @@ public final class WorkspaceState {
             if (evidence(currentObservationId(), id) == null) { throw new IllegalArgumentException("Unresolved checkpoint evidence."); }
         }
         checkpoints.append(checkpoint);
+        epoch++;
         nextCheckpointNumber++;
         dirty = true;
     }

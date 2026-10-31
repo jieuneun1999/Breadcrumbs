@@ -117,6 +117,7 @@ public final class ProjectConsole {
         while (!back) {
             status();
             output.println("[16] Work items / explicit dependencies");
+            output.println("[17] Hash demonstration / canonical indexes");
             output.println("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[0] Back");
             try {
                 String choice = read("project > ");
@@ -148,6 +149,7 @@ public final class ProjectConsole {
                     }
                     case "8" -> diagnostics();
                     case "16" -> new DependencyConsole(this::read, output, state).run();
+                    case "17" -> new HashConsole(this::read, output, state).run();
                     case "9", "10", "11", "12", "13", "14", "15" -> {
                         new ContextConsole(this::read, output, state, store.root()).perform(choice);
                     }

@@ -26,7 +26,13 @@ public final class AllTests {
         breadcrumbs.b4.WorkflowTest.run();
         breadcrumbs.b4.ContextConsoleTest.run();
         System.out.println("PASS: all B4 test groups (" + breadcrumbs.b4.Checks.count() + " assertions)");
+        int b5Start = breadcrumbs.b4.Checks.count();
         breadcrumbs.b5.GraphTest.run();
         breadcrumbs.b5.GraphCliTest.run();
+        breadcrumbs.b5.HashTest.run();
+        breadcrumbs.b5.IndexTest.run();
+        breadcrumbs.b5.HashCliTest.run();
+        breadcrumbs.b5.CorruptionTest.run();
+        System.out.println("PASS: all B5 groups (" + (breadcrumbs.b4.Checks.count() - b5Start) + " assertions)");
     }
 }

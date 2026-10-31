@@ -83,7 +83,9 @@ public final class HandoffService {
         }
         out.append(ContextAudit.DISCLAIMER).append("\nNo native history: ").append(audit.noNativeHistory()).append('\n');
         appendDependencies(out, state, checkpoint);
-        out.append("\n## Unknowns, limitations and privacy\nDeclared dependencies/downstream impact: UNKNOWN (Graph deferred).\n")
+        out.append(state.dependencies().current() == null
+                ? "\n## Unknowns, limitations and privacy\nDeclared dependencies/downstream impact: UNKNOWN (Graph deferred).\n"
+                : "\n## Unknowns, limitations and privacy\nDependencies above are explicit declarations, not independently verified outcomes. Undeclared relationships remain UNKNOWN.\n")
                 .append("No source commands/tests were executed. Source statements remain unverified; user confirmation is a present assessment.\n")
                 .append("Scan complete within policy: ").append(state.currentObservation().complete()).append(" | policy: ")
                 .append(state.currentObservation().policy().version()).append(' ').append(state.currentObservation().policy()).append('\n');
@@ -111,6 +113,9 @@ public final class HandoffService {
             out.append(dependency.prerequisite()).append(" -> ").append(dependency.dependent()).append(" | USER_CONFIRMED declaration: ")
                     .append(clean(dependency.declaration())).append(" | source evidence: ").append(dependency.evidenceId().isEmpty() ? "NONE (direct declaration)" : clean(dependency.evidenceId()))
                     .append(" | observation: ").append(dependency.observationId()).append(" | confirmed: ").append(dependency.confirmedAt()).append('\n');
+            if (!dependency.evidenceId().isEmpty()) {
+                evidence(out, state.evidence(dependency.observationId(), dependency.evidenceId()), false);
+            }
         }
         for (WorkItem item : revision.items()) {
             out.append(item.id()).append(" | ").append(clean(item.title())).append(" | explicit status ").append(item.status()).append(" | Potentially affected work items:");

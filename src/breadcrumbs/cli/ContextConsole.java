@@ -143,7 +143,7 @@ final class ContextConsole {
         String id = input.read("Compare from (blank=B0): ");
         var before = state.activeBaseline().snapshot();
         if (!id.isBlank() && !id.equalsIgnoreCase("B0")) {
-            Checkpoint checkpoint = state.checkpoints().findById(id);
+            Checkpoint checkpoint = state.indexes().checkpoint(id);
             if (checkpoint == null) { throw new IllegalArgumentException("Checkpoint not found."); }
             before = state.observation(checkpoint.project().snapshotId());
         }
@@ -174,7 +174,7 @@ final class ContextConsole {
     private void handoff() throws IOException {
         String selected = input.read("Checkpoint ID (blank=latest; B0=baseline context): ");
         Checkpoint checkpoint = selected.equalsIgnoreCase("B0") ? null : selected.isBlank()
-                ? state.checkpoints().getLatest() : state.checkpoints().findById(selected);
+                ? state.checkpoints().getLatest() : state.indexes().checkpoint(selected);
         if (!selected.isBlank() && !selected.equalsIgnoreCase("B0") && checkpoint == null) {
             throw new IllegalArgumentException("Checkpoint not found.");
         }

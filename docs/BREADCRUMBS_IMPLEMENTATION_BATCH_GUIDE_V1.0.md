@@ -134,6 +134,15 @@ Implement custom Graph nodes, directed adjacency, declared task dependencies, BF
 
 ## B6 — Trie + inverted index
 
+B5 update (2026-10-31): B5A independently passed Graph/provenance/v3 storage and
+full prior regression before B5B began. PR5 targets unmerged B4 at B5A5b44fbb.
+B5B adds custom separate-chaining Hash, canonical derived indexes and disabled-mode
+parity. Final direct Windows/JDK25 Java17-target verification passes5540 suite
+assertions plus10 B5/55 B4 separate-process assertions. See B5A_EXECUTION.md,
+B5B_EXECUTION.md, B5_STORAGE.md and evidence/b5. Native junction/ACL pass; actual JDK17 runtime, Unix/instructor device and symbolic-link
+creation remain unverified. Both stages DEMO_READY for direct JDK invocation;
+no merge/release or B6/B7 completion claim.
+
 Custom prefix-tree nodes and custom Hash-backed term-to-source postings; bound suggestions and extractable text. Index only evidence actually extracted; source locator and checkpoint ID must resolve to current canonical data. Require index versioning/rebuilding when files/checkpoints change and secret exclusion. This is **lexical/prefix search**, not semantic retrieval.
 
 ## B7 — Delivery hardening and optional enhancements
@@ -158,7 +167,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [192 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md), [stacked PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) |
 | B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
 | B4 | DEMO_READY on Windows/JDK 25; evidence-driven context, drift and handoff | [4,450 suite + 55 A–F assertions, original v1 compatibility and platform limits](B4_EXECUTION.md) |
-| B5 | NOT_STARTED | — |
+| B5 | B5A/B5B DEMO_READY on direct Windows/JDK25 invocation; shell limit disclosed | [B5A](B5A_EXECUTION.md), [B5B](B5B_EXECUTION.md), [source-bound evidence](evidence/b5/README.md) |
 | B6 | NOT_STARTED | — |
 | B7 | NOT_STARTED | — |
 

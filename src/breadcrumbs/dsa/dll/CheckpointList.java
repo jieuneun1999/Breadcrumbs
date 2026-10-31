@@ -6,6 +6,8 @@ public final class CheckpointList {
     private CheckpointNode head;
     private CheckpointNode tail;
     private int size;
+    private long modification;
+    public long modification() { return modification; }
 
     public void append(Checkpoint checkpoint) {
         // Finding a duplicate is O(n); the following tail-link changes are O(1).
@@ -19,6 +21,7 @@ public final class CheckpointList {
         }
         tail = node;
         size++;
+        modification++;
     }
 
     public void prepend(Checkpoint checkpoint) {
@@ -33,6 +36,7 @@ public final class CheckpointList {
         }
         head = node;
         size++;
+        modification++;
     }
 
     public void insertAt(int index, Checkpoint checkpoint) {
@@ -59,6 +63,7 @@ public final class CheckpointList {
         following.previous.next = node;
         following.previous = node;
         size++;
+        modification++;
     }
 
     public Checkpoint findById(String checkpointId) {
@@ -86,6 +91,7 @@ public final class CheckpointList {
         node.previous = null;
         node.next = null;
         size--;
+        modification++;
         return true;
     }
 

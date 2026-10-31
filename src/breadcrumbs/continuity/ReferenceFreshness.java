@@ -35,14 +35,14 @@ public final class ReferenceFreshness {
         boolean stale = false, unknown = false;
         DriftEngine.Change[] changes = new DriftEngine().compare(original, later).changes();
         for (String id : ids) {
-            EvidenceClaim claim = state.evidence(observationId, id);
+            EvidenceClaim claim = state.indexes().evidence(observationId, id);
             if (claim == null) { throw new IllegalArgumentException("Checkpoint evidence is unresolved."); }
             State freshness = State.UNKNOWN;
             String reason = "No later comparable observation; stored observation is not current verification.";
             if (claim.userSupplied()) {
                 freshness = State.NOT_APPLICABLE; reason = "Human assessment has no file fingerprint.";
             } else if (original != later) {
-                SnapshotEntry observed = DriftEngine.find(original.entries(), claim.relativePath());
+                SnapshotEntry observed = state.indexes().path(observationId, claim.relativePath());
                 if (observed == null || !observed.sha256().equals(claim.fingerprint())) {
                     reason = "Original fingerprint is unresolved.";
                 } else {

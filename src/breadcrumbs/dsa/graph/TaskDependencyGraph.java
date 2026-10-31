@@ -9,13 +9,17 @@ public final class TaskDependencyGraph {
     private final GraphVertex[] vertices = new GraphVertex[100];
     private int size;
     private int edges;
+    private boolean indexed = true;
+    private final breadcrumbs.dsa.hash.CustomHashTable<Integer> slots = new breadcrumbs.dsa.hash.CustomHashTable<>(4, 100);
+    public void setIndexed(boolean indexed) { this.indexed = indexed; }
     public record Visit(String id, int level, String via, Dependency provenance) { }
     public TaskDependencyGraph(String workspaceId) { this.workspaceId = workspaceId; }
     public int vertexCount() { return size; }
     public int edgeCount() { return edges; }
-    public void clear() { Arrays.fill(vertices, null); size = 0; edges = 0; }
+    public void clear() { Arrays.fill(vertices, null); slots.clear(); size = 0; edges = 0; }
     public boolean contains(String id) { return locate(id) >= 0; }
     private int locate(String id) {
+        if (indexed) { Integer slot = slots.get(id); return slot == null ? -1 : slot; }
         for (int i = 0; i < size; i++) { if (vertices[i].id.equals(id)) { return i; } }
         return -1;
     }
@@ -24,7 +28,7 @@ public final class TaskDependencyGraph {
             throw new IllegalArgumentException("Duplicate/foreign vertex or graph full.");
         }
         if (size > 0 && vertices[size - 1].id.compareTo(item.id()) >= 0) { throw new IllegalArgumentException("Canonical IDs must be in ascending order."); }
-        vertices[size++] = new GraphVertex(item.id());
+        vertices[size] = new GraphVertex(item.id()); slots.put(item.id(), size++);
     }
     public void addDependency(Dependency dependency) {
         int from = locate(dependency.prerequisite()), to = locate(dependency.dependent());
@@ -95,7 +99,9 @@ public final class TaskDependencyGraph {
     }
     private boolean cycle(int vertex, int[] colors) {
         colors[vertex] = 1;
+        int chain = 0;
         for (EdgeNode edge = vertices[vertex].firstOutgoing; edge != null; edge = edge.next) {
+            if (++chain > 500 || edge.target < 0 || edge.target >= size) { return true; }
             if (colors[edge.target] == 1 || colors[edge.target] == 0 && cycle(edge.target, colors)) { return true; }
         }
         colors[vertex] = 2; return false;
@@ -103,9 +109,10 @@ public final class TaskDependencyGraph {
     public boolean validate() {
         int counted = 0;
         for (int i = 0; i < size; i++) {
+            if (vertices[i] == null || slots.get(vertices[i].id) == null || slots.get(vertices[i].id) != i) { return false; }
             int last = -1, chain = 0;
             for (EdgeNode edge = vertices[i].firstOutgoing; edge != null; edge = edge.next) {
-                if (++chain > 500 || edge.target <= last || edge.target >= size || edge.target == i
+                if (++chain > 500 || edge.declaration == null || edge.target <= last || edge.target >= size || edge.target == i
                         || !workspaceId.equals(edge.declaration.workspaceId())
                         || !vertices[i].id.equals(edge.declaration.prerequisite())
                         || !vertices[edge.target].id.equals(edge.declaration.dependent())) { return false; }
