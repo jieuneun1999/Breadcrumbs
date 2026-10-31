@@ -14,20 +14,24 @@ import java.time.Instant;
 import java.util.Base64;
 import java.util.HexFormat;
 
-/** Version 1 is an ordered, named, Base64 UTF-8 field stream with an exact-byte checksum.
- * Counts precede arrays. All allocation and reference validation happens before activation.
+/** Version 1 remains byte-compatible. Version 2 adds immutable observations and current reviews.
+ * Both use ordered Base64 UTF-8 fields and exact-byte checksums. Validation precedes activation.
  */
 public final class WorkspaceCodec {
     public static final int MAX_BYTES = 8 * 1024 * 1024;
     private static final String HEADER = "FORMAT_VERSION=1\n";
-    private final StringBuilder output = new StringBuilder(HEADER);
+    private final StringBuilder output = new StringBuilder();
+    private boolean versionTwo;
     private String[] lines;
     private int cursor;
+    private int fieldCount;
 
     public static byte[] encode(WorkspaceState state) throws IOException {
         try {
             validate(state);
             WorkspaceCodec codec = new WorkspaceCodec();
+            codec.versionTwo = state.versionTwo();
+            codec.output.append(codec.versionTwo ? "FORMAT_VERSION=2\n" : HEADER);
             codec.write(state);
             byte[] body = codec.output.toString().getBytes(StandardCharsets.UTF_8);
             byte[] bytes = (codec.output + "CHECKSUM=" + digest(body) + "\n").getBytes(StandardCharsets.UTF_8);
@@ -40,7 +44,8 @@ public final class WorkspaceCodec {
         try {
             if (bytes.length == 0 || bytes.length > MAX_BYTES) { throw new IllegalArgumentException(); }
             String text = utf8(bytes);
-            if (!text.startsWith(HEADER)) { throw new IOException("Unsupported or missing FORMAT_VERSION=1."); }
+            boolean versionTwo = text.startsWith("FORMAT_VERSION=2\n");
+            if (!text.startsWith(HEADER) && !versionTwo) { throw new IOException("Unsupported storage version; expected 1 or 2."); }
             int footer = text.lastIndexOf("CHECKSUM=");
             if (footer < HEADER.length() || !text.endsWith("\n")
                     || !text.substring(footer).equals("CHECKSUM="
@@ -48,6 +53,7 @@ public final class WorkspaceCodec {
                 throw new IOException("Workspace checksum/length mismatch. Keep the file for manual recovery.");
             }
             WorkspaceCodec codec = new WorkspaceCodec();
+            codec.versionTwo = versionTwo;
             int lineCount = 0;
             for (int i = 0; i < footer; i++) {
                 if (text.charAt(i) == '\n' && ++lineCount > 200000) { throw new IllegalArgumentException(); }
@@ -75,7 +81,7 @@ public final class WorkspaceCodec {
 
     private void put(String key, Object value) {
         String text = value.toString();
-        if (text.length() > 8192 || output.length() > MAX_BYTES) { throw new IllegalArgumentException(); }
+        if (text.length() > 8192 || output.length() > MAX_BYTES || ++fieldCount > 199999) { throw new IllegalArgumentException(); }
         output.append(key).append('=').append(Base64.getEncoder()
                 .encodeToString(text.getBytes(StandardCharsets.UTF_8))).append('\n');
     }
@@ -148,37 +154,18 @@ public final class WorkspaceCodec {
         put("profile", baseline.profile());
         put("mode", baseline.entryMode());
         put("confirmed", baseline.confirmedAt());
-        put("root", snapshot.root() == null ? "" : snapshot.root());
-        put("scan", snapshot.scanId());
-        put("observed", snapshot.observedAt());
-        put("policyVersion", snapshot.policy().version());
-        ScanPolicy policy = snapshot.policy();
-        put("depth", policy.maxDepth());
-        put("entriesLimit", policy.maxEntries());
-        put("fileBytes", policy.maxFileBytes());
-        put("totalBytes", policy.maxTotalBytes());
-        put("textLimit", policy.maxTextCharacters());
-        put("lineLimit", policy.maxLineLength());
-        put("claimLimit", policy.maxClaims());
-        put("columns", policy.maxCsvColumns());
-        put("duration", policy.maxDurationMillis());
-        put("complete", snapshot.complete());
-        put("bytesRead", snapshot.bytesRead());
-        put("diagnostics", snapshot.diagnostics().length);
-        for (String d : snapshot.diagnostics()) { put("diagnostic", d); }
-        put("entries", snapshot.entries().length);
-        for (SnapshotEntry entry : snapshot.entries()) {
-            put("path", entry.relativePath());
-            put("size", entry.sizeBytes());
-            put("modified", entry.lastModified() == null ? "" : entry.lastModified());
-            put("sha256", entry.sha256());
-            put("status", entry.status());
-            put("adapter", entry.adapter());
-            put("role", entry.artifactRole());
-            put("observed", entry.observedAt());
-            put("reason", entry.reason());
+        snapshot(snapshot); claims(baseline.claims());
+        if (versionTwo) {
+            put("observations", state.laterObservations().length);
+            for (ScanResult later : state.laterObservations()) { snapshot(later); }
+            put("soloOwner", state.soloOwner());
+            put("reviews", state.reviews().length);
+            for (ContextReview review : state.reviews()) {
+                put("observation", review.observationId()); put("evidence", review.evidenceId());
+                put("field", review.field()); put("entity", review.entityId()); put("value", review.value());
+                put("disposition", review.disposition()); put("reviewed", review.reviewedAt());
+            }
         }
-        claims(snapshot.claims()); claims(baseline.claims());
         put("nextCheckpoint", state.nextCheckpointNumber());
         put("checkpoints", state.checkpoints().size());
         for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
@@ -209,6 +196,77 @@ public final class WorkspaceCodec {
         ProjectProfile profile = choice("profile", ProjectProfile.class);
         EntryMode mode = choice("mode", EntryMode.class);
         Instant confirmed = time("confirmed");
+        ScanResult snapshot = snapshot();
+        EvidenceClaim[] reviewed = claims();
+        WorkspaceState state = new WorkspaceState();
+        state.activate(new BaselineB0(id, name, profile, mode, snapshot, reviewed, ClaimReview.conflicts(reviewed), confirmed));
+        if (versionTwo) {
+            int observationCount = count("observations", 20);
+            for (int i = 0; i < observationCount; i++) { state.addObservation(snapshot()); }
+            state.setSoloOwner(flag("soloOwner"));
+            int reviewCount = count("reviews", 2000);
+            for (int i = 0; i < reviewCount; i++) {
+                state.addReview(new ContextReview(get("observation"), get("evidence"),
+                    choice("field", EvidenceClaim.Field.class), get("entity"), get("value"),
+                    choice("disposition", EvidenceClaim.ReviewDisposition.class), time("reviewed")));
+            }
+        }
+        int next = (int) number("nextCheckpoint", 1, 1000000);
+        int count = count("checkpoints", 1000);
+        for (int i = 0; i < count; i++) {
+            String cpId = get("id"), title = get("title"), summary = get("summary");
+            Checkpoint.Status status = choice("status", Checkpoint.Status.class);
+            Instant created = time("created");
+            Checkpoint.Origin origin = choice("origin", Checkpoint.Origin.class);
+            String workspace = get("workspace"), snapshotId = get("snapshot"), objective = get("objective");
+            ProjectContext.BlockerState blocker = choice("blockerState", ProjectContext.BlockerState.class);
+            String blockers = get("blockers"), actions = get("next"), decisions = get("decisions"), owner = get("owner");
+            String[] refs = new String[count("references", 2000)];
+            for (int j = 0; j < refs.length; j++) { refs[j] = get("reference"); }
+            ProjectContext context = new ProjectContext(workspace, snapshotId, objective, blocker, blockers,
+                    actions, decisions, owner, refs, get("previous"), time("confirmed"));
+            // Storage is temporary transport. The custom pointer algorithm reconstructs chronology.
+            state.checkpoints().append(new Checkpoint(cpId, title, summary, status, created, origin, context));
+        }
+        state.restoreNextCheckpointNumber(next);
+        return state;
+    }
+
+    private void snapshot(ScanResult snapshot) {
+        put("root", snapshot.root() == null ? "" : snapshot.root());
+        put("scan", snapshot.scanId());
+        put("observed", snapshot.observedAt());
+        put("policyVersion", snapshot.policy().version());
+        ScanPolicy policy = snapshot.policy();
+        put("depth", policy.maxDepth());
+        put("entriesLimit", policy.maxEntries());
+        put("fileBytes", policy.maxFileBytes());
+        put("totalBytes", policy.maxTotalBytes());
+        put("textLimit", policy.maxTextCharacters());
+        put("lineLimit", policy.maxLineLength());
+        put("claimLimit", policy.maxClaims());
+        put("columns", policy.maxCsvColumns());
+        put("duration", policy.maxDurationMillis());
+        put("complete", snapshot.complete());
+        put("bytesRead", snapshot.bytesRead());
+        put("diagnostics", snapshot.diagnostics().length);
+        for (String d : snapshot.diagnostics()) { put("diagnostic", d); }
+        put("entries", snapshot.entries().length);
+        for (SnapshotEntry entry : snapshot.entries()) {
+            put("path", entry.relativePath());
+            put("size", entry.sizeBytes());
+            put("modified", entry.lastModified() == null ? "" : entry.lastModified());
+            put("sha256", entry.sha256());
+            put("status", entry.status());
+            put("adapter", entry.adapter());
+            put("role", entry.artifactRole());
+            put("observed", entry.observedAt());
+            put("reason", entry.reason());
+        }
+        claims(snapshot.claims());
+    }
+
+    private ScanResult snapshot() throws IOException {
         String rootText = get("root");
         Path root = rootText.isEmpty() ? null : Path.of(rootText);
         if (root != null && (!root.isAbsolute() || !root.equals(root.normalize()) || rootText.startsWith("\\\\"))) {
@@ -233,29 +291,7 @@ public final class WorkspaceCodec {
                     get("sha256"), choice("status", SnapshotEntry.Status.class), choice("adapter", SnapshotEntry.Adapter.class),
                     choice("role", EvidenceClaim.ArtifactRole.class), time("observed"), get("reason"));
         }
-        ScanResult snapshot = new ScanResult(root, scan, observed, p, entries, claims(), diagnostics, complete, bytes);
-        EvidenceClaim[] reviewed = claims();
-        WorkspaceState state = new WorkspaceState();
-        state.activate(new BaselineB0(id, name, profile, mode, snapshot, reviewed, ClaimReview.conflicts(reviewed), confirmed));
-        int next = (int) number("nextCheckpoint", 1, 1000000);
-        int count = count("checkpoints", 1000);
-        for (int i = 0; i < count; i++) {
-            String cpId = get("id"), title = get("title"), summary = get("summary");
-            Checkpoint.Status status = choice("status", Checkpoint.Status.class);
-            Instant created = time("created");
-            Checkpoint.Origin origin = choice("origin", Checkpoint.Origin.class);
-            String workspace = get("workspace"), snapshotId = get("snapshot"), objective = get("objective");
-            ProjectContext.BlockerState blocker = choice("blockerState", ProjectContext.BlockerState.class);
-            String blockers = get("blockers"), actions = get("next"), decisions = get("decisions"), owner = get("owner");
-            String[] refs = new String[count("references", 2000)];
-            for (int j = 0; j < refs.length; j++) { refs[j] = get("reference"); }
-            ProjectContext context = new ProjectContext(workspace, snapshotId, objective, blocker, blockers,
-                    actions, decisions, owner, refs, get("previous"), time("confirmed"));
-            // Storage is temporary transport. The custom pointer algorithm reconstructs chronology.
-            state.checkpoints().append(new Checkpoint(cpId, title, summary, status, created, origin, context));
-        }
-        state.restoreNextCheckpointNumber(next);
-        return state;
+        return new ScanResult(root, scan, observed, p, entries, claims(), diagnostics, complete, bytes);
     }
 
     private static void safe(String text, int max) {
@@ -286,6 +322,33 @@ public final class WorkspaceCodec {
         if (scan.root() == null ? !scan.scanId().isEmpty() || scan.entries().length != 0
                 : !scan.scanId().equals("SCAN-" + baseline.workspaceId())) { throw new IllegalArgumentException(); }
         if (baseline.entryMode() != EntryMode.NEW_EMPTY && scan.root() == null) { throw new IllegalArgumentException(); }
+        validateObservation(baseline);
+        for (ScanResult later : state.laterObservations()) {
+            if (!later.scanId().matches("OBS-" + baseline.workspaceId() + "-[0-9]{4}")) { throw new IllegalArgumentException(); }
+            validateObservation(new BaselineB0(baseline.workspaceId(), baseline.displayName(), baseline.profile(),
+                    baseline.entryMode(), later, later.claims(), ClaimReview.conflicts(later.claims()), later.observedAt()));
+        }
+        String previous = "";
+        Instant previousTime = baseline.confirmedAt();
+        int previousNumber = 0;
+        for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
+            ProjectContext context = checkpoint.project();
+            int number = Integer.parseInt(checkpoint.checkpointId().substring(3));
+            if (context == null || checkpoint.origin() != Checkpoint.Origin.USER_CONFIRMED || !context.workspaceId().equals(baseline.workspaceId())
+                    || state.observation(context.snapshotId()) == null
+                    || !context.previousCheckpointId().equals(previous) || number <= previousNumber
+                    || checkpoint.createdAt().isBefore(previousTime) || !checkpoint.createdAt().equals(context.confirmedAt())) { throw new IllegalArgumentException(); }
+            safe(checkpoint.title(), 120); safe(checkpoint.summary(), 600);
+            ScanResult referenced = state.observation(context.snapshotId());
+            if (referenced.observedAt().isAfter(context.confirmedAt())) { throw new IllegalArgumentException(); }
+            for (String ref : context.evidenceIds()) { if (state.evidence(context.snapshotId(), ref) == null) { throw new IllegalArgumentException(); } }
+            previous = checkpoint.checkpointId(); previousTime = checkpoint.createdAt(); previousNumber = number;
+        }
+        if (state.nextCheckpointNumber() <= previousNumber || state.nextCheckpointNumber() > 1000000) { throw new IllegalArgumentException(); }
+    }
+
+    private static void validateObservation(BaselineB0 baseline) {
+        ScanResult scan = baseline.snapshot();
         if (scan.observedAt().isAfter(baseline.confirmedAt()) || scan.bytesRead() < 0
                 || scan.bytesRead() > scan.policy().maxTotalBytes() || scan.entries().length > scan.policy().maxEntries()
                 || scan.claims().length > scan.policy().maxClaims() || baseline.claims().length > 2000
@@ -314,27 +377,12 @@ public final class WorkspaceCodec {
             for (ConflictGroup group : conflicts) {
                 for (String ref : group.evidenceIds()) { conflict |= ref.equals(original.evidenceId()); }
             }
-            EvidenceClaim expected = conflict ? original.withVerification(EvidenceClaim.Verification.CONFLICTING) : original;
+            EvidenceClaim expected = conflict && !scan.scanId().startsWith("OBS-") ? original.withVerification(EvidenceClaim.Verification.CONFLICTING) : original;
             if (reviewed == null || !expected.withReview(reviewed.review()).equals(reviewed)) { throw new IllegalArgumentException(); }
         }
         for (EvidenceClaim claim : reviewedClaims) {
             if (!claim.userSupplied() && find(originalClaims, claim.evidenceId()) == null) { throw new IllegalArgumentException(); }
         }
-        String previous = "";
-        Instant previousTime = baseline.confirmedAt();
-        int previousNumber = 0;
-        for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
-            ProjectContext context = checkpoint.project();
-            int number = Integer.parseInt(checkpoint.checkpointId().substring(3));
-            if (context == null || checkpoint.origin() != Checkpoint.Origin.USER_CONFIRMED || !context.workspaceId().equals(baseline.workspaceId())
-                    || !context.snapshotId().equals(scan.scanId().isEmpty() ? "B0-NO-SCAN" : scan.scanId())
-                    || !context.previousCheckpointId().equals(previous) || number <= previousNumber
-                    || checkpoint.createdAt().isBefore(previousTime) || !checkpoint.createdAt().equals(context.confirmedAt())) { throw new IllegalArgumentException(); }
-            safe(checkpoint.title(), 120); safe(checkpoint.summary(), 600);
-            for (String ref : context.evidenceIds()) { if (find(baseline.claims(), ref) == null) { throw new IllegalArgumentException(); } }
-            previous = checkpoint.checkpointId(); previousTime = checkpoint.createdAt(); previousNumber = number;
-        }
-        if (state.nextCheckpointNumber() <= previousNumber || state.nextCheckpointNumber() > 1000000) { throw new IllegalArgumentException(); }
     }
 
     private static EvidenceClaim find(EvidenceClaim[] claims, String id) {
@@ -345,7 +393,8 @@ public final class WorkspaceCodec {
     private static void validateClaims(EvidenceClaim[] claims, BaselineB0 baseline, SnapshotEntry[] entries) {
         for (int i = 0; i < claims.length; i++) {
             EvidenceClaim claim = claims[i];
-            if (!baseline.workspaceId().equals(claim.workspaceId()) || !claim.evidenceId().matches("EV-" + baseline.workspaceId() + "-[0-9]{6}")
+            if (!baseline.workspaceId().equals(claim.workspaceId()) || !claim.evidenceId().matches("EV-" + baseline.workspaceId()
+                        + (baseline.snapshot().scanId().startsWith("OBS-") ? "-O" + baseline.snapshot().scanId().substring(baseline.snapshot().scanId().length() - 4) : "") + "-[0-9]{6}")
                     || claim.field() == null || claim.artifactRole() == null || claim.sourceKind() == null || claim.provenance() == null
                     || claim.verification() == null || claim.review() == null || claim.observedAt() == null) { throw new IllegalArgumentException(); }
             safe(claim.entityId(), 1000); safe(claim.literalValue(), 4000); safe(claim.comparisonValue(), 4000);

@@ -21,5 +21,10 @@ public final class AllTests {
         breadcrumbs.cli.ProjectConsoleTest.run();
         breadcrumbs.cli.StartupRendererTest.run();
         System.out.println("PASS: all B3 test groups");
+        breadcrumbs.b4.AuditPolicyTest.run();
+        breadcrumbs.b4.DriftTest.run();
+        breadcrumbs.b4.WorkflowTest.run();
+        breadcrumbs.b4.ContextConsoleTest.run();
+        System.out.println("PASS: all B4 test groups (" + breadcrumbs.b4.Checks.count() + " assertions)");
     }
 }

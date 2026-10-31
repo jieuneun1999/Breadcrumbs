@@ -17,7 +17,7 @@ public final class ProjectCheckpointService {
         }
         for (String id : evidenceIds) {
             boolean found = false;
-            for (var claim : state.activeBaseline().claims()) {
+            for (var claim : state.claimsAt(state.currentObservationId())) {
                 found |= claim.evidenceId().equals(id);
             }
             if (!found) { throw new IllegalArgumentException("Evidence reference is outside this workspace."); }
@@ -26,7 +26,8 @@ public final class ProjectCheckpointService {
         Checkpoint latest = state.checkpoints().getLatest();
         if (time.isBefore(state.activeBaseline().confirmedAt())) { time = state.activeBaseline().confirmedAt(); }
         if (latest != null && time.isBefore(latest.createdAt())) { time = latest.createdAt(); }
-        String snapshot = state.activeBaseline().snapshot().scanId();
+        if (time.isBefore(state.currentObservation().observedAt())) { time = state.currentObservation().observedAt(); }
+        String snapshot = state.currentObservationId();
         ProjectContext context = new ProjectContext(state.activeBaseline().workspaceId(),
                 snapshot.isEmpty() ? "B0-NO-SCAN" : snapshot, objective, blockerState, blockers,
                 next, decisions, owner, evidenceIds, latest == null ? "" : latest.checkpointId(), time);
@@ -40,7 +41,8 @@ public final class ProjectCheckpointService {
         if (!approved) { return false; }
         Checkpoint latest = state.checkpoints().getLatest();
         if (preview.project() == null || !preview.project().previousCheckpointId()
-                .equals(latest == null ? "" : latest.checkpointId())) {
+                .equals(latest == null ? "" : latest.checkpointId())
+                || !preview.project().snapshotId().equals(state.currentObservationId())) {
             throw new IllegalArgumentException("Preview is stale. Review a fresh checkpoint.");
         }
         state.appendConfirmed(preview);

@@ -35,9 +35,9 @@ public final class Main {
                 int width = 80;
                 try { width = Math.max(28, Integer.parseInt(System.getenv("COLUMNS"))); }
                 catch (NumberFormatException ignored) { /* Unknown dimensions use the compact 80-column layout. */ }
-                // Rich symbols have a fixed UTF-8 encoding; no console settings are changed.
-                PrintStream output = richBrand && color
-                        ? new PrintStream(System.out, true, StandardCharsets.UTF_8) : System.out;
+                // Context reports and source locators use UTF-8 in plain and colored modes alike.
+                // Fix the stream encoding without changing the user's terminal or system settings.
+                PrintStream output = new PrintStream(System.out, true, StandardCharsets.UTF_8);
                 new ProjectConsole(input, output, new WorkspaceStore(storage),
                         new TerminalTheme(color, richBrand), width).run();
             }

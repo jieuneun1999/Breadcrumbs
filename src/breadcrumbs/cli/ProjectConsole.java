@@ -107,7 +107,7 @@ public final class ProjectConsole {
         // Leaving may save this same workspace. Reload that newly saved state, not the earlier preview.
         WorkspaceState loaded = store.load(saved[index].id());
         state.replaceWith(loaded); persistence = true;
-        output.println("Opened saved workspace. No source rescan. Freshness UNKNOWN.");
+        output.println("Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.");
         status();
     }
 
@@ -116,9 +116,10 @@ public final class ProjectConsole {
         boolean back = false;
         while (!back) {
             status();
-            output.println("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[0] Back");
+            output.println("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[0] Back");
             try {
-                switch (read("project > ")) {
+                String choice = read("project > ");
+                switch (choice) {
                     case "0" -> back = true;
                     case "1" -> new BootstrapConsole(this::read, output, state,
                             new BootstrapService(ScanPolicy.defaults()), true).showBaseline();
@@ -140,10 +141,15 @@ public final class ProjectConsole {
                         output.println("App storage: " + safe(store.root().toString()));
                         output.println("Profile: " + state.activeBaseline().profile() + " | Mode: " + state.activeBaseline().entryMode());
                         output.println("Next native number: " + state.nextCheckpointNumber());
-                        output.println("Source freshness UNKNOWN. B0 is a saved observation, never a native checkpoint.");
+                        output.println("Live source freshness UNKNOWN until a consented scan. B0 is a saved observation, never a native checkpoint.");
+                        output.println("Current saved observation: " + state.currentObservationId() + "; later observations: " + state.laterObservations().length);
+                        output.println("Use Context audit / Resume for checkpoint-specific saved comparison results. No live rescan occurs here.");
                     }
                     case "8" -> diagnostics();
-                    default -> output.println("Choose 0-8.");
+                    case "9", "10", "11", "12", "13", "14", "15" -> {
+                        new ContextConsole(this::read, output, state, store.root()).perform(choice);
+                    }
+                    default -> output.println("Choose 0-15.");
                 }
             } catch (IllegalArgumentException invalid) { output.println("Operation cancelled or rejected. " + safe(invalid.getMessage())); }
         }
@@ -158,8 +164,8 @@ public final class ProjectConsole {
                 : ProjectContext.BlockerState.valueOf(blocker.toUpperCase(Locale.ROOT)); }
         catch (IllegalArgumentException bad) { throw new IllegalArgumentException("Choose a listed blocker state."); }
         String details = read("Blocker details: "), next = read("Next actions: "), decisions = read("Decisions / rationale: "), owner = read("Owner: ");
-        output.println("Available B0 evidence (source-reported claims are not independent verification):");
-        for (EvidenceClaim c : state.activeBaseline().claims()) {
+        output.println("Available current observation evidence (source-reported claims are not independent verification):");
+        for (EvidenceClaim c : state.claimsAt(state.currentObservationId())) {
             output.println(c.evidenceId() + " | " + c.field() + " | " + c.sourceKind() + " | " + c.review());
         }
         String selected = read("Evidence IDs separated by commas (blank = none): ");
@@ -218,11 +224,12 @@ public final class ProjectConsole {
         output.println("Next actions: " + safe(p.nextActions()) + "\nDecisions: " + safe(p.decisions()) + "\nOwner: " + safe(p.owner()));
         output.println("Origin: USER_CONFIRMED present assessment. Historical/source outcomes remain unverified.");
         for (String id : p.evidenceIds()) {
-            for (EvidenceClaim claim : state.activeBaseline().claims()) {
+            for (EvidenceClaim claim : state.claimsAt(p.snapshotId())) {
                 if (claim.evidenceId().equals(id)) { new BaselineRenderer(output, true).claim(claim); }
             }
         }
-        output.println("Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN.");
+        output.println("Unknown/unresolved B0 claims remain available in View B0 / sources. Freshness UNKNOWN without a later comparison.");
+        output.println("Use Resume / handoff for referenced freshness against the latest saved observation.");
     }
     private String read(String prompt) throws IOException {
         output.print(theme.label(TerminalTheme.Tone.BREAD_GOLD, prompt)); output.flush();

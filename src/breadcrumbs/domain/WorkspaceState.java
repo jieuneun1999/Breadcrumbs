@@ -1,6 +1,8 @@
 package breadcrumbs.domain;
 
 import breadcrumbs.dsa.dll.CheckpointList;
+import breadcrumbs.inspector.ScanResult;
+import java.util.Arrays;
 
 /** Sole owner of the active project's confirmed baseline and chronological checkpoint list. */
 public final class WorkspaceState {
@@ -8,6 +10,10 @@ public final class WorkspaceState {
     private CheckpointList checkpoints = new CheckpointList();
     private int nextCheckpointNumber = 1;
     private boolean dirty;
+    private ScanResult[] laterObservations = new ScanResult[0];
+    private ContextReview[] reviews = new ContextReview[0];
+    private boolean versionTwo;
+    private boolean soloOwner;
 
     public BaselineB0 activeBaseline() {
         return activeBaseline;
@@ -27,6 +33,10 @@ public final class WorkspaceState {
         checkpoints = new CheckpointList();
         nextCheckpointNumber = 1;
         dirty = true;
+        laterObservations = new ScanResult[0];
+        reviews = new ContextReview[0];
+        versionTwo = false;
+        soloOwner = false;
     }
 
     public int nextCheckpointNumber() { return nextCheckpointNumber; }
@@ -40,6 +50,73 @@ public final class WorkspaceState {
         checkpoints = validated.checkpoints;
         nextCheckpointNumber = validated.nextCheckpointNumber;
         dirty = validated.dirty;
+        laterObservations = validated.laterObservations.clone();
+        reviews = validated.reviews.clone();
+        versionTwo = validated.versionTwo;
+        soloOwner = validated.soloOwner;
+    }
+
+    public ScanResult[] laterObservations() { return laterObservations.clone(); }
+    public ContextReview[] reviews() { return reviews.clone(); }
+    public boolean versionTwo() { return versionTwo; }
+    public boolean soloOwner() { return soloOwner; }
+
+    /** Explicit setting; no project profile silently implies that coordination is unnecessary. */
+    public void setSoloOwner(boolean solo) { soloOwner = solo; enableVersionTwo(); }
+    public void enableVersionTwo() { versionTwo = true; dirty = true; }
+
+    public String currentObservationId() {
+        String id = currentObservation().scanId();
+        return id.isEmpty() ? "B0-NO-SCAN" : id;
+    }
+    public ScanResult currentObservation() {
+        return laterObservations.length == 0 ? activeBaseline.snapshot() : laterObservations[laterObservations.length - 1];
+    }
+    public ScanResult observation(String id) {
+        if (activeBaseline == null) { return null; }
+        ScanResult first = activeBaseline.snapshot();
+        if (id.equals(first.scanId().isEmpty() ? "B0-NO-SCAN" : first.scanId())) { return first; }
+        for (ScanResult scan : laterObservations) { if (scan.scanId().equals(id)) { return scan; } }
+        return null;
+    }
+    public EvidenceClaim[] claimsAt(String observationId) {
+        ScanResult scan = observation(observationId);
+        if (scan == null) { throw new IllegalArgumentException("Unknown observation."); }
+        return scan == activeBaseline.snapshot() ? activeBaseline.claims() : scan.claims();
+    }
+    public EvidenceClaim evidence(String observationId, String evidenceId) {
+        for (EvidenceClaim claim : claimsAt(observationId)) {
+            if (claim.evidenceId().equals(evidenceId)) { return claim; }
+        }
+        return null;
+    }
+    public void addObservation(ScanResult scan) {
+        if (activeBaseline == null || scan == null || scan.root() == null || laterObservations.length >= 20
+                || !scan.scanId().equals("OBS-" + activeBaseline.workspaceId() + "-"
+                    + String.format(java.util.Locale.ROOT, "%04d", laterObservations.length + 1))
+                || !java.util.Objects.equals(scan.root(), activeBaseline.snapshot().root())
+                || scan.observedAt().isBefore(currentObservation().observedAt())) {
+            throw new IllegalArgumentException("Invalid later observation or capacity reached (20). B0 retained.");
+        }
+        laterObservations = Arrays.copyOf(laterObservations, laterObservations.length + 1);
+        laterObservations[laterObservations.length - 1] = scan;
+        enableVersionTwo();
+    }
+    public void addReview(ContextReview review) {
+        if (reviews.length >= 2000 || observation(review.observationId()) == null
+                || review.reviewedAt().isBefore(observation(review.observationId()).observedAt())) {
+            throw new IllegalArgumentException("Invalid review observation/time or review capacity reached.");
+        }
+        if (!review.evidenceId().isEmpty()) {
+            EvidenceClaim source = evidence(review.observationId(), review.evidenceId());
+            if (source == null || source.field() != review.field() || !source.entityId().equals(review.entityId())
+                    || !source.literalValue().equals(review.value())) {
+                throw new IllegalArgumentException("Review must preserve the exact source statement.");
+            }
+        }
+        reviews = Arrays.copyOf(reviews, reviews.length + 1);
+        reviews[reviews.length - 1] = review;
+        enableVersionTwo();
     }
 
     public void restoreNextCheckpointNumber(int number) {
@@ -55,6 +132,12 @@ public final class WorkspaceState {
                 || !checkpoint.checkpointId().equals(String.format(java.util.Locale.ROOT,
                         "CP-%06d", nextCheckpointNumber)) || nextCheckpointNumber > 999999) {
             throw new IllegalArgumentException("Checkpoint does not belong to the active sequence.");
+        }
+        if (!checkpoint.project().snapshotId().equals(currentObservationId())) {
+            throw new IllegalArgumentException("Checkpoint must reference the reviewed current observation.");
+        }
+        for (String id : checkpoint.project().evidenceIds()) {
+            if (evidence(currentObservationId(), id) == null) { throw new IllegalArgumentException("Unresolved checkpoint evidence."); }
         }
         checkpoints.append(checkpoint);
         nextCheckpointNumber++;
