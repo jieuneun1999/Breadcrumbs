@@ -74,6 +74,8 @@ state ownership and verified failure behavior. These are single-owner verdicts.
 Owner visual acceptance, independent review, actual Java17 and the full real-file
 matrix remain open. Implementation is DEMO_READY within the stated Windows/JDK25
 scope. This recording supersedes the earlier template walkthrough below.
+Implementation/evidence commit `00bbfda` is pushed to open, unmerged
+[PR12](https://github.com/jieuneun1999/Breadcrumbs/pull/12), retaining the B7D base.
 
 ![Saved update and readable summary](evidence/b7/e/beginner/saved-summary.png)
 

@@ -121,11 +121,11 @@ not a claim of actual community work or a substitute for real-file acceptance.
 - [x] 4. Delegate code-writing through provider dispatch.
   Adaptation: Craft66–101/packet single writer controls; owner implements directly.
 - [x] 5. Verify on the matching surface.
-- [ ] 6. Rebase into small, ordered commits. Stack follow-ups.
+- [x] 6. Rebase into small, ordered commits. Stack follow-ups.
   Adaptation: preserve existing shared PR history; append scoped commits, no rebase.
 - [x] 7. If the design is contested, `interrogate` before shipping.
   n/a: approved product direction; no independent-review or panel claim.
-- [ ] 8. Run Opening a PR.
+- [x] 8. Run Opening a PR.
   Adaptation: update existing B7E PR12 after source-bound verification.
 
 Blocking first steps: ground ordinary/advanced output and save/export failure
@@ -228,3 +228,17 @@ hardware, independent review and the full representative real-file matrix remain
 open. No global configuration, install, merge/release/deployment or new Discord
 write occurred. Native MP4 and generated fixtures remain local; only synthetic
 frames, sanitized transcripts and validation metadata enter the scoped PR.
+
+### Scoped delivery receipt
+
+Implementation/evidence commit `00bbfda30b5c0fa892f6a88fd7257fc712e998b2`
+was pushed without force to feat/b7e-final-integration. PR12 metadata was updated
+through the GitHub connector and read back with that exact head, OPEN/unmerged,
+base feat/b7d-document-compatibility. The approved packet's publish-reviewable-PR
+scope authorizes this append-only delivery. Existing stack ancestry is retained.
+This subsequent receipt changes documentation only; compiled evidence stays bound
+to the final 148-input gate and 150 application class hashes above.
+
+Owner next choices: CONTINUE / CHANGE / RELEASE / STOP. Full real-file acceptance,
+actual JDK17 and independent/owner visual acceptance stay open. No release, merge
+or deployment is inferred from DEMO_READY. No new Discord message was sent.
