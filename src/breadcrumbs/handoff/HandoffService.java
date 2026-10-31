@@ -82,6 +82,7 @@ public final class HandoffService {
                     .append(" Next: ").append(clean(finding.nextAction())).append('\n');
         }
         out.append(ContextAudit.DISCLAIMER).append("\nNo native history: ").append(audit.noNativeHistory()).append('\n');
+        appendDependencies(out, state, checkpoint);
         out.append("\n## Unknowns, limitations and privacy\nDeclared dependencies/downstream impact: UNKNOWN (Graph deferred).\n")
                 .append("No source commands/tests were executed. Source statements remain unverified; user confirmation is a present assessment.\n")
                 .append("Scan complete within policy: ").append(state.currentObservation().complete()).append(" | policy: ")
@@ -98,6 +99,24 @@ public final class HandoffService {
     public static String fingerprint(WorkspaceState state) {
         try { return WorkspaceCodec.digest(WorkspaceCodec.encode(state)); }
         catch (IOException invalid) { throw new IllegalArgumentException("Canonical state must validate before producing an export."); }
+    }
+    private static void appendDependencies(StringBuilder out, WorkspaceState state, Checkpoint checkpoint) {
+        out.append("\n## Explicit dependency revisions\nCurrent graph revision: ").append(state.dependencies().currentId().isEmpty() ? "NOT RECORDED" : state.dependencies().currentId()).append('\n');
+        String selected = checkpoint == null ? state.dependencies().currentId() : checkpoint.project().graphRevisionId();
+        GraphRevision revision = selected.isEmpty() ? null : state.dependencies().find(selected);
+        if (revision == null) { out.append("Historical dependency information: UNKNOWN / NOT RECORDED. No historical graph is invented.\n"); return; }
+        out.append("Reported graph revision: ").append(revision.id()).append(" at ").append(revision.confirmedAt()).append('\n');
+        var graph = breadcrumbs.dsa.graph.TaskDependencyGraph.rebuild(state.activeBaseline().workspaceId(), revision);
+        for (Dependency dependency : revision.dependencies()) {
+            out.append(dependency.prerequisite()).append(" -> ").append(dependency.dependent()).append(" | USER_CONFIRMED declaration: ")
+                    .append(clean(dependency.declaration())).append(" | source evidence: ").append(dependency.evidenceId().isEmpty() ? "NONE (direct declaration)" : clean(dependency.evidenceId()))
+                    .append(" | observation: ").append(dependency.observationId()).append(" | confirmed: ").append(dependency.confirmedAt()).append('\n');
+        }
+        for (WorkItem item : revision.items()) {
+            out.append(item.id()).append(" | ").append(clean(item.title())).append(" | explicit status ").append(item.status()).append(" | Potentially affected work items:");
+            for (var visit : graph.breadthFirst(item.id())) { if (!visit.id().equals(item.id())) { out.append(' ').append(visit.id()); } }
+            out.append(". No automatic BLOCKED status.\n");
+        }
     }
     private static void evidence(StringBuilder out, EvidenceClaim claim, boolean snippets) {
         if (claim == null) { throw new IllegalArgumentException("Unresolved evidence reference."); }

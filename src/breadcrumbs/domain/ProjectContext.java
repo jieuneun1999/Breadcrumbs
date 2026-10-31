@@ -7,10 +7,19 @@ import java.time.Instant;
 public record ProjectContext(String workspaceId, String snapshotId, String objective,
                              BlockerState blockerState, String blockers, String nextActions,
                              String decisions, String owner, String[] evidenceIds,
-                             String previousCheckpointId, Instant confirmedAt) {
+                             String previousCheckpointId, Instant confirmedAt, String graphRevisionId) {
+    public ProjectContext(String workspaceId, String snapshotId, String objective, BlockerState blockerState,
+            String blockers, String nextActions, String decisions, String owner, String[] evidenceIds,
+            String previousCheckpointId, Instant confirmedAt) {
+        this(workspaceId, snapshotId, objective, blockerState, blockers, nextActions, decisions, owner,
+                evidenceIds, previousCheckpointId, confirmedAt, "");
+    }
     public enum BlockerState { UNKNOWN, NONE_REPORTED, BLOCKED }
 
     public ProjectContext {
+        if (graphRevisionId == null || !graphRevisionId.isEmpty() && !graphRevisionId.matches("G-[0-9]{6}")) {
+            throw new IllegalArgumentException("Invalid graph revision reference.");
+        }
         if (workspaceId == null || !workspaceId.matches("W(?:[0-9]{3,9}|-[a-f0-9]{32})")
                 || snapshotId == null || snapshotId.isBlank() || blockerState == null || confirmedAt == null) {
             throw new IllegalArgumentException("Workspace, snapshot and explicit blocker state are required.");

@@ -30,7 +30,7 @@ public final class ProjectCheckpointService {
         String snapshot = state.currentObservationId();
         ProjectContext context = new ProjectContext(state.activeBaseline().workspaceId(),
                 snapshot.isEmpty() ? "B0-NO-SCAN" : snapshot, objective, blockerState, blockers,
-                next, decisions, owner, evidenceIds, latest == null ? "" : latest.checkpointId(), time);
+                next, decisions, owner, evidenceIds, latest == null ? "" : latest.checkpointId(), time, state.dependencies().currentId());
         ProjectContext.note(title);
         ProjectContext.note(progress);
         return new Checkpoint(String.format(Locale.ROOT, "CP-%06d", state.nextCheckpointNumber()),
@@ -42,7 +42,8 @@ public final class ProjectCheckpointService {
         Checkpoint latest = state.checkpoints().getLatest();
         if (preview.project() == null || !preview.project().previousCheckpointId()
                 .equals(latest == null ? "" : latest.checkpointId())
-                || !preview.project().snapshotId().equals(state.currentObservationId())) {
+                || !preview.project().snapshotId().equals(state.currentObservationId())
+                || !preview.project().graphRevisionId().equals(state.dependencies().currentId())) {
             throw new IllegalArgumentException("Preview is stale. Review a fresh checkpoint.");
         }
         state.appendConfirmed(preview);

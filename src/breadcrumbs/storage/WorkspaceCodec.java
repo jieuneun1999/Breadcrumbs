@@ -22,6 +22,7 @@ public final class WorkspaceCodec {
     private static final String HEADER = "FORMAT_VERSION=1\n";
     private final StringBuilder output = new StringBuilder();
     private boolean versionTwo;
+    private boolean versionThree;
     private String[] lines;
     private int cursor;
     private int fieldCount;
@@ -31,7 +32,8 @@ public final class WorkspaceCodec {
             validate(state);
             WorkspaceCodec codec = new WorkspaceCodec();
             codec.versionTwo = state.versionTwo();
-            codec.output.append(codec.versionTwo ? "FORMAT_VERSION=2\n" : HEADER);
+            codec.versionThree = state.dependencies().current() != null;
+            codec.output.append(codec.versionThree ? "FORMAT_VERSION=3\n" : codec.versionTwo ? "FORMAT_VERSION=2\n" : HEADER);
             codec.write(state);
             byte[] body = codec.output.toString().getBytes(StandardCharsets.UTF_8);
             byte[] bytes = (codec.output + "CHECKSUM=" + digest(body) + "\n").getBytes(StandardCharsets.UTF_8);
@@ -44,7 +46,8 @@ public final class WorkspaceCodec {
         try {
             if (bytes.length == 0 || bytes.length > MAX_BYTES) { throw new IllegalArgumentException(); }
             String text = utf8(bytes);
-            boolean versionTwo = text.startsWith("FORMAT_VERSION=2\n");
+            boolean versionThree = text.startsWith("FORMAT_VERSION=3\n");
+            boolean versionTwo = versionThree || text.startsWith("FORMAT_VERSION=2\n");
             if (!text.startsWith(HEADER) && !versionTwo) { throw new IOException("Unsupported storage version; expected 1 or 2."); }
             int footer = text.lastIndexOf("CHECKSUM=");
             if (footer < HEADER.length() || !text.endsWith("\n")
@@ -54,6 +57,7 @@ public final class WorkspaceCodec {
             }
             WorkspaceCodec codec = new WorkspaceCodec();
             codec.versionTwo = versionTwo;
+            codec.versionThree = versionThree;
             int lineCount = 0;
             for (int i = 0; i < footer; i++) {
                 if (text.charAt(i) == '\n' && ++lineCount > 200000) { throw new IllegalArgumentException(); }
@@ -166,6 +170,27 @@ public final class WorkspaceCodec {
                 put("disposition", review.disposition()); put("reviewed", review.reviewedAt());
             }
         }
+        if (versionThree) {
+            put("graphRevisions", state.dependencies().revisions().length);
+            for (GraphRevision revision : state.dependencies().revisions()) {
+                put("graphId", revision.id()); put("graphTime", revision.confirmedAt()); put("nextTask", revision.nextTaskNumber());
+                put("workItems", revision.items().length);
+                for (WorkItem item : revision.items()) {
+                    put("taskWorkspace", item.workspaceId()); put("taskId", item.id()); put("taskTitle", item.title());
+                    put("description", item.description()); put("taskStatus", item.status()); put("taskOwner", item.owner());
+                    put("due", item.dueDate() == null ? "" : item.dueDate()); put("taskObservation", item.observationId());
+                    put("taskRefs", item.evidenceIds().length);
+                    for (String ref : item.evidenceIds()) { put("taskRef", ref); }
+                    put("taskCreated", item.createdAt()); put("taskUpdated", item.updatedAt());
+                }
+                put("dependencies", revision.dependencies().length);
+                for (Dependency edge : revision.dependencies()) {
+                    put("edgeWorkspace", edge.workspaceId()); put("prerequisite", edge.prerequisite()); put("dependent", edge.dependent());
+                    put("edgeObservation", edge.observationId()); put("edgeEvidence", edge.evidenceId());
+                    put("declaration", edge.declaration()); put("edgeConfirmed", edge.confirmedAt());
+                }
+            }
+        }
         put("nextCheckpoint", state.nextCheckpointNumber());
         put("checkpoints", state.checkpoints().size());
         for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
@@ -188,6 +213,7 @@ public final class WorkspaceCodec {
             for (String id : context.evidenceIds()) { put("reference", id); }
             put("previous", context.previousCheckpointId());
             put("confirmed", context.confirmedAt());
+            if (versionThree) { put("graphRevision", context.graphRevisionId()); }
         }
     }
 
@@ -211,6 +237,30 @@ public final class WorkspaceCodec {
                     choice("disposition", EvidenceClaim.ReviewDisposition.class), time("reviewed")));
             }
         }
+        if (versionThree) {
+            int revisions = count("graphRevisions", 100);
+            if (revisions == 0) { throw new IllegalArgumentException(); }
+            for (int r = 0; r < revisions; r++) {
+                String graphId = get("graphId"); Instant graphTime = time("graphTime");
+                int nextTask = (int) number("nextTask", 1, 1000000);
+                WorkItem[] items = new WorkItem[count("workItems", 100)];
+                for (int i = 0; i < items.length; i++) {
+                    String ws = get("taskWorkspace"), taskId = get("taskId"), title = get("taskTitle"), description = get("description");
+                    WorkItem.Status status = choice("taskStatus", WorkItem.Status.class);
+                    String owner = get("taskOwner"), due = get("due"), observation = get("taskObservation");
+                    String[] refs = new String[count("taskRefs", 2000)];
+                    for (int j = 0; j < refs.length; j++) { refs[j] = get("taskRef"); }
+                    items[i] = new WorkItem(ws, taskId, title, description, status, owner,
+                        due.isEmpty() ? null : java.time.LocalDate.parse(due), observation, refs, time("taskCreated"), time("taskUpdated"));
+                }
+                Dependency[] edges = new Dependency[count("dependencies", 500)];
+                for (int i = 0; i < edges.length; i++) {
+                    edges[i] = new Dependency(get("edgeWorkspace"), get("prerequisite"), get("dependent"), get("edgeObservation"),
+                        get("edgeEvidence"), get("declaration"), time("edgeConfirmed"));
+                }
+                state.dependencies().restore(new GraphRevision(graphId, graphTime, nextTask, items, edges));
+            }
+        }
         int next = (int) number("nextCheckpoint", 1, 1000000);
         int count = count("checkpoints", 1000);
         for (int i = 0; i < count; i++) {
@@ -224,7 +274,7 @@ public final class WorkspaceCodec {
             String[] refs = new String[count("references", 2000)];
             for (int j = 0; j < refs.length; j++) { refs[j] = get("reference"); }
             ProjectContext context = new ProjectContext(workspace, snapshotId, objective, blocker, blockers,
-                    actions, decisions, owner, refs, get("previous"), time("confirmed"));
+                    actions, decisions, owner, refs, get("previous"), time("confirmed"), versionThree ? get("graphRevision") : "");
             // Storage is temporary transport. The custom pointer algorithm reconstructs chronology.
             state.checkpoints().append(new Checkpoint(cpId, title, summary, status, created, origin, context));
         }
@@ -338,6 +388,10 @@ public final class WorkspaceCodec {
                     || state.observation(context.snapshotId()) == null
                     || !context.previousCheckpointId().equals(previous) || number <= previousNumber
                     || checkpoint.createdAt().isBefore(previousTime) || !checkpoint.createdAt().equals(context.confirmedAt())) { throw new IllegalArgumentException(); }
+            if (!context.graphRevisionId().isEmpty()) {
+                GraphRevision revision = state.dependencies().find(context.graphRevisionId());
+                if (revision == null || revision.confirmedAt().isAfter(context.confirmedAt())) { throw new IllegalArgumentException(); }
+            }
             safe(checkpoint.title(), 120); safe(checkpoint.summary(), 600);
             ScanResult referenced = state.observation(context.snapshotId());
             if (referenced.observedAt().isAfter(context.confirmedAt())) { throw new IllegalArgumentException(); }

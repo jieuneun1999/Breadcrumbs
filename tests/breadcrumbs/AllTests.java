@@ -26,5 +26,7 @@ public final class AllTests {
         breadcrumbs.b4.WorkflowTest.run();
         breadcrumbs.b4.ContextConsoleTest.run();
         System.out.println("PASS: all B4 test groups (" + breadcrumbs.b4.Checks.count() + " assertions)");
+        breadcrumbs.b5.GraphTest.run();
+        breadcrumbs.b5.GraphCliTest.run();
     }
 }

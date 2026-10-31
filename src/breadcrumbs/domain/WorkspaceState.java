@@ -14,6 +14,8 @@ public final class WorkspaceState {
     private ContextReview[] reviews = new ContextReview[0];
     private boolean versionTwo;
     private boolean soloOwner;
+    private DependencyState dependencies = new DependencyState(this);
+    public DependencyState dependencies() { return dependencies; }
 
     public BaselineB0 activeBaseline() {
         return activeBaseline;
@@ -37,6 +39,7 @@ public final class WorkspaceState {
         reviews = new ContextReview[0];
         versionTwo = false;
         soloOwner = false;
+        dependencies = new DependencyState(this);
     }
 
     public int nextCheckpointNumber() { return nextCheckpointNumber; }
@@ -54,6 +57,9 @@ public final class WorkspaceState {
         reviews = validated.reviews.clone();
         versionTwo = validated.versionTwo;
         soloOwner = validated.soloOwner;
+        dependencies = new DependencyState(this);
+        dependencies.copyFrom(validated.dependencies);
+        dirty = validated.dirty;
     }
 
     public ScanResult[] laterObservations() { return laterObservations.clone(); }
