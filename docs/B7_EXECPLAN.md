@@ -74,7 +74,7 @@ separate predicates and are never inferred from synthetic Java 17-target results
   fabricated counts, repeated frame logs, animations during input or orphan threads.
   Style trusted labels only. Test cleanup, cancellation, warnings, narrow/plain
   output and unchanged artwork. Complete this before the requested recording.
-- [ ] Reconcile source hashes, actual artifacts, staged PRs and final statuses.
+- [x] Reconcile source hashes, actual artifacts, staged PRs and final statuses.
 
 ## Recovery design alternatives
 

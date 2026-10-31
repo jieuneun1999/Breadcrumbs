@@ -161,3 +161,19 @@ that gate and do not change the compiled application classes.
 ![Approved B3 launch, native capture](evidence/b7/e/approved-launch.png)
 
 ![Spaced Inbox and compact action reminders, native capture](evidence/b7/e/spaced-inbox.png)
+
+## Stacked implementation delivery
+
+| Stage | Verified implementation head | Open PR / base |
+| --- | --- | --- |
+| A Recovery | 3f6130e | [#8](https://github.com/jieuneun1999/Breadcrumbs/pull/8), B6 |
+| B Daily workflows | 915995f | [#9](https://github.com/jieuneun1999/Breadcrumbs/pull/9), B7A |
+| C Inbox/artifacts | d640f53 | [#10](https://github.com/jieuneun1999/Breadcrumbs/pull/10), B7B |
+| D DOCX/coverage | da972f3 | [#11](https://github.com/jieuneun1999/Breadcrumbs/pull/11), B7C |
+| E Integration/terminal/acceptance | b8be509 | [#12](https://github.com/jieuneun1999/Breadcrumbs/pull/12), B7D |
+
+The E head above identifies the compiled implementation/evidence commit; the
+subsequent receipt commit updates execution records only. All stages remain open,
+unmerged review work. Frozen Master/First-Import contracts and every old B1–B6 test
+body were compared against B6 and remain unchanged. Earlier branch evidence stays
+available. No merge/release/deployment or external Discord communication occurred.
