@@ -145,6 +145,17 @@ no merge/release or B6/B7 completion claim.
 
 Custom prefix-tree nodes and custom Hash-backed term-to-source postings; bound suggestions and extractable text. Index only evidence actually extracted; source locator and checkpoint ID must resolve to current canonical data. Require index versioning/rebuilding when files/checkpoints change and secret exclusion. This is **lexical/prefix search**, not semantic retrieval.
 
+B6 update (2026-11-01): DEMO_READY on Windows/JDK 25, Java 17 target.
+Project option 18 combines a manual code-point Trie, the B5 Hash Table and manual
+posting chains. Captured fields only; source-policy consent, canonical resolution,
+revision invalidation, atomic candidate publication and coverage disclosure apply.
+Native verification passes 5,765 suite assertions, including 225 B6, plus 21 B6,
+10 B5 and 55 B4 separate-process assertions. Native ACL/junction checks and the
+external-directory launcher pass. See [execution](B6_EXECUTION.md),
+[search contract](B6_SEARCH_POLICY.md), [evidence](evidence/b6/README.md) and
+[future real-document gate](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md).
+Real-document extraction, advanced format parsers and B7 recovery remain pending.
+
 ## B7 — Delivery hardening and optional enhancements
 
 Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screenshots, complexity proof, source/license inventory and end-to-end test suite. Select advanced DOCX/XLSX/PPTX/PDF parsers, Git, and voice AI only as independently packaged optional adapters; the JDK-only academic core must still start without them. Never claim the app is verified on Sir's laptop without testing it there.
@@ -168,7 +179,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
 | B4 | DEMO_READY on Windows/JDK 25; evidence-driven context, drift and handoff | [4,450 suite + 55 A–F assertions, original v1 compatibility and platform limits](B4_EXECUTION.md) |
 | B5 | B5A/B5B DEMO_READY on direct Windows/JDK25 invocation; shell limit disclosed | [B5A](B5A_EXECUTION.md), [B5B](B5B_EXECUTION.md), [source-bound evidence](evidence/b5/README.md) |
-| B6 | NOT_STARTED | — |
+| B6 | DEMO_READY on Windows/JDK 25; captured-context lexical search | [5,765 suite and 86 separate-process assertions](B6_EXECUTION.md), [policy](B6_SEARCH_POLICY.md), [real-file gate pending](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md) |
 | B7 | NOT_STARTED | — |
 
 Update this log only with actual verified PRs/commits/tests. Post concise implementation changes in Breadcrumbs **#dev-updates**; use **#current-milestone** for current goals and acceptance state.

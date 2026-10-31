@@ -1,0 +1,34 @@
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+PASS: B3 actual storage junction rejection
+PASS: B3 continuity/storage (65 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+PASS: B4 audit policy and scoring
+PASS: B4 drift classification and uncertainty
+PASS: B4 actual Windows export junction rejection
+PASS: B4 workflow, references, storage migration and safe export
+PASS: B4 actual project CLI flows
+PASS: all B4 test groups (187 assertions)
+PASS: B5A Graph/domain/storage (31 assertions)
+PASS: B5A actual CLI and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\cli-6874092262083808718
+PASS: B5B custom Hash (1017 assertions)
+PASS: B5B indexes and disabled parity (20 assertions)
+PASS: B5B real Hash CLI | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\hash-cli-12255029999536926611
+PASS: B5 bounds and private-pointer corruption checks
+PASS: all B5 groups (1090 assertions)
+PASS: B6 tokenizer and custom Trie
+PASS: B6 canonical search, safety, revisions, coverage and restore | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\index-1920334816388825006
+PASS: B6 collision, limits, cancellation, corruption and privacy boundaries
+PASS: B6 actual search CLI, narrow output and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\cli-10210191129330761578
+PASS: all B6 groups (225 assertions)

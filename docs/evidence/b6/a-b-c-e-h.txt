@@ -1,0 +1,371 @@
+
+       .-~~~~-.         Breadcrumbs / project continuity
+     .' / / /  '.
+    / .-====-.  _)       _   _   _   _   _   _   _            _   __
+   | :######:  (_  .    |_) |_) |_  |_| | \ /   |_) | | |\/| |_) (_
+   | :######:   _)   .  |_) | \ |_  | | |_/ \_  | \ |_| |  | |_) __)
+    '---------'  .  .
+  Leave context behind. Pick up where work stopped.
+
+  [v] Storage: Ready
+  [v] Saved projects: 1
+  [i] Persistence: opt-in per workspace.
+  [i] Opening saved work never scans or executes source projects.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+breadcrumbs > [1] Synthetic B4 | W631
+Project number (0 = cancel): Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.
+
+ACTIVE PROJECT | Synthetic B4 | W631
+Storage status: SAVED
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+breadcrumbs > 
+ACTIVE PROJECT | Synthetic B4 | W631
+Storage status: SAVED
+[16] Work items / explicit dependencies
+[17] Hash demonstration / canonical indexes
+[18] Search project context
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[9] Context audit
+[10] Guided present-context review
+[11] Consent and rescan sources
+[12] Compare saved observations
+[13] Relevant checkpoint retrieval
+[14] Resume / handoff preview and export
+[15] Coordination applicability
+[0] Back
+project > SEARCH PROJECT CONTEXT
+INDEX_UNAVAILABLE
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Unreviewed source terms may disclose private captured wording. Snippets stay wit
+hheld. Instructions, owner fields and sensitive content stay excluded.
+Include safe unreviewed captured terms for this workspace session? Type yes.
+approve > 
+Session opt-in recorded. Rebuild required.
+SEARCH PROJECT CONTEXT
+INDEX_UNAVAILABLE
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Rebuild completed=true
+Trie terms=16 nodes=94; Hash terms=16 buckets=32; manual posting nodes=19; index
+ed fields=7; characters budgeted=332; canonical valid=true
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Prefix: 
+Trie suggestions. READY
+[1] method
+[2] methodology
+[3] methods
+[0] Back
+term > 
+READY
+Exact term: methodology
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
+e reread. Checkpoints are historical assessments.
+Hash exact lookup -> manual posting chain -> canonical records
+[1] EV-W631-000001 | OBJECTIVE
+CURRENT SAVED EVIDENCE
+Source: notes.md, line 2, Objective
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.649662100Z
+Truth: SOURCE_REPORTED / EXPLICIT / UNVERIFIED
+Review: LEFT_UNKNOWN
+Sensitivity: INTERNAL
+Occurrences: 2
+[2] EV-W631-000002 | NEXT_ACTION
+CURRENT SAVED EVIDENCE
+Source: plan.txt, line 1
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.649662100Z
+Truth: SOURCE_REPORTED / EXPLICIT / UNVERIFIED
+Review: LEFT_UNKNOWN
+Sensitivity: INTERNAL
+Occurrences: 1
+[3] CP-000001 | TITLE
+HISTORICAL CHECKPOINT
+Source: checkpoint field TITLE
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.745174600Z
+Truth: USER_CONFIRMED present assessment, past work not independently verified
+Review: CONFIRMED
+Sensitivity: INTERNAL
+Occurrences: 1
+Showing 3 of 3 indexed field matches.
+View a bounded confirmed matching field, or 0 to return. Pending source snippets
+ are withheld.
+record > 
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Exact term: 
+READY
+Exact term: methodology
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
+e reread. Checkpoints are historical assessments.
+Hash exact lookup -> manual posting chain -> canonical records
+[1] EV-W631-000001 | OBJECTIVE
+CURRENT SAVED EVIDENCE
+Source: notes.md, line 2, Objective
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.649662100Z
+Truth: SOURCE_REPORTED / EXPLICIT / UNVERIFIED
+Review: LEFT_UNKNOWN
+Sensitivity: INTERNAL
+Occurrences: 2
+[2] EV-W631-000002 | NEXT_ACTION
+CURRENT SAVED EVIDENCE
+Source: plan.txt, line 1
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.649662100Z
+Truth: SOURCE_REPORTED / EXPLICIT / UNVERIFIED
+Review: LEFT_UNKNOWN
+Sensitivity: INTERNAL
+Occurrences: 1
+[3] CP-000001 | TITLE
+HISTORICAL CHECKPOINT
+Source: checkpoint field TITLE
+Observation: SCAN-W631
+Recorded: 2026-10-31T18:05:56.745174600Z
+Truth: USER_CONFIRMED present assessment, past work not independently verified
+Review: CONFIRMED
+Sensitivity: INTERNAL
+Occurrences: 1
+Showing 3 of 3 indexed field matches.
+View a bounded confirmed matching field, or 0 to return. Pending source snippets
+ are withheld.
+record > 
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Search status READY. Observation SCAN-W631
+Discovered entries=10; fingerprinted=9; sensitivity-skipped=2
+TXT/MD/CSV: captured fields only; supported files=3; eligible evidence fields=2;
+ policy-excluded/unindexed evidence fields=0
+metadata-only files=4; unsupported=5; skipped=2; failed/unstable=0; scan complet
+e=true
+PDF/DOCX/XLSX/PPTX/images: body extraction unavailable, body not searched.
+Java/JSON/XML/YAML: metadata-only in this implementation. No full-text/OCR/seman
+tic search.
+Skipped includes exclusions/sensitivity; unsupported/failed portions may contain
+ unknown terms.
+Source terms require confirmation or explicit session opt-in; unreviewed snippet
+s withheld.
+Live source freshness UNKNOWN. Current saved evidence and current work items; ch
+eckpoint fields labeled historical.
+Indexed canonical fields=7
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Exact term: 
+READY
+Exact term: bodyonlyword
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
+e reread. Checkpoints are historical assessments.
+Hash exact lookup -> manual posting chain -> canonical records
+Showing 0 of 0 indexed field matches.
+No indexed matches. This does not prove absence from source documents. See cover
+age.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Exact term: 
+READY
+Exact term: instructiononly
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
+e reread. Checkpoints are historical assessments.
+Hash exact lookup -> manual posting chain -> canonical records
+Showing 0 of 0 indexed field matches.
+No indexed matches. This does not prove absence from source documents. See cover
+age.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Prefix: 
+Trie suggestions. READY
+No suggestions in indexed fields. See coverage or rebuild.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Prefix: 
+Trie suggestions. READY
+No suggestions in indexed fields. See coverage or rebuild.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Exact term: 
+READY
+Exact term: unsafeonlyword
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
+e reread. Checkpoints are historical assessments.
+Hash exact lookup -> manual posting chain -> canonical records
+Showing 0 of 0 indexed field matches.
+No indexed matches. This does not prove absence from source documents. See cover
+age.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+Trie terms=16 nodes=94; Hash terms=16 buckets=32; manual posting nodes=19; index
+ed fields=7; characters budgeted=332; canonical valid=true
+Separate synthetic Trie demonstration. Canonical records unchanged.
+3 terms share nodes=13; exact method=true; exact meth=false
+meth -> method, methodology, methods; valid=true
+Trie navigation scans sorted siblings. Hash uses B5 separate chaining. Exact res
+ults show posting counts and canonical locators. No measured speedup claim.
+SEARCH PROJECT CONTEXT
+READY
+[1] Search exact term
+[2] Prefix suggestions / choose term
+[3] Search coverage
+[4] Rebuild saved-field index
+[5] Index health / DSA demonstration
+[6] Source-term privacy policy
+[7] Enable / disable search index
+[0] Back
+search > 
+
+ACTIVE PROJECT | Synthetic B4 | W631
+Storage status: SAVED
+[16] Work items / explicit dependencies
+[17] Hash demonstration / canonical indexes
+[18] Search project context
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[9] Context audit
+[10] Guided present-context review
+[11] Consent and rescan sources
+[12] Compare saved observations
+[13] Relevant checkpoint retrieval
+[14] Resume / handoff preview and export
+[15] Coordination applicability
+[0] Back
+project > 
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+breadcrumbs > Goodbye.

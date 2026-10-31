@@ -2,9 +2,39 @@
 
 **Leave context behind. Pick up where work stopped.**
 
-Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1–B4 provide a custom DLL sandbox, safe initial-project baseline, confirmed checkpoints, local restart continuity, evidence audit, consented drift comparison and portable handoffs.
+Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ console application** for preserving reliable project continuity. B1–B6 provide a custom DLL, safe project baseline, confirmed checkpoints, restart continuity, evidence audit/drift, portable handoffs, declared dependency Graph, custom Hash indexes and captured-context lexical search.
 
-> **Status: B4 DEMO_READY on Windows/JDK 25, targeting Java 17.** The final Windows harness passes **4,450 assertions** across unchanged B1–B3 tests and B4, plus **55 separate-process A–F assertions**. B4 adds audit, immutable later observations, referenced freshness, deterministic retrieval and previewed handoff export with genuine B3 storage compatibility. See [B4 execution](docs/B4_EXECUTION.md), [retained evidence](docs/evidence/b4/README.md) and [policy/storage contract](docs/B4_POLICY_AND_STORAGE.md). The accepted [CLI artwork/screenshots](docs/evidence/terminal-visual/README.md) are preserved. Actual JDK 17 runtime, Unix and instructor-machine execution remain unverified. B5A/B5B are implemented; B6–B7 remain unimplemented. Feature PRs remain unmerged.
+> **Status: B6 DEMO_READY on Windows/JDK 25, targeting Java 17.** The native Windows run passes **5,765 suite assertions**, including **225 B6**, plus **21 B6, 10 B5 and 55 B4 separate-process assertions**. Junction/ACL checks and the external-directory launcher pass. See [B6 execution](docs/B6_EXECUTION.md), [search policy](docs/B6_SEARCH_POLICY.md) and [retained evidence](docs/evidence/b6/README.md). The accepted [CLI artwork/screenshots](docs/evidence/terminal-visual/README.md) are preserved. Actual JDK 17 runtime, Unix, instructor hardware and symbolic-link creation remain unverified. [Real-document compatibility](docs/DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md) remains a future acceptance gate. B7 is unimplemented. Feature PRs remain unmerged.
+
+## Search captured project context
+
+Run `run.bat`, open a saved workspace and choose project option **18**.
+Choose **4** to rebuild from saved canonical fields, **1** for an exact term,
+**2** for prefix suggestions and numbered selection, or **3** for coverage.
+Option **5** shows real index health and a separate synthetic Trie demonstration.
+Option **7** disables/enables search. Outdated indexes require rebuild.
+
+By default, source terms require a confirmed evidence review. Option **6** can
+explicitly allow safe unreviewed captured terms for this workspace session.
+Unreviewed snippets stay withheld. Matching confirmed fields require separate
+display consent. Workspace switching resets the source-term opt-in.
+
+Search uses a manually linked code-point Trie, the existing B5 custom Hash Table,
+and manual posting chains. Hits retain canonical IDs, fields, source line/section,
+truth/review states, observation, time and occurrence count. Checkpoint hits are
+explicitly historical. Changed observations, reviews, checkpoints, tasks or policies
+invalidate the disposable index. No search structures are persisted.
+
+**TXT/Markdown/CSV search covers captured configured fields only.** It does not
+search every document paragraph. PDF, DOCX, XLSX, PPTX, Java, JSON, XML, YAML and
+image bodies are not extracted/searchable in this implementation. Search does not
+reread the original folder. Live source freshness remains UNKNOWN until a consented
+rescan. Missing matches do not prove information is absent from the documents.
+
+Run `scripts\test-b6.bat` for strict Java 17-target compilation, all suites and
+the B6/B5/B4 production-process scenarios. The optional
+`scripts\verify-b6-windows.ps1` also exercises native junctions/ACLs and the launcher,
+and binds the run to source/test/script hashes. All fixtures are synthetic.
 
 ## Build, run, and test
 
@@ -48,8 +78,8 @@ java -cp build/test breadcrumbs.b4.B4Scenarios
 ```
 
 `scripts\test-b5.bat` contains the same commands plus production compilation.
-B6 search structures and B7 recovery remain unimplemented. Accepted branding and
-frozen v1.2 specifications are unchanged. No merge/release/Discord update performed.
+B6 search structures are implemented as described above. B7 recovery remains
+unimplemented. Accepted branding and frozen v1.2 specifications are unchanged.
 
 [Review B4 in PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4), stacked on
 the unmerged B3 branch. The [session checkpoint](docs/B4_EXECUTION.md#session-checkpoint)

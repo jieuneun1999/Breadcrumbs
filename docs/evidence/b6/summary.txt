@@ -1,0 +1,56 @@
+Started: 2026-11-01T02:05:42.9057402+08:00
+OS: Microsoft Windows NT 10.0.19045.0
+PASS: Windows production build | exit 0
+PASS: Strict Java 17 target test compilation | exit 0
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+PASS: actual Windows junction fixture
+PASS: B2 inspector (91 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+PASS: B3 actual storage junction rejection
+PASS: B3 continuity/storage (65 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+PASS: B4 audit policy and scoring
+PASS: B4 drift classification and uncertainty
+PASS: B4 actual Windows export junction rejection
+PASS: B4 workflow, references, storage migration and safe export
+PASS: B4 actual project CLI flows
+PASS: all B4 test groups (187 assertions)
+PASS: B5A Graph/domain/storage (31 assertions)
+PASS: B5A actual CLI and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\cli-6874092262083808718
+PASS: B5B custom Hash (1017 assertions)
+PASS: B5B indexes and disabled parity (20 assertions)
+PASS: B5B real Hash CLI | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\hash-cli-12255029999536926611
+PASS: B5 bounds and private-pointer corruption checks
+PASS: all B5 groups (1090 assertions)
+PASS: B6 tokenizer and custom Trie
+PASS: B6 canonical search, safety, revisions, coverage and restore | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\index-1920334816388825006
+PASS: B6 collision, limits, cancellation, corruption and privacy boundaries
+PASS: B6 actual search CLI, narrow output and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\cli-10210191129330761578
+PASS: all B6 groups (225 assertions)
+PASS: B6 A-H separate Main processes (21 assertions) | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-process\run-270514048251389477
+PASS: B5 separate Main processes (10 assertions) | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-process\run-7033050122419687999
+B4 A�F process verification
+Started: 2026-10-31T18:06:02.180710500Z
+OS: Windows 10 | Java: 25
+PASS A: new-empty B0, nine-rule audit, baseline-only report, zero checkpoints.
+PASS B: same-ID conflict, both locators, skip/cancel, no fabricated winner/outcome; source hashes unchanged.
+PASS C: native CP save/restart, no automatic scan, consented scans, unrelated FRESH versus referenced STALE; source bytes unchanged by app.
+PASS D: real duplicate-hash two-to-two rename remains AMBIGUOUS_RENAME.
+PASS E: three native DLL checkpoints, deterministic explained ranking and exact preview export with original source references/warnings.
+PASS F: genuine pre-B4 imported v1 fixture, read-only open, explicit v2 save, separate-process restart; B0/CP/evidence/counter retained.
+Assertions: 55
+Fixtures/output: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b4-scenarios\run-7206889004466675942
+Completed: 2026-10-31T18:06:06.815450700Z
+
+PASS: External-directory Windows launcher | exit 0
+PASS: all source/test/script hashes unchanged during verification
+Completed: 2026-11-01T02:06:10.1520476+08:00
