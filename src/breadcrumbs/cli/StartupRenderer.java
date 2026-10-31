@@ -7,6 +7,7 @@ final class StartupRenderer {
     private static final String[] ACTIONS = {
         "[1]  Open / switch saved project",
         "[2]  Create or import project",
+        "[7]  Daily workspace / Follow / Leave",
         "[3]  Active project / history",
         "[4]  DSA demonstration",
         "[0]  Exit"

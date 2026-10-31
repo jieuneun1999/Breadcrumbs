@@ -78,7 +78,7 @@ final class ClaimExtractor {
                     else { field = Field.DOCUMENT_TEXT; }
                     builder.add(field, "", literal, literal, i + 1, "DOCX main paragraph " + (i + 1));
                 }
-                return new Extraction(builder.finish(), SnapshotEntry.Status.SUPPORTED, "Bounded main-document paragraphs only; layout, comments, headers, drawings and embedded content not extracted. Revisions/fields rejected.", builder.limited);
+                return new Extraction(builder.finish(), SnapshotEntry.Status.SUPPORTED, (builder.limited ? "Claim limit reached; extraction coverage is partial. " : "") + "Bounded main-document paragraphs only; layout, comments, headers, drawings, embedded content and field instructions/cached results omitted. Revisions rejected.", builder.limited);
             }
             String text = StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
                     .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(bytes)).toString();

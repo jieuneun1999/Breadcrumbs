@@ -16,7 +16,7 @@ public record ScanPolicy(int maxDepth, int maxEntries, long maxFileBytes, long m
     }
 
     public static ScanPolicy defaults() {
-        return new ScanPolicy(5, 300, 65536, 2097152, 65536, 1000, 200, 16, 5000);
+        return new ScanPolicy(5, 300, 262144, 2097152, 65536, 1000, 200, 16, 5000);
     }
 
     public String version() {

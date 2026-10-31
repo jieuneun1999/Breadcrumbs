@@ -56,5 +56,7 @@ public final class AllTests {
         breadcrumbs.inspector.DocxTest.run();
         breadcrumbs.storage.B7ArtifactLockTest.run();
         System.out.println("PASS: B7D bounded document compatibility (" + (breadcrumbs.b4.Checks.count() - b7dStart) + " assertions)");
+        breadcrumbs.cli.TerminalConsistencyTest.run();
+        breadcrumbs.cli.CalmConsoleTest.run();
     }
 }

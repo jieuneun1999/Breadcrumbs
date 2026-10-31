@@ -21,6 +21,30 @@ public final class BrandRenderer {
 
     private BrandRenderer() { }
 
+    /** Production branding uses only the approved B3 artwork; small terminals get text, never alternate art. */
+    public static void renderApproved(PrintStream out, TerminalTheme theme, int width) {
+        int columns = Math.max(28, width);
+        out.println();
+        if (columns >= 160) {
+            if (theme.animationsEnabled()) {
+                out.print(RichBrandRenderer.frame(theme, true)); out.flush();
+                try { Thread.sleep(120); }
+                catch (InterruptedException stopped) { Thread.currentThread().interrupt(); }
+                out.print("\u001b[" + ReferenceBrandArt.MARKS.length + "A\r");
+            }
+            RichBrandRenderer.render(out, theme); out.flush();
+        }
+        else {
+            out.println("  " + theme.label(TerminalTheme.Tone.BREAD_GOLD, "BREADCRUMBS"));
+            if (columns >= 36) { out.println("  " + theme.label(TerminalTheme.Tone.SECONDARY, SIGNATURE)); }
+            out.println("  Leave context behind." + (columns >= 51 ? " Pick up where work stopped." : ""));
+            if (columns < 51) { out.println("  Pick up where work stopped."); }
+            out.println("  " + theme.label(TerminalTheme.Tone.SECONDARY, "Logo: use COLUMNS=160."));
+        }
+        out.println();
+    }
+
+    /** Historical presentation contract retained for the original B3 fixture suite. Production uses renderApproved. */
     public static void render(PrintStream out, TerminalTheme theme, int width) {
         int columns = Math.max(28, width);
         out.println();

@@ -62,15 +62,15 @@ separate predicates and are never inferred from synthetic Java 17-target results
 - [x] B7D. Implement feasible bounded JDK-only DOCX paragraphs with truthful
   locators/coverage and security negatives. Keep optional PDF/XLSX/PPTX gated and
   metadata-only unless separately approved. Gate parser contracts and regression.
-  REAL_DOCUMENT_ACCEPTANCE = PENDING_OWNER_FIXTURES.
-- [ ] B7E. Integrate a task-focused primary menu while preserving old advanced
+  REAL_DOCUMENT_ACCEPTANCE = PARTIAL_PUBLIC_DOCX; FULL_MATRIX_PENDING_OWNER_REVIEW.
+- [x] B7E. Integrate a task-focused primary menu while preserving old advanced
   numeric paths/tests, all four profiles, actual recorded terminal walkthrough,
   academic/security/complexity deliverables and final native regression.
-- [ ] Additive owner steer. After the B7A correctness gate, reuse TerminalTheme
+- [x] Additive owner steer. After the B7A correctness gate, reuse TerminalTheme
   throughout ordinary and advanced workflows. Add one reusable Java 17 operation
   feedback component with STARTED/RUNNING/COMPLETED/WARNINGS/FAILED/CANCELLED,
-  synchronous bounded redraw only on capable interactive terminals, and concise
-  start/final fallback for redirected/no-color/ASCII output. No artificial delay,
+  bounded synchronized redraw only on capable interactive terminals, and concise
+  start/final fallback for redirected/no-color/ASCII output. No artificial operation delay,
   fabricated counts, repeated frame logs, animations during input or orphan threads.
   Style trusted labels only. Test cleanup, cancellation, warnings, narrow/plain
   output and unchanged artwork. Complete this before the requested recording.
@@ -96,7 +96,7 @@ First-Import documents stay unchanged; extensions are documented in separate ADR
 Append decisions to B7_DECISIONS.tsv. Each stage has the named execution document
 and source-bound evidence under docs/evidence/b7. Commit only synthetic/redacted
 evidence. Real private files are never uploaded. The user's requested walkthrough
-uses generated synthetic project documents and real production terminal sessions;
+uses synthetic fixtures plus the explicitly authorized public template and real production terminal sessions;
 replay, actual desktop capture and any edited video are labeled separately.
 After each green gate, commit/open the stage PR and continue to its dependent stage.
 Only a true boundary or exhausted budget stops safe independent work.

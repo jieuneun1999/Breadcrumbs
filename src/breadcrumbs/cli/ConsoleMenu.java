@@ -21,12 +21,17 @@ public final class ConsoleMenu {
     private final CheckpointList list = new CheckpointList();
     private final WorkspaceState workspaceState = new WorkspaceState();
     private final BootstrapConsole bootstrapConsole;
+    private final TerminalTheme theme; private final TerminalOutput ui;
     private int nextNativeId = 1;
 
     public ConsoleMenu(Reader input, PrintStream output) {
+        this(input, output, new TerminalTheme(false), 80);
+    }
+    public ConsoleMenu(Reader input, PrintStream output, TerminalTheme theme, int width) {
         this.input = input instanceof BufferedReader buffered ? buffered : new BufferedReader(input);
         this.output = output;
-        bootstrapConsole = new BootstrapConsole(this::read, output, workspaceState);
+        this.theme = theme; ui = new TerminalOutput(output, theme, width);
+        bootstrapConsole = new BootstrapConsole(this::read, output, workspaceState, new breadcrumbs.bootstrap.BootstrapService(breadcrumbs.inspector.ScanPolicy.defaults()), false, theme, width);
     }
 
     public void run() throws IOException {
@@ -178,8 +183,8 @@ public final class ConsoleMenu {
     }
 
     private void report(String operation, String result, String complexity, String explanation) {
-        output.println("Operation: " + operation);
-        output.println("Result: " + result);
+        ui.line("Operation: ", operation);
+        ui.line("Result: ", result);
         output.println("DLL structure: " + list.displayStructure());
         output.println("Time complexity: " + complexity);
         output.println("Explanation: " + explanation);
@@ -187,7 +192,7 @@ public final class ConsoleMenu {
     }
 
     private String read(String prompt) throws IOException {
-        output.print(prompt);
+        output.print(theme.label(TerminalTheme.Tone.BREAD_GOLD, prompt));
         output.flush();
         StringBuilder line = new StringBuilder();
         boolean overflow = false;
@@ -246,24 +251,24 @@ public final class ConsoleMenu {
 
     private void menu() {
         output.println("\n========================================");
-        output.println("              BREADCRUMBS");
+        ui.heading("              BREADCRUMBS");
         output.println("       Project Checkpoint Management");
         output.println("========================================");
-        output.println("[1] Create / append session-only CP (B1 sandbox)");
-        output.println("[2] Prepend SYNTHETIC checkpoint");
-        output.println("[3] Insert SYNTHETIC checkpoint at position");
-        output.println("[4] Search checkpoint by ID");
-        output.println("[5] Delete checkpoint by ID");
-        output.println("[6] Traverse forward");
-        output.println("[7] Traverse backward");
-        output.println("[8] View latest checkpoint (tail)");
-        output.println("[9] Display DLL structure");
-        output.println("[10] View list size");
-        output.println("[11] Validate DLL integrity");
-        output.println("[12] Load five SYNTHETIC DEMO checkpoints");
-        output.println("[13] Add or create a project / establish B0");
-        output.println("[14] View B0 and paged inventory / claims");
-        output.println("[0] Exit");
+        ui.menu("[1] Create / append session-only CP (B1 sandbox)");
+        ui.menu("[2] Prepend SYNTHETIC checkpoint");
+        ui.menu("[3] Insert SYNTHETIC checkpoint at position");
+        ui.menu("[4] Search checkpoint by ID");
+        ui.menu("[5] Delete checkpoint by ID");
+        ui.menu("[6] Traverse forward");
+        ui.menu("[7] Traverse backward");
+        ui.menu("[8] View latest checkpoint (tail)");
+        ui.menu("[9] Display DLL structure");
+        ui.menu("[10] View list size");
+        ui.menu("[11] Validate DLL integrity");
+        ui.menu("[12] Load five SYNTHETIC DEMO checkpoints");
+        ui.menu("[13] Add or create a project / establish B0");
+        ui.menu("[14] View B0 and paged inventory / claims");
+        ui.menu("[0] Exit");
         output.println("Enter /cancel at any prompt to return here. Confirmations accept only yes.");
     }
 }

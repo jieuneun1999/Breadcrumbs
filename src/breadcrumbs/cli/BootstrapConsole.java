@@ -32,6 +32,7 @@ final class BootstrapConsole {
     private final BaselineRenderer renderer;
     private final TerminalTheme theme;
     private final int width;
+    private final boolean projectShell;
 
     BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState) {
         this(input, output, workspaceState, new BootstrapService(ScanPolicy.defaults()), false);
@@ -47,16 +48,14 @@ final class BootstrapConsole {
         this.output = output;
         this.workspaceState = workspaceState;
         this.service = service;
-        renderer = new BaselineRenderer(output, projectShell);
+        this.projectShell = projectShell;
+        renderer = new BaselineRenderer(output, projectShell, theme, width);
         this.theme = theme; this.width = width;
     }
 
     void bootstrap() throws IOException {
-        output.println("\nADD OR CREATE PROJECT");
-        output.println("[1] Start a new empty project");
-        output.println("[2] Import an existing folder");
-        output.println("[3] Import existing notes / handoff context");
-        output.println("[0] Back. /cancel at any prompt discards the proposal.");
+        var ui = new TerminalOutput(output, theme, width); ui.heading("\nADD OR CREATE PROJECT");
+        ui.menu("[1] Start a new empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.");
         String choice = input.read("Entry mode: ");
         if (choice.equals("0")) {
             return;
@@ -90,11 +89,15 @@ final class BootstrapConsole {
         Path root = selectedPath.isEmpty() ? null : Path.of(selectedPath);
         boolean scanApproved = false;
         if (root != null) {
+          if (projectShell) {
+            new TerminalOutput(output, theme, width).note("\nRead-only scan. Source files are never written or executed. Links and sensitive/generated paths are skipped.\nTXT/MD/CSV fields and bounded DOCX paragraphs; other bodies stay unavailable. Details remain in View B0 / sources.");
+          } else {
             output.println("READ-ONLY inspection. Imported files are never executed or written.");
             output.println("Links/reparse points, sensitive names and generated folders are skipped.");
             output.println("TXT/Markdown/CSV configured fields and bounded DOCX main paragraphs. Other formats receive metadata/fingerprints, not content understanding.");
             output.println("Limits: " + ScanPolicy.defaults());
             output.println("Use a quiescent LOCAL folder. Portable JDK checks are not an OS sandbox against hostile filesystem races.");
+          }
             if (!input.read("Approve bounded read-only scan? Type yes: ").equalsIgnoreCase("yes")) {
                 output.println("Cancelled before scanning. Active workspace unchanged.");
                 return;
@@ -139,7 +142,7 @@ final class BootstrapConsole {
         preview(draft);
         if (mode != EntryMode.NEW_EMPTY) {
             draft = review(draft);
-            preview(draft);
+            if (!projectShell) { preview(draft); }
         }
         if (workspaceState.activeBaseline() != null) {
             output.println("Confirmation replaces the active session workspace; no persistence is available.");
@@ -147,7 +150,8 @@ final class BootstrapConsole {
         boolean approved = input.read("Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
         if (service.confirm(workspaceState, draft, approved)) {
             output.println("Baseline B0 established. No native checkpoint was created.");
-            renderer.baseline(workspaceState.activeBaseline(), workspaceState.checkpoints().size());
+            if (!projectShell) { renderer.baseline(workspaceState.activeBaseline(), workspaceState.checkpoints().size()); }
+            else { new TerminalOutput(output, theme, width).note("Full inventory, hashes and source details are available in Advanced tools > View B0 / sources."); }
         } else {
             output.println("Cancelled. Proposal discarded; active workspace unchanged.");
         }
@@ -183,7 +187,13 @@ final class BootstrapConsole {
     private BootstrapDraft review(BootstrapDraft proposal) throws IOException {
         BootstrapDraft reviewed = proposal;
         for (EvidenceClaim candidate : proposal.claims()) {
-            renderer.claim(candidate);
+            if (!projectShell) { renderer.claim(candidate); }
+            else {
+                var ui = new TerminalOutput(output, theme, width);
+                ui.heading("\nREVIEW SOURCE STATEMENT"); ui.line("Origin: ", candidate.sourceKind() + " / independently unverified");
+                ui.line("Source: ", breadcrumbs.inspector.ContentSafety.terminal(candidate.relativePath(), 180) + " " + candidate.locationUnit() + " " + candidate.line());
+                ui.value(candidate.field().name(), breadcrumbs.inspector.ContentSafety.terminal(candidate.literalValue(), 300));
+            }
             String choice;
             do {
                 choice = input.read("Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
@@ -203,6 +213,16 @@ final class BootstrapConsole {
     }
 
     private void preview(BootstrapDraft draft) {
+        if (projectShell) {
+            var ui = new TerminalOutput(output, theme, width); ui.heading("\nIMPORT PREVIEW");
+            ui.line("Project: ", draft.displayName() + " | " + draft.profile());
+            ui.line("Coverage: ", draft.scan().entries().length + " entries | " + draft.claims().length + " captured statements | " + (draft.scan().complete() ? "within scan bounds" : "PARTIAL; limits reached"));
+            int metadata = 0, failed = 0;
+            for (var entry : draft.scan().entries()) { if (entry.status() == SnapshotEntry.Status.UNSUPPORTED) { metadata++; } if (entry.status() == SnapshotEntry.Status.FAILED || entry.status() == SnapshotEntry.Status.UNSTABLE) { failed++; } }
+            ui.line("Unavailable body coverage: ", metadata + " unsupported | " + failed + " failed/unstable");
+            ui.note("B0 is an observation, not a historical resume. No checkpoint or prior work is invented.\nReview source statements now, or defer them. Full policy, inventory and hashes remain available in View B0 / sources.");
+            return;
+        }
         renderer.summary(draft.workspaceId(), draft.displayName(), draft.profile(), draft.entryMode(),
                 draft.scan(), draft.claims(), draft.conflicts(), false, 0);
         SnapshotEntry[] entries = draft.scan().entries();

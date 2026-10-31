@@ -31,12 +31,17 @@ final class DailyConsole {
     }
     void run() throws IOException {
         if (state.activeBaseline() == null) { ui.warning("Open or create a workspace first."); return; }
+        boolean showMenu = true;
         while (true) {
-            ui.heading("BREADCRUMBS / DAILY WORKSPACE");
-            ui.menu("[1] Follow the Breadcrumbs\n[2] Leave a Breadcrumb\n[10] Evidence Inbox\n[3] Continuity Health\n[4] Review changes\n[5] Search context\n[11] State / handoff documents\n[7] Explore checkpoint history\n[8] Work items / dependencies\n[6] Full checkpoint form\n[9] Advanced tools\n[0] Back");
+            if (showMenu) {
+                ui.heading("\nDAILY WORKSPACE");
+                ui.menu("[1] Follow the Breadcrumbs\n[2] Leave a Breadcrumb\n[10] Evidence Inbox\n\n[3] Continuity Health\n[4] Review changes\n[5] Search context\n[11] State / handoff documents\n\n[7] Explore checkpoint history\n[8] Work items / dependencies\n[6] Full checkpoint form\n[9] Advanced tools\n[0] Back");
+                showMenu = false;
+            } else { ui.note("\n1=follow  2=leave  5=search  ?=menu  0=back"); }
             try {
                 switch (input.read("daily > ")) {
                     case "0" -> { return; }
+                    case "?" -> showMenu = true;
                     case "1" -> follow();
                     case "2" -> quick();
                     case "3" -> {
@@ -52,7 +57,7 @@ final class DailyConsole {
                         for (var cp : state.checkpoints().traverseForward()) { ui.value(cp.checkpointId(), cp.createdAt() + " | " + cp.title()); }
                         ui.note("These are historical human assessments, not independently verified outcomes.");
                     }
-                    case "8" -> new DependencyConsole(input, out, state).run();
+                    case "8" -> new DependencyConsole(input, out, state, theme, width).run();
                     case "9" -> advanced.run();
                     case "10" -> { String manual = new InboxConsole(input, out, state, save, theme, width).run(); if (manual != null) { quick(new String[] {manual}); } }
                     case "11" -> new DocumentsConsole(input, out, state, store, save, theme, width).run();
@@ -61,7 +66,7 @@ final class DailyConsole {
             } catch (IllegalArgumentException invalid) { ui.error("Operation cancelled or rejected."); ui.plain(invalid.getMessage()); }
         }
     }
-    void follow() { ui.heading("FOLLOW THE BREADCRUMBS"); ui.plain(new ContinuityService().brief(state, persisted)); }
+    void follow() { ui.plain("\n" + new ContinuityService().brief(state, persisted)); }
     private void quick() throws IOException { quick(new String[0]); }
     private void quick(String[] manualIds) throws IOException {
         ui.heading("LEAVE A BREADCRUMB");
@@ -109,7 +114,7 @@ final class DailyConsole {
                     options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), options.evidenceIds(), refs);
                 }
                 case "o" -> options = new QuickCheckpointService.Options(input.read("Objective, blank UNKNOWN: "), input.read("Owner, blank UNKNOWN: "), input.read("Decision / rationale / additional context, blank UNKNOWN: "), options.evidenceIds(), options.manualIds());
-                case "d" -> new DependencyConsole(input, out, state).run();
+                case "d" -> new DependencyConsole(input, out, state, theme, width).run();
                 case "f" -> { full.run(); return; }
                 default -> ui.warning("Choose a preview action. No checkpoint has been created.");
             }

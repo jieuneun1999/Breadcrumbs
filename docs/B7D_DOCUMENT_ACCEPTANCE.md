@@ -98,3 +98,29 @@ OS Microsoft Windows NT 10.0.19045.0
 Exit 0 | 138 input hashes unchanged
 
 All preserved B1-B6 groups, B7A-C, 45 B7D assertions and the recovery/B6/B5/B4 separate-process scenarios passed. Review logs under docs/evidence/b7/d are LF/trailing-whitespace normalized; raw logs remain under build. Specification compliance and engineering-quality self-review pass for bounded synthetic scope. No independent review, Java 17 runtime or real-file acceptance is claimed.
+
+## B7E public-template extension (supersedes the initial D bounds)
+
+The owner explicitly authorized downloading a substantial public sample on
+2026-11-01. The Government of Northwest Territories Finance project-plan template
+is90,770bytes, has453 main-part paragraphs and302,540bytes of main XML. Its ordinary
+paragraphs fit the existing text/paragraph budgets; the previous tiny defaults
+would reject a useful everyday document. The E extension raises default file bytes
+to256KiB and per-inflated ZIP part to512KiB, preserving1MiB total inflation,128entries,
+ratio100,200claims and all existing XML/resource/security bounds. The previous D
+record remains an accurate statement of that tested stage, not today's bounds.
+
+Complex/simple field instructions and their cached results are now omitted,
+including generated table-of-contents text, instead of rejecting all ordinary
+paragraphs in a file containing fields. Field nesting/balance is bounded and
+validated; instructions never execute. Revision/alternate-content rejection is
+unchanged. A new fixture proves instructions/cache are absent and ordinary body
+paragraph2 retains its original ordinal. Capture saturation explicitly reports
+partial coverage. No claim of full453-paragraph indexing is made.
+
+PublicDocumentAcceptance independently checks exact paragraph154, confirms its
+review, searches `scope`, saves a linked checkpoint, restarts and verifies the
+original document SHA256 remains437972d69ad2e86137e62f9551689ec7247a253dacff83b11ad54645d2ea92c0.
+Six assertions passed against the downloaded original. Public DOCX acceptance is
+PARTIAL within the bounded contract. The complete representative-format matrix,
+owner review, instructor/runtime acceptance and PDF extraction remain pending.

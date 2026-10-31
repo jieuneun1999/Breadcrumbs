@@ -13,7 +13,12 @@ final class TerminalOutput {
     void error(String trusted) { styled(trusted, TerminalTheme.Tone.ERROR); }
     void success(String trusted) { styled(trusted, TerminalTheme.Tone.SUCCESS); }
     void value(String trustedLabel, String value) {
-        styled(trustedLabel, TerminalTheme.Tone.BREAD_LIGHT); plain(ContentSafety.terminal(value, 5000));
+        out.println(); styled(trustedLabel, TerminalTheme.Tone.BREAD_LIGHT); plain(ContentSafety.terminal(value, 5000));
+    }
+    void line(String trustedLabel, String value) {
+        String neutral = ContentSafety.terminal(value, 5000);
+        if (trustedLabel.length() + neutral.length() <= width) { out.println(theme.label(TerminalTheme.Tone.BREAD_LIGHT, trustedLabel) + neutral); }
+        else { value(trustedLabel, neutral); }
     }
     void plain(String value) { for (String line : value.split("\n", -1)) { styled(ContentSafety.terminal(line, 5000), null); } }
     void menu(String trustedLines) {

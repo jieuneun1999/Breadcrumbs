@@ -37,7 +37,10 @@ public final class ContinuityService {
         out.append("Referenced saved-observation freshness: ").append(new ReferenceFreshness().assess(state, last).state()).append('\n');
         out.append("NEEDS ATTENTION\n").append(ContextAudit.priority(new ContextAudit().evaluate(state, last))).append('\n');
         out.append("Unsupported/unextracted document portions remain unknown. Source reports do not verify project progress.\n");
-        return out.toString();
+        return out.toString().replace("\nWHERE YOU LEFT OFF", "\n\nWHERE YOU LEFT OFF")
+                .replace("\nNEXT ACTION", "\n\nNEXT ACTION").replace("\nBLOCKERS", "\n\nBLOCKERS")
+                .replace("\nDECISIONS / RATIONALE", "\n\nDECISIONS / RATIONALE").replace("\nEVIDENCE", "\n\nEVIDENCE")
+                .replace("\nNEEDS ATTENTION", "\n\nNEEDS ATTENTION");
     }
     private static String present(WorkspaceState state, EvidenceClaim.Field field) {
         ContextReview review = CurrentAssessment.statement(state, field);

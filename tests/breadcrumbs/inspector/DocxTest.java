@@ -41,6 +41,10 @@ public final class DocxTest {
         var store = new WorkspaceStore(base.resolve("app")); store.save(state); var restart = store.load("W731");
         require(restart.activeBaseline().claims()[0].section().equals("DOCX main paragraph 2"), "DOCX locator survives canonical restart");
         require(java.util.Arrays.equals(good, Files.readAllBytes(source.resolve("research.docx"))), "document original remains byte-identical");
+        Files.write(source.resolve("fields.docx"), document("<w:p><w:r><w:fldChar w:fldCharType=\"begin\"/></w:r><w:r><w:instrText>fieldinstructionword</w:instrText></w:r><w:r><w:fldChar w:fldCharType=\"separate\"/></w:r><w:r><w:t>cachedfieldword</w:t></w:r><w:r><w:fldChar w:fldCharType=\"end\"/></w:r></w:p><w:p><w:r><w:t>ordinarybodyword</w:t></w:r></w:p>"));
+        var fields = new ProjectInspector().inspect(source, "W731", ScanPolicy.defaults(), n -> true);
+        int fieldClaims = 0; for (var c : fields.claims()) { if (c.relativePath().equals("fields.docx")) { require(c.line() == 2 && c.literalValue().equals("ordinarybodyword"), "field instructions and cached results omitted; ordinary paragraph locator retained"); fieldClaims++; } }
+        require(fieldClaims == 1, "normal body remains useful in documents containing TOC/cross-reference fields");
         bad(source, document("<w:p><w:r><w:t>password=synthetic</w:t></w:r></w:p>"), SnapshotEntry.Status.SKIPPED, "sensitive text");
         bad(source, document("<w:p><w:r><w:t>" + "x".repeat(1100) + "</w:t></w:r></w:p>"), SnapshotEntry.Status.UNSUPPORTED, "paragraph bound");
         bad(source, document("<w:p><w:ins><w:r><w:t>ambiguous revision</w:t></w:r></w:ins></w:p>"), SnapshotEntry.Status.UNSUPPORTED, "tracked changes not silently flattened");

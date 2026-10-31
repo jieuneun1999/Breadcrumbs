@@ -10,38 +10,41 @@ final class HashConsole {
     private final ContextConsole.Input input;
     private final PrintStream out;
     private final WorkspaceState state;
-    HashConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state) { this.input = input; this.out = out; this.state = state; }
+    private final TerminalOutput ui;
+    private final TerminalTheme theme; private final int width;
+    HashConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state) { this(input, out, state, new TerminalTheme(false), 80); }
+    HashConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state, TerminalTheme theme, int width) { this.input = input; this.out = out; this.state = state; this.theme = theme; this.width = width; ui = new TerminalOutput(out, theme, width); }
     void run() throws IOException {
         CustomHashTable<String> table = new CustomHashTable<>(4, 100);
         while (true) {
-            out.println("SYNTHETIC HASH DEMO\n[1] Insert/update\n[2] Lookup\n[3] Remove\n[4] Collision + resize fixture\n[5] Buckets\n[6] Validate\n[7] Compare canonical/index checkpoint lookup\n[8] Toggle canonical indexing\n[9] Rebuild/validate canonical indexes\n[0] Back");
+            ui.heading("SYNTHETIC HASH DEMO"); ui.menu("[1] Insert/update\n[2] Lookup\n[3] Remove\n[4] Collision + resize fixture\n[5] Buckets\n[6] Validate\n[7] Compare canonical/index checkpoint lookup\n[8] Toggle canonical indexing\n[9] Rebuild/validate canonical indexes\n[0] Back");
             String choice = input.read("hash > "); if (choice.equals("0")) { return; }
             try {
                 switch (choice) {
                     case "1" -> table.put(input.read("Synthetic key: "), input.read("Synthetic value: "));
-                    case "2" -> out.println("Found: " + breadcrumbs.handoff.HandoffService.clean(String.valueOf(table.get(input.read("Key: ")))));
-                    case "3" -> out.println("Removed: " + breadcrumbs.handoff.HandoffService.clean(String.valueOf(table.remove(input.read("Key: ")))));
+                    case "2" -> ui.plain("Found: " + breadcrumbs.handoff.HandoffService.clean(String.valueOf(table.get(input.read("Key: ")))));
+                    case "3" -> ui.plain("Removed: " + breadcrumbs.handoff.HandoffService.clean(String.valueOf(table.remove(input.read("Key: ")))));
                     case "4" -> {
                         table.put("Aa", "DEMO-A"); table.put("BB", "DEMO-B");
-                        out.println("Aa and BB collide: " + (table.bucketIndex("Aa") == table.bucketIndex("BB")));
-                        out.print(table.displayBuckets());
+                        ui.plain("Aa and BB collide: " + (table.bucketIndex("Aa") == table.bucketIndex("BB")));
+                        ui.plain(table.displayBuckets());
                         for (int i = 0; i < 8; i++) { table.put("DEMO-" + i, "Synthetic " + i); }
-                        out.println("Resized buckets: " + table.capacity());
+                        ui.plain("Resized buckets: " + table.capacity());
                     }
-                    case "5" -> out.print(table.displayBuckets());
-                    case "6" -> out.println("Valid: " + table.validate());
+                    case "5" -> ui.plain(table.displayBuckets());
+                    case "6" -> ui.plain("Valid: " + table.validate());
                     case "7" -> {
                         String id = input.read("Actual checkpoint ID: ");
                         var canonical = state.checkpoints().findById(id); var indexed = state.indexes().checkpoint(id);
-                        out.println("Same canonical value: " + (canonical == indexed) + " | mode enabled: " + state.indexes().enabled());
+                        ui.plain("Same canonical value: " + (canonical == indexed) + " | mode enabled: " + state.indexes().enabled());
                     }
-                    case "8" -> { state.indexes().setEnabled(!state.indexes().enabled()); out.println("Index enabled: " + state.indexes().enabled()); }
-                    case "9" -> { state.indexes().rebuild(); out.println("Canonical indexes valid: " + state.indexes().validate()); }
-                    default -> out.println("Choose 0-9.");
+                    case "8" -> { state.indexes().setEnabled(!state.indexes().enabled()); ui.plain("Index enabled: " + state.indexes().enabled()); }
+                    case "9" -> { OperationFeedback.run(out, theme, width, OperationFeedback.Operation.REBUILD, () -> { state.indexes().rebuild(); return true; }); ui.line("Canonical indexes valid: ", Boolean.toString(state.indexes().validate())); }
+                    default -> ui.plain("Choose 0-9.");
                 }
-                out.println("Hash expected get/put/remove O(1), collisions worst O(n), resize O(n), insertion amortized expected O(1). Diagnostics O(capacity+n), full validate worst O(n^2). Canonical rebuild includes scanning stored observations.");
-                out.print(table.displayBuckets());
-            } catch (IllegalArgumentException bad) { out.println("Rejected: " + breadcrumbs.inspector.ContentSafety.terminal(bad.getMessage(), 500)); }
+                ui.plain("Hash expected get/put/remove O(1), collisions worst O(n), resize O(n), insertion amortized expected O(1). Diagnostics O(capacity+n), full validate worst O(n^2). Canonical rebuild includes scanning stored observations.");
+                ui.plain(table.displayBuckets());
+            } catch (IllegalArgumentException bad) { ui.plain("Rejected: " + breadcrumbs.inspector.ContentSafety.terminal(bad.getMessage(), 500)); }
         }
     }
 }

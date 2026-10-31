@@ -21,14 +21,18 @@ final class SearchConsole {
         this.theme = theme;
     }
     void run() throws IOException {
+        boolean showMenu = true;
         while (true) {
             var ui = new TerminalOutput(out, theme, width);
-            ui.heading("SEARCH PROJECT CONTEXT"); ui.plain(index.status().name());
-            ui.menu("[1] Search exact term\n[2] Prefix suggestions / choose term\n[3] Search coverage\n[4] Rebuild saved-field index\n[5] Index health / DSA demonstration\n[6] Source-term privacy policy\n[7] Enable / disable search index\n[0] Back");
+            if (showMenu) {
+                ui.heading("\nSEARCH PROJECT CONTEXT"); ui.plain(index.status().name());
+                ui.menu("[1] Search exact term\n[2] Prefix suggestions / choose term\n[3] Search coverage\n[4] Rebuild saved-field index\n\n[5] Index health / DSA demonstration\n[6] Source-term privacy policy\n[7] Enable / disable search index\n[0] Back"); showMenu = false;
+            } else { ui.note("\n1=exact  2=prefix  3=coverage  4=rebuild  ?=menu  0=back"); }
             String choice = read("search > ");
             try {
                 switch (choice) {
                     case "0" -> { return; }
+                    case "?" -> showMenu = true;
                     case "1" -> matches(read("Exact term: "));
                     case "2" -> suggestions();
                     case "3" -> print(index.coverage());
@@ -74,7 +78,8 @@ final class SearchConsole {
     }
     private void matches(String term) throws IOException {
         SearchReport report = index.searchExact(term, index.policy().maxResults());
-        print(report.status() + "\nExact term: " + report.term() + "\n" + report.notice());
+        var ui = new TerminalOutput(out, theme, width); ui.heading("SEARCH RESULTS");
+        ui.line("Index state: ", report.status().name()); ui.line("Exact term: ", report.term()); ui.plain(report.notice());
         if (report.status() != SearchReport.Status.READY) { return; }
         SearchReport.Hit[] hits = report.hits();
         print("Hash exact lookup -> manual posting chain -> canonical records");
@@ -82,9 +87,9 @@ final class SearchConsole {
             var hit = hits[i]; var location = hit.location();
             print("[" + (i + 1) + "] " + location.recordId() + " | " + location.field());
             print(location.historical() ? "HISTORICAL CHECKPOINT" : "CURRENT SAVED " + location.kind());
-            print("Source: " + location.locator() + "\nObservation: " + location.observationId()
-                    + "\nRecorded: " + location.recordedAt() + "\nTruth: " + location.truth() + "\nReview: " + location.review()
-                    + "\nSensitivity: " + location.sensitivity() + "\nOccurrences: " + hit.occurrences());
+            ui.line("Source: ", location.locator()); ui.line("Observation: ", location.observationId());
+            ui.line("Recorded: ", location.recordedAt().toString()); ui.line("Truth: ", location.truth());
+            ui.line("Review: ", location.review()); ui.line("Sensitivity: ", location.sensitivity()); ui.line("Occurrences: ", Integer.toString(hit.occurrences()));
         }
         print("Showing " + hits.length + " of " + report.totalMatches() + " indexed field matches." + (report.limited() ? " Results capped." : ""));
         if (hits.length == 0) { print("No indexed matches. This does not prove absence from source documents. See coverage."); return; }

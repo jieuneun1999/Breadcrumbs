@@ -56,7 +56,7 @@ final class InboxConsole {
                     && input.read("Specifically allow this unverified reported statement in lexical search? Type yes: ").equalsIgnoreCase("yes");
             boolean export = classification == ManualContext.Sensitivity.INTERNAL && input.read("Allow this literal manual body/origin in handoff export? Type yes: ").equalsIgnoreCase("yes");
             state.manualContext().review(captured.id(), EvidenceClaim.ReviewDisposition.CONFIRMED, index, export); save.run();
-            if (input.read("Also record an explicit present-context assessment from this note? Type yes: ").equalsIgnoreCase("yes")) {
+            if (classification == ManualContext.Sensitivity.INTERNAL && input.read("Also record an explicit present-context assessment from this note? Type yes: ").equalsIgnoreCase("yes")) {
                 var field = type == ManualContext.Type.NEXT_ACTION_CANDIDATE ? EvidenceClaim.Field.NEXT_ACTION : type == ManualContext.Type.DECISION ? EvidenceClaim.Field.DECISION : EvidenceClaim.Field.CURRENT_STATE;
                 String value = type == ManualContext.Type.REPORTED_STATEMENT ? "Reported statement, independently unverified: " + captured.statement() : captured.statement();
                 state.addReview(new ContextReview(state.currentObservationId(), "", field, "", value, EvidenceClaim.ReviewDisposition.CONFIRMED, Instant.now())); save.run();

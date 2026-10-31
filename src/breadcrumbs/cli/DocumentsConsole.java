@@ -18,13 +18,17 @@ final class DocumentsConsole {
         for (int i = 0; i < ids.length; i++) { ids[i] = checkpoints[i].checkpointId(); } return ids;
     }
     void run() throws IOException {
+        boolean showMenu = true;
         while (true) {
-            ui.heading("STATE AND HANDOFF DOCUMENTS");
-            ui.note("Generated views are rebuildable. Validated canonical state remains authoritative. Source files are never copied or overwritten.");
-            ui.menu("[1] View state.md\n[2] View HANDOFF.md\n[3] View historical checkpoint Markdown\n[4] Generate app-owned continuity documents\n[5] Configure checkpoint-triggered generation\n[6] Export portable Markdown package\n[0] Back");
+            if (showMenu) {
+                ui.heading("\nSTATE AND HANDOFF DOCUMENTS");
+                ui.note("Generated views are rebuildable. Source files are never copied or overwritten.");
+                ui.menu("[1] View state.md\n[2] View HANDOFF.md\n[3] View historical checkpoint Markdown\n\n[4] Generate app-owned continuity documents\n[5] Configure checkpoint-triggered generation\n[6] Export portable Markdown package\n[0] Back"); showMenu = false;
+            } else { ui.note("\n1=state  2=handoff  4=generate  6=export  ?=menu  0=back"); }
             String choice = input.read("documents > ");
             switch (choice) {
                 case "0" -> { return; }
+                case "?" -> showMenu = true;
                 case "1", "2", "3" -> {
                     String id = choice.equals("1") ? "state" : choice.equals("2") ? "handoff" : input.read("Historical checkpoint ID: ");
                     String path = id.equalsIgnoreCase("state") ? "state.md" : id.equalsIgnoreCase("handoff") ? "HANDOFF.md" : "checkpoints/" + id + ".md";

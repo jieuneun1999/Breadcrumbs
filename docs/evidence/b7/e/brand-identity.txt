@@ -1,0 +1,2 @@
+PASS exact accepted B3 output | color=false | SHA256 eed1e843185d4d4f592b831b31d3418f7ecfdbbb535aacccd37f877da8be5af6
+PASS exact accepted B3 output | color=true | SHA256 4404859e559908ee74dbab63ecd84662bab52966e5547712067065897f0ecf9c

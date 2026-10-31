@@ -17,8 +17,13 @@ final class ContextConsole {
     private final PrintStream output;
     private final WorkspaceState state;
     private final Path storage;
+    private final TerminalOutput ui; private final TerminalTheme theme; private final int width;
     ContextConsole(Input input, PrintStream output, WorkspaceState state, Path storage) {
+        this(input, output, state, storage, new TerminalTheme(false), 80);
+    }
+    ContextConsole(Input input, PrintStream output, WorkspaceState state, Path storage, TerminalTheme theme, int width) {
         this.input = input; this.output = output; this.state = state; this.storage = storage;
+        this.theme = theme; this.width = width; ui = new TerminalOutput(output, theme, width);
     }
     void perform(String choice) throws IOException {
         switch (choice) {
@@ -28,25 +33,25 @@ final class ContextConsole {
                 String setting = input.read("Coordination [solo/team/skip]: ");
                 if (setting.equalsIgnoreCase("solo") || setting.equalsIgnoreCase("team")) {
                     state.setSoloOwner(setting.equalsIgnoreCase("solo"));
-                    output.println("Current applicability recorded. Save explicitly to persist B4 changes.");
-                } else { output.println("Applicability unchanged."); }
+                    ui.plain("Current applicability recorded. Save explicitly to persist B4 changes.");
+                } else { ui.plain("Applicability unchanged."); }
             }
             default -> throw new IllegalArgumentException("Unknown context option.");
         }
     }
-    private void audit() {
-        var report = new ContextAudit().evaluate(state, state.checkpoints().getLatest());
-        output.println("CONTEXT AUDIT | " + report.policy() + " | " + report.evaluatedAt() + " | " + report.observationId());
-        output.println("Readiness: " + report.readiness());
-        output.println("Priority: " + ContextAudit.priority(report));
-        output.println("Context score: " + HandoffService.percent(report.score())
+    private void audit() throws IOException {
+        var report = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.AUDIT, () -> new ContextAudit().evaluate(state, state.checkpoints().getLatest()));
+        ui.heading("CONTEXT AUDIT"); ui.line("Policy / observation: ", report.policy() + " | " + report.evaluatedAt() + " | " + report.observationId());
+        ui.line("Readiness: ", report.readiness().toString());
+        ui.line("Priority: ", ContextAudit.priority(report));
+        ui.plain("Context score: " + HandoffService.percent(report.score())
                 + " | Assessable coverage: " + HandoffService.percent(report.coverage()));
         for (var dimension : report.dimensions()) {
-            output.println(dimension.name() + " | score " + HandoffService.percent(dimension.score())
+            ui.plain(dimension.name() + " | score " + HandoffService.percent(dimension.score())
                     + " | coverage " + HandoffService.percent(dimension.coverage()));
         }
         for (var finding : report.findings()) {
-            output.println(finding.id() + " | " + finding.state() + " | weight " + finding.weight()
+            ui.plain(finding.id() + " | " + finding.state() + " | weight " + finding.weight()
                     + " | " + HandoffService.clean(finding.explanation()));
             for (String id : finding.evidenceIds()) {
                 EvidenceClaim c = state.evidence(state.currentObservationId(), id);
@@ -55,23 +60,23 @@ final class ContextConsole {
                 }
                 if (c != null) { source(c); }
             }
-            output.println("Next: " + finding.nextAction());
+            ui.plain("Next: " + finding.nextAction());
         }
-        output.println("No native history: " + report.noNativeHistory() + " | " + ContextAudit.DISCLAIMER);
+        ui.plain("No native history: " + report.noNativeHistory() + " | " + ContextAudit.DISCLAIMER);
     }
     private void source(EvidenceClaim c) {
-        output.println(HandoffService.clean(c.evidenceId()) + " | " + c.field() + " | " + HandoffService.clean(c.entityId())
+        ui.plain(HandoffService.clean(c.evidenceId()) + " | " + c.field() + " | " + HandoffService.clean(c.entityId())
                 + " | " + HandoffService.clean(c.relativePath()) + (c.paragraphLocated() ? " paragraph " : ":") + c.line() + " | " + HandoffService.clean(c.section())
                 + " | SHA-256 " + HandoffService.clean(c.fingerprint()) + " | observed " + c.observedAt());
-        output.println("Literal source statement / unverified: " + HandoffService.clean(c.literalValue()));
+        ui.plain("Literal source statement / unverified: " + HandoffService.clean(c.literalValue()));
     }
     private void review() throws IOException {
         EvidenceClaim[] claims = CurrentAssessment.claims(state);
         var conflicts = ClaimReview.conflicts(claims);
-        output.println("Present review only. Original source claims and historical checkpoints stay intact. At most two questions.");
+        ui.plain("Present review only. Original source claims and historical checkpoints stay intact. At most two questions.");
         // Show every member/locator before asking about any competing statement.
         for (ConflictGroup group : conflicts) {
-            output.println("CONFLICT | " + group.field() + " | " + HandoffService.clean(group.entityId())
+            ui.plain("CONFLICT | " + group.field() + " | " + HandoffService.clean(group.entityId())
                     + " | resolved by present review: " + group.resolvedByReview());
             for (String id : group.evidenceIds()) { source(state.evidence(state.currentObservationId(), id)); }
         }
@@ -90,7 +95,7 @@ final class ContextConsole {
                         || c.review() == EvidenceClaim.ReviewDisposition.REJECTED) { continue; }
                 source(c); asked++;
                 String answer = input.read("Use this as present context? [confirm/reject/skip/cancel]: ");
-                if (answer.equalsIgnoreCase("cancel")) { output.println("Review stopped; earlier explicitly confirmed reviews retained."); return; }
+                if (answer.equalsIgnoreCase("cancel")) { ui.plain("Review stopped; earlier explicitly confirmed reviews retained."); return; }
                 var disposition = switch (answer.toLowerCase(java.util.Locale.ROOT)) {
                     case "confirm" -> EvidenceClaim.ReviewDisposition.CONFIRMED;
                     case "reject" -> EvidenceClaim.ReviewDisposition.REJECTED;
@@ -115,31 +120,35 @@ final class ContextConsole {
                 asked++;
                 if (value.equalsIgnoreCase("cancel")) { break; }
                 if (value.isBlank()) { continue; }
-                output.println("Present human statement: " + HandoffService.clean(value));
+                ui.plain("Present human statement: " + HandoffService.clean(value));
                 if (input.read("Record? [confirm/reject/skip/cancel]: ").equalsIgnoreCase("confirm")) {
                     state.addReview(new ContextReview(state.currentObservationId(), "", fields[i], "", value,
                             EvidenceClaim.ReviewDisposition.CONFIRMED, Instant.now()));
                 }
             }
         }
-        output.println("Review finished. Save explicitly to retain B4 changes. This does not retrospectively verify old work.");
+        ui.plain("Review finished. Save explicitly to retain B4 changes. This does not retrospectively verify old work.");
         audit();
     }
     private void scan() throws IOException {
-        output.println("Read-only scan of saved local root. No commands or scripts run; same B2 exclusions/limits.");
-        output.println("Root: " + HandoffService.clean(String.valueOf(state.activeBaseline().snapshot().root()))
+        ui.plain("Read-only scan of saved local root. No commands or scripts run; same B2 exclusions/limits.");
+        ui.plain("Root: " + HandoffService.clean(String.valueOf(state.activeBaseline().snapshot().root()))
                 + " | Policy: " + state.currentObservation().policy());
         if (!input.read("Scan now? Type yes; anything else cancels: ").equalsIgnoreCase("yes")) {
-            output.println("Rescan cancelled. No source access."); return;
+            ui.plain("Rescan cancelled. No source access."); return;
         }
-        var scan = new ObservationService().scan(state, true, visited -> true);
-        output.println("Saved in memory: " + scan.scanId() + " | complete within policy: " + scan.complete()
+        breadcrumbs.inspector.ScanResult scan;
+        try (var feedback = new OperationFeedback(output, theme, width, OperationFeedback.Operation.RESCAN)) {
+            try { scan = new ObservationService().scan(state, true, visited -> { feedback.running(visited); return true; }); feedback.complete(!scan.complete(), scan.entries().length + " entries inventoried. Review coverage."); }
+            catch (IOException | RuntimeException failure) { feedback.failed("Rescan failed; prior observations retained."); throw failure; }
+        }
+        ui.plain("Saved in memory: " + scan.scanId() + " | complete within policy: " + scan.complete()
                 + " | entries: " + scan.entries().length + " | claims: " + scan.claims().length);
-        output.println("B0 and prior checkpoint references retained. Save explicitly to persist this observation.");
+        ui.plain("B0 and prior checkpoint references retained. Save explicitly to persist this observation.");
         differences();
     }
     private void differences() throws IOException {
-        output.println("Available comparisons: B0 or a native checkpoint ID. Only saved observations are used; no scan occurs.");
+        ui.plain("Available comparisons: B0 or a native checkpoint ID. Only saved observations are used; no scan occurs.");
         String id = input.read("Compare from (blank=B0): ");
         var before = state.activeBaseline().snapshot();
         if (!id.isBlank() && !id.equalsIgnoreCase("B0")) {
@@ -147,15 +156,16 @@ final class ContextConsole {
             if (checkpoint == null) { throw new IllegalArgumentException("Checkpoint not found."); }
             before = state.observation(checkpoint.project().snapshotId());
         }
-        if (before == state.currentObservation()) { output.println("No later observation. Freshness UNKNOWN; a consented scan is required."); return; }
-        output.println("Workspace drift (separate from checkpoint-referenced freshness):");
-        for (DriftEngine.Change change : new DriftEngine().compare(before, state.currentObservation()).changes()) {
-            output.println(change.status() + " | " + HandoffService.clean(change.oldPath()) + " -> "
+        if (before == state.currentObservation()) { ui.plain("No later observation. Freshness UNKNOWN; a consented scan is required."); return; }
+        ui.plain("Workspace drift (separate from checkpoint-referenced freshness):");
+        final var selectedBefore = before;
+        for (DriftEngine.Change change : OperationFeedback.run(output, theme, width, OperationFeedback.Operation.COMPARE, () -> new DriftEngine().compare(selectedBefore, state.currentObservation())).changes()) {
+            ui.plain(change.status() + " | " + HandoffService.clean(change.oldPath()) + " -> "
                     + HandoffService.clean(change.newPath()) + " | " + change.reason());
         }
         Checkpoint latest = state.checkpoints().getLatest();
         if (latest != null) {
-            output.println("Latest checkpoint referenced freshness: " + new ReferenceFreshness().assess(state, latest).state());
+            ui.plain("Latest checkpoint referenced freshness: " + new ReferenceFreshness().assess(state, latest).state());
         }
     }
     private void retrieve() throws IOException {
@@ -163,8 +173,8 @@ final class ContextConsole {
         String[] ids = query.isBlank() ? new String[0] : query.split(",", -1);
         for (int i = 0; i < ids.length; i++) { ids[i] = ids[i].strip(); }
         var ranks = new CheckpointRetrieval().rank(state, ids);
-        output.println("Deterministic native DLL retrieval. Tags are not modeled; no tag score is invented.");
-        if (ranks.length == 0) { output.println("No native checkpoints. Use baseline context report."); }
+        ui.plain("Deterministic native DLL retrieval. Tags are not modeled; no tag score is invented.");
+        if (ranks.length == 0) { ui.plain("No native checkpoints. Use baseline context report."); }
         for (var rank : ranks) {
             output.printf(java.util.Locale.ROOT, "%s | %.3f = overlap %d (+%d) + fresh %.0f + recency %.3f%n",
                     rank.checkpoint().checkpointId(), rank.score(), rank.sharedEvidence(), rank.sharedEvidence() > 0 ? 3 : 0,
@@ -178,18 +188,18 @@ final class ContextConsole {
         if (!selected.isBlank() && !selected.equalsIgnoreCase("B0") && checkpoint == null) {
             throw new IllegalArgumentException("Checkpoint not found.");
         }
-        output.println("Imported snippets are INTERNAL and omitted by default. Only explicitly CONFIRMED source claims can be included.");
+        ui.plain("Imported snippets are INTERNAL and omitted by default. Only explicitly CONFIRMED source claims can be included.");
         boolean snippets = input.read("Include reviewed snippets in this preview? Type yes: ").equalsIgnoreCase("yes");
-        var preview = new HandoffService().preview(state, checkpoint, snippets);
-        output.println(preview.text());
+        var preview = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.EXPORT, () -> new HandoffService().preview(state, checkpoint, snippets));
+        ui.heading("HANDOFF PREVIEW"); ui.plain(preview.text());
         if (!input.read("Export this exact preview? Type yes; Enter keeps terminal copy: ").equalsIgnoreCase("yes")) { return; }
         Path directory = Path.of(input.read("Existing absolute export directory outside imported root/app state: "));
         String file = input.read("New filename (.md or .txt; no overwrite): ");
-        output.println("Destination: " + HandoffService.clean(directory.resolve(file).toString()));
+        ui.plain("Destination: " + HandoffService.clean(directory.resolve(file).toString()));
         if (!input.read("Confirm writing the reviewed handoff here? Type yes: ").equalsIgnoreCase("yes")) {
-            output.println("Export cancelled."); return;
+            ui.plain("Export cancelled."); return;
         }
-        Path result = new HandoffExporter().export(state, preview, directory, file, storage, true);
-        output.println("Exported and read back: " + HandoffService.clean(result.toString()));
+        Path result = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.EXPORT, () -> new HandoffExporter().export(state, preview, directory, file, storage, true));
+        ui.plain("Exported and read back: " + HandoffService.clean(result.toString()));
     }
 }

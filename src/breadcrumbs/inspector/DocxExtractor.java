@@ -25,7 +25,7 @@ final class DocxExtractor {
                 var part = new ByteArrayOutputStream(); byte[] buffer = new byte[4096]; int length;
                 while ((length = zip.read(buffer)) != -1) {
                     total += length;
-                    if (part.size() + length > 262144 || total > 1048576) { throw new IOException("DOCX inflated byte budget exceeded."); }
+                    if (part.size() + length > 524288 || total > 1048576) { throw new IOException("DOCX inflated byte budget exceeded."); }
                     part.write(buffer, 0, length);
                 }
                 zip.closeEntry();
@@ -44,6 +44,7 @@ final class DocxExtractor {
         var reader = factory.createXMLStreamReader(new ByteArrayInputStream(main));
         String[] paragraphs = new String[2000]; int used = 0, depth = 0, characters = 0, events = 0; boolean root = false, body = false, inParagraph = false, inText = false;
         StringBuilder paragraph = new StringBuilder();
+        int fieldDepth = 0, simpleFieldDepth = 0;
         try {
             while (reader.hasNext()) {
                 int event = reader.next();
@@ -54,16 +55,23 @@ final class DocxExtractor {
                     if (!root) { if (!reader.getLocalName().equals("document") || !WORD.equals(reader.getNamespaceURI())) { throw new XMLStreamException("Unsupported Word document namespace/root."); } root = true; }
                     if (!WORD.equals(reader.getNamespaceURI())) { continue; }
                     String name = reader.getLocalName();
-                    if (name.equals("ins") || name.equals("del") || name.equals("moveFrom") || name.equals("moveTo") || name.equals("altChunk") || name.equals("instrText") || name.equals("fldSimple")) { throw new IllegalArgumentException("Tracked changes, alternate content and field instructions are not supported."); }
+                    if (name.equals("ins") || name.equals("del") || name.equals("moveFrom") || name.equals("moveTo") || name.equals("altChunk")) { throw new IllegalArgumentException("Tracked changes and alternate content are not supported."); }
+                    if (name.equals("fldSimple")) { simpleFieldDepth++; }
+                    if (name.equals("fldChar")) {
+                        String kind = reader.getAttributeValue(WORD, "fldCharType");
+                        if ("begin".equals(kind)) { if (++fieldDepth > 16) { throw new IOException("DOCX field nesting limit exceeded."); } }
+                        else if ("end".equals(kind)) { if (fieldDepth == 0) { throw new IOException("Unbalanced DOCX field."); } fieldDepth--; }
+                    }
                     if (name.equals("body")) { body = true; }
                     if (body && name.equals("p")) { if (inParagraph || used == paragraphs.length) { throw new IOException("DOCX paragraph structure/count limit exceeded."); } inParagraph = true; paragraph.setLength(0); }
-                    if (inParagraph && name.equals("t")) { inText = true; }
+                    if (inParagraph && name.equals("t") && fieldDepth == 0 && simpleFieldDepth == 0) { inText = true; }
                     if (inParagraph && (name.equals("tab") || name.equals("br") || name.equals("cr"))) { paragraph.append(' '); }
                 } else if (event == XMLStreamConstants.CHARACTERS || event == XMLStreamConstants.CDATA) {
                     if (inText) { paragraph.append(reader.getText()); }
                 } else if (event == XMLStreamConstants.END_ELEMENT) {
                     if (WORD.equals(reader.getNamespaceURI())) {
                         if (reader.getLocalName().equals("t")) { inText = false; }
+                        if (reader.getLocalName().equals("fldSimple")) { simpleFieldDepth--; }
                         if (reader.getLocalName().equals("p") && inParagraph) { paragraphs[used++] = paragraph.toString(); inParagraph = false; }
                         if (reader.getLocalName().equals("body")) { body = false; }
                     }
@@ -74,7 +82,7 @@ final class DocxExtractor {
                 if (characters > policy.maxTextCharacters()) { throw new IllegalArgumentException("DOCX text character limit exceeded."); }
             }
         } finally { reader.close(); }
-        if (!root || inParagraph || depth != 0) { throw new XMLStreamException("Incomplete DOCX XML."); }
+        if (!root || inParagraph || depth != 0 || fieldDepth != 0 || simpleFieldDepth != 0) { throw new XMLStreamException("Incomplete DOCX XML/fields."); }
         return new Paragraphs(java.util.Arrays.copyOf(paragraphs, used));
     }
 }

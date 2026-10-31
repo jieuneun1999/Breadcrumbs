@@ -15,7 +15,7 @@ public final class Main {
 
     public static void main(String[] args) {
         try {
-            boolean noColor = false, always = false, dsa = false, richBrand = false;
+            boolean noColor = false, always = false, dsa = false, richBrand = true;
             Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
             for (String arg : args) {
                 if (arg.equals("--no-color")) { noColor = true; }
@@ -26,23 +26,23 @@ public final class Main {
                 else { throw new IllegalArgumentException("Unknown option."); }
             }
             var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
-            if (dsa) { new ConsoleMenu(input, System.out).run(); }
-            else {
+            {
                 boolean color = TerminalTheme.enabled(noColor, always, System.console() != null,
                         System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
                         System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null
                                 || System.getenv("ANSICON") != null);
-                int width = 80;
+                int width = 160;
                 try { width = Math.max(28, Integer.parseInt(System.getenv("COLUMNS"))); }
-                catch (NumberFormatException ignored) { /* Unknown dimensions use the compact 80-column layout. */ }
+                catch (NumberFormatException ignored) { /* The approved B3 artwork needs 160 columns; COLUMNS can request a smaller text-only layout. */ }
                 // Context reports and source locators use UTF-8 in plain and colored modes alike.
                 // Fix the stream encoding without changing the user's terminal or system settings.
                 PrintStream output = new PrintStream(System.out, true, StandardCharsets.UTF_8);
                 boolean animations = color && TerminalTheme.enabled(noColor, false, System.console() != null,
                         System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
                         System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null || System.getenv("ANSICON") != null);
-                new ProjectConsole(input, output, new WorkspaceStore(storage),
-                        new TerminalTheme(color, richBrand, animations), width).run();
+                var theme = new TerminalTheme(color, richBrand, animations);
+                if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
+                else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
             }
         } catch (IOException failure) {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
