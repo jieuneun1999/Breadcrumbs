@@ -6,3 +6,4 @@ ts	phase	decision	why	evidence	result
 2026-11-01T02:52:36.7119064+08:00	B7B	Daily workflows and shared feedback passed the source-bound regression	Manual context and artifacts can now build on verified daily capture	docs/evidence/b7/b/summary.txt	VERIFIED; visual/real-file gates open
 2026-11-01T03:15:34.1790555+08:00	B7C gate	Manual origin and generated views remain distinct from source facts/canonical storage	verify-b7-stage B7C, 134 unchanged inputs and all groups passed	Proceed to B7D; real-file gate pending
 2026-11-01T03:15:42.7824778+08:00	B7C count correction	Summary is authoritative	135 input hashes; preceding row's 134 was a transcription error	No source drift
+2026-11-01T03:26:05.1657395+08:00	Windows publication boundary	Quiescent-directory rename premise disproved with a real nonsharing OS handle	B7ArtifactLockTest blocks then releases promotion; persistent lock fails boundedly	Narrow four-attempt AccessDenied retry; original external reader NOT_PROVEN

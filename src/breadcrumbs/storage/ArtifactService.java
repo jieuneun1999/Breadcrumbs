@@ -14,7 +14,7 @@ import breadcrumbs.continuity.ContinuityService;
 import breadcrumbs.search.ContextSearchIndex;
 
 public final class ArtifactService {
-    public enum Point { WRITING_STATE, BEFORE_PUBLISH }
+    public enum Point { WRITING_STATE, BEFORE_PUBLISH, DIRECTORY_BUSY }
     @FunctionalInterface public interface Fault { void at(Point point) throws IOException; }
     public record File(String path, String text) { }
     public record Bundle(String revision, File[] files) {
@@ -59,7 +59,7 @@ public final class ArtifactService {
                 .append("\nOriginal observation: ").append(p.snapshotId()).append("\nRecorded graph revision: ").append(p.graphRevisionId().isEmpty() ? "NOT RECORDED" : p.graphRevisionId()).append('\n');
         for (String id : p.evidenceIds()) {
             var claim = state.evidence(p.snapshotId(), id);
-            out.append(id).append(" | ").append(HandoffService.clean(claim.relativePath())).append(" | captured line ").append(claim.line()).append(" | original SHA256 ").append(claim.fingerprint())
+            out.append(id).append(" | ").append(HandoffService.clean(claim.relativePath())).append(" | captured ").append(claim.locationUnit()).append(' ').append(claim.line()).append(" | original SHA256 ").append(claim.fingerprint())
                     .append(" | ").append(claim.sourceKind()).append(" / ").append(claim.verification()).append('\n');
         }
         out.append("Original manual-reference IDs: ").append(String.join(", ", p.manualEvidenceIds())).append("\nNo later findings have been added to this historical record. Referenced bodies omitted.\n");
@@ -100,7 +100,7 @@ public final class ArtifactService {
         else {
             Path stage = Files.createDirectory(root.resolve(".stage-" + UUID.randomUUID()));
             write(stage, bundle); fault.at(Point.BEFORE_PUBLISH);
-            Files.move(stage, target, StandardCopyOption.ATOMIC_MOVE); verify(target, bundle.revision());
+            promote(stage, target); verify(target, bundle.revision());
         }
         Path pointer = root.resolve("latest.txt"); WorkspaceStore.checkAncestors(pointer);
         if (Files.exists(pointer, LinkOption.NOFOLLOW_LINKS)) {
@@ -123,7 +123,21 @@ public final class ArtifactService {
         Path stage = Files.createDirectory(destination.resolveSibling(".breadcrumbs-package-" + UUID.randomUUID()));
         write(stage, bundle); fault.at(Point.BEFORE_PUBLISH);
         WorkspaceStore.checkAncestors(destination);
-        Files.move(stage, destination, StandardCopyOption.ATOMIC_MOVE); verify(destination, bundle.revision()); return destination;
+        promote(stage, destination); verify(destination, bundle.revision()); return destination;
+    }
+    private void promote(Path stage, Path target) throws IOException {
+        for (int attempt = 0; ; attempt++) {
+            WorkspaceStore.checkAncestors(stage); WorkspaceStore.checkAncestors(target);
+            if (Files.exists(target, LinkOption.NOFOLLOW_LINKS)) { throw new IOException("Publication destination already exists; staged documents retained."); }
+            try { Files.move(stage, target, StandardCopyOption.ATOMIC_MOVE); return; }
+            catch (AccessDeniedException busy) {
+                if (attempt == 3) { throw busy; }
+                fault.at(Point.DIRECTORY_BUSY);
+                // Windows readers can temporarily deny rename. Bound actual I/O retries, never fake progress.
+                try { Thread.sleep(25L << attempt); }
+                catch (InterruptedException cancelled) { Thread.currentThread().interrupt(); throw new java.io.InterruptedIOException("Document publication interrupted; staged and prior documents retained."); }
+            }
+        }
     }
     private void write(Path directory, Bundle bundle) throws IOException {
         StringBuilder manifest = new StringBuilder("BREADCRUMBS_VIEWS=1\n").append(bundle.revision()).append('\n');

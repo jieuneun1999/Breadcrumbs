@@ -11,7 +11,7 @@ final class SearchFields {
     static void visit(WorkspaceState state, SearchPolicy policy, Consumer<Field> accept) {
         String observation = state.currentObservationId();
         for (EvidenceClaim claim : state.claimsAt(observation)) { visitEvidence(state, policy, claim, accept); }
-        if (policy.contentVersion().equals("CAPTURED-2")) {
+        if (!policy.contentVersion().equals("CAPTURED-1")) {
             for (var capture : state.manualContext().captures()) { emit(manual(state, capture), accept); }
         }
         for (Checkpoint cp : state.checkpoints().traverseForward()) {
@@ -32,7 +32,7 @@ final class SearchFields {
     static Field resolve(WorkspaceState state, SearchPolicy policy, SearchLocation location) {
         if (state.activeBaseline() == null || !state.activeBaseline().workspaceId().equals(location.workspaceId())) { return null; }
         Field field = switch (location.kind()) {
-            case MANUAL -> policy.contentVersion().equals("CAPTURED-2") ? manual(state, state.indexes().manual(location.recordId())) : null;
+            case MANUAL -> !policy.contentVersion().equals("CAPTURED-1") ? manual(state, state.indexes().manual(location.recordId())) : null;
             case EVIDENCE -> {
                 if (!location.observationId().equals(state.currentObservationId())) { yield null; }
                 yield evidence(state, policy, state.indexes().evidence(location.observationId(), location.recordId()));
@@ -57,9 +57,10 @@ final class SearchFields {
             SnapshotEntry entry = state.indexes().path(observation, claim.relativePath());
             if (entry == null || entry.status() != SnapshotEntry.Status.SUPPORTED
                     || entry.adapter() != SnapshotEntry.Adapter.TXT && entry.adapter() != SnapshotEntry.Adapter.MARKDOWN && entry.adapter() != SnapshotEntry.Adapter.CSV
+                        && !(entry.adapter() == SnapshotEntry.Adapter.DOCX && policy.contentVersion().equals("CAPTURED-3") && claim.paragraphLocated())
                     || !entry.sha256().equals(claim.fingerprint()) || claim.line() < 1) { return null; }
         }
-        String locator = claim.relativePath() + ", line " + claim.line() + (claim.section().isEmpty() ? "" : ", " + claim.section());
+        String locator = claim.relativePath() + ", " + claim.locationUnit() + " " + claim.line() + (claim.section().isEmpty() ? "" : ", " + claim.section());
         return field(new SearchLocation(claim.workspaceId(), SearchLocation.Kind.EVIDENCE, claim.evidenceId(),
                 claim.field().name(), observation, locator, claim.sourceKind() + " / " + claim.provenance() + " / " + claim.verification(),
                 review.name(), "INTERNAL", claim.observedAt(), false), claim.literalValue());

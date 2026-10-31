@@ -92,7 +92,7 @@ final class BootstrapConsole {
         if (root != null) {
             output.println("READ-ONLY inspection. Imported files are never executed or written.");
             output.println("Links/reparse points, sensitive names and generated folders are skipped.");
-            output.println("TXT/Markdown/CSV only. Other formats receive metadata/fingerprints, not content understanding.");
+            output.println("TXT/Markdown/CSV configured fields and bounded DOCX main paragraphs. Other formats receive metadata/fingerprints, not content understanding.");
             output.println("Limits: " + ScanPolicy.defaults());
             output.println("Use a quiescent LOCAL folder. Portable JDK checks are not an OS sandbox against hostile filesystem races.");
             if (!input.read("Approve bounded read-only scan? Type yes: ").equalsIgnoreCase("yes")) {

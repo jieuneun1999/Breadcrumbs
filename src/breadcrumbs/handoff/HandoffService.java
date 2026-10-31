@@ -146,7 +146,7 @@ public final class HandoffService {
     private static void evidence(StringBuilder out, EvidenceClaim claim, boolean snippets) {
         if (claim == null) { throw new IllegalArgumentException("Unresolved evidence reference."); }
         out.append(clean(claim.evidenceId())).append(" | ").append(claim.field()).append(" | ").append(claim.sourceKind())
-                .append(" | ").append(claim.review()).append(" | ").append(clean(claim.relativePath())).append(':').append(claim.line())
+                .append(" | ").append(claim.review()).append(" | ").append(clean(claim.relativePath())).append(claim.paragraphLocated() ? " paragraph " : ":").append(claim.line())
                 .append(" [").append(clean(claim.section())).append("] | SHA-256: ").append(clean(claim.fingerprint()))
                 .append(" | observed: ").append(claim.observedAt()).append('\n');
         if (claim.userSupplied() || snippets && claim.review() == EvidenceClaim.ReviewDisposition.CONFIRMED) {

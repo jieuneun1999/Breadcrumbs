@@ -272,6 +272,8 @@ public final class ProjectInspector {
                 claims[claimCount++] = claim;
             }
             complete &= !extraction.limited();
+            // A suffix alone is not adapter discovery. A non-package has only metadata coverage.
+            if (adapter == SnapshotEntry.Adapter.DOCX && extraction.reason().startsWith("DOCX extension has no supported ZIP")) { adapter = SnapshotEntry.Adapter.METADATA_ONLY; }
             add(path, before, hash, extraction.status(), adapter, extraction.reason());
         }
 
@@ -280,6 +282,7 @@ public final class ProjectInspector {
             if (lower.endsWith(".txt")) { return SnapshotEntry.Adapter.TXT; }
             if (lower.endsWith(".md")) { return SnapshotEntry.Adapter.MARKDOWN; }
             if (lower.endsWith(".csv")) { return SnapshotEntry.Adapter.CSV; }
+            if (lower.endsWith(".docx")) { return SnapshotEntry.Adapter.DOCX; }
             return SnapshotEntry.Adapter.METADATA_ONLY;
         }
 

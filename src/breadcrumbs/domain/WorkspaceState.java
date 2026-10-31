@@ -50,6 +50,7 @@ public final class WorkspaceState {
         soloOwner = false;
         dependencies = new DependencyState(this);
         manualContext = new ManualContext(this); versionFour = false;
+        documentVersion(confirmedBaseline.snapshot());
         epoch++;
     }
 
@@ -119,7 +120,11 @@ public final class WorkspaceState {
         }
         laterObservations = Arrays.copyOf(laterObservations, laterObservations.length + 1);
         laterObservations[laterObservations.length - 1] = scan;
+        documentVersion(scan);
         enableVersionTwo();
+    }
+    private void documentVersion(ScanResult scan) {
+        for (var entry : scan.entries()) { if (entry.adapter() == breadcrumbs.inspector.SnapshotEntry.Adapter.DOCX) { enableVersionFour(); return; } }
     }
     public void addReview(ContextReview review) {
         if (reviews.length >= 2000 || observation(review.observationId()) == null

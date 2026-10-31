@@ -118,7 +118,8 @@ public final class ContextSearchIndex {
                 + (state.claimsAt(state.currentObservationId()).length - eligible[0])
                 + "\nmetadata-only files=" + metadata + "; unsupported=" + unsupported + "; skipped=" + skipped
                 + "; failed/unstable=" + failed + "; scan complete=" + scan.complete()
-                + "\nPDF/DOCX/XLSX/PPTX/images: body extraction unavailable, body not searched."
+                + "\nPDF/XLSX/PPTX/images: body extraction unavailable, body not searched; optional adapters absent."
+                + "\nDOCX: main-document paragraphs only, paragraph ordinals; reviewed fields searchable with CAPTURED-3. No layout/comments/revision fidelity."
                 + "\nJava/JSON/XML/YAML: metadata-only in this implementation. No full-text/OCR/semantic search."
                 + "\nSkipped includes exclusions/sensitivity; unsupported/failed portions may contain unknown terms."
                 + "\nSource terms require confirmation or explicit session opt-in; unreviewed snippets withheld."

@@ -89,7 +89,7 @@ final class BaselineRenderer {
         output.println("  " + (claim.userSupplied() ? "USER_SUPPLIED" : "SOURCE_REPORTED") + " | "
                 + claim.provenance() + " | source verification: " + claim.verification()
                 + " | review: " + claim.review());
-        output.println("  Source: " + safe(claim.relativePath(), 180) + " line " + claim.line()
+        output.println("  Source: " + safe(claim.relativePath(), 180) + " " + claim.locationUnit() + " " + claim.line()
                 + " [" + safe(claim.section(), 100) + "] | " + claim.artifactRole());
         output.println("  Literal: " + safe(claim.literalValue(), 600));
         if (!claim.fingerprint().isEmpty()) {

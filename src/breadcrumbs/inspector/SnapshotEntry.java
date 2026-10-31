@@ -8,5 +8,5 @@ public record SnapshotEntry(String relativePath, long sizeBytes, Instant lastMod
                             String sha256, Status status, Adapter adapter, ArtifactRole artifactRole,
                             Instant observedAt, String reason) {
     public enum Status { SUPPORTED, SKIPPED, UNSUPPORTED, FAILED, UNSTABLE }
-    public enum Adapter { TXT, MARKDOWN, CSV, METADATA_ONLY, DIRECTORY }
+    public enum Adapter { TXT, MARKDOWN, CSV, METADATA_ONLY, DIRECTORY, DOCX }
 }

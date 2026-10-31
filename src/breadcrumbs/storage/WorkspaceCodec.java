@@ -51,7 +51,7 @@ public final class WorkspaceCodec {
             boolean versionFour = text.startsWith("FORMAT_VERSION=4\n");
             boolean versionThree = versionFour || text.startsWith("FORMAT_VERSION=3\n");
             boolean versionTwo = versionThree || text.startsWith("FORMAT_VERSION=2\n");
-            if (!text.startsWith(HEADER) && !versionTwo) { throw new IOException("Unsupported storage version; expected 1 or 2."); }
+            if (!text.startsWith(HEADER) && !versionTwo) { throw new IOException("Unsupported storage version; expected 1, 2, 3 or 4."); }
             int footer = text.lastIndexOf("CHECKSUM=");
             if (footer < HEADER.length() || !text.endsWith("\n")
                     || !text.substring(footer).equals("CHECKSUM="
@@ -150,6 +150,7 @@ public final class WorkspaceCodec {
                     get("assertedDate"), choice("kind", EvidenceClaim.SourceKind.class),
                     choice("provenance", EvidenceClaim.Provenance.class), choice("verification", EvidenceClaim.Verification.class),
                     choice("review", EvidenceClaim.ReviewDisposition.class));
+            if (!versionFour && claims[i].field() == EvidenceClaim.Field.DOCUMENT_TEXT) { throw new IllegalArgumentException(); }
         }
         return claims;
     }
@@ -381,6 +382,7 @@ public final class WorkspaceCodec {
             entries[i] = new SnapshotEntry(path, size, modified.isEmpty() ? null : Instant.parse(modified),
                     get("sha256"), choice("status", SnapshotEntry.Status.class), choice("adapter", SnapshotEntry.Adapter.class),
                     choice("role", EvidenceClaim.ArtifactRole.class), time("observed"), get("reason"));
+            if (!versionFour && entries[i].adapter() == SnapshotEntry.Adapter.DOCX) { throw new IllegalArgumentException(); }
         }
         return new ScanResult(root, scan, observed, p, entries, claims(), diagnostics, complete, bytes);
     }
@@ -504,8 +506,12 @@ public final class WorkspaceCodec {
                 relative(claim.relativePath());
                 boolean found = false;
                 for (SnapshotEntry entry : entries) {
-                    found |= entry.relativePath().equals(claim.relativePath()) && !entry.sha256().isEmpty()
-                            && entry.sha256().equals(claim.fingerprint()) && entry.status() == SnapshotEntry.Status.SUPPORTED;
+                    if (entry.relativePath().equals(claim.relativePath()) && !entry.sha256().isEmpty()
+                            && entry.sha256().equals(claim.fingerprint()) && entry.status() == SnapshotEntry.Status.SUPPORTED) {
+                        if (entry.adapter() == SnapshotEntry.Adapter.DOCX && (!claim.paragraphLocated() || claim.line() > 2000)
+                                || entry.adapter() != SnapshotEntry.Adapter.DOCX && (claim.paragraphLocated() || claim.field() == EvidenceClaim.Field.DOCUMENT_TEXT)) { throw new IllegalArgumentException(); }
+                        found = true;
+                    }
                 }
                 if (!found || claim.line() < 1 || claim.verification() == EvidenceClaim.Verification.USER_CONFIRMED
                         || claim.provenance() != EvidenceClaim.Provenance.EXPLICIT) { throw new IllegalArgumentException(); }

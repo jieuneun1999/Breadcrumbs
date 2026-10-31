@@ -15,6 +15,7 @@ public final class InboxArtifactsCliTest {
         var store = new WorkspaceStore(base.resolve("app")); Path portable = base.resolve("portable");
         String input = "2\n1\nCommunity gathering\nGENERAL\nPlan an accessible meetup\nMeeting agenda\nAsk the host\n\n\n\nyes\nyes\n7\n10\n1\n3\nClient requested an accessible entrance\nClient meeting, verbal report\n\n\nc\nyes\nyes\nyes\nyes\nRecorded the meeting request\nAwaiting review\nPrepare the revised layout\nyes\n11\n5\nyes\n6\nCP-000001\n" + portable + "\nyes\n0\n5\n4\n1\naccessible\n0\n0\n1\n0\n0\n";
         String text = session(store, input);
+        Files.writeString(base.resolve("inbox-artifacts.txt"), text);
         require(text.contains("EVIDENCE INBOX") && text.contains("Captured IN-000001") && text.contains("Confirmed CP-000001"), "NEW_EMPTY project captures a meeting report and real linked checkpoint");
         require(text.contains("SOURCE_REPORTED") && text.contains("Continuity documents generated") && text.contains("Portable package exported"), "actual origin labels, generation and consented package flow");
         var saved = store.load(store.list()[0].id());

@@ -8,7 +8,7 @@ public record SearchPolicy(int maxTerms, int maxTermLength, int maxCharacters,
         String version, String tokenizerVersion, String contentVersion) {
     public static SearchPolicy defaults() {
         return new SearchPolicy(10000, 64, 1000000, 2000, 50000, 2000,
-                10, 5000, 20, 160, 10000, 200000, false, "SEARCH-1", "NFKC-ROOT-1", "CAPTURED-2");
+                10, 5000, 20, 160, 10000, 200000, false, "SEARCH-1", "NFKC-ROOT-1", "CAPTURED-3");
     }
     public SearchPolicy {
         if (maxTerms < 1 || maxTerms > 50000 || maxTermLength < 1 || maxTermLength > 128

@@ -24,7 +24,7 @@ public final class ContinuityService {
             for (String id : context.evidenceIds()) {
                 if (count++ == 10) { out.append("Further references omitted; open the full handoff.\n"); break; }
                 var claim = state.evidence(context.snapshotId(), id);
-                out.append(id).append(" | ").append(clean(claim.relativePath())).append(" line ").append(claim.line()).append(" | ").append(claim.sourceKind()).append(" / ").append(claim.verification()).append('\n');
+                out.append(id).append(" | ").append(clean(claim.relativePath())).append(' ').append(claim.locationUnit()).append(' ').append(claim.line()).append(" | ").append(claim.sourceKind()).append(" / ").append(claim.verification()).append('\n');
             }
             if (count == 0) { out.append("No source evidence linked. This remains a human assessment.\n"); }
             for (String id : context.manualEvidenceIds()) {

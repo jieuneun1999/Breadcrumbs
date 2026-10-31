@@ -227,6 +227,7 @@ public final class ProjectConsole {
                 output.println(theme.label(TerminalTheme.Tone.WARNING, state.checkpoints().isEmpty()
                         ? "Context saved. Continuity export failed." : "Checkpoint saved. Continuity export failed."));
                 output.println("Canonical history remains saved. Previous views retained; retry document generation.");
+                output.println("Export diagnostic: " + safe(exportFailure.getMessage()));
             }
         }
         return true;

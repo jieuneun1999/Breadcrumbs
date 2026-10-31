@@ -10,7 +10,7 @@ public record EvidenceClaim(String workspaceId, String evidenceId, Field field, 
                             Verification verification, ReviewDisposition review) {
     public enum Field {
         OBJECTIVE, DELIVERABLE, CURRENT_STATE, NEXT_ACTION, OWNER, BLOCKERS,
-        PROGRESS, DECISION, RATIONALE, TEST_RESULTS, TASK_STATUS, TASK_MARKER
+        PROGRESS, DECISION, RATIONALE, TEST_RESULTS, TASK_STATUS, TASK_MARKER, DOCUMENT_TEXT
     }
     public enum ArtifactRole { INSTRUCTIONS, CURRENT_STATE, HANDOFF, TASK_LIST, DECISION, UNKNOWN }
     public enum Provenance { OBSERVED, EXPLICIT, DERIVED }
@@ -33,4 +33,6 @@ public record EvidenceClaim(String workspaceId, String evidenceId, Field field, 
     public boolean userSupplied() {
         return sourceKind == SourceKind.USER_SUPPLIED;
     }
+    public boolean paragraphLocated() { return relativePath.toLowerCase(java.util.Locale.ROOT).endsWith(".docx") && section.equals("DOCX main paragraph " + line); }
+    public String locationUnit() { return paragraphLocated() ? "paragraph" : "line"; }
 }

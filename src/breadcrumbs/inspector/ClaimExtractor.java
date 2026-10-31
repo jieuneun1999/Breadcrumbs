@@ -51,6 +51,35 @@ final class ClaimExtractor {
                               String path, String hash, Instant observedAt, ScanPolicy policy,
                               int firstId, int remainingClaims) {
         try {
+            if (adapter == SnapshotEntry.Adapter.DOCX) {
+                if (bytes.length < 4 || bytes[0] != 'P' || bytes[1] != 'K' || bytes[2] != 3 || bytes[3] != 4) {
+                    if (bytes.length >= 4 && bytes[0] == (byte) 0xd0 && bytes[1] == (byte) 0xcf && bytes[2] == 0x11 && bytes[3] == (byte) 0xe0) {
+                        return new Extraction(new EvidenceClaim[0], SnapshotEntry.Status.FAILED, "Encrypted or legacy compound document cannot be extracted.", false);
+                    }
+                    return unsupported("DOCX extension has no supported ZIP package signature; no body captured.");
+                }
+                String[] paragraphs;
+                try { paragraphs = DocxExtractor.read(bytes, policy).text(); }
+                catch (java.io.IOException | javax.xml.stream.XMLStreamException malformed) {
+                    return new Extraction(new EvidenceClaim[0], SnapshotEntry.Status.FAILED, "DOCX ZIP/XML invalid, encrypted or exceeds archive safety budgets; no text captured.", false);
+                } catch (IllegalArgumentException unsupported) { return unsupported(unsupported.getMessage()); }
+                Builder builder = new Builder(workspaceId, path, hash, observedAt, role(path), firstId, remainingClaims);
+                for (String paragraph : paragraphs) {
+                    if (ContentSafety.hasSecretMarker(java.text.Normalizer.normalize(paragraph, java.text.Normalizer.Form.NFKC))) { return new Extraction(new EvidenceClaim[0], SnapshotEntry.Status.SKIPPED, "Sensitive-looking DOCX text not extracted.", false); }
+                    for (int i = 0; i < paragraph.length(); i++) {
+                        char c = paragraph.charAt(i);
+                        if (Character.isISOControl(c) || Character.getType(c) == Character.FORMAT) { return unsupported("Unsafe DOCX text controls; no text captured."); }
+                    }
+                }
+                for (int i = 0; i < paragraphs.length; i++) {
+                    String literal = paragraphs[i].strip(); if (literal.isEmpty()) { continue; }
+                    int separator = literal.indexOf(':'); Field field = separator > 0 ? field(literal.substring(0, separator)) : null;
+                    if (field != null && separator + 1 < literal.length()) { literal = literal.substring(separator + 1).strip(); }
+                    else { field = Field.DOCUMENT_TEXT; }
+                    builder.add(field, "", literal, literal, i + 1, "DOCX main paragraph " + (i + 1));
+                }
+                return new Extraction(builder.finish(), SnapshotEntry.Status.SUPPORTED, "Bounded main-document paragraphs only; layout, comments, headers, drawings and embedded content not extracted. Revisions/fields rejected.", builder.limited);
+            }
             String text = StandardCharsets.UTF_8.newDecoder().onMalformedInput(CodingErrorAction.REPORT)
                     .onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(bytes)).toString();
             if (text.startsWith("\ufeff")) {

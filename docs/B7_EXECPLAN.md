@@ -59,7 +59,7 @@ separate predicates and are never inferred from synthetic Java 17-target results
   safe search integration, generated state/handoff/checkpoint views and optional
   portable package. Gate all old versions, saved-state/export failure separation,
   NEW_EMPTY nontechnical workflow and full regression.
-- [ ] B7D. Implement feasible bounded JDK-only DOCX paragraphs with truthful
+- [x] B7D. Implement feasible bounded JDK-only DOCX paragraphs with truthful
   locators/coverage and security negatives. Keep optional PDF/XLSX/PPTX gated and
   metadata-only unless separately approved. Gate parser contracts and regression.
   REAL_DOCUMENT_ACCEPTANCE = PENDING_OWNER_FIXTURES.

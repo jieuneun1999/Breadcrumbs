@@ -2,7 +2,7 @@
 
 ## Current evidence boundary
 
-B6 implements lexical search infrastructure over canonical captured fields.
+B7 builds on B6 lexical search over canonical captured fields and adds bounded DOCX main-paragraph capture plus manual-origin Inbox context.
 Its acceptance uses disposable synthetic classroom fixtures. No private working
 documents were collected or uploaded. Real-document validation is **NOT_PROVEN**
 and remains required before full-application completion. The frozen Master's
@@ -25,7 +25,7 @@ stable reads and exclusion approval. Skipped files are not assumed fingerprinted
 | TXT | Bounded UTF-8 configured labels/recognized sections only. Eligible captured values searchable. | Physical line and configured field. Existing scan bytes/text/line/claim limits apply. | None for current contract. Full eligible-body search would need an explicit new capture policy. | Actual notes with known labeled phrases; unlabeled phrases must not appear. Include malformed UTF-8 and large lines. | Synthetic extraction/search/negative coverage demonstrated. Real files NOT_PROVEN. |
 | Markdown | Configured headings, explicit task markers/statements and fields. No complete Markdown body capture. | Physical line and recognized section. Fenced code omitted. | Optional broader bounded extractor, separately scoped. | Real README/state/handoff/task notes. Preserve conflicting source claims. AGENTS/CLAUDE instructions remain inert and unindexed. | Synthetic captured fields, prefix/exact and instruction exclusion demonstrated. Real files NOT_PROVEN. |
 | CSV | Existing bounded quoted CSV parser and configured header fields. Eligible captured cells searchable. | Row start physical line and actual CSV column. No invented word positions. | None for configured schema. Any additional schema requires an explicit mapping. | Real configured sheets exported as CSV; quoted newlines, duplicate headers, malformed rows and unknown columns. | Synthetic configured objective/owner policy checks demonstrated. Real files NOT_PROVEN. |
-| DOCX | Metadata only. No paragraph/run extraction, body search or Word rendering. | File identity/hash only. | Future bounded JDK ZIP/XML adapter or optional Office parser. No B6 parser dependency. | Known paragraphs/runs; ZIP entry/ratio/size limits; secure XML with DTD/entities disabled; malformed/encrypted files, embedded objects/macros. Never execute embedded content. | Synthetic body-only term rejected. Paragraph support NOT_PROVEN. |
+| DOCX | B7D JDK ZIP/XML main-document paragraphs and split runs; known labels or literal DOCUMENT_TEXT. Reviewed/opted-in captures searchable under CAPTURED-3. | Actual main-part paragraph ordinal including blank paragraphs; no page/layout claims. Archive/XML/text limits documented in B7D_DOCUMENT_ACCEPTANCE.md. | No libraries required. No Word rendering or relationship resolution. | Synthetic ZIP/XML/encryption/revision/sensitivity negatives; original hashes unchanged. No macro/object execution. | Synthetic paragraph search and restart demonstrated. Real files NOT_PROVEN. |
 | PDF | Metadata only. No body text or OCR search. | File identity/hash only. | Optional vetted Java PDF parser. Image/scanned pages require a separately approved OCR adapter. | Actual text PDFs with expected page phrases; encrypted/corrupt PDFs, unusual fonts and extraction order. Image-only pages explicitly unextractable without OCR. | Synthetic PDF-only word absent from index. Page/text/OCR support NOT_PROVEN. |
 | XLSX | Metadata only. No worksheet/cell extraction or formula evaluation. | File identity/hash only. | Optional bounded worksheet/cell adapter. No selected package/version. | Known sheet/cell addresses; shared strings, formulas versus cached values, hidden sheets, malformed/encrypted files and archive bounds. | Synthetic body-only term rejected. Cell support NOT_PROVEN. |
 | PPTX | Metadata only. No slide/notes body extraction. | File identity/hash only. | Optional bounded slide/notes adapter. No selected package/version. | Known slide and notes phrases; grouped shapes, embedded objects, archive limits and password protection. | Synthetic body-only term rejected. Slide support NOT_PROVEN. |
@@ -70,4 +70,4 @@ not prevent the JDK-only academic core from starting independently.
 Real-document acceptance is complete only after these actual documents have been
 tested and the owner has reviewed the coverage and failures. B6 synthetic results
 do not satisfy that gate. B7 may harden the stable search projection and separately
-scope optional adapters. B7 recovery and full-application release remain pending.
+scope optional adapters. B7 recovery is implemented and synthetically verified; full-application acceptance/release remain pending the owner gates.

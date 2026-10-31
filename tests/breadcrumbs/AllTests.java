@@ -52,5 +52,9 @@ public final class AllTests {
         breadcrumbs.storage.B7ArtifactTest.run();
         breadcrumbs.b7.InboxArtifactsCliTest.run();
         System.out.println("PASS: B7C Inbox, artifacts and CLI (" + (breadcrumbs.b4.Checks.count() - b7cStart) + " assertions)");
+        int b7dStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.inspector.DocxTest.run();
+        breadcrumbs.storage.B7ArtifactLockTest.run();
+        System.out.println("PASS: B7D bounded document compatibility (" + (breadcrumbs.b4.Checks.count() - b7dStart) + " assertions)");
     }
 }

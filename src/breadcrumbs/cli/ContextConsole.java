@@ -61,7 +61,7 @@ final class ContextConsole {
     }
     private void source(EvidenceClaim c) {
         output.println(HandoffService.clean(c.evidenceId()) + " | " + c.field() + " | " + HandoffService.clean(c.entityId())
-                + " | " + HandoffService.clean(c.relativePath()) + ":" + c.line() + " | " + HandoffService.clean(c.section())
+                + " | " + HandoffService.clean(c.relativePath()) + (c.paragraphLocated() ? " paragraph " : ":") + c.line() + " | " + HandoffService.clean(c.section())
                 + " | SHA-256 " + HandoffService.clean(c.fingerprint()) + " | observed " + c.observedAt());
         output.println("Literal source statement / unverified: " + HandoffService.clean(c.literalValue()));
     }
