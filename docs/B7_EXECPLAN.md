@@ -53,7 +53,7 @@ separate predicates and are never inferred from synthetic Java 17-target results
 - [x] B7A. Add staged immutable generations, validated atomic pointer, retained
   last-good state, explicit read-only candidate inspection/recovery, interrupted
   write faults and memory-only fallback. Gate full regression and real-process interruption.
-- [ ] B7B. Add Leave a Breadcrumb, Follow the Breadcrumbs, profile prompts,
+- [x] B7B. Add Leave a Breadcrumb, Follow the Breadcrumbs, profile prompts,
   B4-based health and guided change review. Gate real CLI/restart and full regression.
 - [ ] B7C. Add canonical manual-origin Inbox and explicit schema extension,
   safe search integration, generated state/handoff/checkpoint views and optional

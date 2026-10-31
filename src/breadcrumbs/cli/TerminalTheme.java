@@ -11,11 +11,16 @@ public final class TerminalTheme {
     }
     private final boolean color;
     private final boolean richBrand;
+    private final boolean animations;
     public TerminalTheme(boolean color) { this(color, false); }
-    public TerminalTheme(boolean color, boolean richBrand) {
+    public TerminalTheme(boolean color, boolean richBrand) { this(color, richBrand, false); }
+    public TerminalTheme(boolean color, boolean richBrand, boolean animations) {
         this.color = color;
         this.richBrand = color && richBrand;
+        this.animations = color && animations;
     }
+    public boolean colorEnabled() { return color; }
+    public boolean animationsEnabled() { return animations; }
     public boolean richBrandEnabled() { return richBrand; }
     public String label(Tone tone, String trustedLabel) {
         return color ? "\u001b[" + tone.code + "m" + trustedLabel + "\u001b[0m" : trustedLabel;

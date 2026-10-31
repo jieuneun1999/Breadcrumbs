@@ -12,13 +12,19 @@ final class SearchConsole {
     private final PrintStream out;
     private final ContextSearchIndex index;
     private final int width;
+    private final TerminalTheme theme;
     SearchConsole(ContextConsole.Input input, PrintStream out, ContextSearchIndex index, int width) {
+        this(input, out, index, width, new TerminalTheme(false));
+    }
+    SearchConsole(ContextConsole.Input input, PrintStream out, ContextSearchIndex index, int width, TerminalTheme theme) {
         this.input = input; this.out = out; this.index = index; this.width = Math.max(28, Math.min(width, 120));
+        this.theme = theme;
     }
     void run() throws IOException {
         while (true) {
-            print("SEARCH PROJECT CONTEXT\n" + index.status()
-                    + "\n[1] Search exact term\n[2] Prefix suggestions / choose term\n[3] Search coverage\n[4] Rebuild saved-field index\n[5] Index health / DSA demonstration\n[6] Source-term privacy policy\n[7] Enable / disable search index\n[0] Back");
+            var ui = new TerminalOutput(out, theme, width);
+            ui.heading("SEARCH PROJECT CONTEXT"); ui.plain(index.status().name());
+            ui.menu("[1] Search exact term\n[2] Prefix suggestions / choose term\n[3] Search coverage\n[4] Rebuild saved-field index\n[5] Index health / DSA demonstration\n[6] Source-term privacy policy\n[7] Enable / disable search index\n[0] Back");
             String choice = read("search > ");
             try {
                 switch (choice) {
@@ -26,7 +32,15 @@ final class SearchConsole {
                     case "1" -> matches(read("Exact term: "));
                     case "2" -> suggestions();
                     case "3" -> print(index.coverage());
-                    case "4" -> print("Rebuild completed=" + index.rebuild(index.policy(), () -> false) + "\n" + index.diagnostics());
+                    case "4" -> {
+                        boolean rebuilt;
+                        try (var feedback = new OperationFeedback(out, theme, width, OperationFeedback.Operation.REBUILD)) {
+                            rebuilt = index.rebuild(index.policy(), () -> false);
+                            if (rebuilt) { feedback.complete(false, "Search projection validated and published."); }
+                            else { feedback.failed("No partial index published. Review policy/limits and rebuild."); }
+                        }
+                        print("Rebuild completed=" + rebuilt + "\n" + index.diagnostics());
+                    }
                     case "5" -> diagnostics();
                     case "6" -> policy();
                     case "7" -> { index.setEnabled(index.status() == SearchReport.Status.DISABLED); print("Search " + index.status()); }

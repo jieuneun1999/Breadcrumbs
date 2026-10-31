@@ -38,8 +38,11 @@ public final class Main {
                 // Context reports and source locators use UTF-8 in plain and colored modes alike.
                 // Fix the stream encoding without changing the user's terminal or system settings.
                 PrintStream output = new PrintStream(System.out, true, StandardCharsets.UTF_8);
+                boolean animations = color && TerminalTheme.enabled(noColor, false, System.console() != null,
+                        System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
+                        System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null || System.getenv("ANSICON") != null);
                 new ProjectConsole(input, output, new WorkspaceStore(storage),
-                        new TerminalTheme(color, richBrand), width).run();
+                        new TerminalTheme(color, richBrand, animations), width).run();
             }
         } catch (IOException failure) {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");

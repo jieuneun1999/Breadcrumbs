@@ -39,6 +39,7 @@ public final class ProjectConsole {
                 startup.menu();
                 output.println("[5] Inspect / recover saved generations");
                 output.println("[6] Continue active project in memory");
+                output.println(theme.label(TerminalTheme.Tone.BREAD_GOLD, "[7] Daily workspace: Follow / Leave a Breadcrumb"));
                 try {
                     switch (read("breadcrumbs > ")) {
                         case "0" -> running = !leave();
@@ -47,14 +48,15 @@ public final class ProjectConsole {
                         case "3" -> project();
                         case "4" -> new ConsoleMenu(input, output).run();
                         case "5" -> {
-                            WorkspaceState recovered = new RecoveryConsole(this::read, output, store).run(this::leave);
+                            WorkspaceState recovered = new RecoveryConsole(this::read, output, store, theme, width).run(this::leave);
                             if (recovered != null) { state.replaceWith(recovered); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true; status(); }
                         }
                         case "6" -> {
                             persistence = false;
                             output.println("Explicit in-memory mode. Active context retained; unsaved changes will not survive exit. Choose Create/import if no project is active.");
                         }
-                        default -> output.println("Choose 0-4 for project tools, 5 for recovery, or 6 for in-memory operation.");
+                        case "7" -> daily();
+                        default -> output.println("Choose 0-4 for project tools, 5 for recovery, 6 for in-memory operation, or 7 for daily workflows.");
                     }
                 } catch (IllegalArgumentException invalid) {
                     output.println("Operation cancelled or rejected. " + safe(invalid.getMessage()));
@@ -91,7 +93,7 @@ public final class ProjectConsole {
         WorkspaceState candidate = new WorkspaceState();
         BootstrapService bootstrap = new BootstrapService(ScanPolicy.defaults(),
                 () -> "W-" + UUID.randomUUID().toString().replace("-", ""));
-        new BootstrapConsole(this::read, output, candidate, bootstrap, true).bootstrap();
+        new BootstrapConsole(this::read, output, candidate, bootstrap, true, theme, width).bootstrap();
         if (candidate.activeBaseline() == null) { return; }
         boolean consent = read("Save this workspace to local app storage? Type yes; Enter keeps session-only: ").equalsIgnoreCase("yes");
         state.replaceWith(candidate); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = consent;
@@ -116,10 +118,17 @@ public final class ProjectConsole {
         store.load(saved[index].id());
         if (!leave()) { return; }
         // Leaving may save this same workspace. Reload that newly saved state, not the earlier preview.
-        WorkspaceState loaded = store.load(saved[index].id());
+        WorkspaceState loaded = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.LOAD, () -> store.load(saved[index].id()));
         state.replaceWith(loaded); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true;
         output.println("Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.");
         status();
+        new TerminalOutput(output, theme, width).plain(new breadcrumbs.continuity.ContinuityService().brief(state, persistence));
+        output.println("Choose 7 for the daily workspace, or 3 for the original advanced project tools.");
+    }
+
+    private void daily() throws IOException {
+        new DailyConsole(this::read, output, state, persistence, () -> { if (persistence) { save(); } },
+                this::checkpoint, this::project, theme, width, store.root(), search).run();
     }
 
     private void project() throws IOException {
@@ -162,7 +171,7 @@ public final class ProjectConsole {
                     case "8" -> diagnostics();
                     case "16" -> new DependencyConsole(this::read, output, state).run();
                     case "17" -> new HashConsole(this::read, output, state).run();
-                    case "18" -> new SearchConsole(this::read, output, search, width).run();
+                    case "18" -> new SearchConsole(this::read, output, search, width, theme).run();
                     case "9", "10", "11", "12", "13", "14", "15" -> {
                         new ContextConsole(this::read, output, state, store.root()).perform(choice);
                     }
@@ -198,14 +207,14 @@ public final class ProjectConsole {
     }
 
     private boolean save() {
-        try {
-            store.save(state); storageReady = true;
-            output.println(theme.label(TerminalTheme.Tone.SUCCESS, "Saved. Verified local file readback."));
-            return true;
-        } catch (IOException | IllegalArgumentException failure) {
-            output.println(theme.label(TerminalTheme.Tone.ERROR, "NOT SAVED. In-memory state retained.")
-                    + " Check external storage path/permissions and record integrity, then retry Save.");
-            return false;
+        try (var feedback = new OperationFeedback(output, theme, width, OperationFeedback.Operation.SAVE)) {
+            try {
+                store.save(state); storageReady = true;
+                feedback.complete(false, "Saved. Verified local file readback."); return true;
+            } catch (IOException | IllegalArgumentException failure) {
+                feedback.failed("NOT SAVED. In-memory state retained. Check storage path/permissions and integrity, then retry Save.");
+                return false;
+            }
         }
     }
 

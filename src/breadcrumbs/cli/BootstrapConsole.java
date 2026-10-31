@@ -30,6 +30,8 @@ final class BootstrapConsole {
     private final WorkspaceState workspaceState;
     private final BootstrapService service;
     private final BaselineRenderer renderer;
+    private final TerminalTheme theme;
+    private final int width;
 
     BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState) {
         this(input, output, workspaceState, new BootstrapService(ScanPolicy.defaults()), false);
@@ -37,11 +39,16 @@ final class BootstrapConsole {
 
     BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState,
                      BootstrapService service, boolean projectShell) {
+        this(input, output, workspaceState, service, projectShell, new TerminalTheme(false), 80);
+    }
+    BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState,
+                     BootstrapService service, boolean projectShell, TerminalTheme theme, int width) {
         this.input = input;
         this.output = output;
         this.workspaceState = workspaceState;
         this.service = service;
         renderer = new BaselineRenderer(output, projectShell);
+        this.theme = theme; this.width = width;
     }
 
     void bootstrap() throws IOException {
@@ -95,18 +102,26 @@ final class BootstrapConsole {
             scanApproved = true;
         }
         BootstrapDraft draft;
-        try {
+        if (root == null) {
+            draft = service.prepare(mode, name, profile, null, context, scanApproved, visited -> true);
+        } else try (var progress = new OperationFeedback(output, theme, width, OperationFeedback.Operation.INSPECT)) {
+          try {
             draft = service.prepare(mode, name, profile, root, context, scanApproved, visited -> {
+                progress.running(visited);
                 // Cancellation occurs at a file boundary, never halfway through committing a baseline.
                 if (visited > 0 && visited % 25 == 0) {
                     try {
-                        return input.read("Inspected " + visited + " entries. Enter continues; /cancel aborts: ").isEmpty();
+                        progress.pause();
+                        try { return input.read("Inspected " + visited + " entries. Enter continues; /cancel aborts: ").isEmpty(); }
+                        finally { progress.resume(); }
                     } catch (IOException failure) {
                         throw new UncheckedIOException(failure);
                     }
                 }
                 return true;
             });
+            progress.complete(!draft.scan().complete(), draft.scan().entries().length + " entries inventoried; " + draft.claims().length + " captured claims. Review coverage.");
+          } catch (IOException | RuntimeException failure) { progress.failed("Inspection failed or cancelled. Existing active workspace retained."); throw failure; }
         } catch (UncheckedIOException failure) {
             throw failure.getCause();
         } catch (IOException inaccessible) {

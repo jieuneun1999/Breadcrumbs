@@ -43,5 +43,9 @@ public final class AllTests {
         int b7Start = breadcrumbs.b4.Checks.count();
         breadcrumbs.storage.B7RecoveryTest.run();
         System.out.println("PASS: B7A recovery (" + (breadcrumbs.b4.Checks.count() - b7Start) + " assertions)");
+        int b7bStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.cli.OperationFeedbackTest.run();
+        breadcrumbs.b7.ContinuityWorkflowTest.run();
+        System.out.println("PASS: B7B continuity and terminal feedback (" + (breadcrumbs.b4.Checks.count() - b7bStart) + " assertions)");
     }
 }

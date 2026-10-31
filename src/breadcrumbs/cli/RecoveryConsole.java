@@ -10,7 +10,11 @@ final class RecoveryConsole {
     private final ContextConsole.Input input;
     private final PrintStream out;
     private final WorkspaceStore store;
-    RecoveryConsole(ContextConsole.Input input, PrintStream out, WorkspaceStore store) { this.input = input; this.out = out; this.store = store; }
+    private final TerminalTheme theme;
+    private final int width;
+    RecoveryConsole(ContextConsole.Input input, PrintStream out, WorkspaceStore store, TerminalTheme theme, int width) {
+        this.input = input; this.out = out; this.store = store; this.theme = theme; this.width = width;
+    }
     WorkspaceState run(Leave leave) throws IOException {
         out.println("RECOVERY CANDIDATES. Inspection is read-only; no source scan occurs.");
         for (var saved : store.list()) { out.println(saved.id() + " | " + breadcrumbs.inspector.ContentSafety.terminal(saved.name(), 120) + (saved.problem().isEmpty() ? "" : " | needs recovery")); }
@@ -32,7 +36,7 @@ final class RecoveryConsole {
         if (!leave.confirmed()) { return null; }
         boolean acknowledged = input.read("Type RECOVER " + generation + " to activate a newly saved recovery generation: ").equals("RECOVER " + generation);
         if (!acknowledged) { out.println("Recovery cancelled. Existing state retained."); return null; }
-        WorkspaceState recovered = store.recover(id, generation, true);
+        WorkspaceState recovered = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.RECOVER, () -> store.recover(id, generation, true));
         out.println("Recovered validated generation " + generation + ". Interrupted bytes retained; current pointer read back.");
         out.println("Atomic rename and file flush are used where supported. Power-loss/directory-flush durability is not guaranteed. One process per storage root.");
         return recovered;
