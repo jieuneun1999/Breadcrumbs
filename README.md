@@ -14,6 +14,9 @@ Choose **4** to rebuild from saved canonical fields, **1** for an exact term,
 Option **5** shows real index health and a separate synthetic Trie demonstration.
 Option **7** disables/enables search. Outdated indexes require rebuild.
 
+[Review B6 in PR #7](https://github.com/jieuneun1999/Breadcrumbs/pull/7), stacked on
+the unmerged B5B branch.
+
 By default, source terms require a confirmed evidence review. Option **6** can
 explicitly allow safe unreviewed captured terms for this workspace session.
 Unreviewed snippets stay withheld. Matching confirmed fields require separate

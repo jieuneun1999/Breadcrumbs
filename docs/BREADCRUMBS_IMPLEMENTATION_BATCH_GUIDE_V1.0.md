@@ -179,7 +179,7 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 | B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
 | B4 | DEMO_READY on Windows/JDK 25; evidence-driven context, drift and handoff | [4,450 suite + 55 A–F assertions, original v1 compatibility and platform limits](B4_EXECUTION.md) |
 | B5 | B5A/B5B DEMO_READY on direct Windows/JDK25 invocation; shell limit disclosed | [B5A](B5A_EXECUTION.md), [B5B](B5B_EXECUTION.md), [source-bound evidence](evidence/b5/README.md) |
-| B6 | DEMO_READY on Windows/JDK 25; captured-context lexical search | [5,765 suite and 86 separate-process assertions](B6_EXECUTION.md), [policy](B6_SEARCH_POLICY.md), [real-file gate pending](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md) |
+| B6 | DEMO_READY on Windows/JDK 25; captured-context lexical search | [5,765 suite and 86 separate-process assertions](B6_EXECUTION.md), [stacked PR #7](https://github.com/jieuneun1999/Breadcrumbs/pull/7), [policy](B6_SEARCH_POLICY.md), [real-file gate pending](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md) |
 | B7 | NOT_STARTED | — |
 
 Update this log only with actual verified PRs/commits/tests. Post concise implementation changes in Breadcrumbs **#dev-updates**; use **#current-milestone** for current goals and acceptance state.

@@ -153,3 +153,14 @@ The first documentation commit carried raw Windows line endings and trailing pro
 spaces in console logs, which `git diff --check` flagged. Review copies were
 normalized without changing the exercised source or the raw build outputs.
 The corrected full B6 diff passes the whitespace check.
+
+## Published handoff
+
+[PR #7](https://github.com/jieuneun1999/Breadcrumbs/pull/7) was created through the
+connected GitHub MCP, open/non-draft/unmerged, targeting B5B at
+`27b0ee8d908813418f22cc077cfcdfd97ae6acb7`. The implementation is `8aa5812`, acceptance
+documentation is `4736956`, and review-copy normalization is `2d15afb`. This final
+documentation checkpoint records the publication. Earlier PRs/branches and main
+were not modified. No Discord post, merge, release or deployment was performed.
+The PR contains 44 changed files across implementation, tests, runners, documents
+and synthetic evidence. B6 is DEMO_READY, with the actual-file gate still open.
