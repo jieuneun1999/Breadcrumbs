@@ -9,6 +9,8 @@ creation was unavailable. Actual JDK 17, Unix and instructor hardware are untest
 All documents/workspaces in these logs are disposable synthetic fixtures. No real
 task completion or private-document support is asserted. Text files are actual
 Java output, not mockups, screenshots or native-terminal visual evidence.
+Review copies normalize Windows line endings and trailing prompt whitespace.
+Raw production output remains at the build locations named by the retained logs.
 
 | Artifact | Evidence |
 | --- | --- |

@@ -29,7 +29,7 @@ Storage status: SAVED
   [4]  DSA demonstration
   [0]  Exit
 
-breadcrumbs > 
+breadcrumbs >
 ACTIVE PROJECT | Synthetic B4 | W611
 Storage status: SAVED
 [16] Work items / explicit dependencies
@@ -61,14 +61,14 @@ INDEX_UNAVAILABLE
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Unreviewed source terms may disclose pri
 vate captured wording. Snippets stay wit
 hheld. Instructions, owner fields and se
 nsitive content stay excluded.
 Include safe unreviewed captured terms f
 or this workspace session? Type yes.
-approve > 
+approve >
 Session opt-in recorded. Rebuild require
 d.
 SEARCH PROJECT CONTEXT
@@ -81,7 +81,7 @@ INDEX_UNAVAILABLE
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Rebuild completed=true
 Trie terms=15 nodes=87; Hash terms=15 bu
 ckets=32; manual posting nodes=17; index
@@ -97,12 +97,12 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
-Exact term: 
+search >
+Exact term:
 READY
 Exact term: methodology
 READY for captured indexed fields. TXT/M
-D/CSV captured fields only. Unsupported 
+D/CSV captured fields only. Unsupported
 bodies not searched. Scan complete=true.
  Live source freshness UNKNOWN; no sourc
 e reread. Checkpoints are historical ass
@@ -133,7 +133,7 @@ Showing 2 of 2 indexed field matches.
 View a bounded confirmed matching field,
  or 0 to return. Pending source snippets
  are withheld.
-record > 
+record >
 SEARCH PROJECT CONTEXT
 READY
 [1] Search exact term
@@ -144,7 +144,7 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 
 ACTIVE PROJECT | Synthetic B4 | W611
 Storage status: SAVED
@@ -167,7 +167,7 @@ Storage status: SAVED
 [14] Resume / handoff preview and export
 [15] Coordination applicability
 [0] Back
-project > 
+project >
   [1]  Open / switch saved project
   [2]  Create or import project
   [3]  Active project / history

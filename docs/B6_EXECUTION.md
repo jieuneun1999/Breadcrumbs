@@ -148,3 +148,8 @@ Frozen specifications, accepted branding and existing B1–B5 test bodies have e
 diffs. Only the suite aggregator adds B6 calls. The connected GitHub service is
 the PR transport; `gh repo view` independently verified the canonical repository.
 Origin is absent. No forge or global configuration was changed.
+
+The first documentation commit carried raw Windows line endings and trailing prompt
+spaces in console logs, which `git diff --check` flagged. Review copies were
+normalized without changing the exercised source or the raw build outputs.
+The corrected full B6 diff passes the whitespace check.

@@ -10,4 +10,3 @@ PASS F: genuine pre-B4 imported v1 fixture, read-only open, explicit v2 save, se
 Assertions: 55
 Fixtures/output: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b4-scenarios\run-7206889004466675942
 Completed: 2026-10-31T18:06:06.815450700Z
-

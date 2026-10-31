@@ -35,7 +35,7 @@ Storage status: SAVED
   | [0]  Exit                                                                > |
   \----------------------------------------------------------------------------/
 
-breadcrumbs > 
+breadcrumbs >
 ACTIVE PROJECT | Synthetic B4 | W631
 Storage status: SAVED
 [16] Work items / explicit dependencies
@@ -67,11 +67,11 @@ INDEX_UNAVAILABLE
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Unreviewed source terms may disclose private captured wording. Snippets stay wit
 hheld. Instructions, owner fields and sensitive content stay excluded.
 Include safe unreviewed captured terms for this workspace session? Type yes.
-approve > 
+approve >
 Session opt-in recorded. Rebuild required.
 SEARCH PROJECT CONTEXT
 INDEX_UNAVAILABLE
@@ -83,7 +83,7 @@ INDEX_UNAVAILABLE
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Rebuild completed=true
 Trie terms=15 nodes=99; Hash terms=15 buckets=32; manual posting nodes=15; index
 ed fields=6; characters budgeted=240; canonical valid=true
@@ -97,11 +97,11 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
-Exact term: 
+search >
+Exact term:
 READY
 Exact term: replacementword
-READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported
 bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
 e reread. Checkpoints are historical assessments.
 Hash exact lookup -> manual posting chain -> canonical records
@@ -117,7 +117,7 @@ Occurrences: 1
 Showing 1 of 1 indexed field matches.
 View a bounded confirmed matching field, or 0 to return. Pending source snippets
  are withheld.
-record > 
+record >
 SEARCH PROJECT CONTEXT
 READY
 [1] Search exact term
@@ -128,7 +128,7 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 
 ACTIVE PROJECT | Synthetic B4 | W631
 Storage status: SAVED
@@ -166,7 +166,7 @@ Storage status: SAVED
   | [0]  Exit                                                                > |
   \----------------------------------------------------------------------------/
 
-breadcrumbs > 
+breadcrumbs >
 ACTIVE PROJECT | Synthetic B4 | W632
 Storage status: SAVED
 [16] Work items / explicit dependencies
@@ -198,7 +198,7 @@ INDEX_UNAVAILABLE
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Rebuild completed=true
 Trie terms=0 nodes=1; Hash terms=0 buckets=4; manual posting nodes=0; indexed fi
 elds=0; characters budgeted=0; canonical valid=true
@@ -212,11 +212,11 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
-Exact term: 
+search >
+Exact term:
 READY
 Exact term: otherworkspaceword
-READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported
 bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
 e reread. Checkpoints are historical assessments.
 Hash exact lookup -> manual posting chain -> canonical records
@@ -233,11 +233,11 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Unreviewed source terms may disclose private captured wording. Snippets stay wit
 hheld. Instructions, owner fields and sensitive content stay excluded.
 Include safe unreviewed captured terms for this workspace session? Type yes.
-approve > 
+approve >
 Session opt-in recorded. Rebuild required.
 SEARCH PROJECT CONTEXT
 INDEX_OUTDATED
@@ -249,7 +249,7 @@ INDEX_OUTDATED
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 Rebuild completed=true
 Trie terms=1 nodes=19; Hash terms=1 buckets=4; manual posting nodes=1; indexed f
 ields=1; characters budgeted=36; canonical valid=true
@@ -263,11 +263,11 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
-Exact term: 
+search >
+Exact term:
 READY
 Exact term: replacementword
-READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported
 bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
 e reread. Checkpoints are historical assessments.
 Hash exact lookup -> manual posting chain -> canonical records
@@ -284,11 +284,11 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
-Exact term: 
+search >
+Exact term:
 READY
 Exact term: otherworkspaceword
-READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported 
+READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported
 bodies not searched. Scan complete=true. Live source freshness UNKNOWN; no sourc
 e reread. Checkpoints are historical assessments.
 Hash exact lookup -> manual posting chain -> canonical records
@@ -304,7 +304,7 @@ Occurrences: 1
 Showing 1 of 1 indexed field matches.
 View a bounded confirmed matching field, or 0 to return. Pending source snippets
  are withheld.
-record > 
+record >
 SEARCH PROJECT CONTEXT
 READY
 [1] Search exact term
@@ -315,7 +315,7 @@ READY
 [6] Source-term privacy policy
 [7] Enable / disable search index
 [0] Back
-search > 
+search >
 
 ACTIVE PROJECT | Synthetic B4 | W632
 Storage status: SAVED
@@ -338,7 +338,7 @@ Storage status: SAVED
 [14] Resume / handoff preview and export
 [15] Coordination applicability
 [0] Back
-project > 
+project >
   /----------------------------------------------------------------------------\
   | [1]  Open / switch saved project                                         > |
   | [2]  Create or import project                                            > |
