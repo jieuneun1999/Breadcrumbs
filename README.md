@@ -11,6 +11,7 @@ Breadcrumbs is an in-development **local-first, offline-capable, Java 17+ consol
 B5A and B5B add explicitly confirmed work items/dependencies and manually coded
 Graph/Hash structures. [B5A PR #5](https://github.com/jieuneun1999/Breadcrumbs/pull/5)
 is stacked on B4. [B5A execution](docs/B5A_EXECUTION.md),
+[B5B PR #6](https://github.com/jieuneun1999/Breadcrumbs/pull/6) is stacked on B5A.
 [B5B execution](docs/B5B_EXECUTION.md), [format3](docs/B5_STORAGE.md) and
 [actual CLI evidence](docs/evidence/b5/README.md) describe the independently tested
 stages. The final direct-JDK Windows run passes5540 suite assertions plus10 B5

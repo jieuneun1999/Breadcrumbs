@@ -101,3 +101,19 @@ no task deletion/edit/status-update UI, no B6 Trie/postings/tokenizer, advanced 
 AI/Git/network/source execution or B7 recovery. Instructor hardware, actual JDK17
 runtime, Unix and symlink creation remain unverified. Native junctions/ACL are checked
 by the retained Windows harness. No external service needed to run the application.
+
+## Saved session checkpoint
+
+B5A implementation/gate commit5b44fbb7dda2036c2a550233c4fe159c6086e1ca is published
+in [PR5](https://github.com/jieuneun1999/Breadcrumbs/pull/5), targeting B4.
+B5B implementation/evidence commit023488fd78884ca2d6165ea8a1662c17c3288825 is
+published in [PR6](https://github.com/jieuneun1999/Breadcrumbs/pull/6), targeting B5A.
+Both are open/unmerged. All prior branches/main remain unchanged. Final96-file
+manifest was read back against actual working bytes; frozen art/spec diff is empty.
+This documentation-only checkpoint follows the exercised implementation.
+
+No B6 code, merge, release, deployment or Discord change. Reopen this record,
+B5_STORAGE, README and the live PR heads before the next batch. B6 should reuse
+the custom table, scoped evidence identities and invalidation rules. Owner may
+CONTINUE with a B6 packet, CHANGE after review, RELEASE only through separate
+authorization, or STOP with the saved checkpoint. B5 is DEMO_READY for tested scope.
