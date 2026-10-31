@@ -19,7 +19,7 @@ final class SearchIndexBuilder {
     }
     static SearchIndexBuilder build(WorkspaceState state, SearchPolicy policy, BooleanSupplier cancelled) {
         checkCancellation(cancelled);
-        if (!policy.tokenizerVersion().equals("NFKC-ROOT-1") || !policy.contentVersion().equals("CAPTURED-1")) {
+        if (!policy.tokenizerVersion().equals("NFKC-ROOT-1") || !policy.contentVersion().equals("CAPTURED-1") && !policy.contentVersion().equals("CAPTURED-2")) {
             throw new IllegalArgumentException("Unsupported tokenizer/content version. Index unavailable.");
         }
         SearchIndexBuilder candidate = new SearchIndexBuilder(policy);

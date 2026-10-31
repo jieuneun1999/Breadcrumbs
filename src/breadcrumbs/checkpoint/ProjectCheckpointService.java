@@ -11,6 +11,11 @@ public final class ProjectCheckpointService {
     public Checkpoint preview(WorkspaceState state, String title, String progress, String objective,
                               ProjectContext.BlockerState blockerState, String blockers, String next,
                               String decisions, String owner, String[] evidenceIds) {
+        return preview(state, title, progress, objective, blockerState, blockers, next, decisions, owner, evidenceIds, new String[0]);
+    }
+    public Checkpoint preview(WorkspaceState state, String title, String progress, String objective,
+                              ProjectContext.BlockerState blockerState, String blockers, String next,
+                              String decisions, String owner, String[] evidenceIds, String[] manualIds) {
         if (state.activeBaseline() == null || state.nextCheckpointNumber() > 999999
                 || state.checkpoints().size() >= 1000) {
             throw new IllegalArgumentException("A B0 and available checkpoint capacity/ID are required.");
@@ -30,7 +35,8 @@ public final class ProjectCheckpointService {
         String snapshot = state.currentObservationId();
         ProjectContext context = new ProjectContext(state.activeBaseline().workspaceId(),
                 snapshot.isEmpty() ? "B0-NO-SCAN" : snapshot, objective, blockerState, blockers,
-                next, decisions, owner, evidenceIds, latest == null ? "" : latest.checkpointId(), time, state.dependencies().currentId());
+                next, decisions, owner, evidenceIds, latest == null ? "" : latest.checkpointId(), time, state.dependencies().currentId(), manualIds);
+        state.manualContext().validateReferences(manualIds, time);
         ProjectContext.note(title);
         ProjectContext.note(progress);
         return new Checkpoint(String.format(Locale.ROOT, "CP-%06d", state.nextCheckpointNumber()),

@@ -18,6 +18,11 @@ public final class WorkspaceState {
     private final breadcrumbs.index.WorkspaceIndexes indexes = new breadcrumbs.index.WorkspaceIndexes(this);
     public breadcrumbs.index.WorkspaceIndexes indexes() { return indexes; }
     public long epoch() { return epoch; }
+    private ManualContext manualContext = new ManualContext(this);
+    public ManualContext manualContext() { return manualContext; }
+    private boolean versionFour;
+    public boolean versionFour() { return versionFour; }
+    public void enableVersionFour() { versionFour = true; versionTwo = true; markUnsaved(); }
     private DependencyState dependencies = new DependencyState(this);
     public DependencyState dependencies() { return dependencies; }
 
@@ -44,6 +49,7 @@ public final class WorkspaceState {
         versionTwo = false;
         soloOwner = false;
         dependencies = new DependencyState(this);
+        manualContext = new ManualContext(this); versionFour = false;
         epoch++;
     }
 
@@ -65,6 +71,7 @@ public final class WorkspaceState {
         soloOwner = validated.soloOwner;
         dependencies = new DependencyState(this);
         dependencies.copyFrom(validated.dependencies);
+        manualContext = new ManualContext(this); manualContext.copyFrom(validated.manualContext); versionFour = validated.versionFour;
         dirty = validated.dirty;
     }
 
@@ -139,6 +146,7 @@ public final class WorkspaceState {
     }
 
     public void appendConfirmed(Checkpoint checkpoint) {
+        if (checkpoint.project() != null) { manualContext.validateReferences(checkpoint.project().manualEvidenceIds(), checkpoint.createdAt()); }
         if (activeBaseline == null || checkpoint.project() == null
                 || !checkpoint.project().workspaceId().equals(activeBaseline.workspaceId())
                 || !checkpoint.checkpointId().equals(String.format(java.util.Locale.ROOT,

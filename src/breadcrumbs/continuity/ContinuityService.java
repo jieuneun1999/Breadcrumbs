@@ -27,6 +27,10 @@ public final class ContinuityService {
                 out.append(id).append(" | ").append(clean(claim.relativePath())).append(" line ").append(claim.line()).append(" | ").append(claim.sourceKind()).append(" / ").append(claim.verification()).append('\n');
             }
             if (count == 0) { out.append("No source evidence linked. This remains a human assessment.\n"); }
+            for (String id : context.manualEvidenceIds()) {
+                var capture = state.manualContext().find(id);
+                out.append(id).append(" | MANUAL ").append(capture.type()).append(capture.type() == ManualContext.Type.REPORTED_STATEMENT ? " | SOURCE_REPORTED, independently UNVERIFIED\n" : " | USER_DECLARED, not independently verified\n");
+            }
         }
         out.append("Saved observation: ").append(state.currentObservationId()).append(" at ").append(state.currentObservation().observedAt()).append('\n');
         out.append("Live source freshness UNKNOWN until a consented rescan. Opening did not read the source folder.\n");

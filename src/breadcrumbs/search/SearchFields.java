@@ -11,6 +11,9 @@ final class SearchFields {
     static void visit(WorkspaceState state, SearchPolicy policy, Consumer<Field> accept) {
         String observation = state.currentObservationId();
         for (EvidenceClaim claim : state.claimsAt(observation)) { visitEvidence(state, policy, claim, accept); }
+        if (policy.contentVersion().equals("CAPTURED-2")) {
+            for (var capture : state.manualContext().captures()) { emit(manual(state, capture), accept); }
+        }
         for (Checkpoint cp : state.checkpoints().traverseForward()) {
             for (String field : new String[] {"TITLE", "SUMMARY", "OBJECTIVE", "NEXT_ACTIONS", "DECISIONS", "BLOCKERS"}) {
                 emit(checkpoint(state, cp, field), accept);
@@ -29,6 +32,7 @@ final class SearchFields {
     static Field resolve(WorkspaceState state, SearchPolicy policy, SearchLocation location) {
         if (state.activeBaseline() == null || !state.activeBaseline().workspaceId().equals(location.workspaceId())) { return null; }
         Field field = switch (location.kind()) {
+            case MANUAL -> policy.contentVersion().equals("CAPTURED-2") ? manual(state, state.indexes().manual(location.recordId())) : null;
             case EVIDENCE -> {
                 if (!location.observationId().equals(state.currentObservationId())) { yield null; }
                 yield evidence(state, policy, state.indexes().evidence(location.observationId(), location.recordId()));
@@ -59,6 +63,13 @@ final class SearchFields {
         return field(new SearchLocation(claim.workspaceId(), SearchLocation.Kind.EVIDENCE, claim.evidenceId(),
                 claim.field().name(), observation, locator, claim.sourceKind() + " / " + claim.provenance() + " / " + claim.verification(),
                 review.name(), "INTERNAL", claim.observedAt(), false), claim.literalValue());
+    }
+    private static Field manual(WorkspaceState state, ManualContext.Capture capture) {
+        if (capture == null || !capture.workspaceId().equals(state.activeBaseline().workspaceId()) || !state.manualContext().indexEligible(capture.id())) { return null; }
+        String truth = capture.type() == ManualContext.Type.REPORTED_STATEMENT ? "SOURCE_REPORTED / MANUAL_RECORDED / UNVERIFIED"
+                : "USER_DECLARED / MANUAL_RECORDED / not independently verified";
+        return field(new SearchLocation(capture.workspaceId(), SearchLocation.Kind.MANUAL, capture.id(), "STATEMENT", "MANUAL",
+                "manual origin: " + capture.origin() + " | declared reference: " + capture.reference(), truth, "CONFIRMED", capture.sensitivity().name(), capture.recordedAt(), false), capture.statement());
     }
     private static Field checkpoint(WorkspaceState state, Checkpoint cp, String field) {
         if (cp == null || cp.origin() != Checkpoint.Origin.USER_CONFIRMED || cp.project() == null

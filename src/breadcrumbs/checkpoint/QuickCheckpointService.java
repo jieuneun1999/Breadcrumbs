@@ -3,9 +3,11 @@ package breadcrumbs.checkpoint;
 import breadcrumbs.domain.*;
 
 public final class QuickCheckpointService {
-    public record Options(String objective, String owner, String decisions, String[] evidenceIds) {
-        public Options { evidenceIds = evidenceIds.clone(); }
+    public record Options(String objective, String owner, String decisions, String[] evidenceIds, String[] manualIds) {
+        public Options(String objective, String owner, String decisions, String[] evidenceIds) { this(objective, owner, decisions, evidenceIds, new String[0]); }
+        public Options { evidenceIds = evidenceIds.clone(); manualIds = manualIds.clone(); }
         @Override public String[] evidenceIds() { return evidenceIds.clone(); }
+        @Override public String[] manualIds() { return manualIds.clone(); }
     }
     public Options proposed(WorkspaceState state) {
         Checkpoint last = state.checkpoints().getLatest();
@@ -27,6 +29,6 @@ public final class QuickCheckpointService {
         String title = changed == null || changed.isBlank() ? "Quick update" : changed.substring(0, Math.min(90, changed.length()));
         if (!title.isEmpty() && Character.isHighSurrogate(title.charAt(title.length() - 1))) { title = title.substring(0, title.length() - 1); }
         return new ProjectCheckpointService().preview(state, title, changed, options.objective(), status,
-                status == ProjectContext.BlockerState.BLOCKED ? answer : "UNKNOWN", next, options.decisions(), options.owner(), options.evidenceIds());
+                status == ProjectContext.BlockerState.BLOCKED ? answer : "UNKNOWN", next, options.decisions(), options.owner(), options.evidenceIds(), options.manualIds());
     }
 }

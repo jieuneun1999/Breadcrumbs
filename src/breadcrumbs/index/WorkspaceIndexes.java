@@ -12,6 +12,7 @@ public final class WorkspaceIndexes {
     private long dllModification = -1;
     private long unavailableEpoch = -1;
     private CustomHashTable<Checkpoint> checkpoints = new CustomHashTable<>();
+    private CustomHashTable<ManualContext.Capture> manual = new CustomHashTable<>();
     private CustomHashTable<WorkItem> tasks = new CustomHashTable<>();
     private CustomHashTable<EvidenceClaim> evidence = new CustomHashTable<>();
     private CustomHashTable<SnapshotEntry> paths = new CustomHashTable<>();
@@ -23,6 +24,8 @@ public final class WorkspaceIndexes {
     private String key(String observation, String id) { return state.activeBaseline().workspaceId() + "|" + observation.length() + ":" + observation + id; }
     public void rebuild() {
         var cp = new CustomHashTable<Checkpoint>(); var wi = new CustomHashTable<WorkItem>();
+        var mi = new CustomHashTable<ManualContext.Capture>();
+        for (var capture : state.manualContext().captures()) { mi.put(capture.id(), capture); }
         var ev = new CustomHashTable<EvidenceClaim>(); var pa = new CustomHashTable<SnapshotEntry>(); var ha = new CustomHashTable<SnapshotEntry[]>();
         for (Checkpoint checkpoint : state.checkpoints().traverseForward()) { cp.put(checkpoint.checkpointId(), checkpoint); }
         if (state.dependencies().current() != null) { for (WorkItem item : state.dependencies().current().items()) { wi.put(item.id(), item); } }
@@ -37,7 +40,7 @@ public final class WorkspaceIndexes {
                 all[all.length - 1] = entry; ha.put(hashKey, all);
             }
         }
-        checkpoints = cp; tasks = wi; evidence = ev; paths = pa; hashes = ha; epoch = state.epoch();
+        checkpoints = cp; tasks = wi; evidence = ev; paths = pa; hashes = ha; manual = mi; epoch = state.epoch();
         dllModification = state.checkpoints().modification();
     }
     private boolean ready() {
@@ -49,6 +52,7 @@ public final class WorkspaceIndexes {
         return true;
     }
     public Checkpoint checkpoint(String id) { return ready() ? checkpoints.get(id) : state.checkpoints().findById(id); }
+    public ManualContext.Capture manual(String id) { return ready() ? manual.get(id) : state.manualContext().find(id); }
     public WorkItem workItem(String id) { return ready() ? tasks.get(id) : state.dependencies().findItem(id); }
     public EvidenceClaim evidence(String observation, String id) {
         if (state.observation(observation) == null) { return null; }
@@ -67,6 +71,8 @@ public final class WorkspaceIndexes {
     }
     public boolean validate() {
         if (!ready()) { return true; }
+        for (var capture : state.manualContext().captures()) { if (manual.get(capture.id()) != capture) { return false; } }
+        if (manual.size() != state.manualContext().captures().length || !manual.validate()) { return false; }
         int taskCount = state.dependencies().current() == null ? 0 : state.dependencies().current().items().length;
         int evidenceCount = 0, pathCount = 0;
         for (Checkpoint cp : state.checkpoints().traverseForward()) { if (checkpoints.get(cp.checkpointId()) != cp) { return false; } }

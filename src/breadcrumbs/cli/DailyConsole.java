@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.nio.file.Path;
 import java.time.Instant;
+import breadcrumbs.storage.WorkspaceStore;
 
 /** Daily workflows delegate to the existing canonical services and advanced controls. */
 final class DailyConsole {
@@ -19,20 +20,20 @@ final class DailyConsole {
     private final Action save, full, advanced;
     private final TerminalTheme theme;
     private final int width;
-    private final Path storage;
+    private final WorkspaceStore store;
     private final ContextSearchIndex search;
     private final TerminalOutput ui;
     DailyConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state, boolean persisted,
-            Action save, Action full, Action advanced, TerminalTheme theme, int width, Path storage, ContextSearchIndex search) {
+            Action save, Action full, Action advanced, TerminalTheme theme, int width, WorkspaceStore store, ContextSearchIndex search) {
         this.input = input; this.out = out; this.state = state; this.persisted = persisted; this.save = save;
-        this.full = full; this.advanced = advanced; this.theme = theme; this.width = width; this.storage = storage;
+        this.full = full; this.advanced = advanced; this.theme = theme; this.width = width; this.store = store;
         this.search = search; ui = new TerminalOutput(out, theme, width);
     }
     void run() throws IOException {
         if (state.activeBaseline() == null) { ui.warning("Open or create a workspace first."); return; }
         while (true) {
             ui.heading("BREADCRUMBS / DAILY WORKSPACE");
-            ui.menu("[1] Follow the Breadcrumbs\n[2] Leave a Breadcrumb\n[3] Continuity Health\n[4] Review changes\n[5] Search context\n[6] Full checkpoint form\n[7] Explore checkpoint history\n[8] Work items / dependencies\n[9] Advanced tools\n[0] Back");
+            ui.menu("[1] Follow the Breadcrumbs\n[2] Leave a Breadcrumb\n[10] Evidence Inbox\n[3] Continuity Health\n[4] Review changes\n[5] Search context\n[11] State / handoff documents\n[7] Explore checkpoint history\n[8] Work items / dependencies\n[6] Full checkpoint form\n[9] Advanced tools\n[0] Back");
             try {
                 switch (input.read("daily > ")) {
                     case "0" -> { return; }
@@ -53,13 +54,16 @@ final class DailyConsole {
                     }
                     case "8" -> new DependencyConsole(input, out, state).run();
                     case "9" -> advanced.run();
+                    case "10" -> { String manual = new InboxConsole(input, out, state, save, theme, width).run(); if (manual != null) { quick(new String[] {manual}); } }
+                    case "11" -> new DocumentsConsole(input, out, state, store, save, theme, width).run();
                     default -> ui.warning("Choose a listed daily action.");
                 }
             } catch (IllegalArgumentException invalid) { ui.error("Operation cancelled or rejected."); ui.plain(invalid.getMessage()); }
         }
     }
     void follow() { ui.heading("FOLLOW THE BREADCRUMBS"); ui.plain(new ContinuityService().brief(state, persisted)); }
-    private void quick() throws IOException {
+    private void quick() throws IOException { quick(new String[0]); }
+    private void quick(String[] manualIds) throws IOException {
         ui.heading("LEAVE A BREADCRUMB");
         ui.note(switch (state.activeBaseline().profile()) {
             case SOFTWARE -> "Record implementation, explicit test claims, decisions and the next technical step. Do not imply tests ran.";
@@ -68,6 +72,7 @@ final class DailyConsole {
             case GENERAL -> "Record your current context, uncertainties and next action. No codebase is needed.";
         });
         var service = new QuickCheckpointService(); var options = service.proposed(state);
+        options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), options.evidenceIds(), manualIds);
         String changed = input.read("What changed or what did you work on? ");
         var previous = state.checkpoints().getLatest();
         if (previous != null) { ui.value("Previously recorded blocker, review afresh", previous.project().blockerState() + " | " + previous.project().blockers()); }
@@ -80,8 +85,9 @@ final class DailyConsole {
             ui.value("Next action", preview.project().nextActions()); ui.value("Proposed carried objective, review before confirming", options.objective());
             ui.value("Proposed carried owner, review before confirming", options.owner());
             ui.value("Decision / rationale", options.decisions()); ui.value("Source evidence IDs", String.join(", ", options.evidenceIds()));
+            ui.value("Manual-origin reference IDs", String.join(", ", options.manualIds()));
             ui.note("Confirming records your present assessment. Source reports and historical tests stay independently unverified.");
-            String action = input.read("yes=confirm, e=edit, a=evidence, o=options, d=dependencies, f=full form, 0=cancel: ");
+            String action = input.read("yes=confirm, e=edit, a=evidence, m=manual refs, o=options, d=dependencies, f=full form, 0=cancel: ");
             switch (action.toLowerCase(java.util.Locale.ROOT)) {
                 case "yes" -> {
                     new ProjectCheckpointService().confirm(state, preview, true); ui.success("Confirmed " + preview.checkpointId());
@@ -94,9 +100,15 @@ final class DailyConsole {
                     for (var claim : state.claimsAt(state.currentObservationId())) { ui.value(claim.evidenceId(), claim.field() + " | " + claim.sourceKind() + " | " + claim.review()); }
                     String selected = input.read("Current source evidence IDs, comma-separated; blank clears: ");
                     String[] refs = selected.isBlank() ? new String[0] : selected.split(","); for (int i = 0; i < refs.length; i++) { refs[i] = refs[i].strip(); }
-                    options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), refs);
+                    options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), refs, options.manualIds());
                 }
-                case "o" -> options = new QuickCheckpointService.Options(input.read("Objective, blank UNKNOWN: "), input.read("Owner, blank UNKNOWN: "), input.read("Decision / rationale / additional context, blank UNKNOWN: "), options.evidenceIds());
+                case "m" -> {
+                    for (var capture : state.manualContext().captures()) { ui.value(capture.id(), capture.type() + " | " + state.manualContext().disposition(capture.id())); }
+                    String selected = input.read("Manual IDs, comma-separated; blank clears: "); String[] refs = selected.isBlank() ? new String[0] : selected.split(",");
+                    for (int i = 0; i < refs.length; i++) { refs[i] = refs[i].strip(); }
+                    options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), options.evidenceIds(), refs);
+                }
+                case "o" -> options = new QuickCheckpointService.Options(input.read("Objective, blank UNKNOWN: "), input.read("Owner, blank UNKNOWN: "), input.read("Decision / rationale / additional context, blank UNKNOWN: "), options.evidenceIds(), options.manualIds());
                 case "d" -> new DependencyConsole(input, out, state).run();
                 case "f" -> { full.run(); return; }
                 default -> ui.warning("Choose a preview action. No checkpoint has been created.");

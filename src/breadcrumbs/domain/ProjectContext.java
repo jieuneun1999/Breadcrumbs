@@ -7,7 +7,13 @@ import java.time.Instant;
 public record ProjectContext(String workspaceId, String snapshotId, String objective,
                              BlockerState blockerState, String blockers, String nextActions,
                              String decisions, String owner, String[] evidenceIds,
-                             String previousCheckpointId, Instant confirmedAt, String graphRevisionId) {
+                             String previousCheckpointId, Instant confirmedAt, String graphRevisionId, String[] manualEvidenceIds) {
+    public ProjectContext(String workspaceId, String snapshotId, String objective, BlockerState blockerState,
+            String blockers, String nextActions, String decisions, String owner, String[] evidenceIds,
+            String previousCheckpointId, Instant confirmedAt, String graphRevisionId) {
+        this(workspaceId, snapshotId, objective, blockerState, blockers, nextActions, decisions, owner, evidenceIds,
+                previousCheckpointId, confirmedAt, graphRevisionId, new String[0]);
+    }
     public ProjectContext(String workspaceId, String snapshotId, String objective, BlockerState blockerState,
             String blockers, String nextActions, String decisions, String owner, String[] evidenceIds,
             String previousCheckpointId, Instant confirmedAt) {
@@ -17,6 +23,12 @@ public record ProjectContext(String workspaceId, String snapshotId, String objec
     public enum BlockerState { UNKNOWN, NONE_REPORTED, BLOCKED }
 
     public ProjectContext {
+        if (manualEvidenceIds == null || manualEvidenceIds.length > 500) { throw new IllegalArgumentException("Bounded manual references required."); }
+        manualEvidenceIds = manualEvidenceIds.clone();
+        for (int i = 0; i < manualEvidenceIds.length; i++) {
+            if (manualEvidenceIds[i] == null || !manualEvidenceIds[i].matches("IN-[0-9]{6}")) { throw new IllegalArgumentException("Invalid manual reference identity."); }
+            for (int j = 0; j < i; j++) { if (manualEvidenceIds[i].equals(manualEvidenceIds[j])) { throw new IllegalArgumentException("Duplicate manual reference."); } }
+        }
         if (graphRevisionId == null || !graphRevisionId.isEmpty() && !graphRevisionId.matches("G-[0-9]{6}")) {
             throw new IllegalArgumentException("Invalid graph revision reference.");
         }
@@ -50,6 +62,7 @@ public record ProjectContext(String workspaceId, String snapshotId, String objec
 
     @Override
     public String[] evidenceIds() { return evidenceIds.clone(); }
+    @Override public String[] manualEvidenceIds() { return manualEvidenceIds.clone(); }
 
     /** Multiline notes are storage-safe; terminal rendering still escapes controls at display time. */
     public static String note(String value) {

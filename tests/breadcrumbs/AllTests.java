@@ -47,5 +47,10 @@ public final class AllTests {
         breadcrumbs.cli.OperationFeedbackTest.run();
         breadcrumbs.b7.ContinuityWorkflowTest.run();
         System.out.println("PASS: B7B continuity and terminal feedback (" + (breadcrumbs.b4.Checks.count() - b7bStart) + " assertions)");
+        int b7cStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.b7.ManualContextTest.run();
+        breadcrumbs.storage.B7ArtifactTest.run();
+        breadcrumbs.b7.InboxArtifactsCliTest.run();
+        System.out.println("PASS: B7C Inbox, artifacts and CLI (" + (breadcrumbs.b4.Checks.count() - b7cStart) + " assertions)");
     }
 }

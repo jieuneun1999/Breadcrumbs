@@ -55,7 +55,7 @@ separate predicates and are never inferred from synthetic Java 17-target results
   write faults and memory-only fallback. Gate full regression and real-process interruption.
 - [x] B7B. Add Leave a Breadcrumb, Follow the Breadcrumbs, profile prompts,
   B4-based health and guided change review. Gate real CLI/restart and full regression.
-- [ ] B7C. Add canonical manual-origin Inbox and explicit schema extension,
+- [x] B7C. Add canonical manual-origin Inbox and explicit schema extension,
   safe search integration, generated state/handoff/checkpoint views and optional
   portable package. Gate all old versions, saved-state/export failure separation,
   NEW_EMPTY nontechnical workflow and full regression.

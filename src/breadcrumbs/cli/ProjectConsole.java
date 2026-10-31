@@ -128,7 +128,7 @@ public final class ProjectConsole {
 
     private void daily() throws IOException {
         new DailyConsole(this::read, output, state, persistence, () -> { if (persistence) { save(); } },
-                this::checkpoint, this::project, theme, width, store.root(), search).run();
+                this::checkpoint, this::project, theme, width, store, search).run();
     }
 
     private void project() throws IOException {
@@ -210,12 +210,26 @@ public final class ProjectConsole {
         try (var feedback = new OperationFeedback(output, theme, width, OperationFeedback.Operation.SAVE)) {
             try {
                 store.save(state); storageReady = true;
-                feedback.complete(false, "Saved. Verified local file readback."); return true;
+                feedback.complete(false, "Saved. Verified local file readback.");
             } catch (IOException | IllegalArgumentException failure) {
                 feedback.failed("NOT SAVED. In-memory state retained. Check storage path/permissions and integrity, then retry Save.");
                 return false;
             }
         }
+        if (state.manualContext().artifactsAllowed()) {
+            try {
+                var service = new breadcrumbs.storage.ArtifactService(); var checkpoints = state.checkpoints().traverseForward();
+                String[] ids = new String[checkpoints.length]; for (int i = 0; i < ids.length; i++) { ids[i] = checkpoints[i].checkpointId(); }
+                var bundle = service.preview(state, ids);
+                OperationFeedback.run(output, theme, width, OperationFeedback.Operation.EXPORT, () -> service.materialize(state, store, bundle));
+                output.println(theme.label(TerminalTheme.Tone.SUCCESS, "Continuity documents generated."));
+            } catch (IOException | IllegalArgumentException exportFailure) {
+                output.println(theme.label(TerminalTheme.Tone.WARNING, state.checkpoints().isEmpty()
+                        ? "Context saved. Continuity export failed." : "Checkpoint saved. Continuity export failed."));
+                output.println("Canonical history remains saved. Previous views retained; retry document generation.");
+            }
+        }
+        return true;
     }
 
     private boolean leave() throws IOException {

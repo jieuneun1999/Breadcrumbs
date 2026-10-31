@@ -23,6 +23,7 @@ public final class WorkspaceCodec {
     private final StringBuilder output = new StringBuilder();
     private boolean versionTwo;
     private boolean versionThree;
+    private boolean versionFour;
     private String[] lines;
     private int cursor;
     private int fieldCount;
@@ -31,9 +32,10 @@ public final class WorkspaceCodec {
         try {
             validate(state);
             WorkspaceCodec codec = new WorkspaceCodec();
-            codec.versionTwo = state.versionTwo();
-            codec.versionThree = state.dependencies().current() != null;
-            codec.output.append(codec.versionThree ? "FORMAT_VERSION=3\n" : codec.versionTwo ? "FORMAT_VERSION=2\n" : HEADER);
+            codec.versionFour = state.versionFour();
+            codec.versionTwo = state.versionTwo() || codec.versionFour;
+            codec.versionThree = state.dependencies().current() != null || codec.versionFour;
+            codec.output.append(codec.versionFour ? "FORMAT_VERSION=4\n" : codec.versionThree ? "FORMAT_VERSION=3\n" : codec.versionTwo ? "FORMAT_VERSION=2\n" : HEADER);
             codec.write(state);
             byte[] body = codec.output.toString().getBytes(StandardCharsets.UTF_8);
             byte[] bytes = (codec.output + "CHECKSUM=" + digest(body) + "\n").getBytes(StandardCharsets.UTF_8);
@@ -46,7 +48,8 @@ public final class WorkspaceCodec {
         try {
             if (bytes.length == 0 || bytes.length > MAX_BYTES) { throw new IllegalArgumentException(); }
             String text = utf8(bytes);
-            boolean versionThree = text.startsWith("FORMAT_VERSION=3\n");
+            boolean versionFour = text.startsWith("FORMAT_VERSION=4\n");
+            boolean versionThree = versionFour || text.startsWith("FORMAT_VERSION=3\n");
             boolean versionTwo = versionThree || text.startsWith("FORMAT_VERSION=2\n");
             if (!text.startsWith(HEADER) && !versionTwo) { throw new IOException("Unsupported storage version; expected 1 or 2."); }
             int footer = text.lastIndexOf("CHECKSUM=");
@@ -58,6 +61,7 @@ public final class WorkspaceCodec {
             WorkspaceCodec codec = new WorkspaceCodec();
             codec.versionTwo = versionTwo;
             codec.versionThree = versionThree;
+            codec.versionFour = versionFour;
             int lineCount = 0;
             for (int i = 0; i < footer; i++) {
                 if (text.charAt(i) == '\n' && ++lineCount > 200000) { throw new IllegalArgumentException(); }
@@ -191,6 +195,21 @@ public final class WorkspaceCodec {
                 }
             }
         }
+        if (versionFour) {
+            put("artifactsAllowed", state.manualContext().artifactsAllowed());
+            put("nextManual", state.manualContext().nextNumber());
+            put("manualCaptures", state.manualContext().captures().length);
+            for (var capture : state.manualContext().captures()) {
+                put("manualWorkspace", capture.workspaceId()); put("manualId", capture.id()); put("manualType", capture.type());
+                put("manualStatement", capture.statement()); put("manualOrigin", capture.origin()); put("manualReference", capture.reference());
+                put("manualTime", capture.recordedAt()); put("manualSensitivity", capture.sensitivity());
+            }
+            put("manualReviews", state.manualContext().reviews().length);
+            for (var review : state.manualContext().reviews()) {
+                put("manualReviewId", review.captureId()); put("manualDisposition", review.disposition());
+                put("manualIndexAllowed", review.indexApproved()); put("manualExportAllowed", review.exportApproved()); put("manualReviewedAt", review.reviewedAt());
+            }
+        }
         put("nextCheckpoint", state.nextCheckpointNumber());
         put("checkpoints", state.checkpoints().size());
         for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
@@ -214,6 +233,10 @@ public final class WorkspaceCodec {
             put("previous", context.previousCheckpointId());
             put("confirmed", context.confirmedAt());
             if (versionThree) { put("graphRevision", context.graphRevisionId()); }
+            if (versionFour) {
+                put("manualRefs", context.manualEvidenceIds().length);
+                for (String id : context.manualEvidenceIds()) { put("manualRef", id); }
+            }
         }
     }
 
@@ -239,7 +262,7 @@ public final class WorkspaceCodec {
         }
         if (versionThree) {
             int revisions = count("graphRevisions", 100);
-            if (revisions == 0) { throw new IllegalArgumentException(); }
+            if (revisions == 0 && !versionFour) { throw new IllegalArgumentException(); }
             for (int r = 0; r < revisions; r++) {
                 String graphId = get("graphId"); Instant graphTime = time("graphTime");
                 int nextTask = (int) number("nextTask", 1, 1000000);
@@ -261,6 +284,21 @@ public final class WorkspaceCodec {
                 state.dependencies().restore(new GraphRevision(graphId, graphTime, nextTask, items, edges));
             }
         }
+        if (versionFour) {
+            state.enableVersionFour(); state.manualContext().setArtifactsAllowed(flag("artifactsAllowed"));
+            int nextManual = (int) number("nextManual", 1, 1000000);
+            int manualCount = count("manualCaptures", 500);
+            for (int i = 0; i < manualCount; i++) {
+                state.manualContext().restore(new ManualContext.Capture(get("manualWorkspace"), get("manualId"), choice("manualType", ManualContext.Type.class),
+                        get("manualStatement"), get("manualOrigin"), get("manualReference"), time("manualTime"), choice("manualSensitivity", ManualContext.Sensitivity.class)));
+            }
+            state.manualContext().restoreNextNumber(nextManual);
+            int reviewCount = count("manualReviews", 2000);
+            for (int i = 0; i < reviewCount; i++) {
+                state.manualContext().restore(new ManualContext.Review(get("manualReviewId"), choice("manualDisposition", EvidenceClaim.ReviewDisposition.class),
+                        flag("manualIndexAllowed"), flag("manualExportAllowed"), time("manualReviewedAt")));
+            }
+        }
         int next = (int) number("nextCheckpoint", 1, 1000000);
         int count = count("checkpoints", 1000);
         for (int i = 0; i < count; i++) {
@@ -273,8 +311,11 @@ public final class WorkspaceCodec {
             String blockers = get("blockers"), actions = get("next"), decisions = get("decisions"), owner = get("owner");
             String[] refs = new String[count("references", 2000)];
             for (int j = 0; j < refs.length; j++) { refs[j] = get("reference"); }
+            String previous = get("previous"); Instant confirmedAt = time("confirmed"); String graph = versionThree ? get("graphRevision") : "";
+            String[] manualRefs = new String[versionFour ? count("manualRefs", 500) : 0];
+            for (int j = 0; j < manualRefs.length; j++) { manualRefs[j] = get("manualRef"); }
             ProjectContext context = new ProjectContext(workspace, snapshotId, objective, blocker, blockers,
-                    actions, decisions, owner, refs, get("previous"), time("confirmed"), versionThree ? get("graphRevision") : "");
+                    actions, decisions, owner, refs, previous, confirmedAt, graph, manualRefs);
             // Storage is temporary transport. The custom pointer algorithm reconstructs chronology.
             state.checkpoints().append(new Checkpoint(cpId, title, summary, status, created, origin, context));
         }
@@ -383,6 +424,7 @@ public final class WorkspaceCodec {
         int previousNumber = 0;
         for (Checkpoint checkpoint : state.checkpoints().traverseForward()) {
             ProjectContext context = checkpoint.project();
+            if (context != null) { state.manualContext().validateReferences(context.manualEvidenceIds(), checkpoint.createdAt()); }
             int number = Integer.parseInt(checkpoint.checkpointId().substring(3));
             if (context == null || checkpoint.origin() != Checkpoint.Origin.USER_CONFIRMED || !context.workspaceId().equals(baseline.workspaceId())
                     || state.observation(context.snapshotId()) == null
