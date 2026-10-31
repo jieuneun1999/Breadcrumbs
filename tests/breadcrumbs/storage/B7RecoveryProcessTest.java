@@ -29,7 +29,7 @@ public final class B7RecoveryProcessTest {
         var bytes = new ByteArrayOutputStream();
         new ProjectConsole(new StringReader("5\nW703\nG-000002\nRECOVER G-000002\n3\n3\n0\n0\n"), new PrintStream(bytes, true, StandardCharsets.UTF_8), store, new TerminalTheme(false), 80).run();
         String text = bytes.toString(StandardCharsets.UTF_8);
-        require(text.contains("RECOVERY CANDIDATES") && text.contains("Recovered validated generation") && text.contains("CP-000002"), "actual CLI acknowledges recovery and resumes intact history");
+        require(text.contains("RESTORE A SAVED PROJECT") && text.contains("Your checked project copy has been restored") && text.contains("CP-000002"), "actual CLI acknowledges recovery and resumes intact history");
         require(store.load("W703").checkpoints().size() == 2, "recovered published state survives another restart");
         Files.writeString(base.resolve("recovery-cli.txt"), text);
         System.out.println("PASS: B7A interrupted Java process and real recovery CLI | " + base);

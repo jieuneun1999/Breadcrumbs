@@ -28,7 +28,7 @@ public final class ContextConsoleTest {
         require(cancelled.contains("Checkpoint not found") && cancelled.contains("Query evidence belongs"), "invalid selection and cross workspace query graceful");
         require(store.load("W403").laterObservations().length == 0, "cancelled scan leaves app storage unchanged");
         String reviewed = session(store, "1\n1\n3\n10\nconfirm\nResearch current objective\nconfirm\n15\nsolo\n5\n0\n0\n");
-        require(reviewed.contains("Present review only") && reviewed.contains("Review finished") && reviewed.contains("Saved. Verified"), "guided high value review and explicit save");
+        require(reviewed.contains("Present review only") && reviewed.contains("Review finished") && reviewed.contains("Your project is saved on this computer."), "guided high value review and explicit save");
         var reviewedState = store.load("W403");
         require(reviewedState.reviews().length == 2 && reviewedState.soloOwner(), "present amendments and applicability persisted");
         String scan = session(store, "1\n1\n3\n11\nyes\n\n5\n9\n0\n0\n");
@@ -43,7 +43,7 @@ public final class ContextConsoleTest {
         require(exported.contains("Historical resume") && exported.contains("Exported and read back"), "CLI preview, exact destination confirmation, export");
         require(Files.readString(exports.resolve("context.md")).contains("CP-000001"), "export is standalone readable context");
         String unavailable = session(store, "1\n1\n3\n14\n\n\nyes\n" + exports.resolve("missing") + "\ncontext.md\nyes\n0\n0\n");
-        require(unavailable.contains("Storage/input operation failed") && unavailable.contains("Goodbye"), "unwritable export retains active project and menu");
+        require(unavailable.contains("That action could not be completed.") && unavailable.contains("Goodbye"), "unwritable export retains active project and menu");
         String cancelledReview = session(store, "1\n1\n3\n10\ncancel\n0\n0\n");
         require(cancelledReview.contains("Review stopped") && cancelledReview.contains("Goodbye"), "guided cancel is explicit");
         String eof = session(store, "1\n1\n3\n14\n");

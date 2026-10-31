@@ -67,7 +67,8 @@ final class BootstrapConsole {
             default -> throw new IllegalArgumentException("Choose entry mode 0-3.");
         };
         String name = input.read("Project display name: ");
-        String selectedProfile = input.read("Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
+        String selectedProfile = input.read(projectShell ? "Project type [1 personal, 2 study/research, 3 team/event, 4 software; Enter personal]: " : "Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
+        selectedProfile = switch (selectedProfile) { case "1" -> "GENERAL"; case "2" -> "ACADEMIC"; case "3" -> "OPERATIONS"; case "4" -> "SOFTWARE"; default -> selectedProfile; };
         ProjectProfile profile;
         try {
             profile = selectedProfile.isEmpty() ? ProjectProfile.GENERAL
@@ -77,11 +78,11 @@ final class BootstrapConsole {
         }
         CurrentContext context = CurrentContext.unknown();
         if (mode == EntryMode.NEW_EMPTY) {
-            context = new CurrentContext(input.read("Objective (blank = UNKNOWN): "),
-                    input.read("Intended deliverable (blank = UNKNOWN): "),
-                    input.read("Current next action (blank = UNKNOWN): "),
-                    input.read("Optional owner (blank = UNKNOWN): "),
-                    input.read("Optional blockers (blank = UNKNOWN; enter none only if stated): "));
+            context = new CurrentContext(input.read("What do you want this project to achieve? [Enter if unsure]: "),
+                    input.read("What do you plan to deliver? [Enter if unsure]: "),
+                    input.read("What is the next step? [Enter if unsure]: "),
+                    input.read("Who is responsible? [optional]: "),
+                    input.read("Anything getting in the way? [details, none, or Enter if unsure]: "));
         }
         String selectedPath = input.read(mode == EntryMode.NEW_EMPTY
                 ? "Optional existing EMPTY directory (blank = no directory observation): "
@@ -90,7 +91,7 @@ final class BootstrapConsole {
         boolean scanApproved = false;
         if (root != null) {
           if (projectShell) {
-            new TerminalOutput(output, theme, width).note("\nRead-only scan. Source files are never written or executed. Links and sensitive/generated paths are skipped.\nTXT/MD/CSV fields and bounded DOCX paragraphs; other bodies stay unavailable. Details remain in View B0 / sources.");
+            new TerminalOutput(output, theme, width).note("\nBreadcrumbs will read this folder without changing or running its files. Some formats and private/system folders are skipped.\nText notes, selected CSV fields and Word paragraphs can be read within size limits. PDF and other unsupported bodies cannot be read.");
           } else {
             output.println("READ-ONLY inspection. Imported files are never executed or written.");
             output.println("Links/reparse points, sensitive names and generated folders are skipped.");
@@ -123,7 +124,7 @@ final class BootstrapConsole {
                 }
                 return true;
             });
-            progress.complete(!draft.scan().complete(), draft.scan().entries().length + " entries inventoried; " + draft.claims().length + " captured claims. Review coverage.");
+            progress.complete(!draft.scan().complete(), draft.scan().entries().length + " items checked. " + draft.claims().length + " pieces of context found. " + (draft.scan().complete() ? "Review the details before using them." : "Some content was left out because of the file limits."));
           } catch (IOException | RuntimeException failure) { progress.failed("Inspection failed or cancelled. Existing active workspace retained."); throw failure; }
         } catch (UncheckedIOException failure) {
             throw failure.getCause();
@@ -147,11 +148,11 @@ final class BootstrapConsole {
         if (workspaceState.activeBaseline() != null) {
             output.println("Confirmation replaces the active session workspace; no persistence is available.");
         }
-        boolean approved = input.read("Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
+        boolean approved = input.read(projectShell ? "Start tracking this project with the details above? Type yes: " : "Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
         if (service.confirm(workspaceState, draft, approved)) {
-            output.println("Baseline B0 established. No native checkpoint was created.");
+            output.println(projectShell ? "Your project is ready. No progress updates have been recorded yet." : "Baseline B0 established. No native checkpoint was created.");
             if (!projectShell) { renderer.baseline(workspaceState.activeBaseline(), workspaceState.checkpoints().size()); }
-            else { new TerminalOutput(output, theme, width).note("Full inventory, hashes and source details are available in Advanced tools > View B0 / sources."); }
+            else { new TerminalOutput(output, theme, width).note("Detailed file information is available in More project tools > View B0 / sources."); }
         } else {
             output.println("Cancelled. Proposal discarded; active workspace unchanged.");
         }
@@ -190,13 +191,13 @@ final class BootstrapConsole {
             if (!projectShell) { renderer.claim(candidate); }
             else {
                 var ui = new TerminalOutput(output, theme, width);
-                ui.heading("\nREVIEW SOURCE STATEMENT"); ui.line("Origin: ", candidate.sourceKind() + " / independently unverified");
+                ui.heading("\nREVIEW A DOCUMENT NOTE"); ui.note("Your document says this. Breadcrumbs has not checked whether the work happened.");
                 ui.line("Source: ", breadcrumbs.inspector.ContentSafety.terminal(candidate.relativePath(), 180) + " " + candidate.locationUnit() + " " + candidate.line());
-                ui.value(candidate.field().name(), breadcrumbs.inspector.ContentSafety.terminal(candidate.literalValue(), 300));
+                ui.value(ProjectPresentation.fieldLabel(candidate.field()), breadcrumbs.inspector.ContentSafety.terminal(candidate.literalValue(), 300));
             }
             String choice;
             do {
-                choice = input.read("Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
+                choice = input.read(projectShell ? "Use this for your current project notes? c=use, r=do not use, Enter=decide later, s=review the rest later: " : "Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
                         .toLowerCase(Locale.ROOT);
             } while (!choice.isEmpty() && !choice.equals("c") && !choice.equals("r")
                     && !choice.equals("u") && !choice.equals("s"));
@@ -214,13 +215,14 @@ final class BootstrapConsole {
 
     private void preview(BootstrapDraft draft) {
         if (projectShell) {
-            var ui = new TerminalOutput(output, theme, width); ui.heading("\nIMPORT PREVIEW");
+            var ui = new TerminalOutput(output, theme, width); ui.heading("\nYOUR PROJECT PREVIEW");
             ui.line("Project: ", draft.displayName() + " | " + draft.profile());
-            ui.line("Coverage: ", draft.scan().entries().length + " entries | " + draft.claims().length + " captured statements | " + (draft.scan().complete() ? "within scan bounds" : "PARTIAL; limits reached"));
+            ui.line("What was read: ", draft.scan().entries().length + " items checked; " + draft.claims().length + " pieces of context found");
+            if (!draft.scan().complete()) { ui.warning("Only part of the folder could be read within the file limits."); }
             int metadata = 0, failed = 0;
             for (var entry : draft.scan().entries()) { if (entry.status() == SnapshotEntry.Status.UNSUPPORTED) { metadata++; } if (entry.status() == SnapshotEntry.Status.FAILED || entry.status() == SnapshotEntry.Status.UNSTABLE) { failed++; } }
-            ui.line("Unavailable body coverage: ", metadata + " unsupported | " + failed + " failed/unstable");
-            ui.note("B0 is an observation, not a historical resume. No checkpoint or prior work is invented.\nReview source statements now, or defer them. Full policy, inventory and hashes remain available in View B0 / sources.");
+            ui.line("Content that could not be read: ", metadata + " unsupported files; " + failed + " files with reading problems");
+            ui.note("This is your starting information. It does not mean any work has been completed.\nReview document notes now, or leave them for later. Full file details remain available in More project tools.");
             return;
         }
         renderer.summary(draft.workspaceId(), draft.displayName(), draft.profile(), draft.entryMode(),

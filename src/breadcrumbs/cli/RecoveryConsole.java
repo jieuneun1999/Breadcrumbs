@@ -16,29 +16,37 @@ final class RecoveryConsole {
         this.input = input; this.out = out; this.store = store; this.theme = theme; this.width = width; ui = new TerminalOutput(out, theme, width);
     }
     WorkspaceState run(Leave leave) throws IOException {
-        ui.heading("RECOVERY CANDIDATES"); ui.note("Inspection is read-only; no source scan occurs.");
-        for (var saved : store.list()) { ui.plain(saved.id() + " | " + breadcrumbs.inspector.ContentSafety.terminal(saved.name(), 120) + (saved.problem().isEmpty() ? "" : " | needs recovery")); }
-        String id = input.read("Workspace ID (0 = back): "); if (id.equals("0")) { return null; }
+        ui.heading("\nRESTORE A SAVED PROJECT"); ui.note("First inspect the saved copies. Nothing is restored until you confirm, and your original project folder is not read.");
+        var savedProjects = store.list(); int number = 0;
+        for (var saved : savedProjects) { ui.line("[" + (++number) + "] ", saved.name() + (saved.problem().isEmpty() ? "" : " | needs recovery")); }
+        String id = input.read("Project number or workspace ID (0 = back): "); if (id.equals("0")) { return null; }
+        try { int index = Integer.parseInt(id) - 1; if (index < 0 || index >= savedProjects.length) { throw new IllegalArgumentException("Choose a project from the list."); } id = savedProjects[index].id(); }
+        catch (NumberFormatException suppliedId) { /* Existing workspace IDs remain accepted for advanced use. */ }
         WorkspaceStore.validateId(id);
-        for (var candidate : store.recoveryCandidates(id)) {
-            ui.plain(candidate.generation() + " | valid=" + candidate.valid() + " | recorded=" + candidate.recordedAt()
-                    + " | checkpoints=" + candidate.checkpoints() + " | " + candidate.problem());
+        var copies = store.recoveryCandidates(id); number = 0;
+        for (var candidate : copies) {
+            ui.line("Copy " + (++number) + ": ", candidate.generation() + " | " + (candidate.valid() ? "checked and readable" : "cannot restore") + " | " + candidate.recordedAt());
+            ui.line("Progress updates: ", Integer.toString(candidate.checkpoints()));
+            if (!candidate.problem().isEmpty()) { ui.value("Problem with this copy", candidate.problem()); }
         }
-        ui.plain("Older generations can be previewed; recovery only activates the newest intact history. No silent rollback.");
-        String generation = input.read("Generation to preview (0 = back, prune = retain newest two): ");
+        ui.note("You can inspect older copies. Only the newest readable history can be restored, so a restore cannot silently roll back later updates.");
+        String generation = input.read("Copy number or generation ID to inspect (0 = back, prune = advanced cleanup): ");
         if (generation.equals("0")) { return null; }
         if (generation.equalsIgnoreCase("prune")) {
             ui.plain("This removes only validated older app-owned generations and retains the newest two. Invalid/interrupted evidence is retained.");
             store.prune(id, 2, input.read("Type PRUNE to confirm: ").equals("PRUNE")); ui.plain("Retention completed. Current and prior valid history retained."); return null;
         }
+        try { int index = Integer.parseInt(generation) - 1; if (index < 0 || index >= copies.length) { throw new IllegalArgumentException("Choose a copy from the list."); } generation = copies[index].generation(); }
+        catch (NumberFormatException suppliedId) { /* Generation IDs remain available to the exact acknowledgement flow. */ }
         WorkspaceState preview = store.readRecovery(id, generation);
-        ui.plain("Read-only preview: " + id + " | checkpoint count=" + preview.checkpoints().size() + " | next ID=" + preview.nextCheckpointNumber());
+        ui.line("Progress updates in this copy: ", Integer.toString(preview.checkpoints().size()));
         if (!leave.confirmed()) { return null; }
-        boolean acknowledged = input.read("Type RECOVER " + generation + " to activate a newly saved recovery generation: ").equals("RECOVER " + generation);
+        boolean acknowledged = input.read("Type RECOVER " + generation + " to restore this checked copy as a new saved copy: ").equals("RECOVER " + generation);
         if (!acknowledged) { ui.plain("Recovery cancelled. Existing state retained."); return null; }
-        WorkspaceState recovered = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.RECOVER, () -> store.recover(id, generation, true));
-        ui.plain("Recovered validated generation " + generation + ". Interrupted bytes retained; current pointer read back.");
-        ui.plain("Atomic rename and file flush are used where supported. Power-loss/directory-flush durability is not guaranteed. One process per storage root.");
+        final String selectedId = id, selectedCopy = generation;
+        WorkspaceState recovered = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.RECOVER, () -> store.recover(selectedId, selectedCopy, true));
+        ui.success("Your checked project copy has been restored. Interrupted copies are kept for inspection.");
+        ui.note("Keep only one Breadcrumbs app open for the same save folder. Sudden power loss can still interrupt disk writes.");
         return recovered;
     }
 }

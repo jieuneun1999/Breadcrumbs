@@ -47,7 +47,7 @@ public final class ProcessScenarios {
         Path second = Files.createDirectory(base.resolve("second-source")); Files.writeString(second.resolve("README.md"), "# Objective\notherworkspaceword\n");
         store.save(WorkflowTest.imported(second, "W632"));
         String switched = app(base, "g-isolation", "1\n1\n3\n18\n6\nyes\n4\n1\nreplacementword\n0\n0\n6\n2\n3\n18\n4\n1\notherworkspaceword\n6\nyes\n4\n1\nreplacementword\n1\notherworkspaceword\n0\n0\n0\n0\n");
-        int change = switched.indexOf("Opened saved workspace", switched.indexOf("Opened saved workspace") + 1);
+        int change = switched.indexOf("Your saved project is open", switched.indexOf("Your saved project is open") + 1);
         String other = switched.substring(change);
         require(other.contains("W632") && other.contains("INDEX_UNAVAILABLE") && other.contains("No indexed matches"), "G switching resets projection and source opt-in");
         require(other.contains("EV-W632") && !other.contains("EV-W631"), "G no cross-workspace posting leakage");

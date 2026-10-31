@@ -4,7 +4,7 @@ $repository = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $destination = Join-Path $repository ('build/' + $Stage.ToLowerInvariant() + '-verification-' + [Guid]::NewGuid().ToString('N'))
 [IO.Directory]::CreateDirectory($destination) | Out-Null
 function Read-Inputs {
-    @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -Recurse -File) + @(Get-Item -LiteralPath (Join-Path $repository 'run.bat')) | Sort-Object FullName | Get-FileHash -Algorithm SHA256
+    @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -Recurse -File) + @(Get-Item -LiteralPath (Join-Path $repository 'run.bat')) | Where-Object { $_.Extension -ne '.pyc' -and $_.DirectoryName -notmatch '[\\/]__pycache__([\\/]|$)' } | Sort-Object FullName | Get-FileHash -Algorithm SHA256
 }
 $before = @(Read-Inputs)
 $started = [DateTimeOffset]::Now.ToString('o')

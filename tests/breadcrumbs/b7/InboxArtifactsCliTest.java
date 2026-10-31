@@ -15,14 +15,16 @@ public final class InboxArtifactsCliTest {
         var store = new WorkspaceStore(base.resolve("app")); Path portable = base.resolve("portable");
         String input = "2\n1\nCommunity gathering\nGENERAL\nPlan an accessible meetup\nMeeting agenda\nAsk the host\n\n\n\nyes\nyes\n7\n10\n1\n3\nClient requested an accessible entrance\nClient meeting, verbal report\n\n\nc\nyes\nyes\nyes\nyes\nRecorded the meeting request\nAwaiting review\nPrepare the revised layout\nyes\n11\n5\nyes\n6\nCP-000001\n" + portable + "\nyes\n0\n5\n4\n1\naccessible\n0\n0\n1\n0\n0\n";
         String text = session(store, input);
+        String readable = text.replaceAll("\\s+", " ");
         Files.writeString(base.resolve("inbox-artifacts.txt"), text);
-        require(text.contains("EVIDENCE INBOX") && text.contains("Captured IN-000001") && text.contains("Confirmed CP-000001"), "NEW_EMPTY project captures a meeting report and real linked checkpoint");
-        require(text.contains("SOURCE_REPORTED") && text.contains("Continuity documents generated") && text.contains("Portable package exported"), "actual origin labels, generation and consented package flow");
+        require(text.contains("NOTES AND UPDATES") && text.contains("Your note has been added") && text.contains("Your update has been added"), "NEW_EMPTY project captures a meeting report and real linked checkpoint");
+        require(readable.contains("has not checked whether") && readable.contains("Your project summary and handoff files are up to date") && readable.contains("Your handoff folder is ready"), "actual origin labels, generation and consented package flow");
         var saved = store.load(store.list()[0].id());
+        require(saved.manualContext().captures()[0].type() == breadcrumbs.domain.ManualContext.Type.REPORTED_STATEMENT, "reported-note provenance is preserved in canonical state");
         require(saved.checkpoints().getLatest().project().manualEvidenceIds()[0].equals("IN-000001") && saved.manualContext().artifactsAllowed(), "manual links and opt-in persist canonically");
         require(Files.exists(portable.resolve("state.md")) && Files.exists(portable.resolve("HANDOFF.md")) && Files.exists(portable.resolve("checkpoints/CP-000001.md")), "portable output readable without application");
         String restart = session(store, "1\n1\n7\n5\n4\n1\naccessible\n0\n0\n1\n0\n0\n");
-        require(restart.contains("IN-000001") && restart.contains("MANUAL") && restart.contains("SOURCE_REPORTED"), "restart search resolves manual origin with truthful provenance");
+        require(restart.contains("A note you added") && restart.replaceAll("\\s+", " ").contains("has not checked whether"), "restart search resolves manual origin with truthful provenance");
         Files.writeString(base.resolve("inbox-artifacts.txt"), text); Files.writeString(base.resolve("restart-manual-search.txt"), restart);
         System.out.println("PASS: B7C NEW_EMPTY Inbox, linked checkpoint, generated views, package and restart search | " + base);
     }

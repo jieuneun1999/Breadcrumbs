@@ -38,7 +38,7 @@ public final class TerminalConsistencyTest {
         }
         var bytes = new ByteArrayOutputStream(); var out = new PrintStream(bytes, true, StandardCharsets.UTF_8);
         var answers = new ArrayDeque<String>(java.util.List.of("1", "2", "sensitivefixturebody", "Private origin", "", "s", "c", "no", "0"));
-        new InboxConsole(prompt -> { require(!prompt.contains("present-context assessment"), "sensitive Inbox body cannot be copied into exportable present-context reviews"); return answers.removeFirst(); }, out, state, () -> { }, new TerminalTheme(false), 80).run();
+        new InboxConsole(prompt -> { require(!prompt.contains("present-context assessment") && !prompt.contains("current description"), "sensitive Inbox body cannot be copied into exportable present-context reviews"); return answers.removeFirst(); }, out, state, () -> { }, new TerminalTheme(false), 80).run();
         require(state.manualContext().captures().length == 1 && state.reviews().length == 0 && !new breadcrumbs.handoff.HandoffService().preview(state, null, false).text().contains("sensitivefixturebody"), "sensitive manual capture remains isolated from handoff bodies");
         System.out.println("PASS: B7E shared terminal styles, narrow fallback and sensitive Inbox isolation");
     }

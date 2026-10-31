@@ -4,12 +4,80 @@
 
 B7A–B7E implementation is DEMO_READY for the exercised Windows/JDK25 scope,
 targeting Java17. This is not final owner/instructor acceptance or a release.
-The complete B1–B6 test bodies remain preserved. Canonical chronology/provenance,
+The B1–B6 behavioral checks remain. Presentation literals have been migrated to
+the owner's approved wording, as listed in the current follow-up below. Canonical chronology/provenance,
 recovery, daily capture/resume, manual Inbox, generated/portable documents and
 bounded DOCX capture all run through production CLI/services. No merge, deployment,
-Discord update, private-document discovery or package installation occurred.
+private-document discovery or package installation occurred in the implementation.
+The separately requested earlier Discord summary was posted and read back; this
+presentation follow-up sends no new Discord message.
 
 `REAL_DOCUMENT_ACCEPTANCE = PARTIAL_PUBLIC_DOCX; FULL_MATRIX_PENDING_OWNER_REVIEW`
+
+## Current plain-language follow-up and populated demo
+
+The owner approved everyday language and reassuring animation without removing
+functions. Ordinary screens now show a project summary, progress updates, notes,
+next step, waiting-on and readable save outcomes. Advanced tools retain IDs,
+original detailed reports, hashes, DSA diagnostics and all numerical routes.
+The B3 artwork and grouped 120 ms intro are unchanged. Operation feedback uses
+one breathing-dot row with actual counts and a written final result. Fast work
+is never delayed for animation.
+
+Final native gate: `build/b7e-verification-6bc4819fd2e3438da38410716c13f727`,
+1 November 2026, 06:36–06:39 Asia/Manila. Exit 0, 148 source/test/script/launcher
+inputs unchanged. All B1–B7 and separate-process scenarios passed, including
+native Windows junction/ACL boundaries and the space-path launcher. Developer
+Python caches are now excluded from input enumeration. See the
+[gate summary](evidence/b7/e/beginner/summary.txt),
+[test results](evidence/b7/e/beginner/tests.txt) and
+[input hashes](evidence/b7/e/beginner/source-sha256.txt).
+
+The new 150.25-second MP4 records actual production ProjectConsole in two native
+Java processes with paced scripted Reader input. It is an explicitly simulated
+community food drive: a populated 62-paragraph Word plan and coordination files,
+four readable source files, 101 captured context entries and no prior session.
+It demonstrates import, a confirmed update, save, process exit/reopen, reported
+meeting note with separate permissions, search, one real fixture file change,
+scoped review and a standalone handoff folder. It does not verify real events.
+
+Local video:
+`C:/Users/Papa/Desktop/Knowledgebase/Projects/Breadcrumbs/build/b7-beginner-demo-8d5582ea8f624b929e610137138b06c6/walkthrough.mp4`.
+H264, 1280x800, 24 fps, 16,430,022 bytes. SHA256
+`12d75861e03e044fd3a67f0988ceecb7beb4b8a4475269daf1472fed5fcd1209`.
+FFmpeg decoded the full video with exit 0. Actual frames at 3, 50, 105, 125 and
+143 seconds were inspected for branding, spacing, readable flow and real outputs.
+All 150 recorded application class hashes match the final gate build. Original
+fixture bytes remain unchanged except the explicitly scripted overview-note edit.
+Saved-state readback confirms one update, one reported note, one later observation
+and one scoped review; every stored file's byte hash is unchanged by readback.
+See [recording identity](evidence/b7/e/beginner/recording-identity.json) and
+[readback](evidence/b7/e/beginner/native-readback.txt).
+
+One failed native attempt exposed CRLF pause values in the capture harness.
+That attempt was stopped and retained locally, and is not delivery evidence.
+Pause validation now happens before console navigation. The successful capture
+and final regression exercise the corrected harness source. Product operations
+have no artificial timing changes. Raw video and generated project files stay local.
+
+Copy-only migrations cover B3 project/startup, B4 review/process, B5 graph-save,
+B6 switch markers, and B7 workflow/Inbox/recovery/feedback tests. Detailed drift
+assertions explicitly choose `d` and then acknowledge the same observation.
+Canonical counts, references, fault checks, privacy, DSA and old-format assertions
+remain. New tests exercise plain wording, source-versus-owner meaning, missing
+details, narrow rendering, successful restart and save-versus-handoff failures.
+The Frozen Master/First-Import contracts are unchanged.
+
+Specification self-review PASS for the approved presentation scope. Engineering
+quality self-review PASS for the existing architecture, bounded feedback, explicit
+state ownership and verified failure behavior. These are single-owner verdicts.
+Owner visual acceptance, independent review, actual Java17 and the full real-file
+matrix remain open. Implementation is DEMO_READY within the stated Windows/JDK25
+scope. This recording supersedes the earlier template walkthrough below.
+
+![Saved update and readable summary](evidence/b7/e/beginner/saved-summary.png)
+
+![Changed-file review and saved next step](evidence/b7/e/beginner/file-review.png)
 
 The owner's additional authorization permitted a substantial public download.
 The90,770-byte [Government of Northwest Territories project-plan template](https://www.fin.gov.nt.ca/en/resources/project-management-plan-template)
@@ -121,7 +189,7 @@ Owner next choices remain CONTINUE / CHANGE / RELEASE / STOP. A release choice
 would still require the exact protected effects; it does not silently merge or
 publish anything. Safe implementation is delivered separately from those gates.
 
-## Final recording and reconciled source
+## Earlier template recording and reconciled source
 
 The final native MP4 is 87.333333 seconds, H264,1280x800 at 24 fps,18,366,806 bytes.
 SHA256: `a2ca1613e80cc7d2fb553c207ba06ed342cc18ce2519d15efc2c59b5bb0bfe4d`.
@@ -174,6 +242,7 @@ that gate and do not change the compiled application classes.
 
 The E head above identifies the compiled implementation/evidence commit; the
 subsequent receipt commit updates execution records only. All stages remain open,
-unmerged review work. Frozen Master/First-Import contracts and every old B1–B6 test
-body were compared against B6 and remain unchanged. Earlier branch evidence stays
+unmerged review work. At that earlier checkpoint, Frozen Master/First-Import contracts and every old B1–B6 test
+body were compared against B6 and were unchanged. The later UI-copy migrations
+are listed in the current follow-up above. Earlier branch evidence stays
 available. No merge/release/deployment or external Discord communication occurred.

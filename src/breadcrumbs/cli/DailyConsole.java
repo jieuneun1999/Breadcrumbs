@@ -30,14 +30,14 @@ final class DailyConsole {
         this.search = search; ui = new TerminalOutput(out, theme, width);
     }
     void run() throws IOException {
-        if (state.activeBaseline() == null) { ui.warning("Open or create a workspace first."); return; }
+        if (state.activeBaseline() == null) { ui.warning("Open or create a project first."); return; }
         boolean showMenu = true;
         while (true) {
             if (showMenu) {
-                ui.heading("\nDAILY WORKSPACE");
-                ui.menu("[1] Follow the Breadcrumbs\n[2] Leave a Breadcrumb\n[10] Evidence Inbox\n\n[3] Continuity Health\n[4] Review changes\n[5] Search context\n[11] State / handoff documents\n\n[7] Explore checkpoint history\n[8] Work items / dependencies\n[6] Full checkpoint form\n[9] Advanced tools\n[0] Back");
+                ui.heading("\nYOUR PROJECT");
+                ui.menu("[1] View project summary\n[2] Record an update\n[10] Notes and updates\n\n[3] What needs attention?\n[4] Check files for changes\n[5] Search your project\n[11] Project handoff / export\n\n[7] View saved updates\n[8] Tasks and dependencies\n[6] Detailed update form\n[9] More project tools\n[0] Back");
                 showMenu = false;
-            } else { ui.note("\n1=follow  2=leave  5=search  ?=menu  0=back"); }
+            } else { ui.note("\n1=summary  2=record an update  5=search  ?=menu  0=back"); }
             try {
                 switch (input.read("daily > ")) {
                     case "0" -> { return; }
@@ -45,17 +45,17 @@ final class DailyConsole {
                     case "1" -> follow();
                     case "2" -> quick();
                     case "3" -> {
-                        ui.heading("CONTINUITY HEALTH");
-                        ui.plain(OperationFeedback.run(out, theme, width, OperationFeedback.Operation.AUDIT, () -> new ContinuityService().health(state)));
-                        ui.note("Detailed findings remain available in Advanced tools, Context audit.");
+                        var report = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.AUDIT, () -> new breadcrumbs.audit.ContextAudit().evaluate(state, state.checkpoints().getLatest()));
+                        new ProjectPresentation(out, theme, width).showHealth(report);
                     }
                     case "4" -> review();
-                    case "5" -> new SearchConsole(input, out, search, width, theme).run();
+                    case "5" -> new SearchConsole(input, out, search, width, theme, false).run();
                     case "6" -> full.run();
                     case "7" -> {
-                        ui.heading("RECORDED CHECKPOINT HISTORY");
-                        for (var cp : state.checkpoints().traverseForward()) { ui.value(cp.checkpointId(), cp.createdAt() + " | " + cp.title()); }
-                        ui.note("These are historical human assessments, not independently verified outcomes.");
+                        ui.heading("\nYOUR SAVED UPDATES"); int number = 0;
+                        for (var cp : state.checkpoints().traverseForward()) { ui.line("Update " + (++number) + ": ", cp.title()); ui.plain(cp.summary()); }
+                        if (number == 0) { ui.note("No progress updates yet. Choose Record an update after you work on the project."); }
+                        ui.note("These are the updates you recorded. Breadcrumbs did not check whether the reported work happened.");
                     }
                     case "8" -> new DependencyConsole(input, out, state, theme, width).run();
                     case "9" -> advanced.run();
@@ -66,41 +66,43 @@ final class DailyConsole {
             } catch (IllegalArgumentException invalid) { ui.error("Operation cancelled or rejected."); ui.plain(invalid.getMessage()); }
         }
     }
-    void follow() { ui.plain("\n" + new ContinuityService().brief(state, persisted)); }
+    void follow() { new ProjectPresentation(out, theme, width).showSummary(state, persisted); }
     private void quick() throws IOException { quick(new String[0]); }
     private void quick(String[] manualIds) throws IOException {
-        ui.heading("LEAVE A BREADCRUMB");
+        ui.heading("\nRECORD AN UPDATE");
         ui.note(switch (state.activeBaseline().profile()) {
-            case SOFTWARE -> "Record implementation, explicit test claims, decisions and the next technical step. Do not imply tests ran.";
-            case ACADEMIC -> "Record a revision, any reported adviser feedback and the next research step.";
-            case OPERATIONS -> "Record an update, explicitly reported approvals or supplier needs, and the next action.";
-            case GENERAL -> "Record your current context, uncertainties and next action. No codebase is needed.";
+            case SOFTWARE -> "Leave a short note about your work, anything in the way and the next step. Only report tests you actually ran.";
+            case ACADEMIC -> "Note what you revised, any feedback you received and your next study or research step.";
+            case OPERATIONS -> "Note what moved forward, anything you are waiting for and what to do next.";
+            case GENERAL -> "A Breadcrumb is a saved progress update that helps you continue later. Answer three short questions.";
         });
         var service = new QuickCheckpointService(); var options = service.proposed(state);
         options = new QuickCheckpointService.Options(options.objective(), options.owner(), options.decisions(), options.evidenceIds(), manualIds);
         String changed = input.read("What changed or what did you work on? ");
         var previous = state.checkpoints().getLatest();
-        if (previous != null) { ui.value("Previously recorded blocker, review afresh", previous.project().blockerState() + " | " + previous.project().blockers()); }
-        String blocker = input.read("Anything blocked or awaiting confirmation? [unknown/none/details]: ");
-        String next = input.read("Next concrete action: ");
+        if (previous != null) { ui.value("Previously waiting on; check whether this still applies", ProjectPresentation.blocker(previous.project())); }
+        String blocker = input.read("Anything getting in the way or waiting on someone? [details, none, or Enter if unsure]: ");
+        String next = input.read("What is the next small step? ");
         while (true) {
             var preview = service.preview(state, changed, blocker, next, options);
-            ui.heading("BREADCRUMB PREVIEW. No history change yet.");
-            ui.value("What changed", preview.summary()); ui.value("Blocker assessment", preview.project().blockerState() + " | " + preview.project().blockers());
-            ui.value("Next action", preview.project().nextActions()); ui.value("Proposed carried objective, review before confirming", options.objective());
-            ui.value("Proposed carried owner, review before confirming", options.owner());
-            ui.value("Decision / rationale", options.decisions()); ui.value("Source evidence IDs", String.join(", ", options.evidenceIds()));
-            ui.value("Manual-origin reference IDs", String.join(", ", options.manualIds()));
-            ui.note("Confirming records your present assessment. Source reports and historical tests stay independently unverified.");
-            String action = input.read("yes=confirm, e=edit, a=evidence, m=manual refs, o=options, d=dependencies, f=full form, 0=cancel: ");
+            ui.heading("\nREVIEW YOUR UPDATE");
+            ui.value("What you worked on", preview.summary()); ui.value("Waiting on", ProjectPresentation.blocker(preview.project()));
+            ui.value("Next step", preview.project().nextActions());
+            if (!options.objective().equals("UNKNOWN")) { ui.value("Project goal carried over; check that it still fits", options.objective()); }
+            if (!options.owner().equals("UNKNOWN")) { ui.value("Person responsible carried over; check before saving", options.owner()); }
+            if (!options.decisions().equals("UNKNOWN")) { ui.value("Decision and reason", options.decisions()); }
+            if (options.evidenceIds().length + options.manualIds().length > 0) { ui.line("Attached context: ", options.evidenceIds().length + " document references and " + options.manualIds().length + " notes"); }
+            ui.note("This records your account of the work. Breadcrumbs does not check whether the work happened.");
+            String action = input.read("Save this update? yes=record it, e=edit, ?=more options, 0=cancel: ");
             switch (action.toLowerCase(java.util.Locale.ROOT)) {
                 case "yes" -> {
-                    new ProjectCheckpointService().confirm(state, preview, true); ui.success("Confirmed " + preview.checkpointId());
-                    if (persisted) { save.run(); } else { ui.warning("SESSION-ONLY checkpoint. Save explicitly before leaving to keep it across restart."); }
+                    new ProjectCheckpointService().confirm(state, preview, true); ui.success("Your update has been added to the project.");
+                    if (persisted) { save.run(); } else { ui.warning("This update is only open here. Save the project before closing to keep it."); }
                     return;
                 }
-                case "0" -> { ui.note("Cancelled. No checkpoint added."); return; }
-                case "e" -> { changed = input.read("What changed: "); blocker = input.read("Blocker assessment [unknown/none/details]: "); next = input.read("Next action: "); }
+                case "0" -> { ui.note("Cancelled. No update was added."); return; }
+                case "?" -> ui.note("a=attach document references  m=attach notes  o=goal/person/decision  d=tasks and dependencies  f=detailed form");
+                case "e" -> { changed = input.read("What changed: "); blocker = input.read("Anything in the way? [details, none, or Enter if unsure]: "); next = input.read("Next small step: "); }
                 case "a" -> {
                     for (var claim : state.claimsAt(state.currentObservationId())) { ui.value(claim.evidenceId(), claim.field() + " | " + claim.sourceKind() + " | " + claim.review()); }
                     String selected = input.read("Current source evidence IDs, comma-separated; blank clears: ");
@@ -116,31 +118,33 @@ final class DailyConsole {
                 case "o" -> options = new QuickCheckpointService.Options(input.read("Objective, blank UNKNOWN: "), input.read("Owner, blank UNKNOWN: "), input.read("Decision / rationale / additional context, blank UNKNOWN: "), options.evidenceIds(), options.manualIds());
                 case "d" -> new DependencyConsole(input, out, state, theme, width).run();
                 case "f" -> { full.run(); return; }
-                default -> ui.warning("Choose a preview action. No checkpoint has been created.");
+                default -> ui.warning("Choose one of the options above. No update has been added.");
             }
         }
     }
     private void review() throws IOException {
-        ui.heading("GUIDED CHANGE REVIEW");
-        if (input.read("Rescan source files now? Type yes; Enter reviews saved observations only: ").equalsIgnoreCase("yes")) {
+        ui.heading("\nCHECK FOR CHANGES");
+        if (input.read("Read your project folder again to check for changes? Type yes; Enter uses earlier file checks: ").equalsIgnoreCase("yes")) {
             try (var progress = new OperationFeedback(out, theme, width, OperationFeedback.Operation.RESCAN)) {
                 try {
                     var scan = new ObservationService().scan(state, true, count -> { progress.running(count); return true; });
-                    progress.complete(!scan.complete(), scan.entries().length + " entries observed; " + scan.claims().length + " captured claims. Review coverage.");
-                } catch (IOException | RuntimeException failure) { progress.failed("Rescan failed; existing observations retained."); throw failure; }
+                    progress.complete(!scan.complete(), scan.entries().length + " items checked. " + (scan.complete() ? "Review the changes below." : "Some content could not be read within the file limits. Open file details for the full list."));
+                } catch (IOException | RuntimeException failure) { progress.failed("Your earlier file checks are kept. Check that the project folder is available and try again."); throw failure; }
             }
         }
-        ui.plain(OperationFeedback.run(out, theme, width, OperationFeedback.Operation.COMPARE, () -> new ContinuityService().changes(state)));
-        String choice = input.read("[1] Acknowledge review [2] Present assessment [3] Leave a Breadcrumb [0] Return unresolved: ");
+        var comparison = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.COMPARE, () -> new DriftEngine().compare(state.activeBaseline().snapshot(), state.currentObservation()));
+        new ProjectPresentation(out, theme, width).showChanges(state, comparison);
+        String choice = input.read("[1] Mark as reviewed [2] Add your next step [3] Record an update [d] Technical details [0] Back: ");
+        if (choice.equalsIgnoreCase("d")) { ui.plain(new ContinuityService().changes(state)); return; }
         if (choice.equals("1")) {
-            if (input.read("Review acknowledgement does not verify completion/tests. Type yes: ").equalsIgnoreCase("yes")) {
+            if (input.read("Mark these changes as reviewed? This does not confirm the work is finished. Type yes: ").equalsIgnoreCase("yes")) {
                 state.addReview(new ContextReview(state.currentObservationId(), "", EvidenceClaim.Field.PROGRESS, "CHANGE_REVIEW",
                         "Reviewed saved observation " + state.currentObservationId() + "; source correctness and completion remain unverified.", EvidenceClaim.ReviewDisposition.CONFIRMED, Instant.now()));
-                ui.success("Review acknowledgement recorded separately from project progress."); if (persisted) { save.run(); }
+                ui.success("Marked as reviewed. Your recorded project progress is unchanged."); if (persisted) { save.run(); }
             }
         } else if (choice.equals("2")) {
-            String value = input.read("Your present assessment / next action, blank leaves UNKNOWN: ");
-            if (input.read("Record this user assessment? Type yes: ").equalsIgnoreCase("yes")) {
+            String value = input.read("What should your next step be? [Enter if unsure]: ");
+            if (input.read("Use this as your current next step? Type yes: ").equalsIgnoreCase("yes")) {
                 state.addReview(new ContextReview(state.currentObservationId(), "", EvidenceClaim.Field.NEXT_ACTION, "", value, EvidenceClaim.ReviewDisposition.CONFIRMED, Instant.now()));
                 if (persisted) { save.run(); }
             }

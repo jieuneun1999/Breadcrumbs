@@ -100,3 +100,131 @@ uses synthetic fixtures plus the explicitly authorized public template and real 
 replay, actual desktop capture and any edited video are labeled separately.
 After each green gate, commit/open the stage PR and continue to its dependent stage.
 Only a true boundary or exhausted budget stops safe independent work.
+
+## Active B7E follow-up: beginner language and realistic demo
+
+Owner explicitly approved the plain-language suggestions and requested useful,
+reassuring animation while preserving every function. Baseline is clean01219e7
+on feat/b7e-final-integration, PR12. This is a STANDARD presentation follow-up to
+the same B7E packet. One owner/writer, no delegation/worktree, six repairs per gate,
+two per unchanged hypothesis. Existing scoped commit/push/stack permissions apply;
+no merge/release/deployment/Discord/publication or private-document access. Existing
+B3 artwork, canonical schemas, DSAs, scan/export/recovery safety and source truth
+remain authoritative. Demo is explicitly simulated, populated project context,
+not a claim of actual community work or a substitute for real-file acceptance.
+
+### Feature playbook and throughput
+
+- [x] 1. `how` over the affected subsystem.
+- [x] 2. `architect` for parallel design exploration.
+- [x] 3. Write the throughput checkpoint as four todo items.
+- [x] 4. Delegate code-writing through provider dispatch.
+  Adaptation: Craft66–101/packet single writer controls; owner implements directly.
+- [x] 5. Verify on the matching surface.
+- [ ] 6. Rebase into small, ordered commits. Stack follow-ups.
+  Adaptation: preserve existing shared PR history; append scoped commits, no rebase.
+- [x] 7. If the design is contested, `interrogate` before shipping.
+  n/a: approved product direction; no independent-review or panel claim.
+- [ ] 8. Run Opening a PR.
+  Adaptation: update existing B7E PR12 after source-bound verification.
+
+Blocking first steps: ground ordinary/advanced output and save/export failure
+boundaries; load authority and UI/copy guidance; establish focused failing behavior.
+Independent workstreams: n/a, presentation vocabulary and demo share CLI outputs.
+Shared mutable state: WorkspaceState unchanged; UI projections read only; every
+recording/test gets unique app/source/output roots. No new persisted UI truth.
+Smallest safe decomposition: vocabulary/feedback + summary; daily capture/notes/
+documents/navigation; parity/failure tests; populated realistic native recording.
+
+### Design and authority application
+
+Pstack1.16 poteto-mode and Feature read in dedicated full calls. how/architect,
+model-the-domain, Experience First, Test Behavior and Prove It Works were read.
+Relevant Manual/Workflow/Routing/Craft sections loaded. Impeccable4.6 Clarify,
+Operate and craft-floor read. Context launcher called with download disabled;
+prior CLI identity and owner direction supply the scoped refinement authority.
+Web-only typography/DOM rules do not apply. No global tools/config are changed.
+
+Grounding: Main -> ProjectConsole owns navigation/save; DailyConsole calls the
+existing checkpoint/Inbox/scan/export services. OperationFeedback owns transient
+output only. ContinuityService and HandoffService own technical reports and remain
+available under explicit details. Canonical WorkspaceState/storage/DSAs are not
+redefined by friendlier labels. Save and generated-file publication are separate
+outcomes and must remain separate in beginner wording.
+
+Design A: replace jargon in already-mixed report strings at render time. Rejected
+because it could alter quoted user/source literals and hide useful distinctions.
+Design B: explicit presentation messages and typed read-only summary values,
+rendered through TerminalOutput; keep detailed reports available. Selected. This
+makes labels consistent and leaves source words untouched. No global output filter,
+new application framework or persisted duplicate model is introduced.
+
+Data shape: operation enum supplies action/result/failure messages; existing state
+enum keeps truthful lifecycle. A presentation Summary groups project/save state,
+last recorded update, next step, waiting-on and one B4-derived attention question.
+Origin is kept explicit as your note, document statement or not provided. Internal
+IDs/hashes/scores remain in advanced details rather than ordinary task completion.
+
+Presentation assertions that pin old copy may migrate to the approved labels,
+with all state, privacy, fault, restart and DSA assertions retained. Such migrations
+are listed explicitly; they are not represented as unchanged test bodies. Frozen
+Master/First-Import contracts and prior evidence stay untouched.
+
+### Observed follow-up checks
+
+The first beginner behavior test failed on the old save wording, then passed the
+actual create/update/save/restart and two distinct failure paths. Existing UI
+contracts were migrated in B3 ProjectConsole/Startup, B4 ContextConsole/B4Scenarios,
+B5 GraphCli, B6 workspace-switch marker, B7 Continuity/Inbox/Process/recovery,
+CalmConsole and OperationFeedback. Detailed drift assertions now explicitly open
+`d`, then mark the same observation reviewed without a second scan. Canonical
+checkpoint counts, reference hashes, provenance, privacy, DSA and old-format checks
+were retained. A Windows-default-encoding error in two edited test files was traced
+to the actual bytes and corrected with explicit UTF-8. No source report text was
+changed to make those tests pass.
+
+Native gate `build/b7e-verification-c60ef115b70f42c393bc5441260da004`
+passed at 06:29–06:31 on 1 November 2026 with 148 inputs unchanged. The final
+capture-script correction quotes generated CSV fields correctly; a fresh Main
+preflight reads four files, 101 context entries, zero unsupported files and zero
+reading problems. The source Word fixture has 62 populated paragraphs. Simulation
+inputs, preflight storage, native storage and exported folders are separate.
+A second full source-bound gate follows the final script changes.
+
+Specification self-review: typed display values preserve origin and missing-detail
+meaning; all old functions and advanced numerical paths remain. Engineering-quality
+self-review: no schema/DSA/service rewrite, no new dependency or global changes,
+single writer, bounded transient feedback and neutral literal output. Both verdicts
+remain conditional on the final native inspection and evidence reconciliation.
+These are owner-session reviews, not independent reviewer acceptance.
+
+HyperFrames entrypoint and custom-video contract were read. The owner's concrete
+request is an unedited terminal recording; the selected native FFmpeg approach
+preserves actual output. No composition, tool installation or update was performed.
+The installed tool usage allowance is unknown and is not used to claim rendering
+capacity. Capture reading pauses do not modify product execution timing.
+
+### Final follow-up evidence reconciliation
+
+DEMO_READY for the Windows/JDK25 presentation scope. Final native gate
+`build/b7e-verification-6bc4819fd2e3438da38410716c13f727` completed at
+06:39:53 Asia/Manila on 1 November 2026: exit 0, 148 inputs unchanged. All groups,
+process scenarios, junction/ACL and space-path launcher passed. Final input hashes
+were compared again with current files after capture. The capture harness's CRLF
+pause failure was traced to its numeric input boundary, stopped, retained locally
+and corrected with upfront stripped/range-validated delays. The successful final
+capture and regression use that corrected source; no failed video is delivered.
+
+The 150.25-second 1280x800/24fps H264 native video fully decodes with exit 0. Real
+frames 3/50/105/125/143 seconds were inspected. All 150 recorded application classes
+match the final build. The saved project was read back as one update, one reported
+note, one later observation and one scoped change review, with every stored byte
+hash unchanged by readback. Source fixture files are unchanged except the one
+explicit simulation edit. No source/user literals are rewritten by the UI.
+
+Specification self-review PASS and engineering-quality self-review PASS for this
+bounded presentation change. Owner visual acceptance, actual JDK17, Unix/instructor
+hardware, independent review and the full representative real-file matrix remain
+open. No global configuration, install, merge/release/deployment or new Discord
+write occurred. Native MP4 and generated fixtures remain local; only synthetic
+frames, sanitized transcripts and validation metadata enter the scoped PR.

@@ -22,7 +22,7 @@ public final class GraphCliTest {
         }
         input += "3\nT-000001\nT-000002\n\nExplicit budget prerequisite\nyes\n3\nT-000002\nT-000003\n\nExplicit supplier prerequisite\nyes\n5\n6\nT-000001\n7\nT-000001\n8\nT-000001\n3\nT-000003\nT-000001\n\nCycle attempt\nyes\n9\n0\n5\n0\n0\n";
         String text = session(store, input);
-        for (String expected : new String[] {"No canonical work items", "Created T-000003", "Unique downstream: 2", "would create a cycle", "Graph valid: true", "Saved. Verified", "Goodbye"}) {
+        for (String expected : new String[] {"No canonical work items", "Created T-000003", "Unique downstream: 2", "would create a cycle", "Graph valid: true", "Your project is saved on this computer.", "Goodbye"}) {
             require(text.contains(expected), "Graph actual CLI " + expected);
         }
         var restored = store.load("W502"); require(restored.dependencies().graph().edgeCount() == 2, "CLI graph persisted");

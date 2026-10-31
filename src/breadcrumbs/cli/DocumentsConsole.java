@@ -21,54 +21,59 @@ final class DocumentsConsole {
         boolean showMenu = true;
         while (true) {
             if (showMenu) {
-                ui.heading("\nSTATE AND HANDOFF DOCUMENTS");
-                ui.note("Generated views are rebuildable. Source files are never copied or overwritten.");
-                ui.menu("[1] View state.md\n[2] View HANDOFF.md\n[3] View historical checkpoint Markdown\n\n[4] Generate app-owned continuity documents\n[5] Configure checkpoint-triggered generation\n[6] Export portable Markdown package\n[0] Back"); showMenu = false;
+                ui.heading("\nPROJECT HANDOFF");
+                ui.note("Make readable files so you or someone else can continue later. Your original project files are not copied or changed.");
+                ui.menu("[1] Read the project summary file (state.md)\n[2] Read the handoff file (HANDOFF.md)\n[3] Read an earlier progress update\n\n[4] Refresh the handoff files\n[5] Choose whether handoff files update after saving\n[6] Export a handoff folder\n[d] Technical file details\n[0] Back"); showMenu = false;
             } else { ui.note("\n1=state  2=handoff  4=generate  6=export  ?=menu  0=back"); }
             String choice = input.read("documents > ");
             switch (choice) {
                 case "0" -> { return; }
                 case "?" -> showMenu = true;
                 case "1", "2", "3" -> {
-                    String id = choice.equals("1") ? "state" : choice.equals("2") ? "handoff" : input.read("Historical checkpoint ID: ");
+                    String id = choice.equals("1") ? "state" : choice.equals("2") ? "handoff" : checkpointId(input.read("Earlier update number or ID: "));
                     String path = id.equalsIgnoreCase("state") ? "state.md" : id.equalsIgnoreCase("handoff") ? "HANDOFF.md" : "checkpoints/" + id + ".md";
                     var bundle = artifacts.preview(state, allCheckpoints()); boolean found = false;
                     for (var file : bundle.files()) { if (file.path().equals(path)) { ui.plain(file.text()); found = true; } }
-                    if (!found) { ui.warning("Choose state, handoff or an existing checkpoint ID."); }
-                    if (state.dirty()) { ui.warning("Preview only. This canonical revision is not yet durably saved."); }
+                    if (!found) { ui.warning("Choose a summary, handoff or existing progress update."); }
+                    if (state.dirty()) { ui.warning("Preview only. Save the project before using these files as a saved handoff."); }
                 }
                 case "4" -> {
                     var bundle = artifacts.preview(state, allCheckpoints()); preview(bundle);
-                    if (input.read("Generate these app-owned views after matching the saved revision? Type yes: ").equalsIgnoreCase("yes")) {
+                    if (input.read("Refresh these handoff files from your saved project? Type yes: ").equalsIgnoreCase("yes")) {
                         Path path = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.EXPORT, () -> artifacts.materialize(state, store, bundle));
-                        ui.success("Continuity documents generated."); ui.value("App-owned bundle", path.toString());
+                        ui.success("Your handoff files are up to date."); ui.value("Handoff files on this computer", path.toString());
                     }
                 }
+                case "d" -> { var bundle = artifacts.preview(state, allCheckpoints()); ui.value("Saved project reference", bundle.revision()); for (var file : bundle.files()) { ui.line("File: ", file.path() + " | " + file.text().length() + " characters"); } }
                 case "5" -> {
-                    ui.warning("Opt-in writes state.md, HANDOFF.md and immutable checkpoint summaries in app-owned storage after a successful canonical save. Raw source snippets and sensitive/unapproved manual bodies stay omitted. Preview views before approving.");
+                    ui.warning("If enabled, Breadcrumbs updates the project summary, handoff and saved-update files after a successful save. Private notes and notes you did not approve for export stay out. Your original documents are not copied.");
                     boolean enable = !state.manualContext().artifactsAllowed();
-                    if (input.read(enable ? "Enable this preference? Type yes: " : "Disable this preference? Type yes: ").equalsIgnoreCase("yes")) {
+                    if (input.read(enable ? "Update the handoff files whenever you save? Type yes: " : "Stop updating the handoff files after saving? Type yes: ").equalsIgnoreCase("yes")) {
                         state.manualContext().setArtifactsAllowed(enable); save.run();
-                        ui.value("Checkpoint-triggered generation preference", Boolean.toString(enable));
+                        ui.value("Update handoff files after saving", enable ? "On" : "Off");
+                        if (state.dirty()) { ui.warning("This choice is only set for the open project. Save again to keep it after closing."); }
                     }
                 }
                 case "6" -> {
-                    String selected = input.read("Selected checkpoint IDs, comma-separated; blank exports no checkpoint archives: ");
-                    String[] ids = selected.isBlank() ? new String[0] : selected.split(","); for (int i = 0; i < ids.length; i++) { ids[i] = ids[i].strip(); }
-                    var bundle = artifacts.preview(state, ids); Path destination = Path.of(input.read("New absolute local package directory, outside source/app storage: "));
+                    String selected = input.read("Progress update numbers or IDs to include, separated by commas; Enter includes no earlier updates: ");
+                    String[] ids = selected.isBlank() ? new String[0] : selected.split(","); for (int i = 0; i < ids.length; i++) { ids[i] = checkpointId(ids[i].strip()); }
+                    var bundle = artifacts.preview(state, ids); Path destination = Path.of(input.read("New full folder path for the handoff, outside your project and save folders: "));
                     preview(bundle); ui.value("Destination", destination.toString());
-                    if (input.read("I reviewed privacy/redaction and consent to this create-only package. Type yes: ").equalsIgnoreCase("yes")) {
+                    if (input.read("Create this new handoff folder with the files shown above? Type yes: ").equalsIgnoreCase("yes")) {
                         Path path = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.EXPORT, () -> artifacts.exportPackage(state, store, bundle, destination, true));
-                        ui.success("Portable package exported."); ui.value("Readable Markdown folder", path.toString());
+                        ui.success("Your handoff folder is ready to share."); ui.value("Folder you can open without Breadcrumbs", path.toString());
                     }
                 }
                 default -> ui.warning("Choose a listed document action.");
             }
         }
     }
+    private static String checkpointId(String value) {
+        try { int number = Integer.parseInt(value); if (number < 1 || number > 999999) { throw new IllegalArgumentException("Choose an existing progress update number."); } return String.format(java.util.Locale.ROOT, "CP-%06d", number); }
+        catch (NumberFormatException notNumber) { return value; }
+    }
     private void preview(ArtifactService.Bundle bundle) {
-        ui.value("Canonical revision", bundle.revision());
-        for (var file : bundle.files()) { ui.value("Generated member", file.path() + " | " + file.text().length() + " characters"); }
-        ui.warning("INTERNAL context. Only individually approved manual bodies are included. No source documents, absolute source roots or credentials are copied.");
+        for (var file : bundle.files()) { ui.value("File", file.path() + " | " + file.text().length() + " characters"); }
+        ui.warning("Review this handoff before sharing. Only notes you approved for export are included. Original documents and the project folder location are not copied.");
     }
 }

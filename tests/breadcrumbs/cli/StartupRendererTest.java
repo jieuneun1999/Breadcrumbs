@@ -35,7 +35,7 @@ public final class StartupRendererTest {
             }
             require(resets, "each styled line resets the terminal foreground");
             String failure = render(width, false, true);
-            require(failure.contains("Storage: Unavailable"), "failure has a readable status without color");
+            require(failure.replaceAll("\\s+", " ").contains("save folder is unavailable"), "failure has a readable status without color");
             boolean failureFits = true;
             for (String line : failure.split("\n")) { failureFits &= line.length() <= width; }
             require(failureFits, "failure notice wraps");
@@ -46,7 +46,7 @@ public final class StartupRendererTest {
                 "scored loaf, missing bite and outgoing crumb trail visible");
         require(wide.contains("Saved projects: 2") && wide.contains("1 unreadable saved workspace"),
                 "real counts and unavailable records stay explicit");
-        require(wide.contains("[1]  Open / switch saved project") && wide.contains("[4]  DSA demonstration"),
+        require(wide.contains("[1]  Open a saved project") && wide.contains("[4]  DSA demonstration"),
                 "keyboard actions remain discoverable");
         require(!wide.contains("Recent project:") && !wide.contains("App storage:"), "startup omits absent recent state and full diagnostic path");
         require(wide.contains("/----------------") && wide.contains("\\----------------"),

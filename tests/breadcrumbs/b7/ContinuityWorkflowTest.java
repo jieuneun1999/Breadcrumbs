@@ -31,7 +31,7 @@ public final class ContinuityWorkflowTest {
         var store = new WorkspaceStore(base.resolve("app")); store.save(ContinuityTest.empty("W712", "Daily workflow"));
         String input = "1\n1\n7\n2\nPrepared the meeting agenda\nnone\nSend the agenda for review\nyes\n1\n3\n0\n0\n";
         String text = session(store, input);
-        require(text.contains("LEAVE A BREADCRUMB") && text.contains("Confirmed CP-000001") && text.contains("FOLLOW THE BREADCRUMBS"), "actual quick capture and resume CLI");
+        require(text.contains("RECORD AN UPDATE") && text.contains("Your update has been added") && text.contains("PROJECT SUMMARY"), "actual quick capture and resume CLI");
         var saved = store.load("W712"); require(saved.checkpoints().size() == 1 && saved.checkpoints().getLatest().project().nextActions().equals("Send the agenda for review"), "three-question capture survives restart");
         String restart = session(store, "1\n1\n7\n1\n2\nCancelled work\nunknown\nReview later\n0\n0\n0\n");
         require(restart.contains("Prepared the meeting agenda") && store.load("W712").checkpoints().size() == 1, "resume shows saved context and cancellation adds no history");
@@ -42,7 +42,7 @@ public final class ContinuityWorkflowTest {
         var importedStore = new WorkspaceStore(base.resolve("imported-app")); importedStore.save(imported);
         Files.writeString(source.resolve("state.md"), "# Objective\nRevised research field notes\n# Next Steps\nReview methodology\n");
         String currentHash = WorkspaceCodec.digest(Files.readAllBytes(source.resolve("state.md")));
-        String reviewed = session(importedStore, "1\n1\n7\n4\nyes\n1\nyes\n1\n0\n0\n");
+        String reviewed = session(importedStore, "1\n1\n7\n4\nyes\nd\n4\n\n1\nyes\n1\n0\n0\n");
         require(reviewed.contains("Original SHA256") && reviewed.contains("Observed SHA256") && reviewed.contains("STALE"), "guided review shows real changed hashes and referenced staleness");
         var reviewedState = importedStore.load("W713");
         require(reviewedState.reviews().length == 1 && reviewedState.reviews()[0].entityId().equals("CHANGE_REVIEW"), "review acknowledgement is canonical and scoped");

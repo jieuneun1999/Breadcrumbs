@@ -5,10 +5,10 @@ import java.io.PrintStream;
 /** Stateless startup presentation. Counts come from storage, never from sample product data. */
 final class StartupRenderer {
     private static final String[] ACTIONS = {
-        "[1]  Open / switch saved project",
-        "[2]  Create or import project",
-        "[7]  Daily workspace / Follow / Leave",
-        "[3]  Active project / history",
+        "[1]  Open a saved project",
+        "[2]  New project / import a folder",
+        "[7]  Continue working on your project",
+        "[3]  More project tools / history",
         "[4]  DSA demonstration",
         "[0]  Exit"
     };
@@ -23,9 +23,9 @@ final class StartupRenderer {
     }
 
     void ready(int saved, int unavailable) {
-        line(TerminalTheme.Tone.SUCCESS, "[v] Storage: Ready");
+        line(TerminalTheme.Tone.SUCCESS, "[v] Ready to open or save your projects");
         line(null, "[v] Saved projects: " + saved);
-        line(TerminalTheme.Tone.SECONDARY, "[i] Persistence: opt-in per workspace.");
+        line(TerminalTheme.Tone.SECONDARY, "[i] You choose whether each project is saved on this computer.");
         if (unavailable > 0) {
             line(TerminalTheme.Tone.WARNING, "WARNING: " + unavailable
                     + " unreadable saved workspace(s), retained for recovery.");
@@ -34,7 +34,7 @@ final class StartupRenderer {
     }
 
     void unavailable() {
-        line(TerminalTheme.Tone.WARNING, "[!] Storage: Unavailable. Session-only mode remains available.");
+        line(TerminalTheme.Tone.WARNING, "[!] The save folder is unavailable. You can still work here, but save your changes before closing.");
         sourceNotice();
     }
 
@@ -59,7 +59,7 @@ final class StartupRenderer {
     }
 
     private void sourceNotice() {
-        line(TerminalTheme.Tone.SECONDARY, "[i] Opening saved work never scans or executes source projects.");
+        line(TerminalTheme.Tone.SECONDARY, "[i] Opening a saved project does not check its files for changes.");
     }
 
     private void frame(String trustedText) {

@@ -40,9 +40,9 @@ public final class ProjectConsole {
             boolean showMenu = true;
             while (running) {
                 if (showMenu) {
-                    startup.menu(); ui.menu("[5] Inspect / recover saved generations\n[6] Continue active project in memory");
+                    startup.menu(); ui.menu("[5] Restore a saved project\n[6] Keep working without saving");
                     showMenu = false;
-                } else { ui.note("\n1=open  2=create  7=daily  ?=menu  0=exit"); }
+                } else { ui.note("\n1=open project  2=new project  7=continue  ?=menu  0=exit"); }
                 try {
                     switch (read("breadcrumbs > ")) {
                         case "0" -> running = !leave();
@@ -57,7 +57,7 @@ public final class ProjectConsole {
                         }
                         case "6" -> {
                             persistence = false;
-                            ui.plain("Explicit in-memory mode. Active context retained; unsaved changes will not survive exit. Choose Create/import if no project is active.");
+                            ui.warning("You can keep working here, but changes will be lost when you close unless you save them.");
                         }
                         case "7" -> daily();
                         default -> ui.plain("Choose 0-4 for project tools, 5 for recovery, 6 for in-memory operation, or 7 for daily workflows.");
@@ -66,8 +66,8 @@ public final class ProjectConsole {
                     ui.error("Operation cancelled or rejected."); ui.plain(safe(invalid.getMessage()));
                 } catch (IOException failure) {
                     if (failure instanceof EOFException) { throw failure; }
-                    ui.error("Storage/input operation failed.");
-                    ui.note("Active project preserved. Check path, format and permissions; retry Save.");
+                    ui.error("That action could not be completed.");
+                    ui.note("Your open project is still here. Check that the folder is available and try again.");
                 }
             }
         } catch (EOFException end) {
@@ -99,7 +99,7 @@ public final class ProjectConsole {
                 () -> "W-" + UUID.randomUUID().toString().replace("-", ""));
         new BootstrapConsole(this::read, output, candidate, bootstrap, true, theme, width).bootstrap();
         if (candidate.activeBaseline() == null) { return; }
-        boolean consent = read("Save this workspace to local app storage? Type yes; Enter keeps session-only: ").equalsIgnoreCase("yes");
+        boolean consent = read("Save this project on this computer? Type yes; Enter keeps it open without saving: ").equalsIgnoreCase("yes");
         state.replaceWith(candidate); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = consent;
         if (persistence) { save(); }
         status();
@@ -107,10 +107,10 @@ public final class ProjectConsole {
 
     private void open() throws IOException {
         WorkspaceStore.SavedWorkspace[] saved = store.list();
-        if (saved.length == 0) { ui.plain("No saved workspaces. Choose Create or import."); return; }
+        if (saved.length == 0) { ui.plain("No saved projects yet. Choose New project to start or import a folder."); return; }
         for (int i = 0; i < saved.length; i++) {
-            ui.plain("[" + (i + 1) + "] " + safe(saved[i].name()) + " | " + safe(saved[i].id())
-                    + (saved[i].problem().isEmpty() ? "" : " | UNAVAILABLE"));
+            ui.plain("[" + (i + 1) + "] " + safe(saved[i].name())
+                    + (saved[i].problem().isEmpty() ? "" : " | needs recovery; choose Restore a saved project"));
         }
         String choice = read("Project number (0 = cancel): ");
         if (choice.equals("0")) { return; }
@@ -124,10 +124,10 @@ public final class ProjectConsole {
         // Leaving may save this same workspace. Reload that newly saved state, not the earlier preview.
         WorkspaceState loaded = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.LOAD, () -> store.load(saved[index].id()));
         state.replaceWith(loaded); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true;
-        ui.plain("Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.");
+        ui.note("Your saved project is open. Its folder has not been checked again for changes.");
         status();
-        new TerminalOutput(output, theme, width).plain(new breadcrumbs.continuity.ContinuityService().brief(state, persistence));
-        ui.plain("Choose 7 for the daily workspace, or 3 for the original advanced project tools.");
+        new ProjectPresentation(output, theme, width).showSummary(state, persistence);
+        ui.note("Choose 7 to continue working, or 3 for detailed project tools.");
     }
 
     private void daily() throws IOException {
@@ -139,7 +139,7 @@ public final class ProjectConsole {
         if (state.activeBaseline() == null) { ui.plain("No active workspace. Create/import or open one."); return; }
         boolean back = false;
         while (!back) {
-            status();
+            status(true);
             ui.heading("ADVANCED PROJECT TOOLS");
             ui.menu("[16] Work items / explicit dependencies\n[17] Hash demonstration / canonical indexes\n[18] Search project context");
             ui.menu("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[0] Back");
@@ -213,9 +213,9 @@ public final class ProjectConsole {
         try (var feedback = new OperationFeedback(output, theme, width, OperationFeedback.Operation.SAVE)) {
             try {
                 store.save(state); storageReady = true;
-                feedback.complete(false, "Saved. Verified local file readback.");
+                feedback.complete(false, "Your latest saved changes will be available when you reopen this project.");
             } catch (IOException | IllegalArgumentException failure) {
-                feedback.failed("NOT SAVED. In-memory state retained. Check storage path/permissions and integrity, then retry Save.");
+                feedback.failed("Your changes are still open here. Try saving again before closing. Check that the save folder is available and writable.");
                 return false;
             }
         }
@@ -225,12 +225,10 @@ public final class ProjectConsole {
                 String[] ids = new String[checkpoints.length]; for (int i = 0; i < ids.length; i++) { ids[i] = checkpoints[i].checkpointId(); }
                 var bundle = service.preview(state, ids);
                 OperationFeedback.run(output, theme, width, OperationFeedback.Operation.EXPORT, () -> service.materialize(state, store, bundle));
-                ui.success("Continuity documents generated.");
+                ui.success("Your project summary and handoff files are up to date.");
             } catch (IOException | IllegalArgumentException exportFailure) {
-                ui.warning(state.checkpoints().isEmpty()
-                        ? "Context saved. Continuity export failed." : "Checkpoint saved. Continuity export failed.");
-                ui.plain("Canonical history remains saved. Previous views retained; retry document generation.");
-                ui.plain("Export diagnostic: " + safe(exportFailure.getMessage()));
+                ui.success("Your update is saved.");
+                ui.warning("The handoff files could not be updated. Your earlier files are kept. Retry from Project handoff when you are ready.");
             }
         }
         return true;
@@ -238,17 +236,25 @@ public final class ProjectConsole {
 
     private boolean leave() throws IOException {
         if (!state.dirty()) { return true; }
-        String action = read("Unsaved workspace. [s] save, [d] discard on leaving, Enter cancels: ");
+        String action = read("You have unsaved changes. [s] Save them, [d] leave without keeping them, Enter stays here: ");
         if (action.equalsIgnoreCase("d")) { return true; }
         if (action.equalsIgnoreCase("s")) { persistence = true; return save(); }
         ui.plain("Cancelled. Active workspace unchanged."); return false;
     }
 
     private void status() {
+        status(false);
+    }
+    private void status(boolean technical) {
         if (state.activeBaseline() == null) { return; }
-        ui.plain("\nACTIVE PROJECT | " + safe(state.activeBaseline().displayName()) + " | " + state.activeBaseline().workspaceId());
-        ui.line("Storage status: ", !persistence ? "SESSION-ONLY / UNSAVED" : state.dirty() ? "UNSAVED / retry Save" : "SAVED");
-        if (!storageReady) { ui.plain("Storage unavailable at startup; retry Save if access is restored."); }
+        if (technical) {
+            ui.plain("\nACTIVE PROJECT | " + safe(state.activeBaseline().displayName()) + " | " + state.activeBaseline().workspaceId());
+            ui.line("Storage status: ", !persistence ? "SESSION-ONLY / UNSAVED" : state.dirty() ? "UNSAVED / retry Save" : "SAVED");
+        } else {
+            ui.line("\nProject: ", safe(state.activeBaseline().displayName()));
+            ui.note(!persistence ? "Not saved yet. Save before closing to keep your changes." : state.dirty() ? "You have changes that are not saved yet." : "Saved on this computer.");
+        }
+        if (!storageReady) { ui.warning("The save folder could not be opened earlier. Try saving again when it is available."); }
     }
     private void diagnostics() {
         ui.line("DLL structure: ", state.checkpoints().displayStructure());

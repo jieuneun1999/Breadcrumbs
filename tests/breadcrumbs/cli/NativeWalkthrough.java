@@ -9,10 +9,17 @@ import java.nio.file.*;
 public final class NativeWalkthrough {
     private NativeWalkthrough() { }
     public static void main(String[] args) throws Exception {
-        if (args.length != 3 || System.console() == null || !"1".equals(System.getenv("BREADCRUMBS_NATIVE_VT"))) {
+        if ((args.length != 3 && args.length != 4) || System.console() == null || !"1".equals(System.getenv("BREADCRUMBS_NATIVE_VT"))) {
             throw new IllegalArgumentException("Capture requires a real console with verified process-local VT, input file, storage and log paths.");
         }
         String[] answers = Files.readString(Path.of(args[0]), StandardCharsets.UTF_8).split("\n", -1);
+        String[] pacing = args.length == 4 ? Files.readString(Path.of(args[3]), StandardCharsets.UTF_8).split("\n") : null;
+        if (pacing != null && pacing.length != answers.length - 1) { throw new IllegalArgumentException("Each scripted answer requires one reading pause."); }
+        long[] delays = new long[answers.length - 1];
+        for (int i = 0; i < delays.length; i++) {
+            delays[i] = pacing == null ? i == 0 ? 6000 : answers[i].strip().equals("yes") ? 2200 : 1000 : Long.parseLong(pacing[i].strip());
+            if (delays[i] < 0 || delays[i] > 15000) { throw new IllegalArgumentException("Capture reading pause is outside its bounds."); }
+        }
         try (var log = Files.newOutputStream(Path.of(args[2]), StandardOpenOption.CREATE_NEW)) {
             var output = new PrintStream(new OutputStream() {
                 @Override public void write(int value) throws IOException { System.out.write(value); log.write(value); }
@@ -25,7 +32,7 @@ public final class NativeWalkthrough {
                     if (length == 0) { return 0; }
                     if (line >= answers.length - 1) { return -1; }
                     if (column == 0) {
-                        try { Thread.sleep(line == 0 ? 6000 : answers[line].equals("yes") ? 2200 : 1000); }
+                        try { Thread.sleep(delays[line]); }
                         catch (InterruptedException stopped) { Thread.currentThread().interrupt(); throw new InterruptedIOException("Capture input interrupted."); }
                         output.println(answers[line]);
                     }

@@ -46,7 +46,8 @@ OperationFeedbackTest covers states, tones, counter redraw, neutral injection,
 NO_COLOR, exception cleanup and orphan-thread absence. TerminalConsistencyTest
 covers shared advanced-screen coloring, no-color/narrow layout and sensitive-Inbox
 isolation. Existing startup presentation tests prove original art/layout behavior;
-all B1-B6 assertions are preserved. Native/process results are in the final gate.
+all B1-B6 state/effect assertions are preserved. The later beginner-language
+follow-up migrates presentation literals explicitly. Native/process results are in the final gate.
 
 The owner's recording is a native screen capture of actual Java stdout with
 scripted stdin. Java correctly detects its input as piped and uses the concise
@@ -118,3 +119,55 @@ feedback path without pipe-driven character output or UI input injection.
 Capture-only Reader pacing is 1 s per ordinary response, 2.2 s at confirmations and 6 s
 at each process's initial prompt. No such delays exist in product input handling.
 The MP4/manifest distinguishes this harness from ordinary Main-process regression.
+
+## Beginner language and reassuring motion follow-up
+
+The owner approved a clearer everyday workflow while retaining the functions.
+`ProjectPresentation` is a read-only CLI projection. It groups the project name,
+save state, last update, next step, waiting-on and one priority derived from the
+existing B4 audit. It does not create a second stored project model or change
+the audit score. Document statements, personal assessments, missing details and
+explicitly undocumented details remain distinct. Original literal content is
+never processed through a jargon-replacement filter.
+
+| Detailed concept | Everyday label |
+| --- | --- |
+| Checkpoint | Progress update |
+| Continuity brief | Project summary |
+| Manual Evidence Inbox | Notes and updates |
+| Rescan and drift comparison | Check files for changes |
+| Canonical save | Save your project on this computer |
+| Materialized artifacts and portable package | Handoff files and handoff folder |
+
+The detailed forms, original numbered advanced tools, full reports, hashes,
+IDs, DSA demonstrations and file coverage remain accessible. Note numbers and
+progress-update numbers can be used alongside original IDs. File comparison's
+`d` option shows the unchanged detailed report. Default search results explain
+where a match came from and whether its reported work was independently checked.
+Advanced search still shows exact locators, occurrences and index diagnostics.
+
+Operation messages describe the action and its result. Successful project saves
+and unsuccessful handoff publication remain separate outcomes. Failed saves say
+that changes are still open and need saving before exit. An unsaved generation
+preference is explicitly identified as temporary.
+
+The existing one-row feedback now breathes through four ASCII dot frames. It
+starts after the existing 200 ms threshold and redraws at 120 ms. Real callbacks
+supply counters. Fast work is never delayed. Final written messages remain
+understandable without color. The polished B3 art and its 120 ms grouped intro
+are unchanged by this follow-up.
+
+`BeginnerExperienceTest` exercises create, record, save, restart, technical access,
+save failure and independent handoff failure. It checks source-versus-owner
+meaning, unknown-versus-undocumented details, narrow layouts and read-only
+canonical bytes. Feedback tests observe all four frames, actual counters,
+long-counter width, cleanup and plain output. UI-copy tests are migrated to the
+approved labels; persistence, fault, privacy, DSA and old-format assertions remain.
+
+`record-b7-beginner.py` prepares a populated synthetic community food drive with
+a 62-paragraph DOCX and coordination files. It first exercises ordinary Main
+processes, then records production ProjectConsole in two native Java processes.
+All people and reported events are invented. The input harness supplies reading
+pauses from a separate per-answer file; the application has no demo delays.
+The earlier public-template capture remains historical evidence, while the new
+recording demonstrates a believable everyday project rather than a blank template.

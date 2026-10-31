@@ -55,35 +55,33 @@ is downloaded or activated.
 
 ## A useful first session
 
-1. Choose **2 Create/import**, then a new project or an existing local folder.
-   Pick GENERAL, ACADEMIC, OPERATIONS or SOFTWARE. Approve the read-only scan if
-   using a folder. Review/defer source candidates and confirm B0. It creates no
-   historical checkpoint and does not infer tests, approvals, owners or progress.
-2. Opt into local persistence, then choose **7 Daily workspace**. **Follow the
-   Breadcrumbs** reports saved context, current unknowns, next action and review
-   priority. It works while the original source folder is offline.
-3. **Leave a Breadcrumb** asks what changed, what is blocked and what comes next.
-   Review proposed carried objective/owner; edit, select references, add options or
-   cancel. Only `yes` creates CP-000001 and advances the high-water ID counter.
-4. Use **Evidence Inbox** for a meeting report, observation, decision, current state
-   or next-action candidate. It has an explicitly declared manual origin. Confirmed
-   third-party statements remain SOURCE_REPORTED and independently unverified.
-   Reported terms need specific indexing permission; every exported manual body
-   needs separate approval. SENSITIVE records are excluded from both.
-5. **State/handoff documents** previews state.md, HANDOFF.md and immutable historical
-   summaries. Opt in to generation after successful canonical saves. Portable
-   export previews a selected, create-only Markdown package in a new local folder
-   outside source/app storage. Read it without Breadcrumbs.
-6. Exit and reopen. The saved brief appears without rescanning. A checkpoint's old
-   tests/results remain historical statements. Use **Review changes** for a new,
-   explicitly approved scan and original-versus-observed hashes/reference impact.
-   Acknowledging review never certifies completion.
+1. Choose **2 New project / import a folder**. Choose a personal, study, team or
+   software project. If you import a folder, approve reading it and review the
+   document notes or leave them for later. This sets up starting information;
+   it does not invent earlier progress.
+2. Choose to save the project on this computer. Then choose **7 Continue working**
+   and **1 View project summary** to see where you left off, your next step and
+   anything you are waiting for. Saved notes work even when the project folder is offline.
+3. Choose **2 Record an update**. Answer what changed, what is in the way and what
+   to do next. Review the answers before typing `yes`. Use `e` to edit, `?` for
+   references and other options, or `0` to cancel.
+4. Use **10 Notes and updates** for an observation, meeting report or decision.
+   A note about what someone said remains a report. You separately choose whether
+   its words can appear in search and whether its body can be exported. Private
+   notes stay out of search and handoff files.
+5. Use **11 Project handoff / export** to preview readable summary files or export
+   a new folder outside the project and save folders. You can also choose to refresh
+   these files after saving. Review the files before sharing them.
+6. Exit and reopen the saved project. Its summary appears without rereading the
+   original folder. Choose **4 Check files for changes** when you want a new file
+   check. **Technical details** shows the original hashes and reference impact.
+   Marking changes as reviewed does not confirm that work is complete.
 
 Menus show once per entry, then leave short action reminders. Type `?` to see the
 full menu again. Import shows a short preview; full inventory/hashes remain under
 View B0 / sources. Reports separate their sections with whitespace.
 
-The daily menu also offers continuity health, search, history and dependencies.
+The daily menu also offers attention checks, search, saved updates and dependencies.
 Advanced project option **3** preserves the original numbered paths: **9** audit,
 **10** current review, **11** rescan, **12** compare, **13** retrieval, **14** handoff,
 **16** work items/Graph, **17** Hash and **18** search. Startup **4** is an isolated

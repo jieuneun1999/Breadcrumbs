@@ -52,7 +52,7 @@ public final class B4Scenarios {
         Files.writeString(cSource.resolve("notes.txt"), "Changed unrelated notes.\n");
         String cHash = hashSources(cSource);
         output = app(base, "c-restart-unscanned", cStorage, "1\n1\n3\n14\n\n\n\n0\n0\n");
-        require(output.contains("No source rescan") && output.contains("UNKNOWN — no later scan"), "C restart does not scan");
+        require(output.contains("folder has not been checked again") && output.contains("UNKNOWN — no later scan"), "C restart does not scan");
         require(cStore.load("W411").laterObservations().length == 0, "C observation count unchanged before consent");
         output = app(base, "c-unrelated-scan", cStorage, "1\n1\n3\n11\nyes\nCP-000001\n5\n14\n\n\n\n0\n0\n");
         require(output.contains("Latest checkpoint referenced freshness: FRESH"), "C unrelated workspace edit does not stale CP");

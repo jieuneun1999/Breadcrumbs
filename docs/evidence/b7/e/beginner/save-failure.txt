@@ -1,0 +1,103 @@
+
+  BREADCRUMBS
+  Breadcrumbs / project continuity
+  Leave context behind. Pick up where work stopped.
+  Logo: use COLUMNS=160.
+
+  [v] Ready to open or save your projects
+  [v] Saved projects: 1
+  [i] You choose whether each project is saved on this computer.
+  [i] Opening a saved project does not check its files for changes.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open a saved project                                                > |
+  | [2]  New project / import a folder                                       > |
+  | [7]  Continue working on your project                                    > |
+  | [3]  More project tools / history                                        > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+[5] Restore a saved project
+[6] Keep working without saving
+breadcrumbs > [1] Community food drive
+Project number (0 = cancel): Opening your project...
+[Done] Your project is open.
+Your saved project is open. Its folder has not been checked again for changes.
+
+Project: Community food drive
+Saved on this computer.
+
+PROJECT SUMMARY
+Project: Community food drive
+Saved on this computer.
+
+Where you left off
+Booked the hall and drafted the volunteer schedule
+
+Next step
+Ask the delivery company for a quote
+
+Waiting on
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Worth checking
+Describe where the project stands today.
+
+No project folder is linked. You can still use notes and progress updates.
+Choose 7 to continue working, or 3 for detailed project tools.
+
+1=open project  2=new project  7=continue  ?=menu  0=exit
+breadcrumbs >
+YOUR PROJECT
+[1] View project summary
+[2] Record an update
+[10] Notes and updates
+
+[3] What needs attention?
+[4] Check files for changes
+[5] Search your project
+[11] Project handoff / export
+
+[7] View saved updates
+[8] Tasks and dependencies
+[6] Detailed update form
+[9] More project tools
+[0] Back
+daily >
+RECORD AN UPDATE
+A Breadcrumb is a saved progress update that helps you continue later. Answer th
+ree short questions.
+What changed or what did you work on?
+Previously waiting on; check whether this still applies
+Waiting for the delivery quote
+Anything getting in the way or waiting on someone? [details, none, or Enter if unsure]: What is the next small step?
+REVIEW YOUR UPDATE
+
+What you worked on
+Drafted pickup instructions
+
+Waiting on
+Not provided yet
+
+Next step
+Review the pickup plan
+
+Project goal carried over; check that it still fits
+Prepare 100 food packs
+
+Person responsible carried over; check before saving
+Sam
+This records your account of the work. Breadcrumbs does not check whether the wo
+rk happened.
+Save this update? yes=record it, e=edit, ?=more options, 0=cancel: Your update has been added to the project.
+Saving your project...
+[Could not finish] Your project could not be saved.
+Your changes are still open here. Try saving again before closing. Check that
+the save folder is available and writable.
+
+1=summary  2=record an update  5=search  ?=menu  0=back
+daily >
+1=open project  2=new project  7=continue  ?=menu  0=exit
+breadcrumbs > You have unsaved changes. [s] Save them, [d] leave without keeping them, Enter stays here: Goodbye.

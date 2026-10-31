@@ -13,41 +13,51 @@ final class SearchConsole {
     private final ContextSearchIndex index;
     private final int width;
     private final TerminalTheme theme;
+    private final boolean technical;
     SearchConsole(ContextConsole.Input input, PrintStream out, ContextSearchIndex index, int width) {
         this(input, out, index, width, new TerminalTheme(false));
     }
     SearchConsole(ContextConsole.Input input, PrintStream out, ContextSearchIndex index, int width, TerminalTheme theme) {
+        this(input, out, index, width, theme, true);
+    }
+    SearchConsole(ContextConsole.Input input, PrintStream out, ContextSearchIndex index, int width, TerminalTheme theme, boolean technical) {
         this.input = input; this.out = out; this.index = index; this.width = Math.max(28, Math.min(width, 120));
         this.theme = theme;
+        this.technical = technical;
     }
     void run() throws IOException {
         boolean showMenu = true;
         while (true) {
             var ui = new TerminalOutput(out, theme, width);
             if (showMenu) {
-                ui.heading("\nSEARCH PROJECT CONTEXT"); ui.plain(index.status().name());
-                ui.menu("[1] Search exact term\n[2] Prefix suggestions / choose term\n[3] Search coverage\n[4] Rebuild saved-field index\n\n[5] Index health / DSA demonstration\n[6] Source-term privacy policy\n[7] Enable / disable search index\n[0] Back"); showMenu = false;
-            } else { ui.note("\n1=exact  2=prefix  3=coverage  4=rebuild  ?=menu  0=back"); }
+                ui.heading(technical ? "\nSEARCH PROJECT CONTEXT" : "\nSEARCH YOUR PROJECT");
+                if (technical) { ui.plain(index.status().name()); }
+                else { ui.note("Search the notes and document text you allowed Breadcrumbs to use. Refresh search after recording changes."); }
+                ui.menu("[1] Find a word\n[2] Suggest words from a beginning\n[3] What can be searched?\n[4] Refresh search\n\n[5] Technical details / classroom demonstration\n[6] Choose whether unreviewed document words can be searched\n[7] Turn search on / off\n[0] Back"); showMenu = false;
+            } else { ui.note("\n1=find a word  2=suggestions  3=what is searched  4=refresh  ?=menu  0=back"); }
             String choice = read("search > ");
             try {
                 switch (choice) {
                     case "0" -> { return; }
                     case "?" -> showMenu = true;
-                    case "1" -> matches(read("Exact term: "));
+                    case "1" -> matches(read(technical ? "Exact term: " : "Word to find: "));
                     case "2" -> suggestions();
-                    case "3" -> print(index.coverage());
+                    case "3" -> {
+                        if (technical) { print(index.coverage()); }
+                        else { print("Search uses the text Breadcrumbs could read and that you allowed it to use.\nText/Markdown notes and CSV include selected fields, not every word. Word documents include bounded main paragraphs.\nPDF, spreadsheet, presentation and image bodies cannot currently be read. Private notes, credentials and instructions are excluded.\nA missing match does not prove the word is absent from your files. Technical details show exact file coverage."); }
+                    }
                     case "4" -> {
                         boolean rebuilt;
                         try (var feedback = new OperationFeedback(out, theme, width, OperationFeedback.Operation.REBUILD)) {
                             rebuilt = index.rebuild(index.policy(), () -> false);
-                            if (rebuilt) { feedback.complete(false, "Search projection validated and published."); }
-                            else { feedback.failed("No partial index published. Review policy/limits and rebuild."); }
+                            if (rebuilt) { feedback.complete(false, technical ? "Search projection validated and published." : "You can search the text allowed for this project."); }
+                            else { feedback.failed("Search was not updated. Check the file coverage and search settings before trying again."); }
                         }
-                        print("Rebuild completed=" + rebuilt + "\n" + index.diagnostics());
+                        if (technical) { print("Rebuild completed=" + rebuilt + "\n" + index.diagnostics()); }
                     }
                     case "5" -> diagnostics();
                     case "6" -> policy();
-                    case "7" -> { index.setEnabled(index.status() == SearchReport.Status.DISABLED); print("Search " + index.status()); }
+                    case "7" -> { index.setEnabled(index.status() == SearchReport.Status.DISABLED); print(technical ? "Search " + index.status() : index.status() == SearchReport.Status.DISABLED ? "Search is off." : "Search is on. Refresh it before looking for words."); }
                     default -> print("Choose 0-7.");
                 }
             } catch (IllegalArgumentException invalid) { print("Rejected. " + ContentSafety.terminal(invalid.getMessage(), 200)); }
@@ -56,19 +66,19 @@ final class SearchConsole {
     private void policy() throws IOException {
         if (index.policy().includeUnreviewed()) {
             index.setPolicy(index.policy().withUnreviewed(false));
-            print("Unreviewed source terms excluded. Rebuild required."); return;
+            print("Unreviewed document words are excluded. Refresh search to apply this change."); return;
         }
-        print("Unreviewed source terms may disclose private captured wording. Snippets stay withheld. Instructions, owner fields and sensitive content stay excluded.");
-        print("Include safe unreviewed captured terms for this workspace session? Type yes.");
+        print("Unreviewed document words may include wording you have not checked yet. Private notes and known sensitive content stay excluded; unreviewed passages are not displayed.");
+        print("Allow safe unreviewed document words in search until you leave this project? Type yes.");
         if (read("approve > ").equalsIgnoreCase("yes")) {
-            index.setPolicy(index.policy().withUnreviewed(true)); print("Session opt-in recorded. Rebuild required.");
+            index.setPolicy(index.policy().withUnreviewed(true)); print("Allowed for this visit to the project. Refresh search to apply the change.");
         } else { print("Privacy policy unchanged."); }
     }
     private void suggestions() throws IOException {
-        String prefix = read("Prefix: ");
+        String prefix = read(technical ? "Prefix: " : "Beginning of a word: ");
         var result = index.suggestTerms(prefix, index.policy().maxSuggestions());
         String[] terms = result.terms();
-        print("Trie suggestions. " + index.status());
+        print(technical ? "Trie suggestions. " + index.status() : "Words found in the text you can search:");
         for (int i = 0; i < terms.length; i++) { print("[" + (i + 1) + "] " + terms[i]); }
         if (result.limited()) { print("Suggestion result/visited-node limit reached or index unavailable; not exhaustive."); }
         if (terms.length == 0) { print("No suggestions in indexed fields. See coverage or rebuild."); return; }
@@ -79,6 +89,7 @@ final class SearchConsole {
     private void matches(String term) throws IOException {
         SearchReport report = index.searchExact(term, index.policy().maxResults());
         var ui = new TerminalOutput(out, theme, width); ui.heading("SEARCH RESULTS");
+        if (!technical) { friendlyMatches(report); return; }
         ui.line("Index state: ", report.status().name()); ui.line("Exact term: ", report.term()); ui.plain(report.notice());
         if (report.status() != SearchReport.Status.READY) { return; }
         SearchReport.Hit[] hits = report.hits();
@@ -99,6 +110,26 @@ final class SearchConsole {
         print("Display this INTERNAL confirmed field? Type yes.");
         String value = index.viewField(hits[number - 1].location(), read("approve > ").equalsIgnoreCase("yes"));
         print(value.isEmpty() ? "Field withheld, cancelled or no longer eligible. Rebuild if outdated." : value);
+    }
+    private void friendlyMatches(SearchReport report) throws IOException {
+        var ui = new TerminalOutput(out, theme, width); ui.line("Word: ", report.term());
+        if (report.status() != SearchReport.Status.READY) {
+            ui.warning(report.status() == SearchReport.Status.DISABLED ? "Search is turned off. Choose option 7 to turn it on." : "Search needs a refresh before showing results. Choose option 4."); return;
+        }
+        var hits = report.hits();
+        for (int i = 0; i < hits.length; i++) {
+            var hit = hits[i]; var location = hit.location();
+            ui.line("[" + (i + 1) + "] ", location.kind() == SearchLocation.Kind.MANUAL ? "A note you added" : location.historical() ? "An earlier progress update" : "A project document or task");
+            ui.line("Where: ", location.historical() ? "Your saved progress updates" : location.kind() == SearchLocation.Kind.WORK_ITEM ? "Your project tasks" : location.locator());
+            if (location.kind() == SearchLocation.Kind.EVIDENCE || location.kind() == SearchLocation.Kind.MANUAL) { ui.note("This is recorded information. Breadcrumbs has not checked whether the reported work happened."); }
+            ui.line("Matches in this item: ", Integer.toString(hit.occurrences()));
+        }
+        if (hits.length == 0) { ui.note("No matches in the text that can currently be searched. Other text may be unread, unsupported or not approved for search."); return; }
+        if (report.limited()) { ui.note("More matches may exist. This screen shows a limited set."); }
+        String choice = read("Item number to read, or 0 to go back: "); if (choice.equals("0")) { return; }
+        int n = number(choice, hits.length);
+        String value = index.viewField(hits[n - 1].location(), read("Show this reviewed text on this computer? Type yes: ").equalsIgnoreCase("yes"));
+        print(value.isEmpty() ? "The text was not shown. It may be unreviewed, no longer available, or you chose not to display it." : value);
     }
     private void diagnostics() {
         print(index.diagnostics());

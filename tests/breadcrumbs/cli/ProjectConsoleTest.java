@@ -14,12 +14,12 @@ public final class ProjectConsoleTest {
         Path root = Files.createTempDirectory(base, "storage-");
         String empty = session(root, "x\n1\n3\n0\n", false, 80);
         contains(empty, "Breadcrumbs / project continuity", "Leave context behind. Pick up where work stopped.",
-                "Saved projects: 0", "No saved workspaces", "No active workspace", "Choose 0-4", "Goodbye");
+                "Saved projects: 0", "No saved projects yet", "No active workspace", "Choose 0-4", "Goodbye");
         require(!empty.contains("\u001b"), "plain fallback emits no ANSI escapes");
         String narrow = session(root, "0\n", false, 30);
         contains(narrow, "BREADCRUMBS", "Leave context behind.\n  Pick up where work stopped.");
         String colored = session(root, "0\n", true, 80);
-        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32m[v] Storage: Ready\u001b[0m");
+        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32m[v] Ready to open or save your projects\u001b[0m");
         require(!TerminalTheme.enabled(true, true, true, false, "xterm", false, true), "no-color wins explicit always");
         require(!TerminalTheme.enabled(false, true, true, true, "xterm", false, true), "NO_COLOR wins always");
         require(!TerminalTheme.enabled(false, false, false, false, "xterm", false, true), "redirected suppresses color");
@@ -31,21 +31,21 @@ public final class ProjectConsoleTest {
         contains(session(root, "4\n12\n11\n0\n0\n", false, 80), "Loaded 5", "Integrity valid", "SYNTHETIC");
         String guided = "2\n1\nPlanner\nACADEMIC\nWrite report\nReport\nReview\n\n\n\nyes\nyes\n";
         String create = session(root, guided + "3\n3\n2\nDraft\nStarted\nWrite report\nUNKNOWN\n\nReview\n\n\n\nno\n8\n0\n0\n", false, 80);
-        contains(create, "Baseline B0 established", "Saved. Verified", "No native checkpoint", "Cancelled. Project history unchanged",
+        contains(create, "Your project is ready", "Your project is saved on this computer.", "No native checkpoint", "Cancelled. Project history unchanged",
                 "DLL structure: NULL", "Integrity: true");
         WorkspaceStore store = new WorkspaceStore(root);
         require(store.list().length == 1, "first B0 saved from actual CLI");
         require(store.load(store.list()[0].id()).checkpoints().isEmpty(), "declined native checkpoint not saved");
         String cp = session(root, "1\n1\n3\n2\nFirst real\nDraft ready\nWrite report\nNONE_REPORTED\nnone reported\nReview\nChose structure\nStudent\n\nyes\n3\n4\n8\n0\n0\n", false, 80);
-        contains(cp, "Opened saved workspace", "No source rescan", "CHECKPOINT PREVIEW", "Confirmed CP-000001", "History backward:",
+        contains(cp, "Your saved project is open", "folder has not been checked again", "CHECKPOINT PREVIEW", "Confirmed CP-000001", "History backward:",
                 "CP-000001", "Blocker state: NONE_REPORTED", "Storage status: SAVED", "Integrity: true");
         require(store.load(store.list()[0].id()).checkpoints().size() == 1, "confirmed native CP persisted from CLI");
         String restart = session(root, "1\n1\n3\n3\n7\n0\n0\n", false, 80);
-        contains(restart, "Saved projects: 1", "First real", "Next native number: 2", "Freshness UNKNOWN");
+        contains(restart, "Saved projects: 1", "First real", "Next native number: 2", "No project folder is linked.");
         String sessionOnly = guided.replace("yes\nyes\n", "yes\n\n");
         Path isolated = Files.createTempDirectory(base, "unsaved-");
         String guard = session(isolated, sessionOnly + "2\n\n3\n7\n0\n0\n\n0\nd\n", false, 80);
-        contains(guard, "SESSION-ONLY / UNSAVED", "Cancelled. Active workspace unchanged", "Planner", "Unsaved workspace");
+        contains(guard, "SESSION-ONLY / UNSAVED", "Cancelled. Active workspace unchanged", "Planner", "You have unsaved changes");
         require(new WorkspaceStore(isolated).list().length == 0, "discarded session-only state not written");
         Path multiple = Files.createTempDirectory(base, "multiple-");
         WorkspaceStore many = new WorkspaceStore(multiple);
@@ -54,10 +54,10 @@ public final class ProjectConsoleTest {
         contains(switched, "ACTIVE PROJECT | One | W001", "ACTIVE PROJECT | Two | W002");
         Path broken = multiple.resolve("workspaces/W002/state.txt"); Files.writeString(broken, "broken");
         String corrupt = session(multiple, "1\n1\n1\n2\n3\n7\n0\n0\n", false, 80);
-        contains(corrupt, "unreadable saved workspace", "Storage/input operation failed", "ACTIVE PROJECT | One | W001");
+        contains(corrupt, "unreadable saved workspace", "That action could not be completed.", "ACTIVE PROJECT | One | W001");
         Path blocked = base.resolve("blocked-" + System.nanoTime()); Files.writeString(blocked, "file");
         String noStorage = session(blocked, guided + "3\n7\n0\n0\ns\n0\nd\n", false, 80);
-        contains(noStorage, "Storage: Unavailable", "NOT SAVED. In-memory state retained", "UNSAVED / retry Save", "Goodbye");
+        contains(noStorage, "save folder is unavailable", "Your changes are still open here.", "UNSAVED / retry Save", "Goodbye");
         String eof = session(Files.createTempDirectory(base, "eof-"), sessionOnly, false, 80);
         contains(eof, "End of input", "unsaved session state will be discarded", "Goodbye");
         String cancelled = session(root, "2\n1\n/cancel\n0\n", false, 80);
@@ -101,10 +101,10 @@ public final class ProjectConsoleTest {
             new ProjectConsole(scripted, out, store, new TerminalTheme(false), 80).run();
         }
         String text = bytes.toString(StandardCharsets.UTF_8);
-        int lastOpen = text.lastIndexOf("Opened saved workspace");
+        int lastOpen = text.lastIndexOf("Your saved project is open");
         require(lastOpen >= 0 && text.substring(lastOpen).contains("Retry checkpoint"),
                 "saving before reopening same project retains the newly saved checkpoint in active state");
-        contains(text, "NOT SAVED. In-memory state retained", "Unsaved workspace", "Next native number: 2");
+        contains(text, "Your changes are still open here.", "You have unsaved changes", "Next native number: 2");
         require(store.load("W001").checkpoints().size() == 1, "retry saved checkpoint is durable");
     }
     private static void contains(String text, String... fragments) {

@@ -1,0 +1,159 @@
+
+  BREADCRUMBS
+  Breadcrumbs / project continuity
+  Leave context behind. Pick up where work stopped.
+  Logo: use COLUMNS=160.
+
+  [v] Ready to open or save your projects
+  [v] Saved projects: 1
+  [i] You choose whether each project is saved on this computer.
+  [i] Opening a saved project does not check its files for changes.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open a saved project                                                > |
+  | [2]  New project / import a folder                                       > |
+  | [7]  Continue working on your project                                    > |
+  | [3]  More project tools / history                                        > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+[5] Restore a saved project
+[6] Keep working without saving
+breadcrumbs > [1] Community food drive
+Project number (0 = cancel): Opening your project...
+[Done] Your project is open.
+Your saved project is open. Its folder has not been checked again for changes.
+
+Project: Community food drive
+Saved on this computer.
+
+PROJECT SUMMARY
+Project: Community food drive
+Saved on this computer.
+
+Where you left off
+Booked the hall and drafted the volunteer schedule
+
+Next step
+Ask the delivery company for a quote
+
+Waiting on
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Worth checking
+Describe where the project stands today.
+
+No project folder is linked. You can still use notes and progress updates.
+Choose 7 to continue working, or 3 for detailed project tools.
+
+1=open project  2=new project  7=continue  ?=menu  0=exit
+breadcrumbs >
+YOUR PROJECT
+[1] View project summary
+[2] Record an update
+[10] Notes and updates
+
+[3] What needs attention?
+[4] Check files for changes
+[5] Search your project
+[11] Project handoff / export
+
+[7] View saved updates
+[8] Tasks and dependencies
+[6] Detailed update form
+[9] More project tools
+[0] Back
+daily >
+PROJECT SUMMARY
+Project: Community food drive
+Saved on this computer.
+
+Where you left off
+Booked the hall and drafted the volunteer schedule
+
+Next step
+Ask the delivery company for a quote
+
+Waiting on
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Worth checking
+Describe where the project stands today.
+
+No project folder is linked. You can still use notes and progress updates.
+
+1=summary  2=record an update  5=search  ?=menu  0=back
+daily >
+YOUR PROJECT
+[1] View project summary
+[2] Record an update
+[10] Notes and updates
+
+[3] What needs attention?
+[4] Check files for changes
+[5] Search your project
+[11] Project handoff / export
+
+[7] View saved updates
+[8] Tasks and dependencies
+[6] Detailed update form
+[9] More project tools
+[0] Back
+daily >
+ACTIVE PROJECT | Community food drive | W-eb4658dec93f496d88295df03ab11bb7
+Storage status: SAVED
+ADVANCED PROJECT TOOLS
+[16] Work items / explicit dependencies
+[17] Hash demonstration / canonical indexes
+[18] Search project context
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[9] Context audit
+[10] Guided present-context review
+[11] Consent and rescan sources
+[12] Compare saved observations
+[13] Relevant checkpoint retrieval
+[14] Resume / handoff preview and export
+[15] Coordination applicability
+[0] Back
+project > DLL structure: NULL <- [CP-000001] -> NULL
+Integrity: true
+Core append O(n) including duplicate check; latest O(1); traversal O(n).
+Structure diagnostic O(n); full integrity O(n^2) including uniqueness.
+
+ACTIVE PROJECT | Community food drive | W-eb4658dec93f496d88295df03ab11bb7
+Storage status: SAVED
+ADVANCED PROJECT TOOLS
+[16] Work items / explicit dependencies
+[17] Hash demonstration / canonical indexes
+[18] Search project context
+[1] View B0 / sources
+[2] Create confirmed checkpoint
+[3] Latest checkpoint
+[4] History (forward and backward)
+[5] Save project
+[6] Switch project
+[7] Project information
+[8] DLL diagnostics
+[9] Context audit
+[10] Guided present-context review
+[11] Consent and rescan sources
+[12] Compare saved observations
+[13] Relevant checkpoint retrieval
+[14] Resume / handoff preview and export
+[15] Coordination applicability
+[0] Back
+project >
+1=summary  2=record an update  5=search  ?=menu  0=back
+daily >
+1=open project  2=new project  7=continue  ?=menu  0=exit
+breadcrumbs > Goodbye.

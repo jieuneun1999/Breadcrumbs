@@ -58,5 +58,6 @@ public final class AllTests {
         System.out.println("PASS: B7D bounded document compatibility (" + (breadcrumbs.b4.Checks.count() - b7dStart) + " assertions)");
         breadcrumbs.cli.TerminalConsistencyTest.run();
         breadcrumbs.cli.CalmConsoleTest.run();
+        breadcrumbs.cli.BeginnerExperienceTest.run();
     }
 }
