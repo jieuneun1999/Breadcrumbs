@@ -265,7 +265,7 @@ layout detectors do not verify a terminal; actual console output is the target.
 - [x] 3. Plan the fix; architect material boundaries before implementation.
 - [x] 4. Verify the original reproduction on the same surface.
 - [x] 5. Stage the failing executable repro before the fix where practical.
-- [ ] 6. Run Opening a PR, adapted to append-only PR12 update.
+- [x] 6. Run Opening a PR, adapted to append-only PR12 update.
 
 Throughput: first reproduce hidden choices and broken word wrapping; then shared
 rendering and one-source menu definitions; then navigation/copy; then native
@@ -331,3 +331,14 @@ owner reviews. Actual JDK17, Unix/instructor hardware, independent review, owner
 visual acceptance and full real-file acceptance remain separate open boundaries.
 Result DEMO_READY for the exercised Windows/JDK25 scope. Scoped append-only PR12
 delivery follows; no merge, release, deployment, installs or new Discord message.
+
+### Professional correction delivery receipt
+
+RED reproduction ec371dd precedes verified implementation/evidence
+9e451db41d2d000b3617e8db6f780f35f4b86060. Both were pushed without force to the
+existing B7E branch. GitHub readback shows PR12 OPEN/unmerged at that implementation
+head, with unchanged B7D base. PR title/body now describe professional navigation,
+complete visible choices and the final source-bound checks. This receipt changes
+documentation only. No source/test/script changed after the final 149-input gate.
+Owner next choices remain CONTINUE / CHANGE / RELEASE / STOP. No new Discord write,
+merge, release or deployment occurred. Owner visual acceptance remains pending.
