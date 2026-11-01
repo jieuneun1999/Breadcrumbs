@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: Every workspace action remains visible after a result: 1
+	at breadcrumbs.b4.Checks.require(Checks.java:10)
+	at breadcrumbs.cli.ProfessionalNavigationTest.run(ProfessionalNavigationTest.java:33)
+	at breadcrumbs.cli.ProfessionalNavigationTest.main(ProfessionalNavigationTest.java:11)

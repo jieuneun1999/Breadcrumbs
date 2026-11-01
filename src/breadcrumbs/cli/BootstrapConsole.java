@@ -54,8 +54,8 @@ final class BootstrapConsole {
     }
 
     void bootstrap() throws IOException {
-        var ui = new TerminalOutput(output, theme, width); ui.heading("\nADD OR CREATE PROJECT");
-        ui.menu("[1] Start a new empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.");
+        var ui = new TerminalOutput(output, theme, width); ui.heading("\nCreate or import project");
+        ui.menu("[1] Create an empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.");
         String choice = input.read("Entry mode: ");
         if (choice.equals("0")) {
             return;
@@ -67,7 +67,8 @@ final class BootstrapConsole {
             default -> throw new IllegalArgumentException("Choose entry mode 0-3.");
         };
         String name = input.read("Project display name: ");
-        String selectedProfile = input.read(projectShell ? "Project type [1 personal, 2 study/research, 3 team/event, 4 software; Enter personal]: " : "Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
+        if (projectShell) { ui.menu("[1] General project\n[2] Academic or research project\n[3] Team or operations project\n[4] Software project"); }
+        String selectedProfile = input.read(projectShell ? "Project type [Enter = general]: " : "Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
         selectedProfile = switch (selectedProfile) { case "1" -> "GENERAL"; case "2" -> "ACADEMIC"; case "3" -> "OPERATIONS"; case "4" -> "SOFTWARE"; default -> selectedProfile; };
         ProjectProfile profile;
         try {
@@ -78,11 +79,11 @@ final class BootstrapConsole {
         }
         CurrentContext context = CurrentContext.unknown();
         if (mode == EntryMode.NEW_EMPTY) {
-            context = new CurrentContext(input.read("What do you want this project to achieve? [Enter if unsure]: "),
-                    input.read("What do you plan to deliver? [Enter if unsure]: "),
-                    input.read("What is the next step? [Enter if unsure]: "),
-                    input.read("Who is responsible? [optional]: "),
-                    input.read("Anything getting in the way? [details, none, or Enter if unsure]: "));
+            context = new CurrentContext(input.read("Project goal [Enter if unknown]: "),
+                    input.read("Planned deliverable [Enter if unknown]: "),
+                    input.read("Next action [Enter if unknown]: "),
+                    input.read("Responsible person [optional]: "),
+                    input.read("Blockers or pending items [none, or Enter if unknown]: "));
         }
         String selectedPath = input.read(mode == EntryMode.NEW_EMPTY
                 ? "Optional existing EMPTY directory (blank = no directory observation): "
@@ -191,13 +192,13 @@ final class BootstrapConsole {
             if (!projectShell) { renderer.claim(candidate); }
             else {
                 var ui = new TerminalOutput(output, theme, width);
-                ui.heading("\nREVIEW A DOCUMENT NOTE"); ui.note("Your document says this. Breadcrumbs has not checked whether the work happened.");
+                ui.heading("\nReview document context"); ui.note("This statement comes from a document. Reported work has not been independently verified.");
                 ui.line("Source: ", breadcrumbs.inspector.ContentSafety.terminal(candidate.relativePath(), 180) + " " + candidate.locationUnit() + " " + candidate.line());
                 ui.value(ProjectPresentation.fieldLabel(candidate.field()), breadcrumbs.inspector.ContentSafety.terminal(candidate.literalValue(), 300));
             }
             String choice;
             do {
-                choice = input.read(projectShell ? "Use this for your current project notes? c=use, r=do not use, Enter=decide later, s=review the rest later: " : "Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
+                choice = input.read(projectShell ? "Review decision [C = confirm; R = reject; Enter/U = leave unknown; S = defer remaining]: " : "Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
                         .toLowerCase(Locale.ROOT);
             } while (!choice.isEmpty() && !choice.equals("c") && !choice.equals("r")
                     && !choice.equals("u") && !choice.equals("s"));
@@ -215,7 +216,7 @@ final class BootstrapConsole {
 
     private void preview(BootstrapDraft draft) {
         if (projectShell) {
-            var ui = new TerminalOutput(output, theme, width); ui.heading("\nYOUR PROJECT PREVIEW");
+            var ui = new TerminalOutput(output, theme, width); ui.heading("\nProject setup preview");
             ui.line("Project: ", draft.displayName() + " | " + draft.profile());
             ui.line("What was read: ", draft.scan().entries().length + " items checked; " + draft.claims().length + " pieces of context found");
             if (!draft.scan().complete()) { ui.warning("Only part of the folder could be read within the file limits."); }

@@ -21,7 +21,7 @@ final class ProjectPresentation {
         Value next = latest == null ? present(state, EvidenceClaim.Field.NEXT_ACTION) : value(latest.project().nextActions(), Basis.YOUR_UPDATE);
         Value waiting = latest == null ? present(state, EvidenceClaim.Field.BLOCKERS) : switch (latest.project().blockerState()) {
             case UNKNOWN -> new Value("Not provided yet", Basis.NOT_PROVIDED);
-            case NONE_REPORTED -> new Value("Nothing reported when you saved this update", Basis.YOUR_UPDATE);
+            case NONE_REPORTED -> new Value("None reported in this update", Basis.YOUR_UPDATE);
             case BLOCKED -> value(latest.project().blockers(), Basis.YOUR_UPDATE);
         };
         var report = new ContextAudit().evaluate(state, latest);
@@ -32,28 +32,28 @@ final class ProjectPresentation {
 
     void showSummary(WorkspaceState state, boolean persisted) {
         Summary s = summary(state, persisted);
-        ui.heading("\nPROJECT SUMMARY"); ui.line("Project: ", s.project()); ui.note(s.saved());
-        ui.value("Where you left off", s.lastUpdate());
-        ui.value("Next step", s.nextStep().text()); ui.value("Waiting on", s.waitingFor().text());
+        ui.heading("\nProject summary"); ui.line("Project: ", s.project()); ui.note(s.saved());
+        ui.value("Latest progress update", s.lastUpdate());
+        ui.value("Next action", s.nextStep().text()); ui.value("Blockers and pending items", s.waitingFor().text());
         if (s.nextStep().basis() == Basis.DOCUMENT || s.waitingFor().basis() == Basis.DOCUMENT) { ui.note("These details come from your documents. Breadcrumbs has not checked whether the work happened."); }
         else if (!state.checkpoints().isEmpty()) { ui.note("This is what you recorded earlier. Update it if your plans have changed."); }
-        ui.value("Worth checking", s.attention()); ui.note("\n" + s.fileCheck());
+        ui.value("Recommended review", s.attention()); ui.note("\n" + s.fileCheck());
     }
 
     void showHealth(ContextAudit.Report report) {
-        ui.heading("\nWHAT NEEDS YOUR ATTENTION");
+        ui.heading("\nContext assessment");
         ui.plain(switch (report.readiness()) {
             case INSUFFICIENT_EVIDENCE -> "A few project details still need to be added or reviewed.";
             case REVIEW_CHANGES -> "Some files linked to an earlier update have changed.";
             case NEEDS_CONTEXT -> "Review the items below before relying on your saved notes.";
-            case READY_TO_RESUME -> "Your notes contain useful context for continuing. Check that the next step still fits.";
+            case READY_TO_RESUME -> "Your notes contain useful context for continuing. Check that the next action still fits.";
         });
         ui.value("A useful next action", attention(report));
         ui.note("This checks how useful your notes are for returning to work. It does not measure how much work is finished.\nDetailed findings are available in More project tools > Context audit.");
     }
 
     void showChanges(WorkspaceState state, DriftEngine.Comparison comparison) {
-        ui.heading("\nCHANGES IN YOUR PROJECT FILES");
+        ui.heading("\nFile comparison");
         if (state.currentObservation() == state.activeBaseline().snapshot()) {
             ui.note("There is no second file check to compare yet. Choose Check for changes when you want to read the folder again."); return;
         }
@@ -84,15 +84,15 @@ final class ProjectPresentation {
 
     static String noteType(ManualContext.Type type) {
         return switch (type) {
-            case PERSONAL_OBSERVATION -> "Something you noticed"; case CURRENT_STATE -> "Where the project stands";
-            case REPORTED_STATEMENT -> "Something someone told you"; case DECISION -> "A decision or agreement";
-            case NEXT_ACTION_CANDIDATE -> "An idea for the next step";
+            case PERSONAL_OBSERVATION -> "Personal observation"; case CURRENT_STATE -> "Current project status";
+            case REPORTED_STATEMENT -> "Reported statement"; case DECISION -> "A decision or agreement";
+            case NEXT_ACTION_CANDIDATE -> "Proposed next action";
         };
     }
     static String fieldLabel(EvidenceClaim.Field field) {
         return switch (field) {
             case OBJECTIVE -> "Project goal"; case DELIVERABLE -> "What you plan to deliver";
-            case CURRENT_STATE, PROGRESS -> "Where the project stands"; case NEXT_ACTION -> "Suggested next step";
+            case CURRENT_STATE, PROGRESS -> "Current project status"; case NEXT_ACTION -> "Suggested next action";
             case OWNER -> "Person responsible"; case BLOCKERS -> "What is getting in the way";
             case DECISION -> "Decision"; case RATIONALE -> "Reason"; case TEST_RESULTS -> "Reported test results";
             case TASK_STATUS, TASK_MARKER -> "Task update"; case DOCUMENT_TEXT -> "Text from the document";
@@ -128,13 +128,13 @@ final class ProjectPresentation {
             if (!priority.startsWith(finding.id())) { continue; }
             if (finding.state() == ContextAudit.State.CONFLICTING) { return "Two notes give different answers. Review both before deciding which one to use."; }
             return switch (finding.id()) {
-                case "CTX-NEXT" -> "Add or review the next small step you want to take.";
+                case "CTX-NEXT" -> "Add or review the next action.";
                 case "CTX-STATE" -> "Describe where the project stands today.";
                 case "CTX-BLOCK" -> "Note anything you are waiting for, or say that nothing is getting in the way.";
                 case "CTX-PURPOSE" -> "Add or review what you want this project to achieve.";
                 case "CTX-DELIV" -> "Describe what you plan to deliver.";
                 case "CTX-DECISION" -> "Record an important decision and why you chose it.";
-                case "CTX-OWNER" -> "Check who is responsible for the next step.";
+                case "CTX-OWNER" -> "Check who is responsible for the next action.";
                 case "CTX-EVIDENCE" -> "Link a relevant note or document when you have one.";
                 case "CTX-FRESH" -> finding.state() == ContextAudit.State.STALE
                         ? "A file linked to an earlier update has changed. Review the changes before continuing."
@@ -142,6 +142,6 @@ final class ProjectPresentation {
                 default -> "Review your project notes before continuing.";
             };
         }
-        return "Check that your saved next step still matches what you want to do.";
+        return "Check that your saved next action still matches what you want to do.";
     }
 }

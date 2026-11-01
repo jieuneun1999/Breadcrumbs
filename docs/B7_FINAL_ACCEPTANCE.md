@@ -14,7 +14,57 @@ presentation follow-up sends no new Discord message.
 
 `REAL_DOCUMENT_ACCEPTANCE = PARTIAL_PUBLIC_DOCX; FULL_MATRIX_PENDING_OWNER_REVIEW`
 
-## Current plain-language follow-up and populated demo
+## Current professional navigation correction
+
+The owner requested professional simple language, consistent capitalization,
+ordered choices and reliable discoverability. Primary menus now use specific
+action labels in sentence case. Existing numeric routes appear in numeric order.
+Full and compact views share one action definition, and every available menu key
+stays visible after a result. Wide layouts use aligned columns; narrow layouts
+use wrapped lists. Update confirmation explicitly lists every accepted action.
+Prompts are separated from results and ordinary words are no longer split.
+
+Home option 8 and workspace option 12 expose Save directly. Enabling local saving there also
+governs subsequent updates because the workspace reads ProjectConsole's current
+save mode. Search returns to its actual previous menu, and View search coverage
+shows observed project counts and limits rather than generic instructions alone.
+All existing functions, canonical data, privacy controls, B3 art and animation remain.
+
+Final gate `build/b7e-verification-d7884c85436240c8a9fbffa4422342ac` passed on
+1 November 2026, 19:17–19:19 Asia/Manila: exit 0, 149 inputs unchanged. All B1–B7,
+separate-process scenarios, native junction/ACL checks and space-path launcher
+passed. ProfessionalNavigationTest verifies post-result action visibility/order,
+confirmation keys, explicit-save persistence, actual coverage and plain/color
+wrapping at 28/40/80/120 columns. The failing reproduction is preserved in commit
+ec371dd. Copy assertions were updated without dropping state/effect checks.
+
+The updated native walkthrough is 210 seconds, H264, 1280x800 at 24 fps, 19,751,964 bytes.
+It runs production ProjectConsole in two Java processes with a populated simulated
+project and scripted input. Preflight rejects any selected primary menu key that
+was not displayed immediately beforehand. Full FFmpeg decode passed; real frames
+at 3/55/75/165/200 seconds were inspected. All 150 recorded application class hashes
+match the final build. Saved-state readback confirms the expected update, reported
+note, observation and review, with every stored byte unchanged by inspection.
+
+Local video:
+`C:/Users/Papa/Desktop/Knowledgebase/Projects/Breadcrumbs/build/b7-professional-demo-6a2760a2a8074f36af2f0daf7a32ebc2/walkthrough.mp4`.
+SHA256 `9ee26838f2782ea407c23da2235c054dcd8ba87cc9b20c31f4a8f0a9b5c13688`.
+See [gate summary](evidence/b7/e/professional/summary.txt),
+[test results](evidence/b7/e/professional/tests.txt),
+[recording identity](evidence/b7/e/professional/recording-identity.json) and
+[saved-state readback](evidence/b7/e/professional/native-readback.txt).
+
+Specification self-review PASS and engineering-quality self-review PASS for this
+bounded correction. This is DEMO_READY on Windows/JDK25 targeting Java17.
+Owner visual acceptance, actual JDK17 and the full representative-file matrix
+remain open. No independent review, merge, release or new Discord write is claimed.
+This recording supersedes the earlier walkthroughs below.
+
+![Explicit progress-update actions](evidence/b7/e/professional/update-actions.png)
+
+![Complete ordered workspace actions](evidence/b7/e/professional/workspace-actions.png)
+
+## Earlier plain-language follow-up and populated demo
 
 The owner approved everyday language and reassuring animation without removing
 functions. Ordinary screens now show a project summary, progress updates, notes,

@@ -26,7 +26,7 @@ public final class SearchCliTest {
         }
         require(!text.contains("\u001b"), "plain/no-color search output");
         String narrow = session(store, "1\n1\n3\n18\n6\nyes\n4\n1\nmethodology\n0\n0\n0\n0\n", 40);
-        int start = narrow.indexOf("SEARCH PROJECT CONTEXT"), end = narrow.lastIndexOf("search > ");
+        int start = narrow.indexOf("SEARCH PROJECT CONTEXT"), end = narrow.lastIndexOf("Search > ");
         for (String line : narrow.substring(start, end).split("\\R")) {
             require(line.codePointCount(0, line.length()) <= 40, "narrow search line is bounded");
         }

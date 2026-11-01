@@ -59,5 +59,6 @@ public final class AllTests {
         breadcrumbs.cli.TerminalConsistencyTest.run();
         breadcrumbs.cli.CalmConsoleTest.run();
         breadcrumbs.cli.BeginnerExperienceTest.run();
+        breadcrumbs.cli.ProfessionalNavigationTest.run();
     }
 }

@@ -15,7 +15,7 @@ public final class BeginnerExperienceTest {
         Path base = Files.createTempDirectory(Files.createDirectories(Path.of("build/b7-fixtures")), "beginner-").toAbsolutePath();
         var store = new WorkspaceStore(base.resolve("app"));
         String created = session(store, "2\n1\nCommunity food drive\nGENERAL\nPrepare 100 food packs\nA pickup plan\nConfirm the hall booking\nSam\nAwaiting delivery quote\n\nyes\nyes\n7\n2\nBooked the hall and drafted the volunteer schedule\nWaiting for the delivery quote\nAsk the delivery company for a quote\nyes\n1\n0\n0\n");
-        require(created.contains("Your project is saved on this computer.") && created.contains("Record an update") && created.contains("PROJECT SUMMARY"), "ordinary create/save/update/summary speaks in beginner task language");
+        require(created.contains("Your project is saved on this computer.") && created.contains("Record progress update") && created.contains("Project summary"), "ordinary create/save/update/summary speaks in beginner task language");
         for (String jargon : new String[] {"canonical", "CTX-", "SOURCE_REPORTED", "UNVERIFIED", "DLL structure", "graph revision"}) { require(!created.contains(jargon), "primary workflow does not expose internal terminology " + jargon); }
         var saved = store.load(store.list()[0].id());
         require(saved.checkpoints().size() == 1 && saved.checkpoints().getLatest().project().nextActions().equals("Ask the delivery company for a quote"), "friendly saving retains the actual confirmed checkpoint");

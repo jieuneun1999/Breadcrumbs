@@ -5,12 +5,16 @@ import java.io.PrintStream;
 /** Stateless startup presentation. Counts come from storage, never from sample product data. */
 final class StartupRenderer {
     private static final String[] ACTIONS = {
-        "[1]  Open a saved project",
-        "[2]  New project / import a folder",
-        "[7]  Continue working on your project",
-        "[3]  More project tools / history",
-        "[4]  DSA demonstration",
-        "[0]  Exit"
+        "[1]  Open saved project",
+        "[2]  Create or import project",
+        "[3]  Open advanced project tools",
+        "[4]  Run DSA demonstration",
+        "[5]  Restore saved project",
+        "[6]  Switch to session-only mode",
+        "[7]  Open project workspace",
+        "[8]  Save active project",
+        "[0]  Exit",
+        "[?]  Show menu"
     };
     private final PrintStream output;
     private final TerminalTheme theme;
@@ -23,9 +27,9 @@ final class StartupRenderer {
     }
 
     void ready(int saved, int unavailable) {
-        line(TerminalTheme.Tone.SUCCESS, "[v] Ready to open or save your projects");
+        line(TerminalTheme.Tone.SUCCESS, "[v] Project storage available");
         line(null, "[v] Saved projects: " + saved);
-        line(TerminalTheme.Tone.SECONDARY, "[i] You choose whether each project is saved on this computer.");
+        line(TerminalTheme.Tone.SECONDARY, "[i] Local saving is optional for each project.");
         if (unavailable > 0) {
             line(TerminalTheme.Tone.WARNING, "WARNING: " + unavailable
                     + " unreadable saved workspace(s), retained for recovery.");
@@ -56,6 +60,10 @@ final class StartupRenderer {
             for (String action : ACTIONS) { line(null, action); }
         }
         output.println();
+    }
+
+    void compactMenu() {
+        new TerminalOutput(output, theme, columns).choices(String.join("\n", ACTIONS));
     }
 
     private void sourceNotice() {

@@ -55,30 +55,33 @@ is downloaded or activated.
 
 ## A useful first session
 
-1. Choose **2 New project / import a folder**. Choose a personal, study, team or
+1. Choose **2 Create or import project**. Choose a personal, study, team or
    software project. If you import a folder, approve reading it and review the
    document notes or leave them for later. This sets up starting information;
    it does not invent earlier progress.
-2. Choose to save the project on this computer. Then choose **7 Continue working**
+2. Choose to save the project on this computer. Then choose **7 Open project workspace**
    and **1 View project summary** to see where you left off, your next step and
    anything you are waiting for. Saved notes work even when the project folder is offline.
-3. Choose **2 Record an update**. Answer what changed, what is in the way and what
+3. Choose **2 Record progress update**. Answer what changed, what is in the way and what
    to do next. Review the answers before typing `yes`. Use `e` to edit, `?` for
    references and other options, or `0` to cancel.
-4. Use **10 Notes and updates** for an observation, meeting report or decision.
+4. Use **10 Manage project notes** for an observation, meeting report or decision.
    A note about what someone said remains a report. You separately choose whether
    its words can appear in search and whether its body can be exported. Private
    notes stay out of search and handoff files.
-5. Use **11 Project handoff / export** to preview readable summary files or export
+5. Use **11 Prepare project handoff** to preview readable summary files or export
    a new folder outside the project and save folders. You can also choose to refresh
    these files after saving. Review the files before sharing them.
 6. Exit and reopen the saved project. Its summary appears without rereading the
-   original folder. Choose **4 Check files for changes** when you want a new file
+   original folder. Choose **4 Review file changes** when you want a new file
    check. **Technical details** shows the original hashes and reference impact.
    Marking changes as reviewed does not confirm that work is complete.
 
-Menus show once per entry, then leave short action reminders. Type `?` to see the
-full menu again. Import shows a short preview; full inventory/hashes remain under
+Menus use a complete compact action list after each result, with aligned columns
+when the terminal is wide enough. Every accepted menu action stays visible.
+Type `?` to show the full menu again. Options retain their established numbers
+and appear in numeric order. Use workspace **12 Save project** or home **8 Save
+active project** to save a session-only project; this asks before enabling local storage. Import shows a short preview; full inventory/hashes remain under
 View B0 / sources. Reports separate their sections with whitespace.
 
 The daily menu also offers attention checks, search, saved updates and dependencies.

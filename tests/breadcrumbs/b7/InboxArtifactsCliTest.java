@@ -17,8 +17,8 @@ public final class InboxArtifactsCliTest {
         String text = session(store, input);
         String readable = text.replaceAll("\\s+", " ");
         Files.writeString(base.resolve("inbox-artifacts.txt"), text);
-        require(text.contains("NOTES AND UPDATES") && text.contains("Your note has been added") && text.contains("Your update has been added"), "NEW_EMPTY project captures a meeting report and real linked checkpoint");
-        require(readable.contains("has not checked whether") && readable.contains("Your project summary and handoff files are up to date") && readable.contains("Your handoff folder is ready"), "actual origin labels, generation and consented package flow");
+        require(text.contains("Project notes") && text.contains("Your note has been added") && text.contains("Your update has been added"), "NEW_EMPTY project captures a meeting report and real linked checkpoint");
+        require(readable.contains("has not checked whether") && readable.contains("Your project summary and handoff files are up to date") && readable.contains("Handoff package exported successfully"), "actual origin labels, generation and consented package flow");
         var saved = store.load(store.list()[0].id());
         require(saved.manualContext().captures()[0].type() == breadcrumbs.domain.ManualContext.Type.REPORTED_STATEMENT, "reported-note provenance is preserved in canonical state");
         require(saved.checkpoints().getLatest().project().manualEvidenceIds()[0].equals("IN-000001") && saved.manualContext().artifactsAllowed(), "manual links and opt-in persist canonically");

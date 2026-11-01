@@ -40,11 +40,11 @@ public final class ProjectConsole {
             boolean showMenu = true;
             while (running) {
                 if (showMenu) {
-                    startup.menu(); ui.menu("[5] Restore a saved project\n[6] Keep working without saving");
+                    startup.menu();
                     showMenu = false;
-                } else { ui.note("\n1=open project  2=new project  7=continue  ?=menu  0=exit"); }
+                } else { ui.heading("\nProject navigation"); startup.compactMenu(); }
                 try {
-                    switch (read("breadcrumbs > ")) {
+                    switch (read("Breadcrumbs > ")) {
                         case "0" -> running = !leave();
                         case "?" -> showMenu = true;
                         case "1" -> open();
@@ -60,7 +60,8 @@ public final class ProjectConsole {
                             ui.warning("You can keep working here, but changes will be lost when you close unless you save them.");
                         }
                         case "7" -> daily();
-                        default -> ui.plain("Choose 0-4 for project tools, 5 for recovery, 6 for in-memory operation, or 7 for daily workflows.");
+                        case "8" -> saveActive();
+                        default -> ui.plain("Select a listed option from 0 to 8, or ? to display the menu.");
                     }
                 } catch (IllegalArgumentException invalid) {
                     ui.error("Operation cancelled or rejected."); ui.plain(safe(invalid.getMessage()));
@@ -131,7 +132,7 @@ public final class ProjectConsole {
     }
 
     private void daily() throws IOException {
-        new DailyConsole(this::read, output, state, persistence, () -> { if (persistence) { save(); } },
+        new DailyConsole(this::read, output, state, () -> persistence, () -> { if (persistence) { save(); } }, this::saveActive,
                 this::checkpoint, this::project, theme, width, store, search).run();
     }
 
@@ -140,11 +141,10 @@ public final class ProjectConsole {
         boolean back = false;
         while (!back) {
             status(true);
-            ui.heading("ADVANCED PROJECT TOOLS");
-            ui.menu("[16] Work items / explicit dependencies\n[17] Hash demonstration / canonical indexes\n[18] Search project context");
-            ui.menu("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[0] Back");
+            ui.heading("Advanced project tools");
+            ui.menu("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[16] Work items / explicit dependencies\n[17] Hash demonstration / canonical indexes\n[18] Search project context\n[0] Back");
             try {
-                String choice = read("project > ");
+                String choice = read("Advanced > ");
                 switch (choice) {
                     case "0" -> back = true;
                     case "1" -> new BootstrapConsole(this::read, output, state,
@@ -207,6 +207,12 @@ public final class ProjectConsole {
             ui.plain("Confirmed " + preview.checkpointId()); diagnostics();
             if (persistence) { save(); }
         } else { ui.plain("Cancelled. Project history unchanged."); }
+    }
+
+    private void saveActive() throws IOException {
+        if (state.activeBaseline() == null) { ui.warning("Open or create a project before saving."); return; }
+        if (!persistence && !read("Enable local project saving? Type yes to save; Enter cancels: ").equalsIgnoreCase("yes")) { return; }
+        persistence = true; save();
     }
 
     private boolean save() {
@@ -282,7 +288,7 @@ public final class ProjectConsole {
         ui.plain("Use Resume / handoff for referenced freshness against the latest saved observation.");
     }
     private String read(String prompt) throws IOException {
-        output.print(theme.label(TerminalTheme.Tone.BREAD_GOLD, prompt)); output.flush();
+        ui.prompt(prompt);
         // Bound reads before building a String, including redirected and malformed input.
         StringBuilder line = new StringBuilder(); int c;
         while ((c = input.read()) != -1 && c != '\n') {

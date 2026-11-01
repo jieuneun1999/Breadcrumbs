@@ -11,6 +11,7 @@ import hashlib
 import importlib.util
 import json
 import os
+import re
 import subprocess
 import time
 import zipfile
@@ -74,28 +75,28 @@ def preflight(folder):
     driver.FAST = True
     s = driver.Session(folder, '01-start')
     for marker, value in [
-        ('breadcrumbs > ', '2'), ('Entry mode: ', '2'), ('Project display name: ', 'Community food drive (simulation)'),
+        ('Breadcrumbs > ', '2'), ('Entry mode: ', '2'), ('Project display name: ', 'Community food drive (simulation)'),
         ('Project type', '3'), ('Existing local project directory: ', str(folder / 'source')), ('Approve bounded', 'yes'),
-        ('Use this for', 's'), ('Start tracking', 'yes'), ('Save this project', 'yes'), ('breadcrumbs > ', '7'),
-        ('daily > ', '2'), ('What changed or', 'Booked the hall and drafted the volunteer schedule'),
-        ('Anything getting', 'Waiting for the delivery quote'), ('What is the next', 'Ask the delivery company for a quote'),
-        ('Save this update', 'yes'), ('daily > ', '1'), ('daily > ', '0'), ('breadcrumbs > ', '0')]:
+        ('Review decision', 's'), ('Start tracking', 'yes'), ('Save this project', 'yes'), ('Breadcrumbs > ', '7'),
+        ('Workspace > ', '2'), ('Progress summary', 'Booked the hall and drafted the volunteer schedule'),
+        ('Blockers or pending', 'Waiting for the delivery quote'), ('Next action', 'Ask the delivery company for a quote'),
+        ('Update action', 'yes'), ('Workspace > ', '1'), ('Workspace > ', '0'), ('Breadcrumbs > ', '0')]:
         s.answer(marker, value)
     s.finish()
     assert '0 files with reading problems' in ' '.join(s.raw.split()), 'Generated fixture should be readable'
     change(folder / 'source')
     s = driver.Session(folder, '02-return')
     for marker, value in [
-        ('breadcrumbs > ', '1'), ('Project number (0 = cancel): ', '1'), ('breadcrumbs > ', '7'), ('daily > ', '10'), ('inbox > ', '1'),
-        ('What kind of note', '3'), ('What would you like', 'The hall coordinator said two extra tables are available'),
-        ('Where this came from', 'Simulated planning call'), ('Optional reference', 'Planning call notes'), ('Keep this private', ''),
-        ('Add this note', 'c'), ('Allow words', 'yes'), ('Allow this note', 'yes'), ('Also use this note', ''),
-        ('Record a progress update', ''), ('inbox > ', '0'), ('daily > ', '5'), ('search > ', '4'), ('search > ', '1'),
-        ('Word to find', 'tables'), ('Item number to read', '1'), ('Show this reviewed', 'yes'), ('search > ', '0'),
-        ('daily > ', '4'), ('Read your project folder', 'yes'), ('[1] Mark as reviewed', '1'), ('Mark these changes', 'yes'),
-        ('daily > ', '1'), ('daily > ', '11'), ('documents > ', '6'), ('Progress update numbers', '1'),
-        ('New full folder path', str(folder / 'portable')), ('Create this new handoff', 'yes'), ('documents > ', '0'),
-        ('daily > ', '0'), ('breadcrumbs > ', '0')]:
+        ('Breadcrumbs > ', '1'), ('Project number (0 = cancel): ', '1'), ('Breadcrumbs > ', '7'), ('Workspace > ', '10'), ('Notes > ', '1'),
+        ('Note category', '3'), ('Note content', 'The hall coordinator said two extra tables are available'),
+        ('Information source', 'Simulated planning call'), ('Optional reference', 'Planning call notes'), ('Privacy [', ''),
+        ('Add note [', 'c'), ('Allow words', 'yes'), ('Allow this note', 'yes'), ('Also use this note', ''),
+        ('Record a progress update', ''), ('Notes > ', '0'), ('Workspace > ', '5'), ('Search > ', '4'), ('Search > ', '1'),
+        ('Search term', 'tables'), ('Item number to read', '1'), ('Show this reviewed', 'yes'), ('Search > ', '0'),
+        ('Workspace > ', '4'), ('Read your project folder', 'yes'), ('Review action', '1'), ('Mark these changes', 'yes'),
+        ('Workspace > ', '1'), ('Workspace > ', '11'), ('Handoff > ', '6'), ('Progress update numbers', '1'),
+        ('New full folder path', str(folder / 'portable')), ('Create this new handoff', 'yes'), ('Handoff > ', '0'),
+        ('Workspace > ', '0'), ('Breadcrumbs > ', '0')]:
         s.answer(marker, value)
     s.finish()
     assert (folder / 'portable/HANDOFF.md').exists()
@@ -106,8 +107,12 @@ def preflight(folder):
             if event['kind'] == 'stdout':
                 previous = event['text']
             else:
+                visible = driver.SGR.sub('', previous).rstrip()
+                if visible.endswith(('Breadcrumbs >', 'Workspace >', 'Search >', 'Handoff >', 'Notes >', 'Update action:', 'Review action:')):
+                    selected = event['text'].strip()
+                    assert re.search(r'\[' + re.escape(selected) + r'\]', visible, re.IGNORECASE), 'Demo selected an action that was not displayed: ' + selected
                 answers.append(event['text'])
-                pauses.append(6500 if 'PROJECT SUMMARY' in previous else 4500 if 'REVIEW YOUR' in previous or 'CHANGES IN YOUR' in previous or 'SEARCH RESULTS' in previous else 2600 if len(previous) > 700 else 1400)
+                pauses.append(12000 if 'Project summary' in previous else 10000 if 'Review progress update' in previous or 'File comparison' in previous else 8000 if 'Search results' in previous else 4500 if len(previous) > 700 else 1600)
         pauses[0] = 6500
         (folder / (name + '.input.txt')).write_text(''.join(answers).replace(str(folder / 'portable'), str(folder / 'native-portable')), encoding='utf-8')
         (folder / (name + '.pacing.txt')).write_text('\n'.join(map(str, pauses)) + '\n', encoding='utf-8')

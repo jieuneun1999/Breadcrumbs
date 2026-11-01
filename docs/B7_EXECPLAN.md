@@ -246,25 +246,25 @@ or deployment is inferred from DEMO_READY. No new Discord message was sent.
 ## Active professional navigation correction
 
 Owner requests professional simple wording, capitalization, ordered discoverable
-choices and readable spacing. Clean baseline4dd864e, same B7E repository/branch
+choices and readable spacing. Clean baseline 4dd864e, same B7E repository/branch
 and scoped PR12 permissions. STANDARD, single writer, no delegation/worktree,
 six repairs per gate/two per unchanged hypothesis, no global changes or external
 messages. Preserve B3 art/motion, canonical schemas/services and legacy numeric
 routes. Native evidence and affected/full regression remain required. No project
 verification skill is installed; existing JDK/native runners own verification.
 
-Pstack1.16 poteto-mode and Bug fix were fully read in separate calls. Relevant
-Manual/Workflow/Routing/Craft sections, Impeccable4.6 Clarify/Layout/craft-floor,
+Pstack 1.16 poteto-mode and Bug fix were fully read in separate calls. Relevant
+Manual/Workflow/Routing/Craft sections, Impeccable 4.6 Clarify/Layout/craft-floor,
 architect and Model the Domain/Encode Lessons in Structure were loaded. Reuse
 prior how/why grounding and context discovery; no second context install/probe.
 Craft single-owner adaptation excludes skill delegation/panels/worktrees. Web-only
 layout detectors do not verify a terminal; actual console output is the target.
 
-- [ ] 1. Reproduce on the matching CLI surface.
-- [ ] 2. Binary-search the cause with actual output and subsystem/history evidence.
-- [ ] 3. Plan the fix; architect material boundaries before implementation.
-- [ ] 4. Verify the original reproduction on the same surface.
-- [ ] 5. Stage the failing executable repro before the fix where practical.
+- [x] 1. Reproduce on the matching CLI surface.
+- [x] 2. Binary-search the cause with actual output and subsystem/history evidence.
+- [x] 3. Plan the fix; architect material boundaries before implementation.
+- [x] 4. Verify the original reproduction on the same surface.
+- [x] 5. Stage the failing executable repro before the fix where practical.
 - [ ] 6. Run Opening a PR, adapted to append-only PR12 update.
 
 Throughput: first reproduce hidden choices and broken word wrapping; then shared
@@ -272,7 +272,7 @@ rendering and one-source menu definitions; then navigation/copy; then native
 inspection and regression. No independent lanes because menus, prompts and demo
 inputs share state. WorkspaceState stays canonical; tests/captures use unique roots.
 
-Root causes observed: Daily lists1,2,10,3...; home lists7 before3 and hides5/6
+Root causes observed: Daily lists 1,2,10,3...; home lists 7 before 3 and hides 5/6
 outside the framed list; repeated menus advertise only a subset of accepted keys;
 quick preview accepts a/m/o/d/f before its More options help is opened; shared
 TerminalOutput hard-splits words and ProjectConsole prints unwrapped prompts.
@@ -285,3 +285,49 @@ Quick preview explicitly lists every accepted action. Shared prompt and word-wra
 rendering preserve source text and bound narrow lines. Direct Save exposes the
 existing persistence action; a live BooleanSupplier keeps workspace save status
 owned by ProjectConsole when mode changes. No new stored UI state or DSA.
+
+### Professional correction evidence
+
+Executable RED was observed before implementation: "Every workspace action remains
+visible after a result: 1". Commit ec371dd retains that regression before the fix.
+The reproduction now passes on actual ProjectConsole input/output. Model the Domain
+keeps the save-mode owner in ProjectConsole via a live supplier. Encode Lessons in
+Structure removes separate partial hint strings; each primary menu has one action
+definition. No panels, worktrees or second writer were used.
+
+The first native inspection confirmed aligned complete action columns and readable
+prompts. One material correction batch fixed a context-dependent Search return label,
+restored actual coverage counts under View search coverage, and made next-action
+vocabulary consistent. The confirmation capture uses a fresh fixture/storage root.
+Its preflight checks each selected command against the immediately preceding visible
+menu. No screenshots are fabricated or substituted for runtime behavior.
+
+Final gate d7884c85436240c8a9fbffa4422342ac passed all B1–B7 and separate-process
+checks, native junction/ACL boundaries and unrelated-cwd/space-path launcher.
+ProfessionalNavigationTest covers visible/ordered actions, explicit Save plus later
+update persistence, actual search coverage, all update-confirmation keys, and word-
+aware choices/prompts at 28/40/80/120 columns in plain/color output. Old UI literals
+were migrated; canonical, privacy, fault, provenance, DSA and old-format assertions
+remain. Native confirmation, source/class reconciliation and scoped delivery follow.
+
+### Confirmed professional navigation result
+
+The final 210-second native MP4 fully decodes with exit 0. Actual frames at 3/55/75/
+165/200 seconds confirm the retained B3 header, explicit update choices, complete
+ordered workspace actions, current search return label, separated review choices
+and readable wrapping. This is the second bounded inspection after one correction
+batch; no additional cosmetic loop is required. All 150 recorded application class
+hashes and the final 149-input gate hashes match the current files. Saved-state
+readback retains the expected single update/note/observation/review; all saved byte
+hashes are unchanged by inspection. Video/generated fixtures remain local. Only
+synthetic frames, sanitized logs and validation metadata are published in the PR.
+
+Specification self-review PASS: professional simple copy, sentence case, ordered
+visible actions, stable old numerical routes, discoverable confirmation options,
+truthful save mode and coverage. Engineering-quality self-review PASS: shared
+rendering/menu definitions, no canonical schema/DSA changes, owner-controlled
+persistence, executable regression and native source binding. These are single-
+owner reviews. Actual JDK17, Unix/instructor hardware, independent review, owner
+visual acceptance and full real-file acceptance remain separate open boundaries.
+Result DEMO_READY for the exercised Windows/JDK25 scope. Scoped append-only PR12
+delivery follows; no merge, release, deployment, installs or new Discord message.

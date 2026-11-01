@@ -13,12 +13,12 @@ final class InboxConsole {
     }
     String run() throws IOException {
         while (true) {
-            ui.heading("NOTES AND UPDATES");
+            ui.heading("Project notes");
             ui.note("Keep a note about your project or something someone told you. Do not add passwords or access keys.");
             int number = 0;
             for (var capture : state.manualContext().captures()) { ui.line("Note " + (++number) + ": ", ProjectPresentation.noteType(capture.type()) + " | " + ProjectPresentation.review(state.manualContext().disposition(capture.id())) + (capture.sensitivity() == ManualContext.Sensitivity.SENSITIVE ? " | private" : "")); }
             ui.menu("[1] Add a note\n[2] Review a note\n[3] Read a note\n[4] Attach a note to a progress update\n[0] Back");
-            String choice = input.read("inbox > ");
+            String choice = input.read("Notes > ");
             if (choice.equals("0")) { return null; }
             if (choice.equals("1")) {
                 String captured = capture(); if (captured != null) { return captured; }
@@ -41,19 +41,19 @@ final class InboxConsole {
         throw new IllegalArgumentException("Choose a note number from the list above.");
     }
     private String capture() throws IOException {
-        ui.menu("[1] Something you noticed\n[2] Where the project stands\n[3] Something someone told you\n[4] A decision or agreement\n[5] An idea for the next step");
+        ui.menu("[1] Personal observation\n[2] Current project status\n[3] Reported statement\n[4] Decision or agreement\n[5] Proposed next action");
         int number;
-        try { number = Integer.parseInt(input.read("What kind of note is this? ")); }
+        try { number = Integer.parseInt(input.read("Note category: ")); }
         catch (NumberFormatException invalid) { throw new IllegalArgumentException("Choose a note type from 1 to 5."); }
         if (number < 1 || number > 5) { throw new IllegalArgumentException("Choose a note type from 1 to 5."); }
         var type = ManualContext.Type.values()[number - 1];
-        String statement = input.read("What would you like to note? "), origin = input.read("Where this came from: "), reference = input.read("Optional reference, such as a meeting name or document title: ");
-        String sensitivity = input.read("Keep this private? s=private, Enter=ordinary project note: ");
+        String statement = input.read("Note content: "), origin = input.read("Information source: "), reference = input.read("Optional reference, such as a meeting name or document title: ");
+        String sensitivity = input.read("Privacy [S = private; Enter = standard project note]: ");
         if (!sensitivity.isEmpty() && !sensitivity.equalsIgnoreCase("s")) { throw new IllegalArgumentException("Enter s for a private note, or press Enter for an ordinary project note."); }
         var classification = sensitivity.equalsIgnoreCase("s") ? ManualContext.Sensitivity.SENSITIVE : ManualContext.Sensitivity.INTERNAL;
-        ui.value("REVIEW YOUR NOTE", ProjectContext.note(statement)); ui.value("Where this came from", ProjectContext.note(origin));
+        ui.value("Review project note", ProjectContext.note(statement)); ui.value("Where this came from", ProjectContext.note(origin));
         ui.warning(type == ManualContext.Type.REPORTED_STATEMENT ? "This is what someone told you. Breadcrumbs has not checked whether it is true." : "This records your account. Breadcrumbs does not check whether outside events happened.");
-        String action = input.read("Add this note? c=add and mark reviewed, p=leave for review, 0=cancel: ");
+        String action = input.read("Add note [C = confirm; P = pending review; 0 = cancel]: ");
         if (action.equals("0")) { return null; }
         if (!action.equalsIgnoreCase("c") && !action.equalsIgnoreCase("p")) { throw new IllegalArgumentException("Choose c, p or 0."); }
         var captured = state.manualContext().capture(type, statement, origin, reference, classification);

@@ -25,26 +25,27 @@ final class SearchConsole {
         this.theme = theme;
         this.technical = technical;
     }
+    private static final String ACTIONS = "[1] Search exact term\n[2] Suggest terms by prefix\n[3] View search coverage\n[4] Refresh search index\n[5] View diagnostics and DSA demonstration\n[6] Configure unreviewed-text search\n[7] Enable or disable search\n[0] Return to previous menu\n[?] Show menu";
     void run() throws IOException {
         boolean showMenu = true;
         while (true) {
             var ui = new TerminalOutput(out, theme, width);
             if (showMenu) {
-                ui.heading(technical ? "\nSEARCH PROJECT CONTEXT" : "\nSEARCH YOUR PROJECT");
+                ui.heading(technical ? "\nSEARCH PROJECT CONTEXT" : "\nSearch project records");
                 if (technical) { ui.plain(index.status().name()); }
                 else { ui.note("Search the notes and document text you allowed Breadcrumbs to use. Refresh search after recording changes."); }
-                ui.menu("[1] Find a word\n[2] Suggest words from a beginning\n[3] What can be searched?\n[4] Refresh search\n\n[5] Technical details / classroom demonstration\n[6] Choose whether unreviewed document words can be searched\n[7] Turn search on / off\n[0] Back"); showMenu = false;
-            } else { ui.note("\n1=find a word  2=suggestions  3=what is searched  4=refresh  ?=menu  0=back"); }
-            String choice = read("search > ");
+                ui.menu(ACTIONS); showMenu = false;
+            } else { ui.heading("\nSearch actions"); ui.choices(ACTIONS); }
+            String choice = read("Search > ");
             try {
                 switch (choice) {
                     case "0" -> { return; }
                     case "?" -> showMenu = true;
-                    case "1" -> matches(read(technical ? "Exact term: " : "Word to find: "));
+                    case "1" -> matches(read(technical ? "Exact term: " : "Search term: "));
                     case "2" -> suggestions();
                     case "3" -> {
-                        if (technical) { print(index.coverage()); }
-                        else { print("Search uses the text Breadcrumbs could read and that you allowed it to use.\nText/Markdown notes and CSV include selected fields, not every word. Word documents include bounded main paragraphs.\nPDF, spreadsheet, presentation and image bodies cannot currently be read. Private notes, credentials and instructions are excluded.\nA missing match does not prove the word is absent from your files. Technical details show exact file coverage."); }
+                        if (!technical) { print("Coverage describes the saved file check, not a new scan. Only captured fields allowed by your search settings are included."); }
+                        print(index.coverage());
                     }
                     case "4" -> {
                         boolean rebuilt;
@@ -75,7 +76,7 @@ final class SearchConsole {
         } else { print("Privacy policy unchanged."); }
     }
     private void suggestions() throws IOException {
-        String prefix = read(technical ? "Prefix: " : "Beginning of a word: ");
+        String prefix = read(technical ? "Prefix: " : "Term prefix: ");
         var result = index.suggestTerms(prefix, index.policy().maxSuggestions());
         String[] terms = result.terms();
         print(technical ? "Trie suggestions. " + index.status() : "Words found in the text you can search:");
@@ -88,7 +89,7 @@ final class SearchConsole {
     }
     private void matches(String term) throws IOException {
         SearchReport report = index.searchExact(term, index.policy().maxResults());
-        var ui = new TerminalOutput(out, theme, width); ui.heading("SEARCH RESULTS");
+        var ui = new TerminalOutput(out, theme, width); ui.heading("Search results");
         if (!technical) { friendlyMatches(report); return; }
         ui.line("Index state: ", report.status().name()); ui.line("Exact term: ", report.term()); ui.plain(report.notice());
         if (report.status() != SearchReport.Status.READY) { return; }
@@ -150,13 +151,5 @@ final class SearchConsole {
     private String read(String prompt) throws IOException {
         String value = input.read(prompt); out.println(); return value;
     }
-    private void print(String text) {
-        for (String line : text.split("\\n", -1)) {
-            String safe = ContentSafety.terminal(line, 4000);
-            while (safe.codePointCount(0, safe.length()) > width) {
-                int end = safe.offsetByCodePoints(0, width); out.println(safe.substring(0, end)); safe = safe.substring(end);
-            }
-            out.println(safe);
-        }
-    }
+    private void print(String text) { new TerminalOutput(out, theme, width).plain(text); }
 }

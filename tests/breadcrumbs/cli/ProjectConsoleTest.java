@@ -14,12 +14,12 @@ public final class ProjectConsoleTest {
         Path root = Files.createTempDirectory(base, "storage-");
         String empty = session(root, "x\n1\n3\n0\n", false, 80);
         contains(empty, "Breadcrumbs / project continuity", "Leave context behind. Pick up where work stopped.",
-                "Saved projects: 0", "No saved projects yet", "No active workspace", "Choose 0-4", "Goodbye");
+                "Saved projects: 0", "No saved projects yet", "No active workspace", "Select a listed option from 0 to 8", "Goodbye");
         require(!empty.contains("\u001b"), "plain fallback emits no ANSI escapes");
         String narrow = session(root, "0\n", false, 30);
         contains(narrow, "BREADCRUMBS", "Leave context behind.\n  Pick up where work stopped.");
         String colored = session(root, "0\n", true, 80);
-        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32m[v] Ready to open or save your projects\u001b[0m");
+        contains(colored, "\u001b[1;38;5;214m", "\u001b[0m", "\u001b[32m[v] Project storage available\u001b[0m");
         require(!TerminalTheme.enabled(true, true, true, false, "xterm", false, true), "no-color wins explicit always");
         require(!TerminalTheme.enabled(false, true, true, true, "xterm", false, true), "NO_COLOR wins always");
         require(!TerminalTheme.enabled(false, false, false, false, "xterm", false, true), "redirected suppresses color");

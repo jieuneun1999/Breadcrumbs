@@ -46,7 +46,7 @@ public final class StartupRendererTest {
                 "scored loaf, missing bite and outgoing crumb trail visible");
         require(wide.contains("Saved projects: 2") && wide.contains("1 unreadable saved workspace"),
                 "real counts and unavailable records stay explicit");
-        require(wide.contains("[1]  Open a saved project") && wide.contains("[4]  DSA demonstration"),
+        require(wide.contains("[1]  Open saved project") && wide.contains("[4]  Run DSA demonstration"),
                 "keyboard actions remain discoverable");
         require(!wide.contains("Recent project:") && !wide.contains("App storage:"), "startup omits absent recent state and full diagnostic path");
         require(wide.contains("/----------------") && wide.contains("\\----------------"),

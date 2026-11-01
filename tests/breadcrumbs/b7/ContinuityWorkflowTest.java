@@ -31,7 +31,7 @@ public final class ContinuityWorkflowTest {
         var store = new WorkspaceStore(base.resolve("app")); store.save(ContinuityTest.empty("W712", "Daily workflow"));
         String input = "1\n1\n7\n2\nPrepared the meeting agenda\nnone\nSend the agenda for review\nyes\n1\n3\n0\n0\n";
         String text = session(store, input);
-        require(text.contains("RECORD AN UPDATE") && text.contains("Your update has been added") && text.contains("PROJECT SUMMARY"), "actual quick capture and resume CLI");
+        require(text.contains("Record progress update") && text.contains("Your update has been added") && text.contains("Project summary"), "actual quick capture and resume CLI");
         var saved = store.load("W712"); require(saved.checkpoints().size() == 1 && saved.checkpoints().getLatest().project().nextActions().equals("Send the agenda for review"), "three-question capture survives restart");
         String restart = session(store, "1\n1\n7\n1\n2\nCancelled work\nunknown\nReview later\n0\n0\n0\n");
         require(restart.contains("Prepared the meeting agenda") && store.load("W712").checkpoints().size() == 1, "resume shows saved context and cancellation adds no history");

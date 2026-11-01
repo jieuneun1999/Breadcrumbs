@@ -171,3 +171,38 @@ All people and reported events are invented. The input harness supplies reading
 pauses from a separate per-answer file; the application has no demo delays.
 The earlier public-template capture remains historical evidence, while the new
 recording demonstrates a believable everyday project rather than a blank template.
+
+## Professional navigation correction
+
+The owner rejected overly casual menu language, inconsistent capitalization,
+nonsequential display order and choices hidden by short reminders. This correction
+supersedes those incomplete reminders. Home, workspace, search and handoff each
+have one ordered action definition reused by full and compact displays. After a
+result, every available action remains visible. Wide terminals use two aligned
+columns in row order; narrow terminals use a single wrapped list. Historical
+numerical routes are retained. Primary headings, labels and prompts use sentence
+case with specific action verbs.
+
+Progress confirmation explicitly lists YES/E/A/M/O/D/F/0/? before accepting input.
+It no longer accepts useful actions that are mentioned only in hidden help. File
+review decisions are separate menu rows. Shared word-aware wrapping preserves
+ordinary words and separates prompts from results. The search-specific duplicate
+hard-wrap renderer was removed in favor of TerminalOutput. This changes display
+only, never the original stored statements.
+
+Home option 8 and workspace option 12 expose the existing Save function directly. Persistence
+remains owned by ProjectConsole. DailyConsole reads its current mode through a
+BooleanSupplier so enabling saving in the workspace also governs later updates
+and save-status messages. A regression exercises actual save/reopen data.
+
+Search's return label works from either workspace or advanced tools. Search
+coverage now includes the actual saved observation counts and eligibility/format
+limits rather than generic help alone. Underlying search privacy, index and DSA
+behavior are unchanged. The accepted B3 logo, colors and operation animation remain.
+
+ProfessionalNavigationTest first failed on hidden post-result actions, then passed
+complete action visibility, numeric order, explicit saving, truthful coverage,
+confirmation keys, and wrapped choices/prompts at 28/40/80/120 columns in color and
+plain output. The native demo preflight additionally asserts every selected menu
+key is present in the immediately preceding displayed choices. Deterministic
+checks are separate from native visual inspection and owner acceptance.

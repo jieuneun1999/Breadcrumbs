@@ -15,9 +15,9 @@ public final class CalmConsoleTest {
         var bytes = new ByteArrayOutputStream(); var out = new PrintStream(bytes, true, StandardCharsets.UTF_8);
         new ProjectConsole(new StringReader("1\n1\n7\n1\n1\n0\n0\n"), out, store, new TerminalTheme(false), 80).run();
         String text = bytes.toString(StandardCharsets.UTF_8).replace("\r\n", "\n");
-        require(occurrences(text, "[11] Project handoff / export") == 1, "daily full menu appears once rather than after every operation");
-        require(occurrences(text, "[4]  DSA demonstration") == 1, "home full menu appears once per entry rather than after every action");
-        require(text.contains("?=menu") && text.contains("\n\nNext step"), "short action reminder and spaced report sections remain discoverable");
+        require(occurrences(text, "\nProject workspace\n") == 1, "workspace introduction appears once; complete compact choices follow results");
+        require(occurrences(text, "/----------------") == 1, "home decorative frame appears once; action labels remain available");
+        require(text.contains("[?]") && text.contains("\n\nNext action"), "complete action choices and spaced report sections remain discoverable");
         bytes.reset();
         BrandRenderer.renderApproved(out, new TerminalTheme(true, true, true), 160);
         String animated = bytes.toString(StandardCharsets.UTF_8);

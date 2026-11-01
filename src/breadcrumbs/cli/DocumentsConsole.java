@@ -17,16 +17,17 @@ final class DocumentsConsole {
         var checkpoints = state.checkpoints().traverseForward(); String[] ids = new String[checkpoints.length];
         for (int i = 0; i < ids.length; i++) { ids[i] = checkpoints[i].checkpointId(); } return ids;
     }
+    private static final String ACTIONS = "[1] View project summary file\n[2] View handoff document\n[3] View archived progress update\n[4] Refresh handoff documents\n[5] Configure automatic document updates\n[6] Export handoff package\n[D] View technical file details\n[0] Back to workspace\n[?] Show menu";
     void run() throws IOException {
         boolean showMenu = true;
         while (true) {
             if (showMenu) {
-                ui.heading("\nPROJECT HANDOFF");
-                ui.note("Make readable files so you or someone else can continue later. Your original project files are not copied or changed.");
-                ui.menu("[1] Read the project summary file (state.md)\n[2] Read the handoff file (HANDOFF.md)\n[3] Read an earlier progress update\n\n[4] Refresh the handoff files\n[5] Choose whether handoff files update after saving\n[6] Export a handoff folder\n[d] Technical file details\n[0] Back"); showMenu = false;
-            } else { ui.note("\n1=state  2=handoff  4=generate  6=export  ?=menu  0=back"); }
-            String choice = input.read("documents > ");
-            switch (choice) {
+                ui.heading("\nProject handoff");
+                ui.note("Preview or export project context for continuing work. Source documents are not copied or modified.");
+                ui.menu(ACTIONS); showMenu = false;
+            } else { ui.heading("\nHandoff actions"); ui.choices(ACTIONS); }
+            String choice = input.read("Handoff > ");
+            switch (choice.toLowerCase(java.util.Locale.ROOT)) {
                 case "0" -> { return; }
                 case "?" -> showMenu = true;
                 case "1", "2", "3" -> {
@@ -61,7 +62,7 @@ final class DocumentsConsole {
                     preview(bundle); ui.value("Destination", destination.toString());
                     if (input.read("Create this new handoff folder with the files shown above? Type yes: ").equalsIgnoreCase("yes")) {
                         Path path = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.EXPORT, () -> artifacts.exportPackage(state, store, bundle, destination, true));
-                        ui.success("Your handoff folder is ready to share."); ui.value("Folder you can open without Breadcrumbs", path.toString());
+                        ui.success("Handoff package exported successfully."); ui.value("Export folder", path.toString());
                     }
                 }
                 default -> ui.warning("Choose a listed document action.");
@@ -73,7 +74,7 @@ final class DocumentsConsole {
         catch (NumberFormatException notNumber) { return value; }
     }
     private void preview(ArtifactService.Bundle bundle) {
-        for (var file : bundle.files()) { ui.value("File", file.path() + " | " + file.text().length() + " characters"); }
+        for (var file : bundle.files()) { ui.value("File", file.path()); }
         ui.warning("Review this handoff before sharing. Only notes you approved for export are included. Original documents and the project folder location are not copied.");
     }
 }
