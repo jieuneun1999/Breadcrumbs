@@ -1,0 +1,25 @@
+{
+  "application_classes": 169,
+  "unchanged_gate_inputs": 157,
+  "saved_files_unchanged": 12,
+  "video_sha256": "f41a9901663a1ef01c84707194525d372c5fe3e0d24f4285ad21e54d310f1754",
+  "probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "width": 1280,
+        "height": 800,
+        "r_frame_rate": "24/1"
+      }
+    ],
+    "format": {
+      "duration": "332.666667"
+    }
+  },
+  "gate": "build/b7e-verification-1ec0d658dade4926825118c6e7937cf5",
+  "demo": "build\\b7-project-map-delivery-4a0023a07e87410db3562c1e99c84117",
+  "source_commit": "e121d75",
+  "simulation": true,
+  "independent_participants": 0
+}

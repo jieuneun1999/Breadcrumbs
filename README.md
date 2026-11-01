@@ -16,6 +16,12 @@ acceptance, actual Java 17 runtime and instructor hardware remain pending. No
 release or merge is implied. Frozen v1.2 specifications and prior evidence remain
 available in [docs](docs/).
 
+The new [Project Map and onboarding](docs/B7_PROJECT_MAP_AND_ONBOARDING.md) show
+actual captured goals, documented state, next actions and uncertainty before you
+confirm the starting record. Eight common sections work for every profile and
+for projects without files. Source reports, your assessments and historical work
+stay distinct; conflicting candidates remain unresolved until reviewed.
+
 ## Run and verify
 
 Use an existing **JDK 17+** with `java` and `javac` on PATH. The application needs
@@ -57,11 +63,15 @@ is downloaded or activated.
 
 1. Choose **2 Create or import project**. Choose a personal, study, team or
    software project. If you import a folder, approve reading it and review the
-   document notes or leave them for later. This sets up starting information;
-   it does not invent earlier progress.
+   initial overview. Explore its map, review individual source statements or add
+   proposed current details, then choose **4 Confirm starting project record**.
+   Cancel discards the proposal. This establishes starting information without
+   inventing earlier progress.
 2. Choose to save the project on this computer. Then choose **7 Open project workspace**
    and **1 View project summary** to see where you left off, your next step and
-   anything you are waiting for. Saved notes work even when the project folder is offline.
+   anything you are waiting for. Use **13 Explore Project Map** for the eight
+   sections, source details and review actions. Saved notes work even when the
+   project folder is offline.
 3. Choose **2 Record progress update**. Answer what changed, what is in the way and what
    to do next. Review the answers before typing `yes`. Use `e` to edit, `?` for
    references and other options, or `0` to cancel.
@@ -81,8 +91,10 @@ Menus use a complete compact action list after each result, with aligned columns
 when the terminal is wide enough. Every accepted menu action stays visible.
 Type `?` to show the full menu again. Options retain their established numbers
 and appear in numeric order. Use workspace **12 Save project** or home **8 Save
-active project** to save a session-only project; this asks before enabling local storage. Import shows a short preview; full inventory/hashes remain under
-View B0 / sources. Reports separate their sections with whitespace.
+active project** to save a session-only project; this asks before enabling local
+storage. Import shows a source-linked overview; the map progressively reveals
+bounded details, original record links and role-grouped sources. Full inventory
+remains under View B0 / sources. Reports separate sections with whitespace.
 
 The daily menu also offers attention checks, search, saved updates and dependencies.
 Advanced project option **3** preserves the original numbered paths: **9** audit,

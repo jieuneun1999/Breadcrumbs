@@ -342,3 +342,153 @@ complete visible choices and the final source-bound checks. This receipt changes
 documentation only. No source/test/script changed after the final 149-input gate.
 Owner next choices remain CONTINUE / CHANGE / RELEASE / STOP. No new Discord write,
 merge, release or deployment occurred. Owner visual acceptance remains pending.
+
+## Active universal Project Map owner steer
+
+Owner attachment7e3abdd8 is the active focused B7E packet. Clean local/remote baseline
+b25b7055dd0670e308d7950945703abe0b66ae57, PR12 OPEN/unmerged, B7D base verified.
+STANDARD, one owner/writer, no agents/worktrees/panels, six repairs per gate/two per
+unchanged hypothesis. Preserve frozen specs, branding/motion, DSAs, parser/security,
+canonical schemas/history and read-only source roots. Scoped append-only commits
+and PR12 update remain authorized; no merges/releases/global installs/Discord.
+No project verification skill is installed; existing JDK/native runners apply.
+
+Pstack1.16 poteto-mode and Feature read completely in separate calls. Existing
+how/architect, Model the Domain, Impeccable Operate/Clarify/Layout and craft-floor
+are reused with fresh code grounding. Relevant Manual/Workflow/Routing/Craft,
+frozen truth/bootstrap/security sections and current B7C/D/acceptance/navigation
+contracts were read. Single-owner Craft adaptation controls delegation/rebases;
+append commits and use self-reviews without an independent-review claim.
+
+- [x] 1. how over the affected subsystem.
+- [x] 2. architect for design exploration, adapted to one owner.
+- [x] 3. Throughput checkpoint recorded below.
+- [x] 4. Implement the typed projection, adapted from delegated writing.
+- [x] 5. Verify on the matching CLI surface.
+- [x] 6. Append small ordered commits; preserve shared history, no rebase.
+- [x] 7. Contested design: not applicable; owner direction is explicit.
+- [ ] 8. Update existing PR12 after reconciliation.
+
+Blocking first steps: audit missing initial context, source truth/privacy and draft
+confirmation ownership; prove mapping semantics before navigation. Independent
+workstreams: n/a, first-import/map/review share canonical entities and CLI input.
+Shared mutable state: WorkspaceState remains sole owner; draft and pending existing
+ContextReview values are local proposals until final approval. Smallest safe units:
+read-only projection + tests; overview/map CLI; returning continuity; six production
+scenarios, bounded native inspection and full regression.
+
+Grounding: prepare returns an immutable unconfirmed BootstrapDraft; confirm alone
+activates BaselineB0 and never appends CP. CurrentAssessment overlays reviews per
+observation. ManualContext, DependencyState and DLL own their distinct records.
+ContextAudit and ReferenceFreshness already derive unknown/conflict/stale results.
+ArtifactService remains the only generated-view publisher. Map does not read files.
+
+Design A: format a second monolithic report with inferred summaries and stored
+map state. Rejected: competing truth and untraceable selection among candidates.
+Design B: immutable eight-section projection with typed item origin and structured
+record/source/time links, fresh bounded derivation from draft or canonical records.
+Selected. Overview uses that same projection, with no automatic winner among
+multiple/conflicting sources. Fields map through one explicit switch; file roles
+are hints. Arrays cap retained category/detail/page output; omitted items remain
+counted. Large-history/audit work discloses deferred detail instead of unbounded
+projection work. No fifth DSA/cache/storage format is introduced.
+
+CLI sketch: overview -> review/map/proposed context/confirm/cancel; draft map can
+request a source review or existing-field assessment. Proposed ContextReview
+records apply only after B0 confirmation, preserving immutable original claims.
+Returning workspace13 opens the same map; review actions reuse existing state
+methods and save callback. Session freshness derives from the observation ID at
+open, never file mtimes or automatic reads. Existing handoff uses canonical changes.
+
+### Project Map implementation and bounded verification
+
+how grounded BootstrapDraft/confirm, canonical reviews, observations, manual
+permissions, Graph/DLL, audit/freshness and existing generated artifacts. The
+architecture sketch above was implemented as immutable typed arrays, a pure
+service and thin CLI request routing. No canonical schema/parser/DSA was changed.
+Read tracking correction: how, Model the Domain and craft-floor were completely
+read this turn; earlier architect/Impeccable supporting reads were reused. The
+relevant canonical/frozen sections were loaded through bounded headings; this is
+not a claim that every full manual/spec file was reread.
+
+Initial focused checks passed profiles/provenance/conflicts/privacy/DOCX/Graph/
+restart/drift and the production ProjectConsole setup/map routes. Existing AllTests
+passed after adding explicit overview confirmation to production input tapes.
+The new Main scenarios then added realistic profile-specific text/code/CSV,
+80-paragraph DOCX, unsupported files, a no-file update/restart and full continuity.
+
+Retained initial failures are developer tape/assertion corrections, not dropped
+state checks: the history basis assertion used the wrong wording; a messy import
+needed the existing notes-mode prompt answered; adding progress documents exposed
+that same prompt in all folder scenarios. The first full native gate
+build/b7e-verification-e5d0c0a5a2ff4705aafae576c95058dd failed on the last input
+mismatch, retaining its source hashes/logs. Fixed the inputs, kept clean-exit,
+canonical-record and byte-identity assertions. Expanded six-scenario run passed at
+build/b7-e2e/project-map-1115606081777382933. A checkpoint source reference was
+explicitly attached before asserting stale referenced evidence; an unreferenced
+document change must not be called a stale checkpoint reference.
+
+Owner self-review caught /cancel being swallowed by the new overview validation
+catch. A typed input cancellation now escapes that catch and discards the proposal;
+the production CLI regression verifies no fallback EOF and unchanged saved bytes.
+First actual native inspection (build/project-map-live.png) caught composed
+history line separators becoming question marks. One correction batch preserves
+newlines at the new display boundary while sanitizing each line's controls, and
+keeps detail text out of the one-line value sanitizer. The older capture is
+retained as superseded evidence; final capture/source reconciliation follows.
+
+Verification, runtime capture, source hash binding and final publication receipts
+are recorded separately below. No performance benchmark, independent review or
+human usability participant is claimed. The developer checklist and real-format
+runtime boundaries are documented in B7_PROJECT_MAP_AND_ONBOARDING.md.
+
+The confirmation capture exposed a semantic over-warning: a capped document-text
+bucket made all overview fields disclaim possible omitted alternatives even when
+their own categories were complete. This was an observed correctness/readability
+issue, not an additional aesthetic exploration. Limited-field warnings now consult
+only the categories containing the displayed fields, with an executable UI
+regression. The synthetic CSV now calls its section column category rather than
+objective, and its planning-text column planning_note rather than next_action;
+the old fixture mislabeled plan headings as goals. Real captured conflicting
+candidates are still covered in the separate messy Main scenario. This narrow
+repair triggers a new full gate and final source-bound recording. Earlier passed
+gate/capture remain local and are explicitly superseded, not silently reused.
+
+### Final Project Map evidence reconciliation
+
+Implementation is in 9fe697b, 4ef73fd and e121d75. Final command:
+`pwsh -NoProfile -File scripts/verify-b7-stage.ps1 -Stage B7E -NativeWindows`.
+Observed PASS at build/b7e-verification-1ec0d658dade4926825118c6e7937cf5,
+22:18:00–22:21:40 Asia/Manila, 1 November 2026. Exit0; all157 source/test/script
+hashes unchanged. All B1–B7 groups, recovery processes, four-profile scenarios,
+six map Main scenarios, native junction/ACL and unrelated-cwd space-path launcher
+passed. Final Main fixtures: build/b7-e2e/project-map-9294199921723983925.
+
+Final source-bound native recording:
+build/b7-project-map-delivery-4a0023a07e87410db3562c1e99c84117/walkthrough.mp4,
+332.667seconds, 1280x800/24fps; SHA256
+f41a9901663a1ef01c84707194525d372c5fe3e0d24f4285ad21e54d310f1754.
+Capture exit0, full FFmpeg decode PASS/no errors. All169 captured app class hashes
+and all157 gate input hashes match current files. Exact canonical readback PASS:
+one update, one reported note, one later observation and one scoped change review;
+all12 saved paths/bytes unchanged by inspection. Five actual unaltered native
+frames inspected. Initial overview now has its single recorded goal/state/next
+action without unrelated cap warnings; history line breaks are readable; returning
+map explicitly states no file check this session. Reading pauses live in the
+scripted input harness, not application operations. Old captures remain local.
+
+Specification self-review PASS for the exercised scope: eight universal sections,
+source-linked overview before confirm, individual source review and local proposed
+assessments, fileless continuity, no initial CP, immutable B0/history, explicit scan
+and save consent, unsupported/private/excluded boundaries, role grouping, bounded
+detail and existing handoff integration. Engineering-quality self-review PASS:
+canonical ownership unchanged, no schema/parser/DSA fork, typed immutable projection,
+full regression, actual CLI/native evidence and final hash binding. These are
+single-owner judgments, not independent review or participant feedback. The
+developer usability checklist is recorded in docs/evidence/b7/e/project-map/README.md.
+
+Result DEMO_READY on Windows/JDK25 targeting17. Actual JDK17, Unix/instructor,
+full representative-file matrix, independent review and owner UX acceptance remain
+open. Owner choices CONTINUE / CHANGE / RELEASE / STOP. Delivery is scoped to
+existing PR12, preserving B7D base; no merge, release, deployment, large-video
+upload or new Discord message. Documentation/evidence publication follows.

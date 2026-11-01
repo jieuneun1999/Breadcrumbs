@@ -1,0 +1,2 @@
+PASS: Native saved project read back without mutation: 1 update, 1 reported note, 1 later observation, 1 scoped change review; exact next step retained.
+PASS: all saved paths and bytes unchanged by readback.

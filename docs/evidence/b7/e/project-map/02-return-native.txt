@@ -1,0 +1,604 @@
+
+                                ,
+                              ,,
+                        .   :, .   ,
+                           :+,=  ,,
+               ,..  .,,:++%@@@@**#,
+             ,..:+*=@@@%%##%@@@@@@%,
+           ,,+*%@%%%%@#%%%@@##@%%@@@,
+      ,, ,;%@%@%%%@@@@@@@@@@@@@@@*%@@#;
+       .+%@%%@@@@@@@@@@@@@@@@@@@%%%%@@:
+      .:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+
+    ..,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#%:
+   ,.,=@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ..
+   :,,%@@@@@@@@@@@@@@@@@@@@@@@@@@@:   ,
+   ,,:%%#@@@@@@@@@@@@@@@@@@@@@@@@@#:
+   :,,*::=##@@@@@@@@@@@@@@@@@@@@@@@@@; ;+
+   . ;=;.,,,,=;#@#%%@@@@@@@@@@@@@@@@@@***
+  ,;;:.+++.,.:::;+***#%@@@@@@@@@@@@@@@@:.
+   ,,.,.. ::;++;:,,,,,::=*@@@@@@@@@@@%=,.
+    ..,:::,,..  .,;;;;++:;*@@@@@@%*;,.::.
+          .,,,:,:;:,,,,.,:;=*+;:,,,,.=@@*
+             .   ...,::::;:,,,:++;=;,,:;.
+                          ,,,,:::,::,:::,
+
+                                ,
+                              ,,              Breadcrumbs / project continuity
+                        .   :, .   ,
+                           :+,=  ,,
+               ,..  .,,:++%@@@@**#,
+             ,..:+*=@@@%%##%@@@@@@%,                       ....
+           ,,+*%@%%%%@#%%%@@##@%%@@@,       +##%%%%##+. +#@%%@@@%=  ,+#%@@%#+ ,=*###*, .;*#%%#*:    ,+#%%%*.+=#####*=. ,;+,  ;=; .::    ,:, ,:;:,.     ,:::,
+      ,, ,;%@%@%%%@@@@@@@@@@@@@@@*%@@#;    ,#@@@@@@@%%%#@@@@@@@@@@#:%@@@@@@@@*%@@@@@@%,=@@@@@@@%*  ;%@@@@@@@@@@@@@@@@%+@%@@,#@@@*#@@* .+%@#*@@@@@@#, ,#@@@@@#,
+       .+%@%%@@@@@@@@@@@@@@@@@@@%%%%@@:    ;*%@@@@@@@@@*@@@@@@@@@@@*%@@@@@%@%:@@@@@@@@%+@@@@@@@@@:+%@@@@@@@=@@@@@@@@@@;@@@@+%%@@:;@@@%+#@@#;%@@@@@@%.+@@@%#@@*
+      .:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+    ..=@@@:+@@@@*%@@@%;*@%@@=@@@@%;:;.*%@@#+@@@@*@@@@*#@@@*#@@@*,**=.#@@@#,*%@@;#%@@=;%%@+,%@@@@@@@@:%@@#;%@@+=%@%++:
+    ..,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#%:     .:@@@@@@@@= *@@@@@@@@@*.%@@@@@@*.%@@@#+@@@@;%@@@*:%%@%+%@@%.    +@@@@@@@@%,=%@@#.@@@%,*@@%@@%#@**#@@@@@#.;+%@@@@@=.
+   ,.,=@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ..    ,%@@@%@@@@=,#%@@@%@@* .+#@@*+++,;+@@@@@@@@*+%@@#=*#@@::@@%#,,,: @%@@@@@%;.,#%@%**#@@,;@@;=@:*@@;+@@=+#@@;,;+==*@@+
+   :,,%@@@@@@@@@@@@@@@@@@@@@@@@@@@:   ,      ,#@@+,:;@@@,+#@@+;#@@#,,=@@*,,;: .%@%,:;#@@,+@@%+*@@@;:#@@%++%%;+*@@:+*@@+ ;#@@%;%@@; @@*,,,;@@:,@@*,*%@# =#+:*%@%
+   ,,:%%#@@@@@@@@@@@@@@@@@@@@@@@@@#:          :@@#;+%@@@+:=@@*,;*@@%,##@@@@@@; =@@, +=@@;=*@@@@@@=.:;=@@@@@@*,+@@*::*@@#,:=@@@@@%.:#@%  .;#@*,*@@@@@@* ;%@@@@@%.
+   :,,*::=##@@@@@@@@@@@@@@@@@@@@@@@@@; ;+      @@@@@@@@*,:;###:::===:;+=++=++;.;;+, ;;;;:::;;;;;,   ,,,;;;;; .;:;;.:;:;+ ,,,;:;+. :::+.  +::;,;;;;;:;  ,.:;;;;.
+   . ;=;.,,,,=;#@#%%@@@@@@@@@@@@@@@@@@***,   ,,,,,:,:,,,,,. .,.,,.,. .  ..... ...         ,,,,,       ,,,,,          .,    .,,,    .,     .,  .,,,,,    ..,,,
+  ,;;:.+++.,.:::;+***#%@@@@@@@@@@@@@@@@:.,:   Leave context behind. Pick up where work stopped.
+   ,,.,.. ::;++;:,,,,,::=*@@@@@@@@@@@%=,.*+
+    ..,:::,,..  .,;;;;++:;*@@@@@@%*;,.::.,,  . . ,::, ..     ,.::....  ...
+          .,,,:,:;:,,,,.,:;=*+;:,,,,.=@@*  ,.;  +@@@@..       :#%:        ,:                                      .#@=..,,..,,.,
+             .   ...,::::;:,,,:++;=;,,:;.++,.::,,,:;,,,.;%* ,.       :      ,,,=@*.  .;                     ...,.:.:+,          ,+.            .
+                          ,,,,:::,::,:::,,,:,.. .   ,.,,.:,.,,...              ;+;   .: .....................                    , ...:......
+
+  [v] Project storage available
+  [v] Saved projects: 1
+  [i] Local saving is optional for each project.
+  [i] Opening a saved project does not check its files for changes.
+
+  /------------------------------------------------------------------------------------------------------------------------------------------------------\
+  | [1]  Open saved project                                                                                                                            > |
+  | [2]  Create or import project                                                                                                                      > |
+  | [3]  Open advanced project tools                                                                                                                   > |
+  | [4]  Run DSA demonstration                                                                                                                         > |
+  | [5]  Restore saved project                                                                                                                         > |
+  | [6]  Switch to session-only mode                                                                                                                   > |
+  | [7]  Open project workspace                                                                                                                        > |
+  | [8]  Save active project                                                                                                                           > |
+  | [0]  Exit                                                                                                                                          > |
+  | [?]  Show menu                                                                                                                                     > |
+  \------------------------------------------------------------------------------------------------------------------------------------------------------/
+
+
+Breadcrumbs > 1
+
+[1] Community food drive (simulation)
+
+Project number (0 = cancel): 1
+
+
+[Done] Your project is open.
+Your saved project is open. Its folder has not been checked again for changes.
+
+Project: Community food drive (simulation)
+Saved on this computer.
+
+Project summary
+Project: Community food drive (simulation)
+Saved on this computer.
+
+Latest progress update
+Booked the hall and drafted the volunteer schedule
+
+Next action
+Ask the delivery company for a quote
+
+Blockers and pending items
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Recommended review
+Add or review the next action.
+
+Last file check: 1 Nov 2026, 10:19 PM. Files may have changed since then.
+Choose 7 to continue working, or 3 for detailed project tools.
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > 7
+
+
+Project workspace
+[1]   View project summary
+[2]   Record progress update
+[3]   Assess project context
+[4]   Review file changes
+[5]   Search project records
+[6]   Create detailed progress update
+[7]   View update history
+[8]   Manage tasks and dependencies
+[9]   Open advanced project tools
+[10]  Manage project notes
+[11]  Prepare project handoff
+[12]  Save project
+[13]  Explore Project Map
+[0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 13
+
+
+Project Map
+Project: Community food drive (simulation)
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      66 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map > 0
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 10
+
+Project notes
+Keep a note about your project or something someone told you. Do not add passwords or access keys.
+[1]   Add a note
+[2]   Review a note
+[3]   Read a note
+[4]   Attach a note to a progress update
+[0]   Back
+
+Notes > 1
+
+[1]   Personal observation
+[2]   Current project status
+[3]   Reported statement
+[4]   Decision or agreement
+[5]   Proposed next action
+
+Note category: 3
+
+
+Note content: The hall coordinator said two extra tables are available
+
+
+Information source: Simulated planning call
+
+
+Optional reference, such as a meeting name or document title: Planning call notes
+
+
+Privacy [S = private; Enter = standard project note]:
+
+
+Review project note
+The hall coordinator said two extra tables are available
+
+Where this came from
+Simulated planning call
+This is what someone told you. Breadcrumbs has not checked whether it is true.
+
+Add note [C = confirm; P = pending review; 0 = cancel]: c
+
+Your note has been added to this open project.
+
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Allow words from this reported note to appear in search? This does not verify the note. Type yes: yes
+
+
+Allow this note and its origin to be included in handoff files? Type yes: yes
+
+
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Also use this note as your current description of the project? Type yes:
+
+
+Record a progress update with this note attached now? Type yes:
+
+Project notes
+Keep a note about your project or something someone told you. Do not add passwords or access keys.
+Note 1: Reported statement | Reviewed by you
+[1]   Add a note
+[2]   Review a note
+[3]   Read a note
+[4]   Attach a note to a progress update
+[0]   Back
+
+Notes > 0
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 5
+
+
+Search project records
+Search the notes and document text you allowed Breadcrumbs to use. Refresh search after recording changes.
+[1]   Search exact term
+[2]   Suggest terms by prefix
+[3]   View search coverage
+[4]   Refresh search index
+[5]   View diagnostics and DSA demonstration
+[6]   Configure unreviewed-text search
+[7]   Enable or disable search
+[0]   Return to previous menu
+[?]   Show menu
+
+Search > 4
+
+
+
+[Done] Search is ready.
+You can search the text allowed for this project.
+
+Search actions
+[1]   Search exact term                                       [2]   Suggest terms by prefix
+[3]   View search coverage                                    [4]   Refresh search index
+[5]   View diagnostics and DSA demonstration                  [6]   Configure unreviewed-text search
+[7]   Enable or disable search                                [0]   Return to previous menu
+[?]   Show menu
+
+Search > 1
+
+
+
+Search term: tables
+
+
+Search results
+Word: tables
+[1] A note you added
+Where: manual origin: Simulated planning call | declared reference: Planning call notes
+This is recorded information. Breadcrumbs has not checked whether the reported work happened.
+Matches in this item: 1
+
+Item number to read, or 0 to go back: 1
+
+
+
+Show this reviewed text on this computer? Type yes: yes
+
+
+The hall coordinator said two extra tables are available
+
+Search actions
+[1]   Search exact term                                       [2]   Suggest terms by prefix
+[3]   View search coverage                                    [4]   Refresh search index
+[5]   View diagnostics and DSA demonstration                  [6]   Configure unreviewed-text search
+[7]   Enable or disable search                                [0]   Return to previous menu
+[?]   Show menu
+
+Search > 0
+
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 4
+
+
+Review file changes
+
+Read your project folder again to check for changes? Type yes; Enter uses earlier file checks: yes
+
+
+[Done] File check finished.
+4 items checked. Review the changes below.
+
+[Done] File changes compared.
+
+File comparison
+
+Updated file
+00-overview.md
+Your earlier updates and their original file references are kept. Files that could not be read may contain other
+changes.
+[1]   Mark changes as reviewed
+[2]   Update next action
+[3]   Record progress update
+[D]   View technical comparison
+[0]   Back to workspace
+
+Review action: 1
+
+
+Mark these changes as reviewed? This does not confirm the work is finished. Type yes: yes
+
+Marked as reviewed. Your recorded project progress is unchanged.
+
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 13
+
+
+Project Map
+Project: Community food drive (simulation)
+The latest file observation was recorded during this project session; it is not continuous monitoring.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      67 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map > 1
+
+
+Purpose
+Project goals and planned deliverables.
+[1]   Project goal
+Prepare 100 food packs for a community pickup day.
+Basis: Source-reported; Not reviewed yet
+Source: 00-overview.md line 2 | Objective
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section > 0
+
+
+Project Map
+Project: Community food drive (simulation)
+The latest file observation was recorded during this project session; it is not continuous monitoring.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      67 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map > 0
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 1
+
+
+Project summary
+Project: Community food drive (simulation)
+Saved on this computer.
+
+Latest progress update
+Booked the hall and drafted the volunteer schedule
+
+Next action
+Ask the delivery company for a quote
+
+Blockers and pending items
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Recommended review
+Add or review the next action.
+
+Last file check: 1 Nov 2026, 10:23 PM. Files may have changed since then.
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 11
+
+
+Project handoff
+Preview or export project context for continuing work. Source documents are not copied or modified.
+[1]   View project summary file
+[2]   View handoff document
+[3]   View archived progress update
+[4]   Refresh handoff documents
+[5]   Configure automatic document updates
+[6]   Export handoff package
+[D]   View technical file details
+[0]   Back to workspace
+[?]   Show menu
+
+Handoff > 6
+
+
+Progress update numbers or IDs to include, separated by commas; Enter includes no earlier updates: 1
+
+
+New full folder path for the handoff, outside your project and save folders: <demo>\native-portable
+
+
+File
+README.md
+
+File
+state.md
+
+File
+HANDOFF.md
+
+File
+checkpoints/CP-000001.md
+Review this handoff before sharing. Only notes you approved for export are included. Original documents and the project
+folder location are not copied.
+
+Destination
+<demo>\
+native-portable
+
+Create this new handoff folder with the files shown above? Type yes: yes
+
+
+[Done] Your handoff files are ready.
+Handoff package exported successfully.
+
+Export folder
+<demo>\
+native-portable
+
+Handoff actions
+[1]   View project summary file                               [2]   View handoff document
+[3]   View archived progress update                           [4]   Refresh handoff documents
+[5]   Configure automatic document updates                    [6]   Export handoff package
+[D]   View technical file details                             [0]   Back to workspace
+[?]   Show menu
+
+Handoff > 0
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 0
+
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > 0
+
+Goodbye.

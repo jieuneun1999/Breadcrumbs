@@ -1,0 +1,944 @@
+NOTE: Picked up JDK_JAVA_OPTIONS:  -Dbreadcrumbs.junction.fixture=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container -Dbreadcrumbs.b3Junction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked -Dbreadcrumbs.b4ExportJunction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked
+
+  BREADCRUMBS
+  Breadcrumbs / project continuity
+  Leave context behind. Pick up where work stopped.
+  Logo: use COLUMNS=160.
+
+  [v] Project storage available
+  [v] Saved projects: 1
+  [i] Local saving is optional for each project.
+  [i] Opening a saved project does not check its files for changes.
+
+  /----------------------------------------------------------------------------------------\
+  | [1]  Open saved project                                                              > |
+  | [2]  Create or import project                                                        > |
+  | [3]  Open advanced project tools                                                     > |
+  | [4]  Run DSA demonstration                                                           > |
+  | [5]  Restore saved project                                                           > |
+  | [6]  Switch to session-only mode                                                     > |
+  | [7]  Open project workspace                                                          > |
+  | [8]  Save active project                                                             > |
+  | [0]  Exit                                                                            > |
+  | [?]  Show menu                                                                       > |
+  \----------------------------------------------------------------------------------------/
+
+
+Breadcrumbs > [1] continuity
+
+Project number (0 = cancel): Opening your project...
+[Done] Your project is open.
+Your saved project is open. Its folder has not been checked again for changes.
+
+Project: continuity
+Saved on this computer.
+
+Project summary
+Project: continuity
+Saved on this computer.
+
+Latest progress update
+No progress updates yet. Record what you work on to make returning easier.
+
+Next action
+Not provided yet
+
+Blockers and pending items
+Not provided yet
+
+Recommended review
+Add or review the next action.
+
+Last file check: 1 Nov 2026, 10:20 PM. Files may have changed since then.
+Choose 7 to continue working, or 3 for detailed project tools.
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs >
+Project workspace
+[1]   View project summary
+[2]   Record progress update
+[3]   Assess project context
+[4]   Review file changes
+[5]   Search project records
+[6]   Create detailed progress update
+[7]   View update history
+[8]   Manage tasks and dependencies
+[9]   Open advanced project tools
+[10]  Manage project notes
+[11]  Prepare project handoff
+[12]  Save project
+[13]  Explore Project Map
+[0]   Back to project navigation
+[?]   Show menu
+
+Workspace > PROJECT DEPENDENCIES
+Revision:
+[1]   List work items
+[2]   Create work item
+[3]   Add dependency
+[4]   Remove dependency
+[5]   Adjacency
+[6]   Potential downstream impact
+[7]   BFS
+[8]   DFS
+[9]   Validate
+[0]   Back
+
+dependencies >
+Title:
+Description:
+Explicit status [UNKNOWN/NOT_STARTED/IN_PROGRESS/BLOCKED/COMPLETED]:
+Owner (blank unknown):
+Due date YYYY-MM-DD (blank unknown):
+Current observation evidence IDs comma-separated (blank none): PREVIEW user present assessment | Book vehicle | IN_PROGRESS. Past actions not independently verified.
+
+Confirm creation? yes: Created T-000001
+PROJECT DEPENDENCIES
+Revision: G-000001
+[1]   List work items
+[2]   Create work item
+[3]   Add dependency
+[4]   Remove dependency
+[5]   Adjacency
+[6]   Potential downstream impact
+[7]   BFS
+[8]   DFS
+[9]   Validate
+[0]   Back
+
+dependencies >
+Title:
+Description:
+Explicit status [UNKNOWN/NOT_STARTED/IN_PROGRESS/BLOCKED/COMPLETED]:
+Owner (blank unknown):
+Due date YYYY-MM-DD (blank unknown):
+Current observation evidence IDs comma-separated (blank none): PREVIEW user present assessment | Deliver supplies | NOT_STARTED. Past actions not independently verified.
+
+Confirm creation? yes: Created T-000002
+PROJECT DEPENDENCIES
+Revision: G-000002
+[1]   List work items
+[2]   Create work item
+[3]   Add dependency
+[4]   Remove dependency
+[5]   Adjacency
+[6]   Potential downstream impact
+[7]   BFS
+[8]   DFS
+[9]   Validate
+[0]   Back
+
+dependencies >
+Prerequisite ID:
+Dependent ID: PREVIEW T-000001 Book vehicle -> T-000002 Deliver supplies
+
+Accepted source evidence ID (blank direct declaration):
+Explicit declaration / rationale:
+Confirm change? yes: Confirmed revision G-000003. Save project to persist.
+PROJECT DEPENDENCIES
+Revision: G-000003
+[1]   List work items
+[2]   Create work item
+[3]   Add dependency
+[4]   Remove dependency
+[5]   Adjacency
+[6]   Potential downstream impact
+[7]   BFS
+[8]   DFS
+[9]   Validate
+[0]   Back
+
+dependencies >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > Project notes
+Keep a note about your project or something someone told you. Do not add passwords or access keys.
+[1]   Add a note
+[2]   Review a note
+[3]   Read a note
+[4]   Attach a note to a progress update
+[0]   Back
+
+Notes > [1]   Personal observation
+[2]   Current project status
+[3]   Reported statement
+[4]   Decision or agreement
+[5]   Proposed next action
+
+Note category:
+Note content:
+Information source:
+Optional reference, such as a meeting name or document title:
+Privacy [S = private; Enter = standard project note]:
+Review project note
+The coordinator reported two extra tables
+
+Where this came from
+Simulated planning call
+This is what someone told you. Breadcrumbs has not checked whether it is true.
+
+Add note [C = confirm; P = pending review; 0 = cancel]: Your note has been added to this open project.
+Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Allow words from this reported note to appear in search? This does not verify the note. Type yes:
+Allow this note and its origin to be included in handoff files? Type yes: Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Also use this note as your current description of the project? Type yes:
+Record a progress update with this note attached now? Type yes: Project notes
+Keep a note about your project or something someone told you. Do not add passwords or access keys.
+Note 1: Reported statement | Reviewed by you
+[1]   Add a note
+[2]   Review a note
+[3]   Read a note
+[4]   Attach a note to a progress update
+[0]   Back
+
+Notes >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      2 recorded items
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Current state
+Documented status and current human assessments.
+[1]   Person responsible
+Demo coordinator
+Basis: Source-reported; Left for later
+Source: coordination.csv line 2 | CSV column owner
+[2]   Current project status
+Draft review is underway
+Basis: Source-reported; Left for later
+Source: README.md line 4 | Current State
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Clarify project context
+This records your present assessment, without changing source statements or certifying past work.
+[1]   Project goal
+[2]   Current project status
+[3]   Suggested next action
+[4]   What is getting in the way
+[5]   What you plan to deliver
+[6]   Decision
+[7]   Reason
+[8]   Person responsible
+[0]   Back
+
+Context field:
+Your current assessment [Enter = unknown; NOT_DOCUMENTED = explicitly not documented]:
+Proposed assessment
+Venue arrangement awaits written confirmation
+This adds a current review; original files and past updates remain unchanged.
+
+Accept this assessment? Type yes: Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      8 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Record progress update
+Record operational progress, pending dependencies and the next action.
+
+Progress summary:
+Blockers or pending items [none, or Enter if unknown]:
+Next action:
+Review progress update
+
+Progress summary
+Booked the hall
+
+Blockers or pending items
+Awaiting delivery quote
+
+Next action
+Request a written quote
+This records your account of the work. Breadcrumbs does not check whether the work happened.
+
+Update actions
+[YES] Confirm update                                          [E]   Edit progress details
+[A]   Attach document references                              [M]   Attach project notes
+[O]   Edit goal, owner and decisions                          [D]   Manage tasks and dependencies
+[F]   Open detailed update form                               [0]   Cancel update
+[?]   Show update options
+
+Update action:
+EV-W-368d81c3be084616be5617b09925b28a-000001
+Person responsible | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000002
+What is getting in the way | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000003
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000004
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000005
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000006
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000007
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000008
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000009
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000010
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000011
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000012
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000013
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000014
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000015
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000016
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000017
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000018
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000019
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000020
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000021
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000022
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000023
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000024
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000025
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000026
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000027
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000028
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000029
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000030
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000031
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000032
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000033
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000034
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000035
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000036
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000037
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000038
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000039
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000040
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000041
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000042
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000043
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000044
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000045
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000046
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000047
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000048
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000049
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000050
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000051
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000052
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000053
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000054
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000055
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000056
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000057
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000058
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000059
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000060
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000061
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000062
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000063
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000064
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000065
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000066
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000067
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000068
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000069
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000070
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000071
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000072
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000073
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000074
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000075
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000076
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000077
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000078
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000079
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000080
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000081
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000082
+Text from the document | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000083
+Current project status | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000084
+Project goal | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000085
+Current project status | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000086
+Suggested next action | Left for later
+
+EV-W-368d81c3be084616be5617b09925b28a-000087
+Task update | Left for later
+
+Document reference IDs, comma-separated; Enter clears:
+Review progress update
+
+Progress summary
+Booked the hall
+
+Blockers or pending items
+Awaiting delivery quote
+
+Next action
+Request a written quote
+Attached context: 1 document references and 0 notes
+This records your account of the work. Breadcrumbs does not check whether the work happened.
+
+Update actions
+[YES] Confirm update                                          [E]   Edit progress details
+[A]   Attach document references                              [M]   Attach project notes
+[O]   Edit goal, owner and decisions                          [D]   Manage tasks and dependencies
+[F]   Open detailed update form                               [0]   Cancel update
+[?]   Show update options
+
+Update action: Your update has been added to the project.
+Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Progress & history
+The starting observation and recorded updates, not inferred earlier work.
+[1]   Starting project record
+Original baseline retained; this is not a progress update.
+Basis: Recorded history; not current verification
+[2]   Booked the hall
+Booked the hall
+Recorded next action: Request a written quote
+Recorded blockers: BLOCKED | Awaiting delivery quote
+Recorded decisions: UNKNOWN
+Graph reference: G-000003
+Basis: Recorded history; not current verification
+[3]   Current project status
+The draft is ready for review; no completed work is independently verified.
+Basis: Source-reported; Left for later
+Source: progress.md line 2 | Progress
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Tasks & next actions
+Tasks mentioned in documents are separate from tasks tracked by Breadcrumbs.
+[1]   Tracked task T-000001: Book vehicle
+Request quote | Reported status: IN_PROGRESS | Owner: UNKNOWN
+Basis: Explicitly tracked task
+[2]   Tracked task T-000002: Deliver supplies
+Arrange pickup | Reported status: NOT_STARTED | Owner: UNKNOWN
+Basis: Explicitly tracked task
+[3]   Suggested next action
+Request feedback on the draft
+Basis: Source-reported; Left for later
+Source: README.md line 6 | Next Action
+[4]   Task update | TASK-1 (mentioned in document; not a tracked task)
+TASK-1 = NOT_STARTED
+Basis: Source-reported; Left for later
+Source: tasks.md line 2 | Tasks
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Blockers & dependencies
+Reported obstacles and explicitly declared prerequisite relationships.
+[1]   Declared dependency T-000001 -> T-000002
+Delivery needs transport
+Basis: Declared dependency
+[2]   What is getting in the way
+Confirm venue access
+Basis: Source-reported; Left for later
+Source: coordination.csv line 2 | CSV column blockers
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Evidence & sources
+Saved source inventory and project notes; no files are moved or copied.
+[1]   coordination.csv
+SUPPORTED | CSV | Bounded extraction completed.
+Basis: Observed file metadata
+Source: coordination.csv File metadata only
+[2]   event-plan.txt
+SUPPORTED | TXT | Bounded extraction completed.
+Basis: Observed file metadata
+Source: event-plan.txt File metadata only
+[3]   plan.docx
+SUPPORTED | DOCX | Bounded main-document paragraphs only; layout, comments, headers, drawings, embedded content and
+field instructions/cached results omitted. Revisions rejected.
+Basis: Observed file metadata
+Source: plan.docx File metadata only
+[4]   progress.md
+SUPPORTED | MARKDOWN | Bounded extraction completed.
+Basis: Observed file metadata
+Source: progress.md File metadata only
+Showing at most 64 of 88 items. Existing history/source tools retain the remaining records.
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[S]   Group file sources by role
+[0]   Back to map
+
+Section >
+Project Map
+Project: continuity
+Files have not been checked for changes during this session.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      3 recorded items
+[3]   Progress & history
+      3 recorded items
+[4]   Tasks & next actions
+      4 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      2 recorded items
+[7]   Evidence & sources
+      88 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project handoff
+Preview or export project context for continuing work. Source documents are not copied or modified.
+[1]   View project summary file
+[2]   View handoff document
+[3]   View archived progress update
+[4]   Refresh handoff documents
+[5]   Configure automatic document updates
+[6]   Export handoff package
+[D]   View technical file details
+[0]   Back to workspace
+[?]   Show menu
+
+Handoff > If enabled, Breadcrumbs updates the project summary, handoff and saved-update files after a successful save. Private
+notes and notes you did not approve for export stay out. Your original documents are not copied.
+
+Update the handoff files whenever you save? Type yes: Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+Preparing your handoff files...
+[Done] Your handoff files are ready.
+Your project summary and handoff files are up to date.
+
+Update handoff files after saving
+On
+
+Handoff actions
+[1]   View project summary file                               [2]   View handoff document
+[3]   View archived progress update                           [4]   Refresh handoff documents
+[5]   Configure automatic document updates                    [6]   Export handoff package
+[D]   View technical file details                             [0]   Back to workspace
+[?]   Show menu
+
+Handoff >
+Progress update numbers or IDs to include, separated by commas; Enter includes no earlier updates:
+New full folder path for the handoff, outside your project and save folders:
+File
+README.md
+
+File
+state.md
+
+File
+HANDOFF.md
+
+File
+checkpoints/CP-000001.md
+Review this handoff before sharing. Only notes you approved for export are included. Original documents and the project
+folder location are not copied.
+
+Destination
+<scenario-root>\continuity\portabl
+e
+
+Create this new handoff folder with the files shown above? Type yes: Preparing your handoff files...
+[Done] Your handoff files are ready.
+Handoff package exported successfully.
+
+Export folder
+<scenario-root>\continuity\portabl
+e
+
+Handoff actions
+[1]   View project summary file                               [2]   View handoff document
+[3]   View archived progress update                           [4]   Refresh handoff documents
+[5]   Configure automatic document updates                    [6]   Export handoff package
+[D]   View technical file details                             [0]   Back to workspace
+[?]   Show menu
+
+Handoff >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > Goodbye.

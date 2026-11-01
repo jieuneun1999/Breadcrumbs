@@ -1,0 +1,164 @@
+NOTE: Picked up JDK_JAVA_OPTIONS:  -Dbreadcrumbs.junction.fixture=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container -Dbreadcrumbs.b3Junction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked -Dbreadcrumbs.b4ExportJunction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked
+
+  BREADCRUMBS
+  Breadcrumbs / project continuity
+  Leave context behind. Pick up where work stopped.
+  Logo: use COLUMNS=160.
+
+  [v] Project storage available
+  [v] Saved projects: 1
+  [i] Local saving is optional for each project.
+  [i] Opening a saved project does not check its files for changes.
+
+  /----------------------------------------------------------------------------------------\
+  | [1]  Open saved project                                                              > |
+  | [2]  Create or import project                                                        > |
+  | [3]  Open advanced project tools                                                     > |
+  | [4]  Run DSA demonstration                                                           > |
+  | [5]  Restore saved project                                                           > |
+  | [6]  Switch to session-only mode                                                     > |
+  | [7]  Open project workspace                                                          > |
+  | [8]  Save active project                                                             > |
+  | [0]  Exit                                                                            > |
+  | [?]  Show menu                                                                       > |
+  \----------------------------------------------------------------------------------------/
+
+
+Breadcrumbs > [1] Without files
+
+Project number (0 = cancel): Opening your project...
+[Done] Your project is open.
+Your saved project is open. Its folder has not been checked again for changes.
+
+Project: Without files
+Saved on this computer.
+
+Project summary
+Project: Without files
+Saved on this computer.
+
+Latest progress update
+Prepared the pickup checklist
+
+Next action
+Ask for volunteers
+
+Blockers and pending items
+None reported in this update
+This is what you recorded earlier. Update it if your plans have changed.
+
+Recommended review
+Describe where the project stands today.
+
+No project folder is linked. You can still use notes and progress updates.
+Choose 7 to continue working, or 3 for detailed project tools.
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs >
+Project workspace
+[1]   View project summary
+[2]   Record progress update
+[3]   Assess project context
+[4]   Review file changes
+[5]   Search project records
+[6]   Create detailed progress update
+[7]   View update history
+[8]   Manage tasks and dependencies
+[9]   Open advanced project tools
+[10]  Manage project notes
+[11]  Prepare project handoff
+[12]  Save project
+[13]  Explore Project Map
+[0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project Map
+Project: Without files
+No folder linked. Supplied context and recorded updates remain useful without files.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Progress & history
+The starting observation and recorded updates, not inferred earlier work.
+[1]   Starting project record
+Original baseline retained; this is not a progress update.
+Basis: Recorded history; not current verification
+[2]   Prepared the pickup checklist
+Prepared the pickup checklist
+Recorded next action: Ask for volunteers
+Recorded blockers: NONE_REPORTED | UNKNOWN
+Recorded decisions: UNKNOWN
+Graph reference:
+Basis: Recorded history; not current verification
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+No folder linked. Supplied context and recorded updates remain useful without files.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map >
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace >
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > Goodbye.

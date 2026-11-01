@@ -14,6 +14,67 @@ presentation follow-up sends no new Discord message.
 
 `REAL_DOCUMENT_ACCEPTANCE = PARTIAL_PUBLIC_DOCX; FULL_MATRIX_PENDING_OWNER_REVIEW`
 
+## Current universal Project Map and initial review
+
+The previous first-import preview exposed individual source records without a
+short account of the actual project context. The new overview shows supported
+goal, documented current state, next action, important uncertainty and coverage
+before B0 confirmation. It offers individual source review, a universal
+eight-section map, proposed present-context clarification, confirmation and cancel.
+Draft assessments use existing ContextReview semantics only after explicit B0
+confirmation. No initial checkpoint is created; saving remains separate consent.
+
+Returning workspace option 13 derives the same map from current canonical
+records, original B0, later observations, historical checkpoints, current reviews,
+eligible manual context, explicit Graph tasks/edges and existing audit/freshness.
+Opening it never scans files. Fileless projects use supplied context and can
+record/save/reopen updates. Source task candidates, user assessments and historical
+work remain distinct. PDF/XLSX/PPTX bodies, private notes and excluded names remain
+outside the new display. Actual extracted DOCX paragraphs retain their locators.
+No parser, canonical schema, fifth DSA or second handoff generator was added.
+
+Implementation commits: 9fe697b (typed bounded projection), 4ef73fd (CLI and
+production scenarios) and e121d75 (field-limit correction). Final Windows gate
+`build/b7e-verification-1ec0d658dade4926825118c6e7937cf5` passed on 1 November
+2026, 22:18:00–22:21:40 Asia/Manila: exit 0; all 157 source/test/script hashes
+unchanged. It includes all B1–B7 groups, interrupted-process recovery, existing
+four-profile Main scenarios, six new Project Map Main scenarios, native junction/
+ACL checks and the unrelated-cwd path-with-spaces launcher. New view checks cover
+28/40/80/120/160 columns in color/plain output, C/R/U, proposed clarification,
+cancellation including /cancel, offline reopening, all map sections, paging,
+source groups, note display consent, DOCX/capacity limits and canonical byte
+immutability. No old state/effect assertions were removed.
+
+Final video confirmation exposed an unrelated document-text cap generating
+unnecessary warnings for complete overview fields. Cap notices now consult only
+the relevant categories, with a new UI regression. The final gate supersedes
+the earlier passed `build/b7e-verification-3a06728e97774d04be3d3ff15dd6210f`.
+
+The first full gate failed because a new progress-document fixture triggered the
+existing notes-mode prompt, shifting its scripted inputs. That failed receipt is
+retained locally at `build/b7e-verification-e5d0c0a5a2ff4705aafae576c95058dd`.
+The corrected runner preserves clean-exit and saved-state checks. Actual native
+inspection also found composed history separators rendered as question marks;
+the new display boundary now preserves readable line breaks while sanitizing
+terminal controls. See the [implementation guide](B7_PROJECT_MAP_AND_ONBOARDING.md),
+[execution record](B7_EXECPLAN.md) and [current evidence](evidence/b7/e/project-map/README.md).
+
+The final native capture is 332.667 seconds at 1280x800/24fps, using a populated
+62-paragraph synthetic project in two production ProjectConsole processes. Five
+unaltered frames were visually inspected: approved brand, initial overview,
+original source links, separated history and returning-session freshness. Full
+decode passed without errors. All 169 application classes and 157 gate inputs
+match; canonical readback confirms the expected update/note/observation/review,
+and all 12 saved file paths/bytes remain unchanged. The MP4 is local at
+`build/b7-project-map-delivery-4a0023a07e87410db3562c1e99c84117/walkthrough.mp4`.
+Only sanitized transcripts, screenshots and reproducibility metadata are committed.
+
+This is scripted developer inspection, not independent participant feedback.
+Actual JDK17, Unix/instructor hardware, full representative-document acceptance
+and owner visual acceptance remain open. The earlier professional-navigation
+record below is retained as historical evidence; the Project Map gate supersedes
+its source/test counts for the current implementation.
+
 ## Current professional navigation correction
 
 The owner requested professional simple language, consistent capitalization,

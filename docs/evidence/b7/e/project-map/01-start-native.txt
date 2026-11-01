@@ -1,0 +1,524 @@
+
+                                ,
+                              ,,
+                        .   :, .   ,
+                           :+,=  ,,
+               ,..  .,,:++%@@@@**#,
+             ,..:+*=@@@%%##%@@@@@@%,
+           ,,+*%@%%%%@#%%%@@##@%%@@@,
+      ,, ,;%@%@%%%@@@@@@@@@@@@@@@*%@@#;
+       .+%@%%@@@@@@@@@@@@@@@@@@@%%%%@@:
+      .:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+
+    ..,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#%:
+   ,.,=@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ..
+   :,,%@@@@@@@@@@@@@@@@@@@@@@@@@@@:   ,
+   ,,:%%#@@@@@@@@@@@@@@@@@@@@@@@@@#:
+   :,,*::=##@@@@@@@@@@@@@@@@@@@@@@@@@; ;+
+   . ;=;.,,,,=;#@#%%@@@@@@@@@@@@@@@@@@***
+  ,;;:.+++.,.:::;+***#%@@@@@@@@@@@@@@@@:.
+   ,,.,.. ::;++;:,,,,,::=*@@@@@@@@@@@%=,.
+    ..,:::,,..  .,;;;;++:;*@@@@@@%*;,.::.
+          .,,,:,:;:,,,,.,:;=*+;:,,,,.=@@*
+             .   ...,::::;:,,,:++;=;,,:;.
+                          ,,,,:::,::,:::,
+
+                                ,
+                              ,,              Breadcrumbs / project continuity
+                        .   :, .   ,
+                           :+,=  ,,
+               ,..  .,,:++%@@@@**#,
+             ,..:+*=@@@%%##%@@@@@@%,                       ....
+           ,,+*%@%%%%@#%%%@@##@%%@@@,       +##%%%%##+. +#@%%@@@%=  ,+#%@@%#+ ,=*###*, .;*#%%#*:    ,+#%%%*.+=#####*=. ,;+,  ;=; .::    ,:, ,:;:,.     ,:::,
+      ,, ,;%@%@%%%@@@@@@@@@@@@@@@*%@@#;    ,#@@@@@@@%%%#@@@@@@@@@@#:%@@@@@@@@*%@@@@@@%,=@@@@@@@%*  ;%@@@@@@@@@@@@@@@@%+@%@@,#@@@*#@@* .+%@#*@@@@@@#, ,#@@@@@#,
+       .+%@%%@@@@@@@@@@@@@@@@@@@%%%%@@:    ;*%@@@@@@@@@*@@@@@@@@@@@*%@@@@@%@%:@@@@@@@@%+@@@@@@@@@:+%@@@@@@@=@@@@@@@@@@;@@@@+%%@@:;@@@%+#@@#;%@@@@@@%.+@@@%#@@*
+      .:@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@+    ..=@@@:+@@@@*%@@@%;*@%@@=@@@@%;:;.*%@@#+@@@@*@@@@*#@@@*#@@@*,**=.#@@@#,*%@@;#%@@=;%%@+,%@@@@@@@@:%@@#;%@@+=%@%++:
+    ..,#@@@@@@@@@@@@@@@@@@@@@@@@@@@@#%:     .:@@@@@@@@= *@@@@@@@@@*.%@@@@@@*.%@@@#+@@@@;%@@@*:%%@%+%@@%.    +@@@@@@@@%,=%@@#.@@@%,*@@%@@%#@**#@@@@@#.;+%@@@@@=.
+   ,.,=@@@@@@@@@@@@@@@@@@@@@@@@@@@%.   ..    ,%@@@%@@@@=,#%@@@%@@* .+#@@*+++,;+@@@@@@@@*+%@@#=*#@@::@@%#,,,: @%@@@@@%;.,#%@%**#@@,;@@;=@:*@@;+@@=+#@@;,;+==*@@+
+   :,,%@@@@@@@@@@@@@@@@@@@@@@@@@@@:   ,      ,#@@+,:;@@@,+#@@+;#@@#,,=@@*,,;: .%@%,:;#@@,+@@%+*@@@;:#@@%++%%;+*@@:+*@@+ ;#@@%;%@@; @@*,,,;@@:,@@*,*%@# =#+:*%@%
+   ,,:%%#@@@@@@@@@@@@@@@@@@@@@@@@@#:          :@@#;+%@@@+:=@@*,;*@@%,##@@@@@@; =@@, +=@@;=*@@@@@@=.:;=@@@@@@*,+@@*::*@@#,:=@@@@@%.:#@%  .;#@*,*@@@@@@* ;%@@@@@%.
+   :,,*::=##@@@@@@@@@@@@@@@@@@@@@@@@@; ;+      @@@@@@@@*,:;###:::===:;+=++=++;.;;+, ;;;;:::;;;;;,   ,,,;;;;; .;:;;.:;:;+ ,,,;:;+. :::+.  +::;,;;;;;:;  ,.:;;;;.
+   . ;=;.,,,,=;#@#%%@@@@@@@@@@@@@@@@@@***,   ,,,,,:,:,,,,,. .,.,,.,. .  ..... ...         ,,,,,       ,,,,,          .,    .,,,    .,     .,  .,,,,,    ..,,,
+  ,;;:.+++.,.:::;+***#%@@@@@@@@@@@@@@@@:.,:   Leave context behind. Pick up where work stopped.
+   ,,.,.. ::;++;:,,,,,::=*@@@@@@@@@@@%=,.*+
+    ..,:::,,..  .,;;;;++:;*@@@@@@%*;,.::.,,  . . ,::, ..     ,.::....  ...
+          .,,,:,:;:,,,,.,:;=*+;:,,,,.=@@*  ,.;  +@@@@..       :#%:        ,:                                      .#@=..,,..,,.,
+             .   ...,::::;:,,,:++;=;,,:;.++,.::,,,:;,,,.;%* ,.       :      ,,,=@*.  .;                     ...,.:.:+,          ,+.            .
+                          ,,,,:::,::,:::,,,:,.. .   ,.,,.:,.,,...              ;+;   .: .....................                    , ...:......
+
+  [v] Project storage available
+  [v] Saved projects: 0
+  Welcome to Breadcrumbs. No saved projects yet.
+  Understand recorded project context, remember progress, and continue later.
+  Choose 2 to import a folder or start a project without files.
+  [i] Local saving is optional for each project.
+  [i] Opening a saved project does not check its files for changes.
+
+  /------------------------------------------------------------------------------------------------------------------------------------------------------\
+  | [1]  Open saved project                                                                                                                            > |
+  | [2]  Create or import project                                                                                                                      > |
+  | [3]  Open advanced project tools                                                                                                                   > |
+  | [4]  Run DSA demonstration                                                                                                                         > |
+  | [5]  Restore saved project                                                                                                                         > |
+  | [6]  Switch to session-only mode                                                                                                                   > |
+  | [7]  Open project workspace                                                                                                                        > |
+  | [8]  Save active project                                                                                                                           > |
+  | [0]  Exit                                                                                                                                          > |
+  | [?]  Show menu                                                                                                                                     > |
+  \------------------------------------------------------------------------------------------------------------------------------------------------------/
+
+
+Breadcrumbs > 2
+
+
+Create or import project
+[1]   Create an empty project
+[2]   Import an existing folder
+[3]   Import existing notes / handoff context
+[0]   Back. /cancel at any prompt discards the proposal.
+
+Entry mode: 2
+
+
+Project display name: Community food drive (simulation)
+
+[1]   General project
+[2]   Academic or research project
+[3]   Team or operations project
+[4]   Software project
+
+Project type [Enter = general]: 3
+
+
+Existing local project directory: <demo>\source
+
+
+Breadcrumbs will read this folder without changing or running its files. Some formats and private/system folders are
+skipped.
+Text notes, selected CSV fields and Word paragraphs can be read within size limits. PDF and other unsupported bodies
+cannot be read.
+
+Approve bounded read-only scan? Type yes: yes
+
+
+[Done] Project files checked.
+4 items checked. 77 pieces of context found. Review the details before using them.
+
+Project overview / What we found
+Project: Community food drive (simulation)
+Profile: OPERATIONS
+Initial review. The starting record has not been confirmed or saved.
+
+Project goal
+Prepare 100 food packs for a community pickup day.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 2 | Objective
+
+Documented current state
+Planning is underway; the hall booking needs confirmation.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 4 | Current State
+
+Next action
+Confirm the hall booking with the coordinator.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 6 | Next Action
+
+Needs attention
+Source statements need review: 77 source statements remain unreviewed or uncertain. Confirm, reject or leave them
+unknown; their reports are not independently verified.
+
+Inspection coverage
+4 entries inspected; 4 supported entries; 0 unsupported entries; 0 skipped; 0 reading problems; within scan bounds.
+Statements describe recorded context, not independently verified work. Original project files are not modified.
+[1]   Review detected context
+[2]   Explore Project Map
+[3]   Add or clarify current context
+[4]   Confirm starting project record
+[0]   Cancel setup
+
+Overview action: 2
+
+
+Project Map
+Project: Community food drive (simulation)
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      66 recorded items
+[8]   Unknowns & conflicts
+      1 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map > 1
+
+
+Purpose
+Project goals and planned deliverables.
+[1]   Project goal
+Prepare 100 food packs for a community pickup day.
+Basis: Source-reported; Not reviewed yet
+Source: 00-overview.md line 2 | Objective
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section > 1
+
+
+Record details
+
+Field / title
+Project goal
+Basis: Source-reported; Not reviewed yet
+Recorded value (bounded excerpt):
+Prepare 100 food packs for a community pickup day.
+Source-reported; not independently verified. Original flag: UNVERIFIED
+[T]   Technical record links
+[A]   Add a current assessment
+[R]   Review this statement
+[0]   Back to section
+
+Record > t
+
+Workspace: W-cf4088cec50547e29488f78dc8c6e89b
+Record: EV-W-cf4088cec50547e29488f78dc8c6e89b-000001
+Observation: SCAN-W-cf4088cec50547e29488f78dc8c6e89b
+Checkpoint:
+Source: 00-overview.md
+Locator: line 2 | Objective
+Recorded / observed: 2026-11-01T14:19:46.458977400Z
+Original fingerprint: c87fe6abc8cbe4a72005a7bb9eab87092542397e40034c8d914a2ccd60d683fb
+This proposal is not committed.
+
+Record details
+
+Field / title
+Project goal
+Basis: Source-reported; Not reviewed yet
+Recorded value (bounded excerpt):
+Prepare 100 food packs for a community pickup day.
+Source-reported; not independently verified. Original flag: UNVERIFIED
+[T]   Technical record links
+[A]   Add a current assessment
+[R]   Review this statement
+[0]   Back to section
+
+Record > 0
+
+
+Purpose
+Project goals and planned deliverables.
+[1]   Project goal
+Prepare 100 food packs for a community pickup day.
+Basis: Source-reported; Not reviewed yet
+Source: 00-overview.md line 2 | Objective
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section > 0
+
+
+Project Map
+Project: Community food drive (simulation)
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      66 recorded items
+[8]   Unknowns & conflicts
+      1 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map > 0
+
+
+Project overview / What we found
+Project: Community food drive (simulation)
+Profile: OPERATIONS
+Initial review. The starting record has not been confirmed or saved.
+
+Project goal
+Prepare 100 food packs for a community pickup day.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 2 | Objective
+
+Documented current state
+Planning is underway; the hall booking needs confirmation.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 4 | Current State
+
+Next action
+Confirm the hall booking with the coordinator.
+Basis: Source-reported; Not reviewed yet | 00-overview.md line 6 | Next Action
+
+Needs attention
+Source statements need review: 77 source statements remain unreviewed or uncertain. Confirm, reject or leave them
+unknown; their reports are not independently verified.
+
+Inspection coverage
+4 entries inspected; 4 supported entries; 0 unsupported entries; 0 skipped; 0 reading problems; within scan bounds.
+Statements describe recorded context, not independently verified work. Original project files are not modified.
+[1]   Review detected context
+[2]   Explore Project Map
+[3]   Add or clarify current context
+[4]   Confirm starting project record
+[0]   Cancel setup
+
+Overview action: 4
+
+
+Confirm this starting record and proposed assessments? Type yes: yes
+
+Your starting project record is ready. No progress updates have been recorded yet.
+Detailed file information is available in Open advanced project tools > View B0 / sources.
+
+Save this project on this computer? Type yes; Enter keeps it open without saving: yes
+
+
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Project: Community food drive (simulation)
+Saved on this computer.
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > 7
+
+
+Project workspace
+[1]   View project summary
+[2]   Record progress update
+[3]   Assess project context
+[4]   Review file changes
+[5]   Search project records
+[6]   Create detailed progress update
+[7]   View update history
+[8]   Manage tasks and dependencies
+[9]   Open advanced project tools
+[10]  Manage project notes
+[11]  Prepare project handoff
+[12]  Save project
+[13]  Explore Project Map
+[0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 2
+
+
+Record progress update
+Record operational progress, pending dependencies and the next action.
+
+Progress summary: Booked the hall and drafted the volunteer schedule
+
+
+Blockers or pending items [none, or Enter if unknown]: Waiting for the delivery quote
+
+
+Next action: Ask the delivery company for a quote
+
+
+Review progress update
+
+Progress summary
+Booked the hall and drafted the volunteer schedule
+
+Blockers or pending items
+Waiting for the delivery quote
+
+Next action
+Ask the delivery company for a quote
+This records your account of the work. Breadcrumbs does not check whether the work happened.
+
+Update actions
+[YES] Confirm update                                          [E]   Edit progress details
+[A]   Attach document references                              [M]   Attach project notes
+[O]   Edit goal, owner and decisions                          [D]   Manage tasks and dependencies
+[F]   Open detailed update form                               [0]   Cancel update
+[?]   Show update options
+
+Update action: yes
+
+Your update has been added to the project.
+
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[.  ] Saving your project
+[.. ] Saving your project
+[...] Saving your project
+[ ..] Saving your project
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 13
+
+
+Project Map
+Project: Community food drive (simulation)
+The latest file observation was recorded during this project session; it is not continuous monitoring.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      66 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map > 3
+
+
+Progress & history
+The starting observation and recorded updates, not inferred earlier work.
+[1]   Starting project record
+Original baseline retained; this is not a progress update.
+Basis: Recorded history; not current verification
+[2]   Booked the hall and drafted the volunteer schedule
+Booked the hall and drafted the volunteer schedule
+Recorded next action: Ask the delivery company for a quote
+Recorded blockers: BLOCKED | Waiting for the delivery quote
+Recorde...
+Basis: Recorded history; not current verification
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section > 0
+
+
+Project Map
+Project: Community food drive (simulation)
+The latest file observation was recorded during this project session; it is not continuous monitoring.
+[1]   Purpose
+      1 recorded items
+[2]   Current state
+      13 recorded items
+[3]   Progress & history
+      2 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      66 recorded items
+[8]   Unknowns & conflicts
+      9 recorded items
+[0]   Back to workspace
+[?]   Map help
+
+Map > 0
+
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 1
+
+
+Project summary
+Project: Community food drive (simulation)
+Saved on this computer.
+
+Latest progress update
+Booked the hall and drafted the volunteer schedule
+
+Next action
+Ask the delivery company for a quote
+
+Blockers and pending items
+Waiting for the delivery quote
+This is what you recorded earlier. Update it if your plans have changed.
+
+Recommended review
+Add or review the next action.
+
+Last file check: 1 Nov 2026, 10:19 PM. Files may have changed since then.
+
+Workspace actions
+[1]   View project summary                                    [2]   Record progress update
+[3]   Assess project context                                  [4]   Review file changes
+[5]   Search project records                                  [6]   Create detailed progress update
+[7]   View update history                                     [8]   Manage tasks and dependencies
+[9]   Open advanced project tools                             [10]  Manage project notes
+[11]  Prepare project handoff                                 [12]  Save project
+[13]  Explore Project Map                                     [0]   Back to project navigation
+[?]   Show menu
+
+Workspace > 0
+
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > 0
+
+Goodbye.
