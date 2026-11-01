@@ -60,5 +60,7 @@ public final class AllTests {
         breadcrumbs.cli.CalmConsoleTest.run();
         breadcrumbs.cli.BeginnerExperienceTest.run();
         breadcrumbs.cli.ProfessionalNavigationTest.run();
+        breadcrumbs.b7.ProjectMapTest.run();
+        breadcrumbs.cli.ProjectMapConsoleTest.run();
     }
 }

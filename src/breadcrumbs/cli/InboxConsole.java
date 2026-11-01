@@ -71,7 +71,7 @@ final class InboxConsole {
         }
         return input.read("Record a progress update with this note attached now? Type yes: ").equalsIgnoreCase("yes") ? captured.id() : null;
     }
-    private void review(ManualContext.Capture capture) throws IOException {
+    void review(ManualContext.Capture capture) throws IOException {
         String disposition = input.read("Use this note? confirm=reviewed by you, reject=do not use, unknown=decide later, 0=back: "); if (disposition.equals("0")) { return; }
         var selected = switch (disposition.toLowerCase(java.util.Locale.ROOT)) {
             case "confirm" -> EvidenceClaim.ReviewDisposition.CONFIRMED; case "reject" -> EvidenceClaim.ReviewDisposition.REJECTED;

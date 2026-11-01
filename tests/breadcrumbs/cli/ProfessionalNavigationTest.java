@@ -30,10 +30,10 @@ public final class ProfessionalNavigationTest {
         new ProjectConsole(reader, new PrintStream(bytes, true, StandardCharsets.UTF_8), store, new TerminalTheme(false), 120).run();
         String snapshot = beforeSelection[0].replace("\r\n", "\n");
         String afterSummary = snapshot.substring(snapshot.toLowerCase(java.util.Locale.ROOT).lastIndexOf("\nproject summary\n"));
-        for (int i = 1; i <= 12; i++) { require(afterSummary.contains("[" + i + "]"), "Every workspace action remains visible after a result: " + i); }
+        for (int i = 1; i <= 13; i++) { require(afterSummary.contains("[" + i + "]"), "Every workspace action remains visible after a result: " + i); }
         require(afterSummary.contains("[0]") && afterSummary.contains("[?]"), "navigation and help are visible at the decision point");
         var matcher = java.util.regex.Pattern.compile("\\[(\\d+)\\]").matcher(afterSummary);
-        for (int i = 1; i <= 12; i++) { require(matcher.find() && Integer.parseInt(matcher.group(1)) == i, "workspace choices follow numerical order"); }
+        for (int i = 1; i <= 13; i++) { require(matcher.find() && Integer.parseInt(matcher.group(1)) == i, "workspace choices follow numerical order"); }
         require(matcher.find() && matcher.group(1).equals("0"), "Back follows the workspace actions");
         var wrapped = new ByteArrayOutputStream();
         new TerminalOutput(new PrintStream(wrapped, true, StandardCharsets.UTF_8), new TerminalTheme(false), 28)
@@ -43,7 +43,7 @@ public final class ProfessionalNavigationTest {
         require(store.load("W795").checkpoints().isEmpty(), "navigation does not create project history");
         var sessionStore = new WorkspaceStore(root.resolve("session-save"));
         var savedOutput = new ByteArrayOutputStream();
-        String saveScript = "2\n1\nSession project\n1\nPrepare event\nEvent plan\nReview schedule\n\n\n\nyes\n\n7\n12\nyes\n2\nPrepared the schedule\nnone\nConfirm volunteers\nyes\n5\n3\n0\n0\n0\n";
+        String saveScript = "2\n1\nSession project\n1\nPrepare event\nEvent plan\nReview schedule\n\n\n\n4\nyes\n\n7\n12\nyes\n2\nPrepared the schedule\nnone\nConfirm volunteers\nyes\n5\n3\n0\n0\n0\n";
         new ProjectConsole(new StringReader(saveScript), new PrintStream(savedOutput, true, StandardCharsets.UTF_8), sessionStore, new TerminalTheme(false), 120).run();
         require(savedOutput.toString(StandardCharsets.UTF_8).contains("Discovered entries=0"), "search coverage shows actual project counts instead of generic help alone");
         var restored = sessionStore.load(sessionStore.list()[0].id());

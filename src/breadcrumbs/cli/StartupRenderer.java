@@ -29,6 +29,11 @@ final class StartupRenderer {
     void ready(int saved, int unavailable) {
         line(TerminalTheme.Tone.SUCCESS, "[v] Project storage available");
         line(null, "[v] Saved projects: " + saved);
+        if (saved == 0) {
+            line(TerminalTheme.Tone.BREAD_LIGHT, "Welcome to Breadcrumbs. No saved projects yet.");
+            line(null, "Understand recorded project context, remember progress, and continue later.");
+            line(null, "Choose 2 to import a folder or start a project without files.");
+        }
         line(TerminalTheme.Tone.SECONDARY, "[i] Local saving is optional for each project.");
         if (unavailable > 0) {
             line(TerminalTheme.Tone.WARNING, "WARNING: " + unavailable

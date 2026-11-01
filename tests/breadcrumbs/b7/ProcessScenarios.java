@@ -21,8 +21,8 @@ public final class ProcessScenarios {
             Files.write(source.resolve("research.docx"), DocxTest.document("<w:p><w:r><w:t>Documented accessible methodology</w:t></w:r></w:p>"));
             Files.writeString(source.resolve("reference.pdf"), "%PDF-1.4\nunsupportedpdfonlyword\n%%EOF");
             String before = fingerprint(source);
-            String created = app(dir, "import", "2\n2\n" + profile + " sample\n" + profile + "\n" + source + "\nyes\ns\nyes\nyes\n0\n");
-            require(created.contains("Your project is ready") && created.contains("This statement comes from a document"), profile + " actual first-import B0 without invented history");
+            String created = app(dir, "import", "2\n2\n" + profile + " sample\n" + profile + "\n" + source + "\nyes\n1\ns\n4\nyes\nyes\n0\n");
+            require(created.contains("Your starting project record is ready") && created.contains("Source-reported"), profile + " actual first-import B0 without invented history");
             var store = new WorkspaceStore(dir.resolve("app")); var state = store.load(store.list()[0].id());
             require(state.checkpoints().isEmpty() && state.activeBaseline().profile() == profile, profile + " no native history before confirmation");
             String ref = state.activeBaseline().claims()[0].evidenceId();

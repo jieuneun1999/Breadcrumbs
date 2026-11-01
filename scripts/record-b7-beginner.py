@@ -77,23 +77,28 @@ def preflight(folder):
     for marker, value in [
         ('Breadcrumbs > ', '2'), ('Entry mode: ', '2'), ('Project display name: ', 'Community food drive (simulation)'),
         ('Project type', '3'), ('Existing local project directory: ', str(folder / 'source')), ('Approve bounded', 'yes'),
-        ('Review decision', 's'), ('Start tracking', 'yes'), ('Save this project', 'yes'), ('Breadcrumbs > ', '7'),
+        ('Overview action', '2'), ('Map > ', '1'), ('Section > ', '1'), ('Record > ', 't'),
+        ('Record > ', '0'), ('Section > ', '0'), ('Map > ', '0'),
+        ('Overview action', '4'), ('Confirm this starting record', 'yes'), ('Save this project', 'yes'), ('Breadcrumbs > ', '7'),
         ('Workspace > ', '2'), ('Progress summary', 'Booked the hall and drafted the volunteer schedule'),
         ('Blockers or pending', 'Waiting for the delivery quote'), ('Next action', 'Ask the delivery company for a quote'),
-        ('Update action', 'yes'), ('Workspace > ', '1'), ('Workspace > ', '0'), ('Breadcrumbs > ', '0')]:
+        ('Update action', 'yes'), ('Workspace > ', '13'), ('Map > ', '3'), ('Section > ', '0'), ('Map > ', '0'),
+        ('Workspace > ', '1'), ('Workspace > ', '0'), ('Breadcrumbs > ', '0')]:
         s.answer(marker, value)
     s.finish()
-    assert '0 files with reading problems' in ' '.join(s.raw.split()), 'Generated fixture should be readable'
+    assert '0 reading problems' in ' '.join(s.raw.split()), 'Generated fixture should be readable'
     change(folder / 'source')
     s = driver.Session(folder, '02-return')
     for marker, value in [
-        ('Breadcrumbs > ', '1'), ('Project number (0 = cancel): ', '1'), ('Breadcrumbs > ', '7'), ('Workspace > ', '10'), ('Notes > ', '1'),
+        ('Breadcrumbs > ', '1'), ('Project number (0 = cancel): ', '1'), ('Breadcrumbs > ', '7'),
+        ('Workspace > ', '13'), ('Map > ', '0'), ('Workspace > ', '10'), ('Notes > ', '1'),
         ('Note category', '3'), ('Note content', 'The hall coordinator said two extra tables are available'),
         ('Information source', 'Simulated planning call'), ('Optional reference', 'Planning call notes'), ('Privacy [', ''),
         ('Add note [', 'c'), ('Allow words', 'yes'), ('Allow this note', 'yes'), ('Also use this note', ''),
         ('Record a progress update', ''), ('Notes > ', '0'), ('Workspace > ', '5'), ('Search > ', '4'), ('Search > ', '1'),
         ('Search term', 'tables'), ('Item number to read', '1'), ('Show this reviewed', 'yes'), ('Search > ', '0'),
         ('Workspace > ', '4'), ('Read your project folder', 'yes'), ('Review action', '1'), ('Mark these changes', 'yes'),
+        ('Workspace > ', '13'), ('Map > ', '1'), ('Section > ', '0'), ('Map > ', '0'),
         ('Workspace > ', '1'), ('Workspace > ', '11'), ('Handoff > ', '6'), ('Progress update numbers', '1'),
         ('New full folder path', str(folder / 'portable')), ('Create this new handoff', 'yes'), ('Handoff > ', '0'),
         ('Workspace > ', '0'), ('Breadcrumbs > ', '0')]:
@@ -108,11 +113,11 @@ def preflight(folder):
                 previous = event['text']
             else:
                 visible = driver.SGR.sub('', previous).rstrip()
-                if visible.endswith(('Breadcrumbs >', 'Workspace >', 'Search >', 'Handoff >', 'Notes >', 'Update action:', 'Review action:')):
+                if visible.endswith(('Breadcrumbs >', 'Workspace >', 'Search >', 'Handoff >', 'Notes >', 'Update action:', 'Review action:', 'Overview action:', 'Map >', 'Section >', 'Record >')):
                     selected = event['text'].strip()
                     assert re.search(r'\[' + re.escape(selected) + r'\]', visible, re.IGNORECASE), 'Demo selected an action that was not displayed: ' + selected
                 answers.append(event['text'])
-                pauses.append(12000 if 'Project summary' in previous else 10000 if 'Review progress update' in previous or 'File comparison' in previous else 8000 if 'Search results' in previous else 4500 if len(previous) > 700 else 1600)
+                pauses.append(12000 if 'Project summary' in previous or 'Project overview / What we found' in previous else 10000 if 'Review progress update' in previous or 'File comparison' in previous else 8000 if 'Search results' in previous else 6500 if visible.endswith(('Map >', 'Section >', 'Record >')) else 4500 if len(previous) > 700 else 1600)
         pauses[0] = 6500
         (folder / (name + '.input.txt')).write_text(''.join(answers).replace(str(folder / 'portable'), str(folder / 'native-portable')), encoding='utf-8')
         (folder / (name + '.pacing.txt')).write_text('\n'.join(map(str, pauses)) + '\n', encoding='utf-8')
@@ -148,7 +153,7 @@ def record(folder):
                     print('\nRETURNING TO WORK | The first app process has exited. Reopen the project in a new process.\nThe demo changes one project note so you can review an actual file change.\n', flush=True)
                     change(folder / 'source')
                     time.sleep(5)
-                result = subprocess.run(['java', '-cp', str(REPO / 'build/app') + os.pathsep + str(REPO / 'build/native-demo'), 'breadcrumbs.cli.NativeWalkthrough', str(folder / (name + '.input.txt')), str(folder / 'native-app'), str(folder / (name + '-native.txt')), str(folder / (name + '.pacing.txt'))], cwd=REPO, env=env, timeout=240)
+                result = subprocess.run(['java', '-cp', str(REPO / 'build/app') + os.pathsep + str(REPO / 'build/native-demo'), 'breadcrumbs.cli.NativeWalkthrough', str(folder / (name + '.input.txt')), str(folder / 'native-app'), str(folder / (name + '-native.txt')), str(folder / (name + '.pacing.txt'))], cwd=REPO, env=env, timeout=360)
                 if result.returncode:
                     raise RuntimeError('Native session failed')
                 text = (folder / (name + '-native.txt')).read_text(encoding='utf-8')

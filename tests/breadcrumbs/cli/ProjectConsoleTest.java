@@ -29,9 +29,9 @@ public final class ProjectConsoleTest {
         require(TerminalTheme.enabled(false, false, true, false, "xterm", false, false), "known interactive terminal enables color");
         require(TerminalTheme.enabled(false, false, true, false, null, true, true), "Windows Terminal supports auto color without TERM");
         contains(session(root, "4\n12\n11\n0\n0\n", false, 80), "Loaded 5", "Integrity valid", "SYNTHETIC");
-        String guided = "2\n1\nPlanner\nACADEMIC\nWrite report\nReport\nReview\n\n\n\nyes\nyes\n";
+        String guided = "2\n1\nPlanner\nACADEMIC\nWrite report\nReport\nReview\n\n\n\n4\nyes\nyes\n";
         String create = session(root, guided + "3\n3\n2\nDraft\nStarted\nWrite report\nUNKNOWN\n\nReview\n\n\n\nno\n8\n0\n0\n", false, 80);
-        contains(create, "Your project is ready", "Your project is saved on this computer.", "No native checkpoint", "Cancelled. Project history unchanged",
+        contains(create, "Your starting project record is ready", "Your project is saved on this computer.", "No native checkpoint", "Cancelled. Project history unchanged",
                 "DLL structure: NULL", "Integrity: true");
         WorkspaceStore store = new WorkspaceStore(root);
         require(store.list().length == 1, "first B0 saved from actual CLI");
@@ -62,7 +62,7 @@ public final class ProjectConsoleTest {
         contains(eof, "End of input", "unsaved session state will be discarded", "Goodbye");
         String cancelled = session(root, "2\n1\n/cancel\n0\n", false, 80);
         contains(cancelled, "Operation cancelled", "Goodbye");
-        String injection = session(root, "2\n1\n\u001b[31mEVIL\nGENERAL\n\n\n\n\n\n\nyes\nyes\n0\n", false, 80);
+        String injection = session(root, "2\n1\n\u001b[31mEVIL\nGENERAL\n\n\n\n\n\n\n4\nyes\nyes\n0\n", false, 80);
         require(!injection.contains("\u001b"), "untrusted title cannot inject ANSI into terminal output");
         contains(session(root, "a".repeat(8193) + "\n0\n", false, 80), "Input exceeds 8192", "Goodbye");
         retrySaveAndOpenSameProject(base);

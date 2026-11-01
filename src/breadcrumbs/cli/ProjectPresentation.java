@@ -89,15 +89,7 @@ final class ProjectPresentation {
             case NEXT_ACTION_CANDIDATE -> "Proposed next action";
         };
     }
-    static String fieldLabel(EvidenceClaim.Field field) {
-        return switch (field) {
-            case OBJECTIVE -> "Project goal"; case DELIVERABLE -> "What you plan to deliver";
-            case CURRENT_STATE, PROGRESS -> "Current project status"; case NEXT_ACTION -> "Suggested next action";
-            case OWNER -> "Person responsible"; case BLOCKERS -> "What is getting in the way";
-            case DECISION -> "Decision"; case RATIONALE -> "Reason"; case TEST_RESULTS -> "Reported test results";
-            case TASK_STATUS, TASK_MARKER -> "Task update"; case DOCUMENT_TEXT -> "Text from the document";
-        };
-    }
+    static String fieldLabel(EvidenceClaim.Field field) { return ProjectMapService.label(field); }
 
     static String review(EvidenceClaim.ReviewDisposition disposition) {
         return switch (disposition) {

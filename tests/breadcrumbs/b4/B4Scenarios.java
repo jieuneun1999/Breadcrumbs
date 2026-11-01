@@ -20,7 +20,7 @@ public final class B4Scenarios {
         StringBuilder report = new StringBuilder("B4 A–F process verification\nStarted: " + Instant.now()
                 + "\nOS: " + System.getProperty("os.name") + " | Java: " + System.getProperty("java.version") + "\n");
         Path a = base.resolve("a-storage");
-        String newEmpty = "2\n1\nSynthetic classroom\nACADEMIC\nStudy sources\nReport\nReview scope\n\n\n\nyes\nyes\n";
+        String newEmpty = "2\n1\nSynthetic classroom\nACADEMIC\nStudy sources\nReport\nReview scope\n\n\n\n4\nyes\nyes\n";
         String output = app(base, "a-baseline", a, newEmpty + "3\n9\n14\nB0\n\n\n0\n0\n");
         require(output.contains("Baseline context report — not a historical resume") && output.contains("CTX-FRESH | NOT_APPLICABLE"), "A baseline-only audit and handoff");
         require(new WorkspaceStore(a).load(new WorkspaceStore(a).list()[0].id()).checkpoints().isEmpty(), "A no fabricated CP");

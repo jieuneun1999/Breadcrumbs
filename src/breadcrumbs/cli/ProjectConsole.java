@@ -12,6 +12,10 @@ import java.util.UUID;
 
 /** Owns navigation and persistence consent. All project chronology stays in WorkspaceState. */
 public final class ProjectConsole {
+    static final class Cancelled extends IllegalArgumentException {
+        private static final long serialVersionUID = 1L;
+        Cancelled() { super("Cancelled."); }
+    }
     private final BufferedReader input;
     private final PrintStream output;
     private final WorkspaceStore store;
@@ -24,6 +28,7 @@ public final class ProjectConsole {
     private final ProjectCheckpointService checkpoints = new ProjectCheckpointService();
     private boolean persistence;
     private boolean storageReady;
+    private String openedObservationId = "";
 
     public ProjectConsole(Reader input, PrintStream output, WorkspaceStore store, TerminalTheme theme, int width) {
         this.input = input instanceof BufferedReader buffered ? buffered : new BufferedReader(input);
@@ -53,7 +58,7 @@ public final class ProjectConsole {
                         case "4" -> new ConsoleMenu(input, output, theme, width).run();
                         case "5" -> {
                             WorkspaceState recovered = new RecoveryConsole(this::read, output, store, theme, width).run(this::leave);
-                            if (recovered != null) { state.replaceWith(recovered); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true; status(); }
+                            if (recovered != null) { state.replaceWith(recovered); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true; openedObservationId = state.currentObservationId(); status(); }
                         }
                         case "6" -> {
                             persistence = false;
@@ -102,6 +107,7 @@ public final class ProjectConsole {
         if (candidate.activeBaseline() == null) { return; }
         boolean consent = read("Save this project on this computer? Type yes; Enter keeps it open without saving: ").equalsIgnoreCase("yes");
         state.replaceWith(candidate); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = consent;
+        openedObservationId = candidate.currentObservation().root() == null ? state.currentObservationId() : "";
         if (persistence) { save(); }
         status();
     }
@@ -124,7 +130,7 @@ public final class ProjectConsole {
         if (!leave()) { return; }
         // Leaving may save this same workspace. Reload that newly saved state, not the earlier preview.
         WorkspaceState loaded = OperationFeedback.run(output, theme, width, OperationFeedback.Operation.LOAD, () -> store.load(saved[index].id()));
-        state.replaceWith(loaded); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true;
+        state.replaceWith(loaded); search = new breadcrumbs.search.ContextSearchIndex(state); persistence = true; openedObservationId = state.currentObservationId();
         ui.note("Your saved project is open. Its folder has not been checked again for changes.");
         status();
         new ProjectPresentation(output, theme, width).showSummary(state, persistence);
@@ -132,7 +138,7 @@ public final class ProjectConsole {
     }
 
     private void daily() throws IOException {
-        new DailyConsole(this::read, output, state, () -> persistence, () -> { if (persistence) { save(); } }, this::saveActive,
+        new DailyConsole(this::read, output, state, () -> persistence, () -> !state.currentObservationId().equals(openedObservationId), () -> { if (persistence) { save(); } }, this::saveActive,
                 this::checkpoint, this::project, theme, width, store, search).run();
     }
 
@@ -300,7 +306,7 @@ public final class ProjectConsole {
         }
         if (c == -1 && line.isEmpty()) { throw new EOFException(); }
         String value = line.toString().strip();
-        if (value.equalsIgnoreCase("/cancel")) { throw new IllegalArgumentException("Cancelled."); }
+        if (value.equalsIgnoreCase("/cancel")) { throw new Cancelled(); }
         return value;
     }
     private static String safe(String value) { return ContentSafety.terminal(value, 4000); }

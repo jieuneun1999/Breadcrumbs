@@ -13,7 +13,7 @@ public final class InboxArtifactsCliTest {
     public static void run() throws Exception {
         Path base = Files.createTempDirectory(Files.createDirectories(Path.of("build/b7-fixtures")), "inbox-cli-").toAbsolutePath();
         var store = new WorkspaceStore(base.resolve("app")); Path portable = base.resolve("portable");
-        String input = "2\n1\nCommunity gathering\nGENERAL\nPlan an accessible meetup\nMeeting agenda\nAsk the host\n\n\n\nyes\nyes\n7\n10\n1\n3\nClient requested an accessible entrance\nClient meeting, verbal report\n\n\nc\nyes\nyes\nyes\nyes\nRecorded the meeting request\nAwaiting review\nPrepare the revised layout\nyes\n11\n5\nyes\n6\nCP-000001\n" + portable + "\nyes\n0\n5\n4\n1\naccessible\n0\n0\n1\n0\n0\n";
+        String input = "2\n1\nCommunity gathering\nGENERAL\nPlan an accessible meetup\nMeeting agenda\nAsk the host\n\n\n\n4\nyes\nyes\n7\n10\n1\n3\nClient requested an accessible entrance\nClient meeting, verbal report\n\n\nc\nyes\nyes\nyes\nyes\nRecorded the meeting request\nAwaiting review\nPrepare the revised layout\nyes\n11\n5\nyes\n6\nCP-000001\n" + portable + "\nyes\n0\n5\n4\n1\naccessible\n0\n0\n1\n0\n0\n";
         String text = session(store, input);
         String readable = text.replaceAll("\\s+", " ");
         Files.writeString(base.resolve("inbox-artifacts.txt"), text);

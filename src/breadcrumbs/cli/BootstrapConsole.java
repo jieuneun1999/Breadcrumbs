@@ -134,26 +134,31 @@ final class BootstrapConsole {
             return;
         }
         if (mode == EntryMode.IMPORT_FOLDER && hasLegacyArtifacts(draft)) {
-            output.println("Possible state/handoff/instruction artifacts were found. Their presence proves no progress.");
-            if (input.read("Select legacy-context review mode? Type yes, or Enter to keep IMPORT_FOLDER: ")
+            output.println(projectShell ? "Some files look like previous project notes or instructions. Their presence does not prove that work was completed." : "Possible state/handoff/instruction artifacts were found. Their presence proves no progress.");
+            if (input.read(projectShell ? "Treat this folder as existing notes or handoff context? Type yes; Enter keeps the folder import: " : "Select legacy-context review mode? Type yes, or Enter to keep IMPORT_FOLDER: ")
                     .equalsIgnoreCase("yes")) {
                 draft = new BootstrapDraft(draft.workspaceId(), draft.displayName(), draft.profile(),
                         EntryMode.IMPORT_LEGACY_CONTEXT, draft.scan(), draft.claims());
             }
         }
-        preview(draft);
-        if (mode != EntryMode.NEW_EMPTY) {
-            draft = review(draft);
-            if (!projectShell) { preview(draft); }
+        breadcrumbs.domain.ContextReview[] proposed = new breadcrumbs.domain.ContextReview[0];
+        boolean approved;
+        if (projectShell) {
+            var result = new BootstrapReviewConsole(input::read, output, theme, width, this::review).run(draft);
+            draft = result.draft(); proposed = result.proposals(); approved = result.approved();
+        } else {
+            preview(draft);
+            if (mode != EntryMode.NEW_EMPTY) { draft = review(draft); preview(draft); }
+            approved = input.read("Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
         }
         if (workspaceState.activeBaseline() != null) {
             output.println("Confirmation replaces the active session workspace; no persistence is available.");
         }
-        boolean approved = input.read(projectShell ? "Start tracking this project with the details above? Type yes: " : "Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
         if (service.confirm(workspaceState, draft, approved)) {
-            output.println(projectShell ? "Your project is ready. No progress updates have been recorded yet." : "Baseline B0 established. No native checkpoint was created.");
+            for (var assessment : proposed) { workspaceState.addReview(assessment); }
+            output.println(projectShell ? "Your starting project record is ready. No progress updates have been recorded yet." : "Baseline B0 established. No native checkpoint was created.");
             if (!projectShell) { renderer.baseline(workspaceState.activeBaseline(), workspaceState.checkpoints().size()); }
-            else { new TerminalOutput(output, theme, width).note("Detailed file information is available in More project tools > View B0 / sources."); }
+            else { new TerminalOutput(output, theme, width).note("Detailed file information is available in Open advanced project tools > View B0 / sources."); }
         } else {
             output.println("Cancelled. Proposal discarded; active workspace unchanged.");
         }

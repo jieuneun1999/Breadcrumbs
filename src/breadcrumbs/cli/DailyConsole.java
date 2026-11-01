@@ -16,20 +16,20 @@ final class DailyConsole {
     private final ContextConsole.Input input;
     private final PrintStream out;
     private final WorkspaceState state;
-    private final java.util.function.BooleanSupplier persisted;
+    private final java.util.function.BooleanSupplier persisted, checkedThisSession;
     private final Action save, saveExplicit, full, advanced;
     private final TerminalTheme theme;
     private final int width;
     private final WorkspaceStore store;
     private final ContextSearchIndex search;
     private final TerminalOutput ui;
-    DailyConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state, java.util.function.BooleanSupplier persisted,
+    DailyConsole(ContextConsole.Input input, PrintStream out, WorkspaceState state, java.util.function.BooleanSupplier persisted, java.util.function.BooleanSupplier checkedThisSession,
             Action save, Action saveExplicit, Action full, Action advanced, TerminalTheme theme, int width, WorkspaceStore store, ContextSearchIndex search) {
-        this.input = input; this.out = out; this.state = state; this.persisted = persisted; this.save = save; this.saveExplicit = saveExplicit;
+        this.input = input; this.out = out; this.state = state; this.persisted = persisted; this.checkedThisSession = checkedThisSession; this.save = save; this.saveExplicit = saveExplicit;
         this.full = full; this.advanced = advanced; this.theme = theme; this.width = width; this.store = store;
         this.search = search; ui = new TerminalOutput(out, theme, width);
     }
-    private static final String ACTIONS = "[1] View project summary\n[2] Record progress update\n[3] Assess project context\n[4] Review file changes\n[5] Search project records\n[6] Create detailed progress update\n[7] View update history\n[8] Manage tasks and dependencies\n[9] Open advanced project tools\n[10] Manage project notes\n[11] Prepare project handoff\n[12] Save project\n[0] Back to project navigation\n[?] Show menu";
+    private static final String ACTIONS = "[1] View project summary\n[2] Record progress update\n[3] Assess project context\n[4] Review file changes\n[5] Search project records\n[6] Create detailed progress update\n[7] View update history\n[8] Manage tasks and dependencies\n[9] Open advanced project tools\n[10] Manage project notes\n[11] Prepare project handoff\n[12] Save project\n[13] Explore Project Map\n[0] Back to project navigation\n[?] Show menu";
     private static final String UPDATE_ACTIONS = "[YES] Confirm update\n[E] Edit progress details\n[A] Attach document references\n[M] Attach project notes\n[O] Edit goal, owner and decisions\n[D] Manage tasks and dependencies\n[F] Open detailed update form\n[0] Cancel update\n[?] Show update options";
     void run() throws IOException {
         if (state.activeBaseline() == null) { ui.warning("Open or create a project first."); return; }
@@ -64,9 +64,29 @@ final class DailyConsole {
                     case "10" -> { String manual = new InboxConsole(input, out, state, save, theme, width).run(); if (manual != null) { quick(new String[] {manual}); } }
                     case "11" -> new DocumentsConsole(input, out, state, store, save, theme, width).run();
                     case "12" -> saveExplicit.run();
+                    case "13" -> map();
                     default -> ui.warning("Choose a listed daily action.");
                 }
             } catch (IllegalArgumentException invalid) { ui.error("Operation cancelled or rejected."); ui.plain(invalid.getMessage()); }
+        }
+    }
+    private void map() throws IOException {
+        while (true) {
+            var request = new ProjectMapConsole(input, out, theme, width).run(new ProjectMapService().fromState(state, checkedThisSession.getAsBoolean()));
+            if (request.action() == ProjectMapConsole.Action.BACK) { return; }
+            if (request.action() == ProjectMapConsole.Action.REVIEW_SOURCE) {
+                String choice = input.read("Review statement [C = confirm; R = reject; U = leave unknown; Enter = no change]: ");
+                if (!choice.isEmpty()) {
+                    var claim = state.evidence(state.currentObservationId(), request.item().link().recordId());
+                    state.addReview(new ContextReview(state.currentObservationId(), claim.evidenceId(), claim.field(), claim.entityId(), claim.literalValue(), BootstrapReviewConsole.disposition(choice), Instant.now()));
+                    if (persisted.getAsBoolean()) { save.run(); }
+                }
+            } else if (request.action() == ProjectMapConsole.Action.REVIEW_NOTE) {
+                new InboxConsole(input, out, state, save, theme, width).review(state.manualContext().find(request.item().link().recordId()));
+            } else if (request.action() == ProjectMapConsole.Action.CLARIFY) {
+                var review = ProjectAssessmentConsole.collect(input, out, theme, width, state.currentObservationId(), state.currentObservation().observedAt(), false);
+                if (review != null) { state.addReview(review); if (persisted.getAsBoolean()) { save.run(); } }
+            }
         }
     }
     void follow() { new ProjectPresentation(out, theme, width).showSummary(state, persisted.getAsBoolean()); }
