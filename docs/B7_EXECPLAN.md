@@ -367,7 +367,7 @@ append commits and use self-reviews without an independent-review claim.
 - [x] 5. Verify on the matching CLI surface.
 - [x] 6. Append small ordered commits; preserve shared history, no rebase.
 - [x] 7. Contested design: not applicable; owner direction is explicit.
-- [ ] 8. Update existing PR12 after reconciliation.
+- [x] 8. Update existing PR12 after reconciliation.
 
 Blocking first steps: audit missing initial context, source truth/privacy and draft
 confirmation ownership; prove mapping semantics before navigation. Independent
@@ -492,3 +492,18 @@ full representative-file matrix, independent review and owner UX acceptance rema
 open. Owner choices CONTINUE / CHANGE / RELEASE / STOP. Delivery is scoped to
 existing PR12, preserving B7D base; no merge, release, deployment, large-video
 upload or new Discord message. Documentation/evidence publication follows.
+
+### Project Map delivery receipt
+
+Scoped source/evidence commits 9fe697b, 4ef73fd, e121d75 and
+8a487bfabdfac4369ecc36e2e0c021039e5a536b were pushed without force to the existing
+feat/b7e-final-integration branch. Local HEAD and git ls-remote matched that
+evidence head, with a clean working tree. GitHub MCP updated PR12's title/body
+around the final Project Overview and universal map. Returned remote state is
+OPEN/unmerged, mergeable, with unchanged B7D base
+da972f3c64a6a60207697dd48d37c58c2e4075de and the expected evidence head.
+The description links the current guide, acceptance and evidence, records the
+six scenarios, source-bound native results and remaining runtime/owner boundaries.
+This receipt changes documentation only; no source/test/script changed after the
+final 157-input gate and final 169-class recording. No MP4 or generated project
+was committed. No merge, release, deployment or Discord message occurred.
