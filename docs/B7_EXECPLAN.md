@@ -242,3 +242,46 @@ to the final 148-input gate and 150 application class hashes above.
 Owner next choices: CONTINUE / CHANGE / RELEASE / STOP. Full real-file acceptance,
 actual JDK17 and independent/owner visual acceptance stay open. No release, merge
 or deployment is inferred from DEMO_READY. No new Discord message was sent.
+
+## Active professional navigation correction
+
+Owner requests professional simple wording, capitalization, ordered discoverable
+choices and readable spacing. Clean baseline4dd864e, same B7E repository/branch
+and scoped PR12 permissions. STANDARD, single writer, no delegation/worktree,
+six repairs per gate/two per unchanged hypothesis, no global changes or external
+messages. Preserve B3 art/motion, canonical schemas/services and legacy numeric
+routes. Native evidence and affected/full regression remain required. No project
+verification skill is installed; existing JDK/native runners own verification.
+
+Pstack1.16 poteto-mode and Bug fix were fully read in separate calls. Relevant
+Manual/Workflow/Routing/Craft sections, Impeccable4.6 Clarify/Layout/craft-floor,
+architect and Model the Domain/Encode Lessons in Structure were loaded. Reuse
+prior how/why grounding and context discovery; no second context install/probe.
+Craft single-owner adaptation excludes skill delegation/panels/worktrees. Web-only
+layout detectors do not verify a terminal; actual console output is the target.
+
+- [ ] 1. Reproduce on the matching CLI surface.
+- [ ] 2. Binary-search the cause with actual output and subsystem/history evidence.
+- [ ] 3. Plan the fix; architect material boundaries before implementation.
+- [ ] 4. Verify the original reproduction on the same surface.
+- [ ] 5. Stage the failing executable repro before the fix where practical.
+- [ ] 6. Run Opening a PR, adapted to append-only PR12 update.
+
+Throughput: first reproduce hidden choices and broken word wrapping; then shared
+rendering and one-source menu definitions; then navigation/copy; then native
+inspection and regression. No independent lanes because menus, prompts and demo
+inputs share state. WorkspaceState stays canonical; tests/captures use unique roots.
+
+Root causes observed: Daily lists1,2,10,3...; home lists7 before3 and hides5/6
+outside the framed list; repeated menus advertise only a subset of accepted keys;
+quick preview accepts a/m/o/d/f before its More options help is opened; shared
+TerminalOutput hard-splits words and ProjectConsole prints unwrapped prompts.
+
+Design A: renumber every primary route and add aliases. Rejected because silent
+legacy aliases recreate hidden commands and break established numerical paths.
+Design B: retain keys, order them numerically, define labels once per menu and
+render either full or complete compact choices from that same definition. Selected.
+Quick preview explicitly lists every accepted action. Shared prompt and word-wrap
+rendering preserve source text and bound narrow lines. Direct Save exposes the
+existing persistence action; a live BooleanSupplier keeps workspace save status
+owned by ProjectConsole when mode changes. No new stored UI state or DSA.
