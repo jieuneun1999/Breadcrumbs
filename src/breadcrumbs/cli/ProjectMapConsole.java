@@ -51,10 +51,10 @@ final class ProjectMapConsole {
         Item[] human = Arrays.stream(found).filter(i -> i.kind() == Kind.ASSESSMENT || i.kind() == Kind.PROPOSED_ASSESSMENT).toArray(Item[]::new);
         if (human.length > 0) { found = human; }
         if (found.length == 0) {
-            boolean limited = Arrays.stream(map.buckets()).anyMatch(b -> b.total() > b.items().length);
+            boolean limited = limited(map, fields);
             ui.value(label, limited ? "Not shown in this bounded view; additional source records may contain relevant context." : "Not documented / Unknown. Add a current assessment if you know it."); return;
         }
-        boolean limited = Arrays.stream(map.buckets()).anyMatch(b -> b.total() > b.items().length);
+        boolean limited = limited(map, fields);
         ui.value(label, found.length == 1 ? (found[0].value().equals("UNKNOWN") || found[0].value().equals("NOT_DOCUMENTED") ? "Not documented / Unknown." : ProjectMapService.safe(found[0].value(), 220)) : found.length + " documented candidates; no automatic selection.");
         if (limited) { ui.note("This map is bounded. Further candidates may exist in the original source records; no unique source is established by this excerpt."); }
         for (int i = 0; i < Math.min(found.length, 2); i++) {
@@ -63,6 +63,9 @@ final class ProjectMapConsole {
             ui.line("Basis: ", ProjectMapService.safe(basis(item) + (item.link().path().isEmpty() ? "" : " | " + item.link().path() + " " + item.link().locator()), 200));
         }
         if (found.length > 2) { ui.note("More alternatives are available in the Project Map."); }
+    }
+    private static boolean limited(ProjectMap map, EvidenceClaim.Field[] fields) {
+        return Arrays.stream(fields).map(ProjectMapService::section).distinct().map(map::bucket).anyMatch(b -> b.total() > b.items().length);
     }
     Request run(ProjectMap map) throws IOException {
         while (true) {

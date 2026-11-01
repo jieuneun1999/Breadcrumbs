@@ -48,6 +48,13 @@ public final class ProjectMapConsoleTest {
         require(offline.contains("Files have not been checked for changes during this session") && offline.contains("Project Map"), "saved context opens while original files are offline without a hidden scan");
         var bootstrap = new BootstrapService(ScanPolicy.defaults(), () -> "W779");
         var draft = bootstrap.prepare(EntryMode.NEW_EMPTY, "Narrow map", ProjectProfile.GENERAL, null, new CurrentContext("Read sources", "Report", "Review evidence", "", ""), false, n -> true);
+        var projection = new ProjectMapService().fromDraft(draft);
+        var buckets = projection.buckets();
+        buckets[ProjectMap.Section.SOURCES.ordinal()] = new ProjectMap.Bucket(ProjectMap.Section.SOURCES, 65, new ProjectMap.Item[0]);
+        var sourceLimited = new ProjectMap(projection.workspaceId(), projection.project(), projection.profile(), true, false, projection.coverage(), buckets);
+        var limitedText = new ByteArrayOutputStream();
+        new ProjectMapConsole(prompt -> "0", new PrintStream(limitedText, true, StandardCharsets.UTF_8), new TerminalTheme(false), 120).overview(sourceLimited);
+        require(limitedText.toString(StandardCharsets.UTF_8).contains("Read sources") && !limitedText.toString(StandardCharsets.UTF_8).contains("no unique source"), "unrelated document-text limit does not manufacture purpose/current-field uncertainty");
         for (int width : new int[] {28, 40, 80, 120, 160}) {
             for (boolean color : new boolean[] {false, true}) {
                 var bytes = new ByteArrayOutputStream(); var out = new PrintStream(bytes, true, StandardCharsets.UTF_8);

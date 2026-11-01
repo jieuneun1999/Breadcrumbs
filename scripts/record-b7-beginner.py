@@ -60,7 +60,7 @@ def fixture(source):
         doc.writestr('word/document.xml', xml)
     with (source / 'coordination.csv').open('w', encoding='utf-8', newline='') as table:
         writer = csv.writer(table)
-        writer.writerow(['objective', 'owner', 'next_action'])
+        writer.writerow(['category', 'owner', 'planning_note'])
         writer.writerows((heading, 'Demo coordinator', detail.split('.')[0]) for heading, detail in sections)
     (source / 'SIMULATION.txt').write_text('Synthetic example only. No real event, contact information or existing Breadcrumbs session.\n', encoding='utf-8')
     return len(paragraphs)
