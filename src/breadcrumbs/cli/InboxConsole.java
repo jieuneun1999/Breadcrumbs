@@ -17,7 +17,8 @@ final class InboxConsole {
             ui.note("Keep a note about your project or something someone told you. Do not add passwords or access keys.");
             int number = 0;
             for (var capture : state.manualContext().captures()) { ui.line("Note " + (++number) + ": ", ProjectPresentation.noteType(capture.type()) + " | " + ProjectPresentation.review(state.manualContext().disposition(capture.id())) + (capture.sensitivity() == ManualContext.Sensitivity.SENSITIVE ? " | private" : "")); }
-            ui.menu("[1] Add a note\n[2] Review a note\n[3] Read a note\n[4] Attach a note to a progress update\n[0] Back");
+            ui.screen(BreadFrames.Mood.ENCOURAGING, "Would you like to add or review a project note?",
+                    "[1] Add a note\n[2] Review a note\n[3] Read a note\n[4] Attach a note to a progress update\n[0] Back", false);
             String choice = input.read("Notes > ");
             if (choice.equals("0")) { return null; }
             if (choice.equals("1")) {

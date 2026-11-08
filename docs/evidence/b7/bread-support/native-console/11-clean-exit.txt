@@ -1,0 +1,24 @@
+| [3]   Open advanced project tools        |     .:.,o@@@/@O@@#Owo*##@#@/O#+
+| [4]   Run DSA demonstration              |      ;,+@@@O###@@@O###@@@O##@@o
+| [5]   Restore saved project              |     :,:,*OOO#@@OO@@@@@OOO@@@oo+,
+| [6]   Switch to session-only mode        |     ..,,.,.+*oo*:,::::,,*oo*:,..
+| [7]   Open project workspace             |
+| [8]   Save active project                |
+| [0]   Exit                               |
+| [?]   Show menu                          |
+\------------------------------------------/
+
+Breadcrumbs > 0
+
+/------------------------------------------\            ,:;;;;:;+*oo+;:  .O..
+| Goodbye. You can return whenever you are |     ,.   :;+oO#O@@@@@@O@@O*::..;
+| ready.                                   |     :,  ;,+@O@@@@@@O@@@@@@O@#O;.
+|                                          |      .;+*OO@@@@@O@@@@@@O@@@@@o*;
+\------------------------------------------/     .;:o@@@@@O@@@@@@O@@@@@@O@@++
+                                                 ;,;##@O@@@O^*O@@@@#*^o@@@*+.
+                                                 .:.,o@@@/@O@@#Owo*##@#@/O#+
+                                                  ;,+@@@O###@@@O###@@@O##@@o
+                                                 :,:,*OOO#@@OO@@@@@OOO@@@oo+,
+                                                 ..,,.,.+*oo*:,::::,,*oo*:,..
+Goodbye.
+

@@ -81,6 +81,7 @@ public final class ProjectConsole {
             if (state.dirty() && persistence) { save(); }
             if (state.dirty()) { ui.plain("WARNING: unsaved session state will be discarded."); }
         }
+        ui.screen(BreadFrames.Mood.GOODBYE, "Goodbye. You can return whenever you are ready.", "", false);
         ui.plain("Goodbye.");
     }
 
@@ -115,9 +116,19 @@ public final class ProjectConsole {
     private void open() throws IOException {
         WorkspaceStore.SavedWorkspace[] saved = store.list();
         if (saved.length == 0) { ui.plain("No saved projects yet. Choose New project to start or import a folder."); return; }
+        if (theme.companion() != null && theme.companion().boxedMenus()) {
+            StringBuilder actions = new StringBuilder();
+            for (int i = 0; i < saved.length; i++) {
+                actions.append('[').append(i + 1).append("] ").append(safe(saved[i].name()))
+                        .append(saved[i].problem().isEmpty() ? "" : " | needs recovery").append('\n');
+            }
+            actions.append("[0] Cancel");
+            ui.screen(BreadFrames.Mood.WELCOME, "Choose a saved project to continue.", actions.toString(), false);
+        } else {
         for (int i = 0; i < saved.length; i++) {
             ui.plain("[" + (i + 1) + "] " + safe(saved[i].name())
                     + (saved[i].problem().isEmpty() ? "" : " | needs recovery; choose Restore a saved project"));
+        }
         }
         String choice = read("Project number (0 = cancel): ");
         if (choice.equals("0")) { return; }
@@ -295,6 +306,11 @@ public final class ProjectConsole {
     }
     private String read(String prompt) throws IOException {
         ui.prompt(prompt);
+        if (theme.companion() != null) {
+            String value = theme.companion().readLine(input, theme, prompt, 8192).strip();
+            if (value.equalsIgnoreCase("/cancel")) { throw new Cancelled(); }
+            return value;
+        }
         // Bound reads before building a String, including redirected and malformed input.
         StringBuilder line = new StringBuilder(); int c;
         while ((c = input.read()) != -1 && c != '\n') {

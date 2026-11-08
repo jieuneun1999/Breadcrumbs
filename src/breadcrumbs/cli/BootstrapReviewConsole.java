@@ -26,7 +26,8 @@ final class BootstrapReviewConsole {
         while (true) {
             var map = new ProjectMapService().fromDraft(draft, proposals);
             var console = new ProjectMapConsole(input, out, theme, width); console.overview(map);
-            ui.menu("[1] Review detected context\n[2] Explore Project Map\n[3] Add or clarify current context\n[4] Confirm starting project record\n[0] Cancel setup");
+            ui.screen(BreadFrames.Mood.NEEDS_REVIEW, "Review what is recorded before confirming your starting context.",
+                    "[1] Review detected context\n[2] Explore Project Map\n[3] Add or clarify current context\n[4] Confirm starting project record\n[0] Cancel setup", false);
             try {
                 String choice = input.read("Overview action: ");
                 if (choice.equals("0")) { return new Result(draft, proposals, false); }

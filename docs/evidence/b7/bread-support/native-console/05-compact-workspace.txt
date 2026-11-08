@@ -1,0 +1,52 @@
+                                                                                                .o,,,;o##O@@@@#OoOO#OOoo#@@@@@O@@@@@@O@@@@@OoO#O#ooO@@@#;O
+                                                                                             *;+ +:,,::*O#@@@**@@@@@O@@@oO@O@@@@@@O@@@@@@O*#@@@@O@@O+#O+*: :*
+                                                                                             ::.  ++,,,::;+;:+@@@O@@@@@@O;OO###O######OO*;@@@O@@@@@@:::*: .;:
+                                                                                             ,.,....,:,.,,:,.+oO#@@@@O@#*.:,:,:,,:,:,,,,.;oO@@@@@Oo;.:,.....,
+                                                                                                .....,.,..,.,.,,,::::,,..........,.,..,,...,,,:,,.,..,..... .
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Project: Symbol bread demo
+Saved on this computer.
+
+Project navigation
+
+/--------------------------------------------------------------------------------------------------------------------------\            ,:;;;;:;+*oo+;:  .O..
+| Your project context is here when you need it.                                                                           |     ,.   :;+oO#O@@@@@@O@@O*::..;
+|                                                                                                                          |     :,  ;,+@O@@@@@@O@@@@@@O@#O;.
+| [1]   Open saved project                                      [2]   Create or import project                             |      .;+*OO@@@@@O@@@@@@O@@@@@o*;
+| [3]   Open advanced project tools                             [4]   Run DSA demonstration                                |     .;:o@@@@@O@@@@@@O@@@@@@O@@++
+| [5]   Restore saved project                                   [6]   Switch to session-only mode                          |     ;,;##@O@@@O^*O@@@@#*^o@@@*+.
+| [7]   Open project workspace                                  [8]   Save active project                                  |     .:.,o@@@/@O@@#Owo*##@#@/O#+
+| [0]   Exit                                                    [?]   Show menu                                            |      ;,+@@@O###@@@O###@@@O##@@o
+\--------------------------------------------------------------------------------------------------------------------------/     :,:,*OOO#@@OO@@@@@OOO@@@oo+,
+                                                                                                                                 ..,,.,.+*oo*:,::::,,*oo*:,..
+
+Breadcrumbs > 7
+
+Project workspace
+
+/--------------------------------------------------------------------------------------\                                       ,;;++;+++:.           :@@:
+| Ready to pick up where you left off?                                                 |                       :;oo**+**o+,.+*O***;+++**+***+,       *@;   ,*
+|                                                                                      |                   .;**+;::;**OOOOO##***oOo@@@##O#Oo**o:     *:  .+##
+| [1]   View project summary                                                           |       :         ,**+:;+oO#@@@#O@@@@@@O@@@@@@O@@@@@@O@o**::.    .o*:
+| [2]   Record progress update                                                         |     .;O*,      ;o;,;+o#@@@@O@@@@@@O@@@@@@O#@@@@@O@@@@@OOooOO*:    ,:
+| [3]   Assess project context                                                         |       *,  .   ;o,,:o#@@@O@@@#@@O@@@@@@O@@@@@@O@@@@@@O##@@@@OOOo:  ::
+| [4]   Review file changes                                                            |       .     .:O+::,*#O@@@#@@O@@@@@#O@@@@@@O@@@@@@O@@@@@@O@OO**OO*.
+| [5]   Search project records                                                         |          .+oo*ooO#OOO@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O+**o*
+| [6]   Create detailed progress update                                                |     .  .+o;,+;**o#@@@#O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@#***O:
+| [7]   View update history                                                            |        o;::,+#@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O#*;*+
+| [8]   Manage tasks and dependencies                                                  |       o;,;;+#@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@+:o,
+| [9]   Open advanced project tools                                                    |      ,*,:::o@O@@@@@@O@@@@@@O@@#O#@O@@@@@@O@@@@@@O##@@@@O@@@@#O+;O:
+| [10]  Manage project notes                                                           |      :;.:+;+#@@##O@@@@@@O@@@o::::,+@@@O@@@@@@OO;:,,:+@@@@@@OO,O;
+| [11]  Prepare project handoff                                                        |      .o,.:::+;+O@@@@@O@@@@@O:O@@@O;o@@@@@@O#@@+*@O@O;o@@O@@@@OO+   .
+| [12]  Save project                                                                   |       ,*:.. .;#@@@O@@@@@@O@@@@@@O@@@@+.;:::.O@O@@@@@@O@@@@@@O@*o.
+| [13]  Explore Project Map                                                            |     ,   o;,.;#@O@@@@@@O@@@@@@O@@@@@@O#+////;@@@@@@O@@@@@@O@@@@O*;
+| [0]   Back to project navigation                                                     |        .o,,,;#@@@@@O@@@@@@O#@@@@@O@@@@@OOOO@@@@O@@@@@#O#@@@@@O@;*
+| [?]   Show menu                                                                      |        .o,,,;o##O@@@@#OoOO#OOoo#@@@@@O@@@@@@O@@@@@OoO#O#ooO@@@#;O
+\--------------------------------------------------------------------------------------/     *;  +:,,::*O#@@@**@@@@@O@@@oO@O@@@@@@O@@@@@@O*#@@@@O@@O+#O+*: :*
+                                                                                             ::.  ++,,,::;+;:+@@@O@@@@@@O;OO###O######OO*;@@@O@@@@@@:::*: .;:
+                                                                                             ,.,....,:,.,,:,.+oO#@@@@O@#*.:,:,:,,:,:,,,,.;oO@@@@@Oo;.:,.....,
+                                                                                                .....,.,..,.,.,,,::::,,..........,.,..,,...,,,:,,.,..,..... .
+
+Workspace >

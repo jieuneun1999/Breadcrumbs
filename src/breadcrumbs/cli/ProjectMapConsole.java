@@ -12,8 +12,9 @@ final class ProjectMapConsole {
     record Request(Action action, Item item) { }
     private final ContextConsole.Input input;
     private final TerminalOutput ui;
+    private final TerminalTheme theme;
     ProjectMapConsole(ContextConsole.Input input, PrintStream out, TerminalTheme theme, int width) {
-        this.input = input; ui = new TerminalOutput(out, theme, width);
+        this.input = input; this.theme = theme; ui = new TerminalOutput(out, theme, width);
     }
     static String basis(Item item) {
         return switch (item.kind()) {
@@ -74,8 +75,18 @@ final class ProjectMapConsole {
                     ? "No folder linked. Supplied context and recorded updates remain useful without files." : map.checkedThisSession()
                     ? "The latest file observation was recorded during this project session; it is not continuous monitoring."
                     : "Files have not been checked for changes during this session.");
-            for (var bucket : map.buckets()) { ui.menu("[" + (bucket.section().ordinal() + 1) + "] " + bucket.section().title()); ui.note("      " + (bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + " recorded items")); }
-            ui.menu("[0] Back to " + (map.draft() ? "overview" : "workspace") + "\n[?] Map help");
+            if (theme.companion() == null) {
+                for (var bucket : map.buckets()) { ui.menu("[" + (bucket.section().ordinal() + 1) + "] " + bucket.section().title()); ui.note("      " + (bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + " recorded items")); }
+                ui.menu("[0] Back to " + (map.draft() ? "overview" : "workspace") + "\n[?] Map help");
+            } else {
+                StringBuilder actions = new StringBuilder();
+                for (var bucket : map.buckets()) {
+                    actions.append('[').append(bucket.section().ordinal() + 1).append("] ").append(bucket.section().title()).append('\n')
+                            .append("      ").append(bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + " recorded items").append('\n');
+                }
+                actions.append("[0] Back to ").append(map.draft() ? "overview" : "workspace").append("\n[?] Map help");
+                ui.screen(BreadFrames.Mood.CURIOUS, "Want a clearer picture of your recorded project context?", actions.toString(), false);
+            }
             String choice = input.read("Map > ");
             if (choice.equals("0")) { return new Request(Action.BACK, null); }
             if (choice.equals("?")) { ui.note("The map organizes saved context, not folders. Select a section, then an item. Review decisions do not verify reported work. Private notes and excluded file names are omitted."); continue; }

@@ -1,0 +1,24 @@
+
+
+
+
+
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Workspace actions
+
+/-------------------------------------------------------------------------------
+| What would you like to review or record?
+|
+| [1]   View project summary                                    [2]   Record pro
+| [3]   Assess project context                                  [4]   Review fil
+| [5]   Search project records                                  [6]   Create det
+| [7]   View update history                                     [8]   Manage tas
+| [9]   Open advanced project tools                             [10]  Manage pro
+| [11]  Prepare project handoff                                 [12]  Save proje
+| [13]  Explore Project Map                                     [0]   Back to pr
+| [?]   Show menu
+\-------------------------------------------------------------------------------
+
+Workspace >

@@ -22,6 +22,10 @@ final class TerminalOutput {
     }
     void plain(String value) { for (String line : value.split("\n", -1)) { styled(ContentSafety.terminal(line, 5000), null); } }
     void menu(String trustedLines) {
+        if (theme.companion() != null && theme.companion().boxedMenus() && trustedLines.contains("\n") && MenuBox.fixedCells(trustedLines)) {
+            for (String line : MenuBox.rows(theme, width, "", trustedLines)) { out.println(line); }
+            return;
+        }
         for (String line : trustedLines.split("\n")) {
             int end = line.indexOf(']');
             if (line.startsWith("[") && end > 0 && optionText(line).length() <= width) {
@@ -30,6 +34,7 @@ final class TerminalOutput {
         }
     }
     void choices(String trustedLines) {
+        if (theme.companion() != null && theme.companion().boxedMenus()) { menu(trustedLines); return; }
         String[] lines = trustedLines.lines().filter(line -> !line.isBlank()).toArray(String[]::new);
         int column = (width - 4) / 2;
         if (width < 80 || java.util.Arrays.stream(lines).anyMatch(line -> optionText(line).length() > column)) {
@@ -39,6 +44,16 @@ final class TerminalOutput {
             option(lines[i]);
             if (i + 1 < lines.length) { out.print(" ".repeat(column - optionText(lines[i]).length() + 4)); option(lines[i + 1]); }
             out.println();
+        }
+    }
+    void screen(BreadFrames.Mood mood, String trustedMessage, String trustedActions, boolean expanded) {
+        if (theme.companion() == null || !theme.companion().present(theme, mood, trustedMessage, trustedActions, expanded)) {
+            choices(trustedActions);
+        }
+    }
+    void resultScreen(BreadFrames.Mood mood, String trustedMessage, String trustedActions) {
+        if (theme.companion() == null || !theme.companion().result(theme, mood, trustedMessage, trustedActions)) {
+            choices(trustedActions);
         }
     }
     private void option(String line) {

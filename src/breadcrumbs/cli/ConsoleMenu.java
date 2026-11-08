@@ -194,6 +194,15 @@ public final class ConsoleMenu {
     private String read(String prompt) throws IOException {
         output.print(theme.label(TerminalTheme.Tone.BREAD_GOLD, prompt));
         output.flush();
+        if (theme.companion() != null) {
+            String value = theme.companion().readLine(input, theme, prompt, 1024).strip();
+            for (int i = 0; i < value.length(); i++) {
+                char c = value.charAt(i);
+                if (Character.isISOControl(c) || Character.getType(c) == Character.FORMAT) { throw new IllegalArgumentException("Input must not contain control characters."); }
+            }
+            if (value.equalsIgnoreCase("/cancel")) { throw new IllegalArgumentException("Cancelled. Returned to menu without mutation."); }
+            return value;
+        }
         StringBuilder line = new StringBuilder();
         boolean overflow = false;
         int character;
@@ -254,21 +263,7 @@ public final class ConsoleMenu {
         ui.heading("              BREADCRUMBS");
         output.println("       Project Checkpoint Management");
         output.println("========================================");
-        ui.menu("[1] Create / append session-only CP (B1 sandbox)");
-        ui.menu("[2] Prepend SYNTHETIC checkpoint");
-        ui.menu("[3] Insert SYNTHETIC checkpoint at position");
-        ui.menu("[4] Search checkpoint by ID");
-        ui.menu("[5] Delete checkpoint by ID");
-        ui.menu("[6] Traverse forward");
-        ui.menu("[7] Traverse backward");
-        ui.menu("[8] View latest checkpoint (tail)");
-        ui.menu("[9] Display DLL structure");
-        ui.menu("[10] View list size");
-        ui.menu("[11] Validate DLL integrity");
-        ui.menu("[12] Load five SYNTHETIC DEMO checkpoints");
-        ui.menu("[13] Add or create a project / establish B0");
-        ui.menu("[14] View B0 and paged inventory / claims");
-        ui.menu("[0] Exit");
+        ui.menu("[1] Create / append session-only CP (B1 sandbox)\n[2] Prepend SYNTHETIC checkpoint\n[3] Insert SYNTHETIC checkpoint at position\n[4] Search checkpoint by ID\n[5] Delete checkpoint by ID\n[6] Traverse forward\n[7] Traverse backward\n[8] View latest checkpoint (tail)\n[9] Display DLL structure\n[10] View list size\n[11] Validate DLL integrity\n[12] Load five SYNTHETIC DEMO checkpoints\n[13] Add or create a project / establish B0\n[14] View B0 and paged inventory / claims\n[0] Exit");
         output.println("Enter /cancel at any prompt to return here. Confirmations accept only yes.");
     }
 }

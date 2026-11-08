@@ -34,8 +34,8 @@ final class SearchConsole {
                 ui.heading(technical ? "\nSEARCH PROJECT CONTEXT" : "\nSearch project records");
                 if (technical) { ui.plain(index.status().name()); }
                 else { ui.note("Search the notes and document text you allowed Breadcrumbs to use. Refresh search after recording changes."); }
-                ui.menu(ACTIONS); showMenu = false;
-            } else { ui.heading("\nSearch actions"); ui.choices(ACTIONS); }
+                ui.screen(BreadFrames.Mood.CURIOUS, "What would you like to find in your project records?", ACTIONS, false); showMenu = false;
+            } else { ui.heading("\nSearch actions"); ui.resultScreen(BreadFrames.Mood.CURIOUS, "Search covers only the text allowed for this project.", ACTIONS); }
             String choice = read("Search > ");
             try {
                 switch (choice) {

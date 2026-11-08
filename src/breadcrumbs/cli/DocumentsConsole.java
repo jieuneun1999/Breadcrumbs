@@ -24,8 +24,8 @@ final class DocumentsConsole {
             if (showMenu) {
                 ui.heading("\nProject handoff");
                 ui.note("Preview or export project context for continuing work. Source documents are not copied or modified.");
-                ui.menu(ACTIONS); showMenu = false;
-            } else { ui.heading("\nHandoff actions"); ui.choices(ACTIONS); }
+                ui.screen(BreadFrames.Mood.IDLE, "Choose which project context to prepare for later.", ACTIONS, false); showMenu = false;
+            } else { ui.heading("\nHandoff actions"); ui.resultScreen(BreadFrames.Mood.IDLE, "Your original documents stay in their folder.", ACTIONS); }
             String choice = input.read("Handoff > ");
             switch (choice.toLowerCase(java.util.Locale.ROOT)) {
                 case "0" -> { return; }

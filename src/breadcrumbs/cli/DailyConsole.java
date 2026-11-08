@@ -37,9 +37,9 @@ final class DailyConsole {
         while (true) {
             if (showMenu) {
                 ui.heading("\nProject workspace");
-                ui.menu(ACTIONS);
+                ui.screen(BreadFrames.Mood.WELCOME, "Ready to pick up where you left off?", ACTIONS, false);
                 showMenu = false;
-            } else { ui.heading("\nWorkspace actions"); ui.choices(ACTIONS); }
+            } else { ui.heading("\nWorkspace actions"); ui.resultScreen(BreadFrames.Mood.IDLE, "What would you like to review or record?", ACTIONS); }
             try {
                 switch (input.read("Workspace > ")) {
                     case "0" -> { return; }
@@ -116,7 +116,8 @@ final class DailyConsole {
             if (!options.decisions().equals("UNKNOWN")) { ui.value("Decision and reason", options.decisions()); }
             if (options.evidenceIds().length + options.manualIds().length > 0) { ui.line("Attached context: ", options.evidenceIds().length + " document references and " + options.manualIds().length + " notes"); }
             ui.note("This records your account of the work. Breadcrumbs does not check whether the work happened.");
-            ui.note("\nUpdate actions"); ui.choices(UPDATE_ACTIONS);
+            ui.note("\nUpdate actions"); ui.screen(BreadFrames.Mood.ENCOURAGING,
+                    "Review your update. Only Confirm adds it to your history.", UPDATE_ACTIONS, false);
             String action = input.read("Update action: ");
             switch (action.toLowerCase(java.util.Locale.ROOT)) {
                 case "yes" -> {
@@ -158,7 +159,8 @@ final class DailyConsole {
         }
         var comparison = OperationFeedback.run(out, theme, width, OperationFeedback.Operation.COMPARE, () -> new DriftEngine().compare(state.activeBaseline().snapshot(), state.currentObservation()));
         new ProjectPresentation(out, theme, width).showChanges(state, comparison);
-        ui.menu("[1] Mark changes as reviewed\n[2] Update next action\n[3] Record progress update\n[D] View technical comparison\n[0] Back to workspace");
+        ui.screen(BreadFrames.Mood.NEEDS_REVIEW, "Review the file comparison before updating your notes.",
+                "[1] Mark changes as reviewed\n[2] Update next action\n[3] Record progress update\n[D] View technical comparison\n[0] Back to workspace", false);
         String choice = input.read("Review action: ");
         if (choice.equalsIgnoreCase("d")) { ui.plain(new ContinuityService().changes(state)); return; }
         if (choice.equals("1")) {

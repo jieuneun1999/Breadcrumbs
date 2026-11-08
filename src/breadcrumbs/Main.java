@@ -3,6 +3,9 @@ package breadcrumbs;
 import breadcrumbs.cli.ConsoleMenu;
 import breadcrumbs.cli.ProjectConsole;
 import breadcrumbs.cli.TerminalTheme;
+import breadcrumbs.cli.BreadSupport;
+import breadcrumbs.cli.BreadPreview;
+import breadcrumbs.cli.TerminalKeyboard;
 import breadcrumbs.storage.WorkspaceStore;
 import java.nio.file.Path;
 import java.io.IOException;
@@ -15,13 +18,19 @@ public final class Main {
 
     public static void main(String[] args) {
         try {
-            boolean noColor = false, always = false, dsa = false, richBrand = true;
+            boolean noColor = false, always = false, dsa = false, richBrand = true, noAnimation = false, noMascot = false;
+            String preview = null;
             Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
             for (String arg : args) {
                 if (arg.equals("--no-color")) { noColor = true; }
                 else if (arg.equals("--color=always")) { always = true; }
                 else if (arg.equals("--rich-brand")) { richBrand = true; }
                 else if (arg.equals("--dsa")) { dsa = true; }
+                else if (arg.equals("--no-animation")) { noAnimation = true; }
+                else if (arg.equals("--no-mascot")) { noMascot = true; }
+                else if (arg.equals("--ascii")) { /* Companion artwork always uses visible ASCII symbols. */ }
+                else if (arg.equals("--bread-preview")) { preview = "all"; }
+                else if (arg.startsWith("--bread-preview=")) { preview = arg.substring(16); }
                 else if (arg.startsWith("--storage-root=") && arg.length() > 15) { storage = Path.of(arg.substring(15)); }
                 else { throw new IllegalArgumentException("Unknown option."); }
             }
@@ -37,18 +46,31 @@ public final class Main {
                 // Context reports and source locators use UTF-8 in plain and colored modes alike.
                 // Fix the stream encoding without changing the user's terminal or system settings.
                 PrintStream output = new PrintStream(System.out, true, StandardCharsets.UTF_8);
-                boolean animations = color && TerminalTheme.enabled(noColor, false, System.console() != null,
+                boolean animations = !noAnimation && color && TerminalTheme.enabled(noColor, false, System.console() != null,
                         System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
                         System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null || System.getenv("ANSICON") != null);
-                var theme = new TerminalTheme(color, richBrand, animations);
-                if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
-                else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
+                int height = 0;
+                try { height = Math.max(0, Math.min(1000, Integer.parseInt(System.getenv("LINES")))); }
+                catch (NumberFormatException ignored) { }
+                TerminalKeyboard keys = preview == null ? TerminalKeyboard.open(animations && !noMascot)
+                        : TerminalKeyboard.open(animations && !noMascot, message -> output.println("Bread Support terminal check: " + message));
+                try (var bread = new BreadSupport(output, keys, width, height,
+                        !noMascot && System.console() != null, animations)) {
+                    if (keys != null) { width = bread.columns(); }
+                    boolean companionRgb = keys != null ? keys.rgbSupported() : !System.getProperty("os.name").startsWith("Windows")
+                            || System.getenv("WT_SESSION") != null || "truecolor".equalsIgnoreCase(System.getenv("COLORTERM"))
+                            || "24bit".equalsIgnoreCase(System.getenv("COLORTERM"));
+                    var theme = new TerminalTheme(color, richBrand, animations, bread, companionRgb);
+                    if (preview != null) { BreadPreview.run(output, input, theme, width, preview); }
+                    else if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
+                    else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
+                }
             }
         } catch (IOException failure) {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
             System.exit(1);
         } catch (IllegalArgumentException invalid) {
-            System.err.println("Invalid application arguments. Use --no-color, --color=always, --rich-brand, --dsa or --storage-root=<path>.");
+            System.err.println("Invalid application arguments. Use --no-color, --no-animation, --no-mascot, --ascii, --bread-preview[=all|full|compact|idle], --color=always, --rich-brand, --dsa or --storage-root=<path>.");
             System.exit(1);
         }
     }

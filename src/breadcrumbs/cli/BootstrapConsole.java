@@ -55,7 +55,8 @@ final class BootstrapConsole {
 
     void bootstrap() throws IOException {
         var ui = new TerminalOutput(output, theme, width); ui.heading("\nCreate or import project");
-        ui.menu("[1] Create an empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.");
+        ui.screen(BreadFrames.Mood.WELCOME, "Start with a folder, existing notes, or a project without files.",
+                "[1] Create an empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.", false);
         String choice = input.read("Entry mode: ");
         if (choice.equals("0")) {
             return;

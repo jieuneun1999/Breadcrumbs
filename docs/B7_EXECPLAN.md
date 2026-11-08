@@ -1,5 +1,174 @@
 # B7 execution plan
 
+## Session checkpoint, 9 November 2026
+
+The owner explicitly requested saving this session and committing the work to the
+proper Breadcrumbs branch. That authorizes this local checkpoint commit, superseding
+the earlier no-commit boundary for this change only. Push, PR mutation, merge,
+release, deployment and unrelated checkout changes remain unauthorized.
+
+Repository: `jieuneun1999/Breadcrumbs`. Session worktree:
+`/home/papa/orca/workspaces/Breadcrumbs/breadcrumbs-session`. Commit branch:
+`codex/breadcrumbs-session`, starting at ee01d6167718e7a2a71a170678b1fa00b145b53f.
+The linked Windows checkout already owns `feat/b7e-final-integration` at the same
+head. Preserve it; do not force a second checkout of that branch or move its ref
+behind its worktree. This existing session branch is in the same Git repository
+and is the safe local checkpoint destination. No new branch is needed.
+
+Saved scope: approved reference-derived symbol bread in matching full/compact
+sizes; blink, wave, crumbs and bounded sideways glide; workflow moods; warm CMD
+palette and RGB capability selection; framed menus; compact result layout; safe
+input/render ownership; fallback flags; preview/build tools; tests and synthetic
+evidence. Original B3 startup art, canonical data, source provenance and DSAs are
+preserved. Implementation and earlier rejected experiments are explained below.
+
+Verification: full regression215ab4 and native825bb9 passed with all 165 recorded
+source/tool/test inputs unchanged. The 185 visible-preview Java classes match the
+regression build. This checkpoint changes documentation only after those gates;
+a fresh focused pre-commit run is recorded in the decision log. A folder-local
+`.gitattributes` preserves raw evidence CRLF and fixed-width padding, without
+exempting production source from whitespace checks. Explicit existing
+symlink/junction skips remain. Human typing acceptance, other hosts, actual JDK17
+and all font/resize combinations remain open. Do not claim those gates passed.
+
+Resume from this section, the design document and
+`docs/evidence/b7/bread-support/README.md`. Reconcile branch, HEAD and worktree
+before edits. First practical action is the human black-CMD typing/resize check
+using `python3 scripts/verify-bread-support.py --preview --app`. Do not use
+PowerShell. The isolated preview does not touch real saved projects. Keep numeric
+routes and original branding intact. Do not reintroduce the rejected pixel/ghost
+mascot or a cooked-mode background redraw. This is a saved review checkpoint,
+not a full terminal-acceptance or release declaration.
+
+Pstack Pause Safely and deslop were read for this checkpoint. The source was
+reviewed against the starting head; no behavior changes or broad cleanup were
+introduced. Craft's single-writer adaptation remains in effect. No agents were
+spawned. The commit identity is the enclosing commit, readable with `git log -1`.
+WSL had no Git author configured; the commit command uses the repository's
+established jieuneun1999 GitHub noreply identity for that command only. No
+repository/global identity setting or credential is changed.
+
+## Active Bread Support continuation, 8 November 2026
+
+The owner's Bread Support steer authorizes local presentation, tests and synthetic
+evidence in `/home/papa/orca/workspaces/Breadcrumbs/breadcrumbs-session`, branch
+`codex/breadcrumbs-session`, starting at ee01d6167718e7a2a71a170678b1fa00b145b53f.
+GitHub readback during pickup confirmed PR12 OPEN/unmerged at that head and the
+B7D base. The Windows checkout is untouched. No reset, new branch, delegation,
+installation, commit, push, merge, credentials or external publication is authorized
+by this continuation. Earlier delivery permissions below are historical receipts.
+STANDARD, one writer; the existing plan and decision log remain the execution record.
+No repository AGENTS.md or project verification skill was found. The owner's current
+steer is the bounded Run Packet; frozen architecture/data semantics remain controlling.
+
+### Loaded methods and material application
+
+Canonical `/mnt/c/Users/Papa/.codex/AGENTS.md` was read completely. Relevant bounded
+Manual, Workflow, Routing and Craft sections were retrieved from the Windows
+canonical AI directory. Installed Pstack1.20 poteto-mode was read completely in a
+dedicated call, Session Pickup in its own call, followed by Feature. Selected how,
+architect, Model the Domain, Prove It Works, Attack the Premise, technical-writing,
+unslop, TDD and verification-before-completion instructions were read. Impeccable4.6
+context was exercised against ConsoleMenu; Animate, Operate and craft-floor were
+read. Their web-specific rules were adapted to fixed terminal cells and the approved
+reference. Skill presence alone was not treated as capability or test evidence.
+
+Craft's single-writer adaptation replaced skill-suggested agents, panels and commits
+with local design comparison, implementation and self-review. No delegation or
+independent review is claimed. Architecture methods shaped immutable frame/mood/event
+records, one screen owner, and a separate optional keyboard adapter. Proof methods
+required native buffer inspection and distinguished automated key events from human
+input. The replayable native driver is the verification lever; regression assertions
+for existing data workflows were retained.
+
+### Current visual authority and implementation
+
+The owner rejected the early silhouette, half-block pixel draft, and procedural
+symbol draft (the latter read as a ghost). Those local experiments and PowerShell
+experiments are superseded, not acceptance evidence. The accepted direction is the
+latest reference-derived visible-symbol bread. It uses literal ASCII mark/RGB grids:
+64 x 22 full, 28 x 10 compact, with matching identity and manually refined expressions.
+The reference SHA-256 and bounded offline transcription are recorded in the art
+source and design document. No image, AI service, graphics protocol or Unicode-width
+dependency exists in production rendering. The runtime loads fixed assets only.
+
+Subsequent owner steering keeps the current size, asks for more noticeable smooth
+motion, consistent large/small identity, richer color, reactions by chosen workflow,
+and an aesthetic enclosed menu beside the companion. The optional identity question
+was not answered as a numbered choice; continued steering and the accepted reference
+shape supplied a reasonable default. No further approval was inferred for protected
+actions. B3's original loaf and wordmark files remain byte-for-byte unchanged.
+
+The fixed 96-tick timeline adds blink, paw lift, breath and crumbs. A four-column
+viewport margin permits a bounded two-cell left/right glide. Welcome waves, working
+focuses, and exploration/review use attentive eyes and quieter motion. Shared framed
+menus preserve canonical action strings/numbers. Result screens use the matching
+compact bread and paired options where both labels fit, keeping real summaries and
+warnings more visible. Smaller screens fall back without removing choices.
+
+Classic CMD visibly flattened the initial RGB companion into yellow. Testing a
+non-bold run and a palette selected only by environment did not resolve the actual
+host mismatch: inherited WT_SESSION described the parent terminal. The native
+helper now reports visible classic-console versus pseudoconsole hosting. Classic
+ANSI separates cream, gold, crust and rose; pseudoconsole capability retains RGB
+through TerminalTheme. The corrected native preview was visually inspected. Original brand RGB output
+is preserved. No competing theme or global console setting is introduced.
+
+### Input safety and corrections
+
+Cooked-mode background redraw was rejected because Java locks cannot own OS echo.
+On a supported Windows console, an optional bounded C# helper attaches to its Java
+parent, reads Win32 console events, and delivers key/tick/viewport events through a
+separate pipe. One Java read/render loop owns menu echo and animation. It creates no
+menu animation thread. Existing OperationFeedback owns work-time scheduling and
+uses the same region. Free-form input remains still; resize stops the old region;
+exceptions, EOF and cancellation dispose screens. A failed helper asks for the same
+answer again through the ordinary Reader. Missing helper/capability uses static input.
+
+The owner explicitly ruled out PowerShell for testing. All current build, native
+preview and regression commands use Bash/Python, Windows Java, installed CSC and
+black CMD. Earlier PowerShell attempts are historical only; no new PS helper remains.
+No global tool was installed. Actual JDK17 is unavailable: Java25 compiles with
+`--release 17 -Xlint:all -Werror`; runtime17 remains an open gate.
+
+The first returning-user native check inspected the old prompt before its selection
+was consumed. Console readback showed the saved next step, not lost state. The driver
+now waits for the input row to advance before waiting for the next prompt. Compact
+result menus additionally keep that next step visible. A later foreground screenshot
+run received unrelated live typing; it is invalidated. Automated checks now launch
+minimized and never steal keyboard focus. They retain direct console-buffer evidence;
+visible preview screenshots are separately identified.
+
+### Verification status and remaining acceptance
+
+Current commands: `python3 scripts/verify-bread-support.py` for all existing B1-B7 and
+separate Main process groups; `--native-check` for actual console event/navigation
+checks; `--preview --app` for the visible black CMD application; production
+`--bread-preview=all` for the isolated art atlas. Runs record source and class hashes;
+source drift invalidates a run rather than silently certifying newer edits.
+
+Final run receipts and bounded environment limits are recorded below after readback.
+Continuous looping with automated console key records does not certify human typing,
+Windows Terminal, VS Code, actual JDK17 or all resize/font combinations. No video or
+independent review is claimed. No commit, push, merge or PR mutation was performed.
+
+### Final local verification receipt, 9 November 2026 (Asia/Singapore)
+
+Regression run `215ab4e20bc746da846cb21d369fc0ff` finished PASS for all eight groups
+listed in the evidence index. Native console run `825bb9a21421445396cbc08d404fb850`
+finished PASS_NATIVE_AUTOMATED. All 165 recorded source/tool/test inputs still
+match; all 185 Java classes in the visible preview match the regression candidate.
+AllTests retains its explicit unavailable symlink/junction skips. ACL and actual
+failure/recovery assertions ran. No claim of human typing/other-host/JDK17 acceptance.
+The final source diff check passes, and the three approved brand art files remain
+unchanged. The evidence index records exact commands, results, synthetic buffer
+captures, actual visible CMD screenshot, ANSI/monochrome atlas, source/class hashes,
+known limits and the unchanged open PR12 status. Nothing was committed or pushed.
+
+See `docs/evidence/b7/bread-support/README.md` and
+`docs/B7_BREAD_SUPPORT_TERMINAL_COMPANION.md`. This is a reviewable local refinement;
+full human terminal acceptance remains open rather than implied by passing tests.
+
 ## Active envelope
 
 The supplied B7 brief is the active owner-approved packet. Baseline is clean B6
@@ -507,3 +676,30 @@ six scenarios, source-bound native results and remaining runtime/owner boundarie
 This receipt changes documentation only; no source/test/script changed after the
 final 157-input gate and final 169-class recording. No MP4 or generated project
 was committed. No merge, release, deployment or Discord message occurred.
+
+### Live adapter diagnosis and final acceptance boundary
+
+Attack the Premise was read after repeated static fallback. The rejected premise
+was that a helper could query the console viewport through its event stdout.
+That stdout is deliberately redirected, so the revised helper opens distinct
+console handles, attaches only to its Java parent's console and emits a bounded
+UTF-8 event protocol. It never changes console input modes. A preview diagnostic
+now reports handshake/capability failure without adding diagnostics to ordinary
+product flows. A protocol probe ruled out an initial UTF-8 preamble hypothesis.
+
+A corrected native run at build/bread-native-acceptance passed real idle/partial
+number retention and two-second static long-input checks, navigated the map and
+saved an update. Its final assertion mistakenly counted immutable recovery state
+files as extra projects. The harness now counts workspace roots, preserving the
+existing recovery structure. A later cold-start run selected static mode and is
+retained at build/bread-native-final-acceptance. Fresh native preview readback at
+build/bread-native-bound-diagnostic explicitly reports a connected 120x40 input
+adapter using the final Java source. No universal or human-input pass is inferred.
+
+The previous full regression exercised every B1-B7 group and separate-process
+scenario successfully, but its wrapper correctly detected input drift during
+ongoing keyboard/harness changes. It is superseded for final-source claims. Final
+verification runs after the last Java change, and native source/class identity
+will be compared with that build. Actual human typing was requested through the
+open preview while independent work continues. No answer is assumed from elapsed
+time. Windows Terminal, VS Code, actual JDK17 and Linux-native JVM remain open.
