@@ -13,13 +13,19 @@ final class MenuBox {
         return rows(theme, width, message, actions, false);
     }
     static List<String> rows(TerminalTheme theme, int width, String message, String actions, boolean paired) {
+        return compose(theme, width, message, actions, paired, true);
+    }
+    static List<String> contentRows(TerminalTheme theme, int width, String message, String actions, boolean paired) {
+        return compose(theme, width, message, actions, paired, false);
+    }
+    private static List<String> compose(TerminalTheme theme, int width, String message, String actions, boolean paired, boolean framed) {
         int inside = width - 4;
         if (inside < 8) { throw new IllegalArgumentException("Menu box is too narrow"); }
         List<String> result = new ArrayList<>();
-        result.add(theme.label(TerminalTheme.Tone.BREAD_SHADOW, "/" + "-".repeat(width - 2) + "\\"));
+        if (framed) { result.add(theme.label(TerminalTheme.Tone.BREAD_SHADOW, "/" + "-".repeat(width - 2) + "\\")); }
         if (!message.isBlank()) {
-            for (String line : wrap(message, inside)) { result.add(row(theme, width, line, theme.label(TerminalTheme.Tone.BREAD_LIGHT, line))); }
-            result.add(row(theme, width, "", ""));
+            for (String line : wrap(message, inside)) { result.add(row(theme, width, line, theme.label(TerminalTheme.Tone.BREAD_LIGHT, line), framed)); }
+            result.add(row(theme, width, "", "", framed));
         }
         List<String> options = actions.lines().filter(line -> !line.isBlank()).map(MenuBox::normalize).toList();
         int column = (inside - 4) / 2;
@@ -29,16 +35,16 @@ final class MenuBox {
             if (columns && n + 1 < options.size()) {
                 String gap = " ".repeat(column + 4 - label.length());
                 String next = options.get(n + 1);
-                result.add(row(theme, width, label + gap + next, style(theme, label) + gap + style(theme, next)));
+                result.add(row(theme, width, label + gap + next, style(theme, label) + gap + style(theme, next), framed));
             } else {
                 List<String> lines = wrap(label, inside);
                 for (int i = 0; i < lines.size(); i++) {
                     String line = lines.get(i);
-                    result.add(row(theme, width, line, i == 0 ? style(theme, line) : line));
+                    result.add(row(theme, width, line, i == 0 ? style(theme, line) : line, framed));
                 }
             }
         }
-        result.add(theme.label(TerminalTheme.Tone.BREAD_SHADOW, "\\" + "-".repeat(width - 2) + "/"));
+        if (framed) { result.add(theme.label(TerminalTheme.Tone.BREAD_SHADOW, "\\" + "-".repeat(width - 2) + "/")); }
         return List.copyOf(result);
     }
     private static String style(TerminalTheme theme, String line) {
@@ -46,9 +52,9 @@ final class MenuBox {
         return line.startsWith("[") && end > 0
                 ? theme.label(TerminalTheme.Tone.BREAD_GOLD, line.substring(0, end + 1)) + line.substring(end + 1) : line;
     }
-    private static String row(TerminalTheme theme, int width, String plain, String styled) {
-        return theme.label(TerminalTheme.Tone.BREAD_SHADOW, "| ") + styled
-                + " ".repeat(width - 4 - plain.length()) + theme.label(TerminalTheme.Tone.BREAD_SHADOW, " |");
+    private static String row(TerminalTheme theme, int width, String plain, String styled, boolean framed) {
+        return (framed ? theme.label(TerminalTheme.Tone.BREAD_SHADOW, "| ") : "  ") + styled
+                + " ".repeat(width - 4 - plain.length()) + (framed ? theme.label(TerminalTheme.Tone.BREAD_SHADOW, " |") : "  ");
     }
     private static String normalize(String line) {
         int end = line.indexOf(']');

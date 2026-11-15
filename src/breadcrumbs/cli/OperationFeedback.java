@@ -28,17 +28,19 @@ public final class OperationFeedback implements AutoCloseable {
     private final Operation operation;
     private final ScheduledExecutorService timer;
     private final BreadSupport.Screen breadScreen;
+    private final BreadSupport managed;
     private volatile State state = State.STARTED;
     private long count = -1;
     private int frame;
     private boolean paused;
     public OperationFeedback(PrintStream out, TerminalTheme theme, int width, Operation operation) {
         this.out = out; this.theme = theme; this.width = Math.max(28, Math.min(120, width)); this.operation = operation;
+        managed = theme.companion() != null && theme.companion().screenBased() ? theme.companion() : null;
         breadScreen = theme.companion() == null ? null : theme.companion().operation(theme, operation.label);
         if (theme.animationsEnabled()) {
             timer = Executors.newSingleThreadScheduledExecutor(task -> { Thread thread = new Thread(task, "breadcrumbs-operation-feedback"); thread.setDaemon(true); return thread; });
             timer.scheduleAtFixedRate(this::redraw, 200, breadScreen == null ? 120 : 250, TimeUnit.MILLISECONDS);
-        } else { timer = null; print(operation.label + "...", TerminalTheme.Tone.BREAD_GOLD); }
+        } else { timer = null; if (managed == null) { print(operation.label + "...", TerminalTheme.Tone.BREAD_GOLD); } }
     }
     public State state() { return state; }
     private boolean active() { return state == State.STARTED || state == State.RUNNING; }
@@ -49,6 +51,11 @@ public final class OperationFeedback implements AutoCloseable {
     private void redraw() {
         synchronized (out) {
             if (!active() || paused) { return; }
+            if (managed != null) {
+                managed.feedbackStatus(operation.label + (count >= 0 ? " | " + count + " items checked" : "..."));
+                if (breadScreen != null) { breadScreen.tick(); }
+                return;
+            }
             if (breadScreen != null) { breadScreen.tick(); return; }
             String suffix = count >= 0 ? " | " + count + " items checked" : "";
             if (suffix.length() > width - 6) { suffix = " | " + count; }
@@ -57,7 +64,7 @@ public final class OperationFeedback implements AutoCloseable {
             out.print("\r\u001b[2K" + theme.label(TerminalTheme.Tone.BREAD_GOLD, text)); out.flush();
         }
     }
-    public void pause() { synchronized (out) { paused = true; if (breadScreen != null) { breadScreen.close(); } else if (timer != null && active()) { out.print("\r\u001b[2K"); out.flush(); } } }
+    public void pause() { synchronized (out) { paused = true; if (breadScreen != null) { breadScreen.close(); } if (managed != null) { managed.feedbackStatus(""); } else if (breadScreen == null && timer != null && active()) { out.print("\r\u001b[2K"); out.flush(); } } }
     public void resume() { synchronized (out) { paused = false; } }
     public void complete(boolean warnings, String details) { finish(warnings ? State.COMPLETED_WITH_WARNINGS : State.COMPLETED, details); }
     public void failed(String details) { finish(State.FAILED, details); }
@@ -65,7 +72,7 @@ public final class OperationFeedback implements AutoCloseable {
     private void finish(State result, String details) {
         synchronized (out) {
             if (!active()) { return; } state = result;
-            if (timer != null) { timer.shutdownNow(); if (breadScreen == null) { out.print("\r\u001b[2K"); } }
+            if (timer != null) { timer.shutdownNow(); if (managed == null && breadScreen == null) { out.print("\r\u001b[2K"); } }
             if (breadScreen != null) {
                 breadScreen.mood(switch (result) {
                     case COMPLETED -> BreadFrames.Mood.SUCCESS;
@@ -83,6 +90,7 @@ public final class OperationFeedback implements AutoCloseable {
                 case CANCELLED -> "[Cancelled] The action was stopped.";
                 default -> throw new IllegalArgumentException("A final operation result is required.");
             };
+            if (managed != null) { managed.feedbackStatus(message); }
             print(message, tone);
             if (!details.isBlank()) { print(ContentSafety.terminal(details, 1000), null); } out.flush();
         }

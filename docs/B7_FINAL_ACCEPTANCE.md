@@ -412,3 +412,52 @@ A resize during report paging safely releases complete content to classic mode;
 ordinary menu resize stops stale motion and refreshes on the next response/`?`.
 Specification and engineering-quality self-reviews pass within these boundaries;
 no independent-review or RELEASE_READY claim. See B7_EXECPLAN for repairs and limits.
+
+
+## Latest unified-experience follow-up
+
+The current local follow-up supersedes the earlier separate-intro/header-scan and
+shared-size descriptions above. See BREADCRUMBS_UNIFIED_EXPERIENCE_POLISH.md for
+complete design, responsive decisions and scope.
+
+
+## Final executed acceptance (15 November 2026)
+
+DEMO_READY for bounded Windows/JDK25, targeting Java17. The implementation remains
+local on codex/breadcrumbs-session above fcbef69. Owner visual approval is pending.
+No new commit, push, PR12 update, merge, release or external publication occurred.
+
+| Receipt | Fresh observed result |
+| --- | --- |
+| build/bread-cmd-da0354e4fcd849a5ae4c901bc153cd3c | PASS: complete B1-B7 groups, separate-process scenarios and exact isolated run.bat/build.bat launcher |
+| build/bread-cmd-a2537eea1f21484db6e458226833a8c1 | PASS: native Home/partial input/static fields/arrows/Map/save/exit plus actual80x24 restart with reduced motion |
+| build/bread-cmd-e358150f444440549ac087fa0dbd06b8 | PASS: final stable160x52 recording, same navigation/save/restart checks, restored terminal |
+| Source reconciliation | All173 executable/test/tool inputs and190 Java classes match across the three runs and the final tree |
+| Canonical readback | One actual progress update; exact next action Confirm volunteer shifts before Friday; all8 saved files unchanged by read-only loading |
+| Approved identity | Every22-row native B3 output matches the unchanged approved renderer; no cropped lettering or Home scroll |
+| Media | Actual83.083s1280x832 H264,1989frames/about23.94fps; full decode PASS; Home/gaze/detail/form/save/reopen frames inspected |
+
+The Windows review copy is
+C:/Users/Papa/Desktop/Knowledgebase/Projects/Breadcrumbs/build/unified-experience-2026-11-15-e358150f/.
+It contains one named MP4, three decoded checkpoints and verification metadata.
+The video uses believable synthetic context and scripted native keys. It does not
+claim independent human usability validation. Earlier attempts and occluded screen
+copies are intermediate records, not the final visual receipt.
+
+Specification self-review: PASS within exercised scope. One opening composition,
+exact original identity, complete actions, meaningful transitions, stable fields,
+docked responsive bread, coherent eyes, professional existing routes and unchanged
+canonical services are covered by source inspection, viewport/gaze assertions and
+the native run. The owner-reported disappearance/empty-space and missing-font
+issues are explicitly covered. Engineering-quality self-review: PASS within scope;
+one render/input owner, bounded capture/cache, clean scheduler/cursor lifecycle,
+complete fallbacks and source-bound regression/native evidence. These are separate
+single-owner verdicts, not independent reviews. Final Impeccable detect exited0
+with no output; Java coverage is not inferred from that result.
+
+Live80-column resize while in the alternate buffer remains NOT_PROVEN because the
+host retained160. This differs from the actual80x24 restarted process that passed.
+Actual JDK17 runtime, Linux JVM, Windows Terminal, VS Code, independent human input,
+Ctrl+C and owner artistic acceptance remain open. Junction fixtures unavailable to
+the runner were skipped, not passed. No RELEASE_READY claim. The owner may CONTINUE,
+CHANGE, RELEASE or STOP; any protected effect still needs its exact authorized scope.

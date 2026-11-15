@@ -24,9 +24,8 @@ public final class BrandRenderer {
     /** Production branding uses only the approved B3 artwork; small terminals get text, never alternate art. */
     public static void renderApproved(PrintStream out, TerminalTheme theme, int width) {
         BreadSupport bread = theme.companion();
-        if (bread != null) { bread.beginIntro(); }
-        try { approvedFrame(out, theme, width); }
-        finally { if (bread != null) { bread.endIntro(); } }
+        if (bread != null && bread.screenBased()) { return; }
+        approvedFrame(out, theme, width);
     }
 
     private static void approvedFrame(PrintStream out, TerminalTheme theme, int width) {

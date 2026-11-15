@@ -206,3 +206,19 @@ confirmation keys, and wrapped choices/prompts at 28/40/80/120 columns in color 
 plain output. The native demo preflight additionally asserts every selected menu
 key is present in the immediately preceding displayed choices. Deterministic
 checks are separate from native visual inspection and owner acceptance.
+
+
+## Unified shell and spacing follow-up (15 November 2026)
+
+The enhanced Home now contains original B3 identity/tagline, real status, approved
+bread and all actions together. Explicit view identity replaces prompt-based
+navigation; fields share a stable footer inside their view. Reports page beside
+a fixed portrait. Workspace, forms, Map and record details use intentionally
+bounded frame heights, with old rows/columns cleared when changing layouts.
+This removes the portrait-height gap previously inserted between form instructions.
+
+Long field instructions remain complete above a bounded prompt. Narrow menus
+prioritize complete actions over optional art and keep enhanced paging. Canonical
+meaning, source/review distinctions, numeric routes, arrows and confirmation
+semantics remain unchanged. See BREADCRUMBS_UNIFIED_EXPERIENCE_POLISH.md for design,
+verified outputs and remaining acceptance boundaries.

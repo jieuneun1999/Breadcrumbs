@@ -16,6 +16,7 @@ final class RecoveryConsole {
         this.input = input; this.out = out; this.store = store; this.theme = theme; this.width = width; ui = new TerminalOutput(out, theme, width);
     }
     WorkspaceState run(Leave leave) throws IOException {
+        ui.view(ScreenId.RECOVERY);
         ui.heading("\nRESTORE A SAVED PROJECT"); ui.note("First inspect the saved copies. Nothing is restored until you confirm, and your original project folder is not read.");
         var savedProjects = store.list(); int number = 0;
         for (var saved : savedProjects) { ui.line("[" + (++number) + "] ", saved.name() + (saved.problem().isEmpty() ? "" : " | needs recovery")); }

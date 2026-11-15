@@ -177,3 +177,30 @@ console key injection, report paging, save/restart and cleanup. Add `--record
 are exclusively in the developer driver; no product operation delay is added.
 This is scripted native input, not independent human acceptance. The record and
 hash manifests distinguish successful gates from NOT_PROVEN host behavior.
+
+
+## Unified experience follow-up (15 November 2026)
+
+This section supersedes the separate-intro/header-scan description above for the
+enhanced path. Home composes the unchanged B3 artwork, live reference bread,
+real availability, all actions and input together. The complete22-row B3 art fits
+the normal160x52 native viewport inside a51-row Home; smaller viewports use compact
+branding. Classic production keeps its original approved renderer.
+
+Explicit ScreenId controls meaningfully different views. Content dim/reveal takes
+about120ms on navigation; ordinary fields, partial input and urgent errors do not
+replay a title scan. Text pages independently of the docked portrait. A roomy
+record-detail view has the same40x14 bread rather than an empty side. Shorter frame
+presets remove unused middle space and clear old bottom/right frame remnants.
+
+Both eyes move together in the sampled cell grid, preserving pupils at40 columns.
+Left/right/intermediate holds vary over a bounded72-second schedule. Free-form
+input is static. Actual operations use the owned footer and current portrait;
+completion follows actual work and leaves no feedback thread running. Numbers,
+arrows, blank-Enter safety and canonical workflows remain.
+
+A portrait must leave48 text cells; select the approved40x14 derivative if useful,
+then omit optional art when narrow menus need that width. The80x24 workspace keeps
+enhanced paging and every choice. Tiny/ambiguous/helper-loss fallbacks retain the
+complete text. Final receipts and visual review are in the unified-experience guide
+and B7_EXECPLAN. Only the final stable-size recording is delivery evidence.

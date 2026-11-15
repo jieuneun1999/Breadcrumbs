@@ -42,6 +42,7 @@ public final class ConsoleMenu {
         try {
             boolean running = true;
             while (running) {
+                ui.view(ScreenId.ADVANCED_TOOLS);
                 menu();
                 String operation = "Menu input";
                 try {

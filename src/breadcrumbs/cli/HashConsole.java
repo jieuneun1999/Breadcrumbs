@@ -17,6 +17,7 @@ final class HashConsole {
     void run() throws IOException {
         CustomHashTable<String> table = new CustomHashTable<>(4, 100);
         while (true) {
+            ui.view(ScreenId.ADVANCED_TOOLS);
             ui.heading("SYNTHETIC HASH DEMO"); ui.menu("[1] Insert/update\n[2] Lookup\n[3] Remove\n[4] Collision + resize fixture\n[5] Buckets\n[6] Validate\n[7] Compare canonical/index checkpoint lookup\n[8] Toggle canonical indexing\n[9] Rebuild/validate canonical indexes\n[0] Back");
             String choice = input.read("hash > "); if (choice.equals("0")) { return; }
             try {

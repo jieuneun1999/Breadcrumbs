@@ -13,6 +13,7 @@ public final class BreadFrames {
         public int height() { return height; }
     }
     public enum Mood { IDLE, WELCOME, WORKING, ENCOURAGING, SUCCESS, NEEDS_REVIEW, ERROR, GOODBYE, CURIOUS }
+    public enum Gaze { LOOK_FORWARD, LOOK_SLIGHT_LEFT, LOOK_LEFT, LOOK_SLIGHT_RIGHT, LOOK_RIGHT }
     public record Frame(List<String> rows, List<String> inks, List<List<Integer>> colors) {
         public Frame(List<String> rows, List<String> inks) { this(rows, inks, List.of()); }
         public Frame {
@@ -59,8 +60,36 @@ public final class BreadFrames {
     private static final int[] ASCII_PALETTE = {0, 0x754122, 0xb27030, 0xdb962e, 0xf6bc51,
             0xffdfa0, 0xffefbf, 0xe99591, 0x4f291d};
     private static final Frame[][][] CACHE = build();
+    private static final Frame[][][][] GAZE_CACHE = new Frame[Size.values().length][Mood.values().length][8][Gaze.values().length];
     private BreadFrames() { }
     public static Frame at(Size size, Mood mood, long tick) {
+        return CACHE[size.ordinal()][mood.ordinal()][pose(mood, tick)];
+    }
+    public static synchronized Frame at(Size size, Mood mood, long tick, Gaze gaze) {
+        if (gaze == Gaze.LOOK_FORWARD) { return at(size, mood, tick); }
+        int pose = pose(mood, tick);
+        Frame[] variants = GAZE_CACHE[size.ordinal()][mood.ordinal()][pose];
+        if (variants[gaze.ordinal()] == null) { variants[gaze.ordinal()] = BreadPortrait.draw(size, mood, pose, gaze); }
+        return variants[gaze.ordinal()];
+    }
+    public static Gaze gazeAt(long tick, Gaze attention) {
+        int phase = Math.floorMod(tick, 192);
+        int cycle = (int) Math.floorMod(Math.floorDiv(tick, 192), 3L);
+        int left = cycle == 1 ? 48 : cycle == 2 ? 36 : 40;
+        int right = cycle == 1 ? 114 : cycle == 2 ? 134 : 126;
+        int hold = cycle == 1 ? 16 : cycle == 2 ? 12 : 14;
+        if (phase < 8 || phase >= 168 && phase < 176) {
+            int step = phase < 8 ? phase : phase - 168;
+            return step < 2 || step >= 6 ? slight(attention) : attention;
+        }
+        if (phase >= left && phase < left + hold) { return phase < left + 2 || phase >= left + hold - 2 ? Gaze.LOOK_SLIGHT_LEFT : Gaze.LOOK_LEFT; }
+        if (phase >= right && phase < right + hold) { return phase < right + 2 || phase >= right + hold - 2 ? Gaze.LOOK_SLIGHT_RIGHT : Gaze.LOOK_RIGHT; }
+        return Gaze.LOOK_FORWARD;
+    }
+    private static Gaze slight(Gaze value) {
+        return value == Gaze.LOOK_LEFT ? Gaze.LOOK_SLIGHT_LEFT : value == Gaze.LOOK_RIGHT ? Gaze.LOOK_SLIGHT_RIGHT : Gaze.LOOK_FORWARD;
+    }
+    private static int pose(Mood mood, long tick) {
         int phase = Math.floorMod(tick, 96);
         int pose = phase == 18 || phase == 20 || phase == 70 || phase == 72 ? 1
                 : phase == 19 || phase == 71 ? 2
@@ -76,7 +105,7 @@ public final class BreadFrames {
         } else if (mood == Mood.NEEDS_REVIEW || mood == Mood.CURIOUS) {
             pose = phase == 18 || phase == 70 ? 1 : phase == 19 || phase == 71 ? 2 : phase >= 40 && phase <= 47 ? 3 : 0;
         }
-        return CACHE[size.ordinal()][mood.ordinal()][pose];
+        return pose;
     }
     private static Frame[][][] build() {
         Frame[][][] frames = new Frame[Size.values().length][Mood.values().length][8];

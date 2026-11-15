@@ -13,6 +13,7 @@ final class InboxConsole {
     }
     String run() throws IOException {
         while (true) {
+            ui.view(ScreenId.EVIDENCE_INBOX);
             ui.heading("Project notes");
             ui.note("Keep a note about your project or something someone told you. Do not add passwords or access keys.");
             int number = 0;

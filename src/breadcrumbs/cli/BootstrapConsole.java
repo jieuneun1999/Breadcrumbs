@@ -54,7 +54,7 @@ final class BootstrapConsole {
     }
 
     void bootstrap() throws IOException {
-        var ui = new TerminalOutput(output, theme, width); ui.heading("\nCreate or import project");
+        var ui = new TerminalOutput(output, theme, width); ui.view(ScreenId.PROJECT_SETUP); ui.heading("\nCreate or import project");
         ui.screen(BreadFrames.Mood.WELCOME, "Start with a folder, existing notes, or a project without files.",
                 "[1] Create an empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.", false);
         String choice = input.read("Entry mode: ");
@@ -67,8 +67,13 @@ final class BootstrapConsole {
             case "3" -> EntryMode.IMPORT_LEGACY_CONTEXT;
             default -> throw new IllegalArgumentException("Choose entry mode 0-3.");
         };
+        ui.form(ScreenId.PROJECT_SETUP, "Add the project details. Nothing is saved until you review and confirm.");
         String name = input.read("Project display name: ");
-        if (projectShell) { ui.menu("[1] General project\n[2] Academic or research project\n[3] Team or operations project\n[4] Software project"); }
+        if (projectShell) {
+            String profiles = "[1] General project\n[2] Academic or research project\n[3] Team or operations project\n[4] Software project";
+            if (ui.enhanced()) { ui.screen(BreadFrames.Mood.ENCOURAGING, "Choose the profile that fits your project. Enter keeps the general profile.", profiles, false); }
+            else { ui.menu(profiles); }
+        }
         String selectedProfile = input.read(projectShell ? "Project type [Enter = general]: " : "Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
         selectedProfile = switch (selectedProfile) { case "1" -> "GENERAL"; case "2" -> "ACADEMIC"; case "3" -> "OPERATIONS"; case "4" -> "SOFTWARE"; default -> selectedProfile; };
         ProjectProfile profile;
@@ -78,6 +83,7 @@ final class BootstrapConsole {
         } catch (IllegalArgumentException invalid) {
             throw new IllegalArgumentException("Choose one of the four listed project profiles.");
         }
+        ui.form(ScreenId.PROJECT_SETUP, "Continue with your project details. /cancel discards this proposal.");
         CurrentContext context = CurrentContext.unknown();
         if (mode == EntryMode.NEW_EMPTY) {
             context = new CurrentContext(input.read("Project goal [Enter if unknown]: "),

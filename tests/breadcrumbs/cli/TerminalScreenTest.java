@@ -21,18 +21,19 @@ public final class TerminalScreenTest {
             check(screens.screen().equals("Home"), "Current identity belongs to the presentation");
             screens.actions("[1] Open\n[13] Map\n[0] Back");
             check(screens.move(1).equals("13") && screens.move(1).equals("0") && screens.move(1).equals("1"), "Arrows resolve to original numeric tokens and wrap");
-            screens.endRead(); out.println("Map content"); out.print("Map > "); screens.beginRead("Map > ");
+            screens.endRead(); screens.view(ScreenId.PROJECT_MAP, new TerminalTheme(true)); out.println("Map content"); out.print("Map > "); screens.beginRead("Map > ");
             String text = bytes.toString(StandardCharsets.UTF_8);
-            check(count(text, "\u001b[?1049h") == 1 && count(text, "\u001b[2J") == 2, "One alternate viewport replaces successive screens");
-            check(!text.substring(text.lastIndexOf("\u001b[2J")).contains("Original report"), "New screen does not append previous content");
+            check(count(text, "\u001b[?1049h") == 1 && count(text, "\u001b[2J") == 1, "One alternate viewport keeps a stable shell across successive screens");
+            String viewport = TerminalTestSurface.read(text, 120, 40).text();
+            check(viewport.contains("Map content") && !viewport.contains("Original report"), "Actual rendered viewport replaces previous content without scrollback accumulation");
             screens.endRead();
             for (int i = 0; i < 90; i++) { out.println("Source locator " + i); }
-            out.print("Record > "); keys.tick(4); keys.enter(2); screens.beginRead("Record > ");
+            out.print("Record > "); keys.tick(4); keys.enter(8); screens.beginRead("Record > ");
             text = bytes.toString(StandardCharsets.UTF_8);
             for (int i = 0; i < 90; i++) { check(text.contains("Source locator " + i), "Report content remains reachable through paging"); }
             check(text.contains("Enter:next Left:back"), "Long reports disclose navigation instead of silently clipping");
-            check(count(text, "Source locator 0" + System.lineSeparator()) == 1, "Unchanged keyboard ticks do not clear and repaint a report page");
-            screens.beginOperation(); out.println("Real scan progress"); check(bytes.toString(StandardCharsets.UTF_8).stripTrailing().endsWith("Real scan progress"), "Real operations are revealed immediately"); screens.endOperation();
+            check(count(text, "Source locator 0") == 1, "Unchanged keyboard ticks do not clear and repaint a report page");
+            screens.status("Real scan progress"); check(bytes.toString(StandardCharsets.UTF_8).contains("Real scan progress"), "Status updates are revealed immediately in the owned footer");
         }
         String closed = bytes.toString(StandardCharsets.UTF_8);
         check(closed.contains("\u001b[?25h\u001b[?1049l"), "Terminal and cursor restore on close");

@@ -913,3 +913,259 @@ Verify the final staged source against the same169 hashes before committing.
 After normal push, read back the exact remote branch hash. Use existing Windows
 Git transport if the WSL credential-helper environment cannot resolve its Linux
 Git-directory path; do not change credentials or global Git configuration.
+
+
+## Active Unified Experience packet (15 November 2026)
+
+Owner attachment10ff34b4 authorizes the unified Home/shell, intentional transitions,
+responsive same-character gaze, navigation/input/result polish and actual demo.
+Verified clean baseline fcbef69 on codex/breadcrumbs-session in the existing WSL
+Orca worktree. Windows checkout stays a launcher/evidence copy. No new worktree,
+agent, writer, domain/DSA/storage change, dependency/global configuration, merge,
+force push, PR12 update or external communication. Previous one-snapshot commit/
+push authorization was fulfilled; this packet implements/tests/documents locally.
+STANDARD, one owner/writer, six repairs per gate, at most two failed attempts under
+one hypothesis. Preserve originals and unrelated work. No canonical instructions
+exist in the worktree/parent chain; user entrypoint and canonical Manual govern.
+
+Pstack1.21 poteto-mode fully re-read in a dedicated call, figure-it-out fully read
+separately. How/architect, model-domain/foundation/prove/sequence/trail instructions
+loaded; truncated architect output retrieved. Single-owner Manual adaptation
+replaces arena/explainer/trail subagents with explicit owner self-review and
+sequential structural alternatives. No role/model configuration change. Impeccable
+Operate/Animate/Polish and craft-floor loaded, retaining the once-per-session
+context result and incumbent project authority; no rerun/install/global repair.
+Native fixed-cell adaptation uses actual Java rendering, no web font/CSS claims.
+Canonical Manual evidence/boundary, Workflow STANDARD/verification, Routing packet
+and Craft UI/single-writer/source-binding sections loaded. Existing project
+verification is verify-bread-support.py, not an invented verification skill.
+
+- [x] Read the Principles section of poteto-mode.
+- [x] Phase A: Frame.
+- [x] Phase B: Design the workflow.
+- [x] Phase C: Run the loop.
+- [x] Unified Home and explicit shell prototype with before/after input tests.
+- [x] Home visual checkpoint before propagating layout to other flows.
+- [x] Meaningful screen transitions, stable field/input region and view focus.
+- [x] Same-reference directional gaze and bounded deterministic choreography.
+- [x] Shared major-flow integration and truthful context/result copy.
+- [x] Phase D: Keep the audit trail.
+- [x] Phase E: Verify and hand back.
+
+Grounding: BrandRenderer.beginIntro emits a separate live viewport before startup
+status/menu. TerminalScreenManager derives identity from every prompt and clears
+on every beginRead. BreadSupport owns input/ticks but uses prompt-relative art
+coordinates; fixed footer requires an explicit rendered-region anchor. Menus and
+services already share TerminalOutput. DailyConsole owns workspace flows;
+ProjectMapConsole owns view navigation. Canonical logic remains with those owners.
+
+Alternatives: (A) scatter clears/layout into every console, rejected for duplicated
+ownership and loss of reports; (B) keep prompt-title inference plus a special Home,
+rejected because fields still trigger navigation effects and unrelated views share
+names; (C) add a small ScreenId/explicit view boundary to existing output capture,
+compose a shared shell with fixed footer and body diffs, and retain the existing
+single input/render coordinator. Choose C. No new screen framework or state store.
+API sketch and design authority live in the requested unified-experience guide.
+
+Done predicate: one composed Home contains identity/tagline/status/bread/all
+choices with full B3 art only where the complete composition fits; screen changes
+have restrained content replacement, ordinary fields preserve shell/input anchor;
+both eyes visibly shift coherently without mirroring the loaf, all sizes preserve
+identity; actions/data/privacy remain intact; all required suites and native demo
+pass with source binding. Owner artistic approval and unexercised host gates stay
+explicitly open. Riskiest unknown is Home fit + art/input coordinate ownership;
+prove it before wider propagation. Builds/native captures serialized; retained
+before frame is the source-matching final-terminal-ux-2026-11-15-7078d759 evidence.
+
+
+Unified Home unit: new UnifiedExperienceTest first failed the erased-splash
+assertion, then passed after composed Home/fixed-footer changes. Native Home
+checkpoint7ed34af2 PASS: identity/tagline/all0-8 actions, live motion, paused partial
+number and restored exit. Its7.458s actual1280x832 recording fully decodes and the
+Home frame was inspected. The overly tall empty canvas prompted one bounded
+correction: a viewport-derived40-row application frame (72 for very tall viewports
+that can genuinely host full B3 art). Layout is stable across views. This is not
+owner artistic approval. With the Home checkpoint established, explicit view
+boundaries now integrate workspace/setup/map/search/Inbox/handoff/advanced flows.
+Working feedback uses the owned status row and existing visible portrait rather
+than writing a second full region at the footer. Directional frames are lazy
+immutable derivatives of the original face; gaze and input tests are next.
+
+
+Unified review correction: a targeted form-anchor assertion first failed after
+adding explanatory text below the portrait. The enhanced renderer now records the
+actual staged portrait row, independently of prompt length or trailing notes;
+source-relative metadata is mapped after pagination/full-brand insertion. The
+assertion then passes. Newly staged portraits are repainted coherently without
+resetting the body timeline on arrows. Complete long-field instructions remain in
+the body when the footer needs a bounded label. The static form reuses its anchor
+across subsequent fields. Sampled eye-cell translation repairs the COMPACT pupil
+loss caused by scaling a translated source eye; forward reference frames stay exact.
+The held glance schedule varies deterministically across three bounded cycles.
+
+Full339e3349 passed all B1-B7/process/exact-launcher groups before that final anchor
+and timing correction. Native472ae7b0 passed Home/partial/free-text/arrows/Map/save/
+restart/cleanup against the corrected application, with actual71.75s1280x832 H264,
+1716frames (23.92fps), full decode and inspected Home/workspace. Live80 resize was
+again refused by the host (retained160); do not promote it to PASS. Reading-speed
+review prompted a driver-only correction: pause on each recorded report page and
+capture the progress form. Product operations have no added delay. Final runner
+and native source binding follow; earlier runs are intermediate, not final receipt.
+Impeccable detect exited0 with no output; this does not establish Java TUI coverage.
+Verification-before-completion skill read; apply fresh commands/readback with the
+Manual's proportional scope. No claim of independent review or owner acceptance.
+
+
+Owner live steer: mascot sometimes disappears/goes down and short views leave too
+much black space. Nativec579cbe3 confirms detail has no portrait and form text is
+separated by a full portrait-height spacer. This is a layout ownership issue, not
+an art-size problem. Refine the chosen shared-shell design: reserve a side portrait
+independently of report text/pages; keep the same character at the top of every
+roomy view. Home keeps its left portrait. Workspace/forms use48x17, Map/details40x14.
+No new artwork. The fixed input is stable within each view; meaningful navigation
+may choose a shorter preset: Home32, workspace34, setup/forms/Map30, detail26 rows.
+A sufficiently wide/tall full-B3 Home uses54. Clear any old frame rows on shrink.
+All content remains reachable through text paging while art stays in its own region.
+Tiny/helper-loss fallback restores the complete text and choices. Add independent
+viewport assertions for every report page and detail/frame shrink before recording.
+The earlier native recordings are intermediate; final source/capture gates are rerun.
+
+
+Docked native33424e91 reaches all wide visual checkpoints, but its80-column
+restarted workspace releases to classic because a28-character text column wraps
+the15-action group past the available height. The summary therefore scrolls off
+the classic viewport and the exact native next-action assertion fails. Keep that
+assertion. Root fix: a docked portrait must leave at least48 text cells; use the
+same40x14 derivative if needed, then omit optional art when even that cannot fit.
+Narrow views keep enhanced paging and complete choices rather than choosing art
+at the cost of navigation. A new80x24 viewport test verifies all13 numbered actions
+plus Back/help on one action page. Wide details/forms retain the docked bread.
+Restore Progress update identity after returning from its nested task tools.
+
+
+Owner branding steer: retain the original polished Breadcrumbs lettering on the
+initial screen. The compact-header threshold had excluded the158-cell complete B3
+art from a160-column frame with155 interior cells. Restore the complete unchanged
+art at the actual160x52 native size: a one-cell Home border yields158 interior
+cells, and52 rows contain the22-row brand, one separator row,20-row live bread,
+all launch actions and fixed footer. Every write uses explicit row positioning;
+verify native final-column behavior, not only the logical emulator. Smaller views
+keep compact branding rather than cropping/redrawing it. Other views retain their
+shorter frames and docked bread. Add every-B3-row equality at160x52. Nativeaa624904
+passed the corrected narrow enhanced save/restart path before this branding fix;
+its footage is intermediate. Final source/evidence gates follow this owner steer.
+
+
+Native6473e5cf passed all routes, exact B3/no-scroll checks and saved/restart paths.
+All22 logo rows were read back equal to the original renderer. Actual93.4167s video
+fully decodes (1280x832,2232frames). Batched visual inspection found one residual
+rightmost Home border column after shrinking to ordinary frames; clear the former
+column as well as old lower rows. An independent viewport test covers Home->Map.
+The recorder keeps its initial capture rectangle when the console window shrinks,
+leaving stale imagery outside the narrow restarted window. Keep recording at one
+size; exercise the real80x24 restart in a separate unrecorded native run. Do not
+present the stale outer imagery as application output or host resize acceptance.
+Final correction budget remains bounded; no data/domain changes or publication.
+
+
+## Final executed acceptance (15 November 2026)
+
+DEMO_READY for bounded Windows/JDK25, targeting Java17. The implementation remains
+local on codex/breadcrumbs-session above fcbef69. Owner visual approval is pending.
+No new commit, push, PR12 update, merge, release or external publication occurred.
+
+| Receipt | Fresh observed result |
+| --- | --- |
+| build/bread-cmd-da0354e4fcd849a5ae4c901bc153cd3c | PASS: complete B1-B7 groups, separate-process scenarios and exact isolated run.bat/build.bat launcher |
+| build/bread-cmd-a2537eea1f21484db6e458226833a8c1 | PASS: native Home/partial input/static fields/arrows/Map/save/exit plus actual80x24 restart with reduced motion |
+| build/bread-cmd-e358150f444440549ac087fa0dbd06b8 | PASS: final stable160x52 recording, same navigation/save/restart checks, restored terminal |
+| Source reconciliation | All173 executable/test/tool inputs and190 Java classes match across the three runs and the final tree |
+| Canonical readback | One actual progress update; exact next action Confirm volunteer shifts before Friday; all8 saved files unchanged by read-only loading |
+| Approved identity | Every22-row native B3 output matches the unchanged approved renderer; no cropped lettering or Home scroll |
+| Media | Actual83.083s1280x832 H264,1989frames/about23.94fps; full decode PASS; Home/gaze/detail/form/save/reopen frames inspected |
+
+The Windows review copy is
+C:/Users/Papa/Desktop/Knowledgebase/Projects/Breadcrumbs/build/unified-experience-2026-11-15-e358150f/.
+It contains one named MP4, three decoded checkpoints and verification metadata.
+The video uses believable synthetic context and scripted native keys. It does not
+claim independent human usability validation. Earlier attempts and occluded screen
+copies are intermediate records, not the final visual receipt.
+
+Specification self-review: PASS within exercised scope. One opening composition,
+exact original identity, complete actions, meaningful transitions, stable fields,
+docked responsive bread, coherent eyes, professional existing routes and unchanged
+canonical services are covered by source inspection, viewport/gaze assertions and
+the native run. The owner-reported disappearance/empty-space and missing-font
+issues are explicitly covered. Engineering-quality self-review: PASS within scope;
+one render/input owner, bounded capture/cache, clean scheduler/cursor lifecycle,
+complete fallbacks and source-bound regression/native evidence. These are separate
+single-owner verdicts, not independent reviews. Final Impeccable detect exited0
+with no output; Java coverage is not inferred from that result.
+
+Live80-column resize while in the alternate buffer remains NOT_PROVEN because the
+host retained160. This differs from the actual80x24 restarted process that passed.
+Actual JDK17 runtime, Linux JVM, Windows Terminal, VS Code, independent human input,
+Ctrl+C and owner artistic acceptance remain open. Junction fixtures unavailable to
+the runner were skipped, not passed. No RELEASE_READY claim. The owner may CONTINUE,
+CHANGE, RELEASE or STOP; any protected effect still needs its exact authorized scope.
+
+Final review copy video hash: 590a89b78772ece7e3aef8ece7d3fa89278517e4ca3d7f847ca4cbe73a6d1b5d
+
+
+## Owner-authorized main integration (15 November 2026)
+
+The owner explicitly authorizes committing this working version, merging all
+working Breadcrumbs PR work into main and pushing it now. This supersedes the
+prior local-only publication boundary for this exact integration. No force push,
+branch deletion, tag, release, deployment, credential/configuration change or
+unrelated communication. Repository jieuneun1999/Breadcrumbs, existing Orca
+worktree and codex/breadcrumbs-session only. Preserve generated media/test storage
+outside Git and keep the Windows launcher checkout on its existing branch.
+
+GUARDED publication packet. One execution owner/writer and one bounded read-only
+Terra reviewer for the aggregate integration candidate; no nested delegation,
+extra writer or worktree. Four repair attempts per gate, at most two under one
+hypothesis. Stop for changed remote scope, missing PR ancestry, nontrivial review
+failure, protected branch rejection or unavailable authorization. Prior main
+ d1f13c2bb84c9e0841e3b204e32cdbc403b78613 and all original branch tips remain in
+history. Recovery is an ordinary reviewed revert if later authorized, never a
+force push or reset of shared history.
+
+Pstack1.21 poteto-mode completely re-read in a dedicated call; Shipping playbook
+completely read separately. Canonical Manual/Workflow/Routing/Craft sections for
+risk, authority, one writer, read-only review and bounded adaptation loaded.
+Deslop, no-comments/comment-sicko and technical-writing selected instructions
+loaded. Keep this narrowly a publication: static/comment review reports material
+risks without a style rewrite of the already verified implementation. Use the
+installed native Terra read-only role permitted by the engineering entrypoint;
+no provider installation, model-sheet rewrite or fallback panel.
+
+Shipping steps and bounded adaptation:
+- [x] Resolve the forge, repository identity, and both Git remotes.
+- [x] Freeze and disarm the queue before verification.
+- [ ] Re-check that each verdict still describes the patch.
+- [ ] Prepare only the bottom PR.
+- [ ] Land one PR at a time, checked against the current landing SHA and base.
+- [x] Do not read GitHub auto-merge or merge-queue state as stack readiness.
+- [ ] Recompute after every merge.
+- [ ] Watch the current frontier until it merges or fails. Do not mutate the stack around it.
+- [ ] Stop at the ceiling.
+
+Observed forge state:12 open stacked PRs,1 through12. GraphQL confirms every
+head/base and both autoMergeRequest and mergeQueueEntry null. Origin fetch and
+push URL both name https://github.com/jieuneun1999/Breadcrumbs.git. main is an
+ancestor of fcbef69; all12 exact PR heads are ancestors of that current working
+branch. No PR contributes a separate unintegrated feature. Therefore adapt the
+historical per-PR shipping queue into one consolidation PR from the exact verified
+aggregate working version to main, preserving commit ancestry. Do not replay old
+UI snapshots or squash away the historical PR heads. An independent reviewer
+checks the aggregate and runs the actual app before guarded merge. GitHub PR
+metadata is read back afterward rather than assumed to close automatically.
+
+Acceptance: explicit allowlist commit, clean staged scan,173 final executable
+inputs bound to full da0354e4/native a2537eea and e358150f receipts, fresh independent
+runtime verdict, expected-head merge guard, current main/base readback, final
+GitHub main tree equal to candidate tree and all12 PR heads reachable. CI, owner
+artistic acceptance and actual release/other-host claims remain separate. No new
+code behavior is intended in this publication. Safe independent preparation
+continues under the owner's exact authorization without another permission gate.

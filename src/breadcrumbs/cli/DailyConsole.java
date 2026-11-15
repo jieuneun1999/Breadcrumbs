@@ -35,6 +35,14 @@ final class DailyConsole {
         if (state.activeBaseline() == null) { ui.warning("Open or create a project first."); return; }
         boolean showMenu = true;
         while (true) {
+            ui.view(ScreenId.PROJECT_WORKSPACE);
+            if (ui.enhanced()) {
+                ui.line("Project: ", state.activeBaseline().displayName());
+                ui.note(state.dirty() ? "Changes are not saved yet." : persisted.getAsBoolean() ? "Saved on this computer." : "Open for this session; save to keep changes.");
+                var latest = state.checkpoints().getLatest();
+                if (latest != null) { ui.line("Last recorded next action: ", ProjectMapService.safe(latest.project().nextActions(), 160)); }
+                else { ui.note("No progress updates yet. Explore the starting context in Project Map."); }
+            }
             if (showMenu) {
                 ui.heading("\nProject workspace");
                 ui.screen(BreadFrames.Mood.WELCOME, "Ready to pick up where you left off?", ACTIONS, false);
@@ -92,6 +100,7 @@ final class DailyConsole {
     void follow() { new ProjectPresentation(out, theme, width).showSummary(state, persisted.getAsBoolean()); }
     private void quick() throws IOException { quick(new String[0]); }
     private void quick(String[] manualIds) throws IOException {
+        ui.form(ScreenId.PROGRESS_UPDATE, "Record what changed. Review the details before adding this update to your history.");
         ui.heading("\nRecord progress update");
         ui.note(switch (state.activeBaseline().profile()) {
             case SOFTWARE -> "Summarize changes, blockers and next actions. Include only test results you observed.";
@@ -104,9 +113,11 @@ final class DailyConsole {
         String changed = input.read("Progress summary: ");
         var previous = state.checkpoints().getLatest();
         if (previous != null) { ui.value("Previous blockers or pending items; review before carrying forward", ProjectPresentation.blocker(previous.project())); }
+        if (previous != null) { ui.form(ScreenId.PROGRESS_UPDATE, "Review previous blockers before carrying them forward. Nothing is confirmed yet."); }
         String blocker = input.read("Blockers or pending items [none, or Enter if unknown]: ");
         String next = input.read("Next action: ");
         while (true) {
+            ui.view(ScreenId.PROGRESS_UPDATE);
             var preview = service.preview(state, changed, blocker, next, options);
             ui.heading("\nReview progress update");
             ui.value("Progress summary", preview.summary()); ui.value("Blockers or pending items", ProjectPresentation.blocker(preview.project()));
@@ -148,6 +159,7 @@ final class DailyConsole {
         }
     }
     private void review() throws IOException {
+        ui.view(ScreenId.REVIEW_CHANGES);
         ui.heading("\nReview file changes");
         if (input.read("Read your project folder again to check for changes? Type yes; Enter uses earlier file checks: ").equalsIgnoreCase("yes")) {
             try (var progress = new OperationFeedback(out, theme, width, OperationFeedback.Operation.RESCAN)) {

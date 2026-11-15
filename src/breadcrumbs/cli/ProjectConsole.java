@@ -39,15 +39,22 @@ public final class ProjectConsole {
 
     public void run() throws IOException {
         BrandRenderer.renderApproved(output, theme, width);
-        refresh();
+        if (!ui.enhanced()) { refresh(); }
         try {
             boolean running = true;
             boolean showMenu = true;
             while (running) {
+                if (ui.enhanced()) {
+                    ui.view(ScreenId.HOME); refresh();
+                    if (state.activeBaseline() != null) {
+                        ui.line("Current project: ", state.activeBaseline().displayName());
+                        ui.note(state.dirty() ? "Changes are not saved yet." : persistence ? "This project is saved on this computer." : "This project is open for this session.");
+                    }
+                }
                 if (showMenu) {
                     startup.menu();
                     showMenu = false;
-                } else { ui.heading("\nProject navigation"); startup.compactMenu(); }
+                } else { if (!ui.enhanced()) { ui.heading("\nProject navigation"); } startup.compactMenu(); }
                 try {
                     switch (read("Breadcrumbs > ")) {
                         case "0" -> running = !leave();
@@ -100,6 +107,7 @@ public final class ProjectConsole {
     }
 
     private void create() throws IOException {
+        ui.view(ScreenId.PROJECT_SETUP);
         if (!leave()) { return; }
         WorkspaceState candidate = new WorkspaceState();
         BootstrapService bootstrap = new BootstrapService(ScanPolicy.defaults(),
@@ -114,6 +122,7 @@ public final class ProjectConsole {
     }
 
     private void open() throws IOException {
+        ui.view(ScreenId.PROJECT_SELECTION);
         WorkspaceStore.SavedWorkspace[] saved = store.list();
         if (saved.length == 0) { ui.plain("No saved projects yet. Choose New project to start or import a folder."); return; }
         if (theme.companion() != null && theme.companion().boxedMenus()) {
@@ -158,7 +167,7 @@ public final class ProjectConsole {
         boolean back = false;
         while (!back) {
             status(true);
-            ui.heading("Advanced project tools");
+            ui.view(ScreenId.ADVANCED_TOOLS); ui.heading("Advanced project tools");
             ui.menu("[1] View B0 / sources\n[2] Create confirmed checkpoint\n[3] Latest checkpoint\n[4] History (forward and backward)\n[5] Save project\n[6] Switch project\n[7] Project information\n[8] DLL diagnostics\n[9] Context audit\n[10] Guided present-context review\n[11] Consent and rescan sources\n[12] Compare saved observations\n[13] Relevant checkpoint retrieval\n[14] Resume / handoff preview and export\n[15] Coordination applicability\n[16] Work items / explicit dependencies\n[17] Hash demonstration / canonical indexes\n[18] Search project context\n[0] Back");
             try {
                 String choice = read("Advanced > ");
@@ -202,6 +211,7 @@ public final class ProjectConsole {
     }
 
     private void checkpoint() throws IOException {
+        ui.form(ScreenId.PROGRESS_UPDATE, "Add a detailed account of the work. Review the complete update before confirming it.");
         ui.plain("Human present-context statements only. Blank optional fields stay UNKNOWN. /cancel returns.");
         String title = read("Checkpoint title: "), progress = read("Progress summary: "), objective = read("Objective: ");
         String blocker = read("Blockers [UNKNOWN, NONE_REPORTED, BLOCKED]: ");

@@ -3,6 +3,7 @@ package breadcrumbs.cli;
 import breadcrumbs.cli.BreadFrames.Frame;
 import breadcrumbs.cli.BreadFrames.Mood;
 import breadcrumbs.cli.BreadFrames.Size;
+import breadcrumbs.cli.BreadFrames.Gaze;
 import java.io.EOFException;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -27,6 +28,8 @@ public final class BreadSupport implements AutoCloseable {
     private final boolean visible, animation;
     private int columns, rows;
     private Screen active;
+    private record Portrait(Size size, int column) { }
+    private Portrait visiblePortrait;
     private boolean closed;
 
     public BreadSupport(PrintStream out, Keyboard keyboard, int columns, int rows, boolean visible, boolean animation) {
@@ -40,6 +43,31 @@ public final class BreadSupport implements AutoCloseable {
         this.visible = visible; this.animation = animation;
     }
     public int columns() { return columns; }
+    int textColumns() { return screenBased() ? screens.textColumns() : columns; }
+    boolean screenBased() { return screens != null && screens.enabled(); }
+    String viewTitle() { return screenBased() ? screens.screen() : ""; }
+    void view(ScreenId id, TerminalTheme theme) {
+        if (screens == null) { return; }
+        boolean changed = screens.view() != id; screens.view(id, theme);
+        if (changed && screenBased() && visible) { stop(); dock(theme, Mood.IDLE, id == ScreenId.HOME); }
+    }
+    private Size preferredSize() {
+        Size size = columns >= 120 && rows >= 30 ? Size.FULL : columns >= 100 && rows >= 27 ? Size.MEDIUM : Size.COMPACT;
+        if (screenBased() && screens.view() != ScreenId.HOME && size == Size.FULL) { size = Size.MEDIUM; }
+        if (screenBased() && (screens.view() == ScreenId.PROJECT_MAP || screens.view() == ScreenId.PROJECT_MAP_SECTION || screens.view() == ScreenId.PROJECT_MAP_DETAIL)) { size = Size.COMPACT; }
+        return size;
+    }
+    private boolean dock(TerminalTheme theme, Mood mood, boolean expanded) {
+        if (columns < 72 || rows < 21 || closed) { return false; }
+        Size size = preferredSize();
+        if (size.height() > screens.contentRows() || screens.contentColumns() - size.width() - 7 < 48) { size = Size.COMPACT; }
+        // A narrow text column can split a complete action group across pages.
+        // Prefer all choices and report paging when the portrait cannot leave room.
+        if (size.height() > screens.contentRows() || screens.contentColumns() - size.width() - 7 < 48) { return false; }
+        screens.portrait(viewport(BreadFrames.at(size, mood, 0).render(theme), 0), !expanded);
+        active = new Screen(theme, size, mood, 0, screens.portraitColumn()); return true;
+    }
+    void urgent() { if (screens != null) { screens.urgent(); } }
     boolean boxedMenus() { return visible && !closed && columns >= 28 && rows >= 10; }
     public boolean controlledInput() { return keyboard != null && !closed; }
 
@@ -52,6 +80,7 @@ public final class BreadSupport implements AutoCloseable {
         private Frame previous;
         private List<String> previousLines;
         private long tick;
+        private int attentionTicks;
         private boolean stopped;
         Screen(TerminalTheme theme, Size size, Mood mood, int distance, int column) {
             this.theme = theme; this.size = size; this.mood = mood; this.distance = distance; this.column = column;
@@ -61,19 +90,26 @@ public final class BreadSupport implements AutoCloseable {
         void tick() {
             synchronized (out) {
                 if (stopped || closed || active != this || !animation || out.checkError()) { return; }
-                Frame next = BreadFrames.at(size, mood, ++tick);
+                Gaze attention = column > 0 ? Gaze.LOOK_LEFT : Gaze.LOOK_RIGHT;
+                Gaze gaze = mood == Mood.SUCCESS ? Gaze.LOOK_FORWARD : attentionTicks > 0 ? attention : BreadFrames.gazeAt(tick + 1, attention);
+                if (attentionTicks > 0) { attentionTicks--; }
+                Frame next = BreadFrames.at(size, mood, ++tick, gaze);
                 int offset = offset(tick);
                 if (next == previous && offset == previousOffset) { return; }
                 List<String> rendered = viewport(next.render(theme), offset);
                 for (int y = 0; y < size.height(); y++) {
                     if (rendered.get(y).equals(previousLines.get(y))) { continue; }
-                    visual.print("\u001b7\u001b[" + (distance - y) + "A\r\u001b[" + (column + 1) + "G" + rendered.get(y) + "\u001b8");
+                    if (screenBased()) {
+                        if (screens.actorRow() < 0) { return; }
+                        visual.print("\u001b7\u001b[" + (screens.actorRow() + y) + ";" + screens.actorStartColumn() + "H" + rendered.get(y) + "\u001b8");
+                    } else { visual.print("\u001b7\u001b[" + (distance - y) + "A\r\u001b[" + (column + 1) + "G" + rendered.get(y) + "\u001b8"); }
                 }
                 visual.flush(); previous = next; previousLines = rendered; previousOffset = offset;
             }
         }
         void mood(Mood value) { synchronized (out) { mood = value; tick = 0; } }
-        @Override public void close() { synchronized (out) { stopped = true; if (active == this) { active = null; if (screens != null) { screens.endOperation(); } } } }
+        void attention() { attentionTicks = 6; }
+        @Override public void close() { synchronized (out) { stopped = true; if (active == this) { active = null; } } }
     }
 
     boolean present(TerminalTheme theme, Mood mood, String message, String actions, boolean expanded) {
@@ -90,16 +126,22 @@ public final class BreadSupport implements AutoCloseable {
             actions(actions);
             if (closed || !visible || columns < 72 || rows < 21
                     || !MenuBox.fixedCells(message) || !MenuBox.fixedCells(actions)) { return false; }
-            Size size = columns >= 120 && rows >= 30 ? Size.FULL : columns >= 100 && rows >= 27 ? Size.MEDIUM : Size.COMPACT;
+            if (screenBased()) {
+                if (!dock(theme, mood, expanded)) { return false; }
+                out.println();
+                for (String line : MenuBox.contentRows(theme, textColumns(), message, actions, result)) { out.println(line); }
+                return true;
+            }
+            Size size = preferredSize();
             List<String> box;
             int regionWidth, right, count;
             while (true) {
                 regionWidth = size.width() + 4;
-                right = columns - regionWidth - 4;
+                right = textColumns() - regionWidth - 4;
                 if (right < 24) { return false; }
-                box = MenuBox.rows(theme, right, message, actions, result);
+                box = screenBased() ? MenuBox.contentRows(theme, right, message, actions, result) : MenuBox.rows(theme, right, message, actions, result);
                 count = Math.max(size.height(), box.size());
-                if (count + 7 <= rows) { break; }
+                if (count <= (screenBased() ? screens.contentRows() : rows - 7)) { break; }
                 if (size == Size.COMPACT) { return false; }
                 size = Size.COMPACT;
             }
@@ -121,7 +163,13 @@ public final class BreadSupport implements AutoCloseable {
 
     Screen operation(TerminalTheme theme, String message) {
         stop();
-        if (screens != null) { screens.beginOperation(); }
+        if (screenBased()) {
+            screens.status(message);
+            if (visiblePortrait == null || screens.actorRow() < 0) { return null; }
+            active = new Screen(theme, visiblePortrait.size(), Mood.WORKING, 0, visiblePortrait.column());
+            active.previousLines = java.util.Collections.nCopies(visiblePortrait.size().height(), "");
+            active.tick(); return active;
+        }
         if (!present(theme, Mood.WORKING, message, "", false)) { return null; }
         synchronized (out) {
             Screen screen = active;
@@ -136,11 +184,14 @@ public final class BreadSupport implements AutoCloseable {
         try {
             if (keyboard == null || closed) { return readPortable(fallback, limit); }
             if (screens != null) {
-                screens.endOperation();
                 try { screens.beginRead(prompt); }
                 catch (EOFException end) { throw end; }
                 catch (IOException unavailable) { return portableAfterFailure(fallback, theme, prompt, limit); }
-                if (active != null && !screens.fitsLiveRegion(active.distance + 1)) { stop(); }
+                if (active != null) {
+                    if (!screens.fitsLiveRegion(active.size.height(), active.column, active.size.width() + 4)) { visiblePortrait = null; stop(); }
+                    else { visiblePortrait = new Portrait(active.size, active.column); }
+                }
+                if (!screens.menuInput()) { stop(); }
             }
             StringBuilder line = new StringBuilder();
             boolean overflow = false;
@@ -161,17 +212,20 @@ public final class BreadSupport implements AutoCloseable {
                 if (key >= UP && key <= RIGHT) {
                     if (screens != null && line.isEmpty()) {
                         String chosen = screens.move(key == UP || key == LEFT ? -1 : 1);
+                        if (active != null) { active.attention(); }
                         paintInput(theme, prompt, chosen);
                     }
                     continue;
                 }
                 if (key == 4 || key == 26) { throw new EOFException(); }
                 if (key == 13 || key == 10) {
-                    visual.println(); visual.flush();
+                    if (!screenBased()) { visual.println(); visual.flush(); }
                     if (overflow) { throw new IllegalArgumentException("Input exceeds " + limit + " characters."); }
-                    return line.isEmpty() && screens != null ? screens.selected() : line.toString();
+                    String answer = line.isEmpty() && screens != null ? screens.selected() : line.toString();
+                    if (screens != null) { screens.completeRead(answer); }
+                    return answer;
                 }
-                if (key == 27) { visual.println(); return "/cancel"; }
+                if (key == 27) { if (!screenBased()) { visual.println(); } return "/cancel"; }
                 if (key == 8 || key == 127) {
                     if (!line.isEmpty()) { line.delete(line.offsetByCodePoints(line.length(), -1), line.length()); }
                 } else if (key == 21) { line.setLength(0); }
@@ -184,8 +238,7 @@ public final class BreadSupport implements AutoCloseable {
     }
 
     void actions(String actions) { if (screens != null) { screens.actions(actions); } }
-    void beginIntro() { if (screens != null) { screens.beginIntro(); } }
-    void endIntro() { if (screens != null) { screens.endOperation(); } }
+    void feedbackStatus(String value) { if (screenBased()) { screens.status(value); } }
 
     private String portableAfterFailure(Reader fallback, TerminalTheme theme, String prompt, int limit) throws IOException {
         stop(); keyboard.close(); keyboard = null;
@@ -197,6 +250,7 @@ public final class BreadSupport implements AutoCloseable {
 
     private void paintInput(TerminalTheme theme, String prompt, String value) {
         synchronized (out) {
+            if (screenBased()) { screens.paintInput(theme, prompt, value); return; }
             int available = Math.max(1, columns - 1);
             String tail = prompt;
             int uiWidth = Math.max(28, Math.min(columns, 120));

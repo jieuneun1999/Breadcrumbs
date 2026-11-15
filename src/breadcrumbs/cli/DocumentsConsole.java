@@ -21,6 +21,7 @@ final class DocumentsConsole {
     void run() throws IOException {
         boolean showMenu = true;
         while (true) {
+            ui.view(ScreenId.HANDOFF);
             if (showMenu) {
                 ui.heading("\nProject handoff");
                 ui.note("Preview or export project context for continuing work. Source documents are not copied or modified.");

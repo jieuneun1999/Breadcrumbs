@@ -46,12 +46,13 @@ def main():
     parser.add_argument('--preview', action='store_true')
     parser.add_argument('--native-check', action='store_true')
     parser.add_argument('--screen-check', action='store_true')
+    parser.add_argument('--home-check', action='store_true', help='Native unified Home checkpoint before wider integration')
     parser.add_argument('--record', action='store_true', help='Record actual screen-check window with the installed FFmpeg')
     parser.add_argument('--ffmpeg', help='Existing Windows FFmpeg executable; no download or install')
     parser.add_argument('--app', action='store_true', help='Show original startup branding and integrated menus in the preview')
     args = parser.parse_args()
-    if args.record and (not args.screen_check or not args.ffmpeg):
-        parser.error('--record requires --screen-check and --ffmpeg=<existing Windows executable>')
+    if args.record and (not (args.screen_check or args.home_check) or not args.ffmpeg):
+        parser.error('--record requires --screen-check or --home-check and --ffmpeg=<existing Windows executable>')
     os.chdir(REPO)
     token = uuid.uuid4().hex
     evidence = REPO / 'build' / ('bread-cmd-' + token)
@@ -74,7 +75,7 @@ def main():
     if CSC.exists():
         run([CSC, '/nologo', '/optimize+', '/warnaserror+', '/target:exe',
              '/out:' + classes + r'\bread-keys.exe', r'.\tools\bread-keys.cs'], REPO, evidence / 'compile-keys.txt')
-    if args.preview or args.native_check or args.screen_check:
+    if args.preview or args.native_check or args.screen_check or args.home_check:
         if not CSC.exists():
             raise RuntimeError('Native preview requires the already installed optional Windows compiler')
         run([CSC, '/nologo', '/optimize+', '/warnaserror+', '/r:System.Drawing.dll', '/target:exe',
@@ -85,13 +86,13 @@ def main():
             if not linux_path(args.ffmpeg).is_file():
                 raise RuntimeError('Specified existing FFmpeg is unavailable')
             batch += 'set "BREAD_RECORD=1"\r\nset "BREAD_FFMPEG=' + args.ffmpeg + '"\r\n'
-        batch += '"' + windows + '\\bread-preview.exe" "' + classes + '" "' + windows + '" "' + win_evidence + '"' + (' --screen-auto' if args.screen_check else ' --auto' if args.native_check else ' --app' if args.app else '') + '\r\n'
+        batch += '"' + windows + '\\bread-preview.exe" "' + classes + '" "' + windows + '" "' + win_evidence + '"' + (' --home-auto' if args.home_check else ' --screen-auto' if args.screen_check else ' --auto' if args.native_check else ' --app' if args.app else '') + '\r\n'
         (runtime / 'preview.cmd').write_bytes(batch.encode('utf-8'))
         (runtime / 'launch.cmd').write_bytes(('@echo off\r\nstart ' + ('/min ' if args.native_check else '') + '"Bread Support symbols" "%SystemRoot%\\System32\\cmd.exe" /d /c "' + windows + '\\preview.cmd"\r\n').encode())
         subprocess.Popen([CMD, '/d', '/c', windows + r'\launch.cmd'], cwd=runtime,
                          stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL,
                          stderr=subprocess.DEVNULL, start_new_session=True)
-        if args.native_check or args.screen_check:
+        if args.native_check or args.screen_check or args.home_check:
             deadline = time.monotonic() + (210 if args.record else 150)
             while not (evidence / 'checks.txt').exists() and time.monotonic() < deadline:
                 time.sleep(.25)
@@ -100,7 +101,7 @@ def main():
             if (evidence / 'error.txt').exists():
                 raise RuntimeError((evidence / 'error.txt').read_text())
         manifest['preview'] = 'Native CMD window launched; actual console captures are separate evidence'
-        if args.native_check or args.screen_check:
+        if args.native_check or args.screen_check or args.home_check:
             manifest['result'] = 'PASS_NATIVE_AUTOMATED'
             manifest['scope'] = (evidence / 'checks.txt').read_text()
     else:
@@ -112,7 +113,7 @@ def main():
                          '-d', windows + r'\build\test', '-sourcepath', 'src;tests'] + targets
         run(compile_tests, REPO, evidence / 'compile-tests.txt')
         shutil.copytree(REPO / 'tests/fixtures', runtime / 'tests/fixtures')
-        groups = ['breadcrumbs.cli.BreadSupportTest', 'breadcrumbs.cli.BreadSupportProcessTest'] if args.focused else GROUPS
+        groups = ['breadcrumbs.cli.BreadSupportTest', 'breadcrumbs.cli.TerminalScreenTest', 'breadcrumbs.cli.BreadGazeTest', 'breadcrumbs.cli.UnifiedExperienceTest', 'breadcrumbs.cli.BreadSupportProcessTest'] if args.focused else GROUPS
         for group in groups:
             command = [JDK / 'java.exe', '-cp', windows + r'\build\test;' + classes, group]
             run(command, runtime, evidence / (group + '.txt')); manifest['commands'].append(list(map(str, command)))

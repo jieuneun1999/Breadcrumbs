@@ -133,7 +133,7 @@ public static class BreadPreviewProgram
     static string classes,root,evidence;
     static System.Diagnostics.Process app;
     static System.Diagnostics.Process recording;
-    static bool automated,screenAutomated;
+    static bool automated,screenAutomated,homeOnly;
     static System.Collections.Generic.List<string> checks=new System.Collections.Generic.List<string>();
     static readonly StringBuilder observedPages=new StringBuilder();
     static int pageCapture;
@@ -167,6 +167,7 @@ public static class BreadPreviewProgram
             if(line.Contains("Enter:next")) {
                 observedPages.AppendLine(BreadConsole.Screen());
                 if(screenAutomated && pageCapture++==0) Capture("screen-00-welcome");
+                else if(Record) System.Threading.Thread.Sleep(2000); // Let recorded report pages be read.
                 BreadConsole.Send("\r");
                 var consumed=System.Diagnostics.Stopwatch.StartNew();
                 while(BreadConsole.Line()==line && consumed.ElapsedMilliseconds<5000) System.Threading.Thread.Sleep(20);
@@ -238,27 +239,38 @@ public static class BreadPreviewProgram
         Start("--ui=screen --terminal-diagnostics --storage-root=\""+storage+"\"");
         Wait("Breadcrumbs >"); Capture("screen-01-home");
         Check(BreadConsole.Screen().Contains("BREADCRUMBS /"),"Enhanced viewport is active");
-        string before=BreadConsole.Screen(); Changed(before); Capture("screen-02-idle");
+        Check(BreadConsole.Screen().StartsWith("/"),"Full-width Home retains its top border without terminal scrolling");
+        Check(BreadConsole.Screen().Contains("+##%%%%##+"),"Original polished B3 lettering is visible within Home");
+        Check(BreadConsole.Screen().Contains("Leave context behind. Pick up where work stopped."),"Brand tagline shares the Home screen");
+        for(int key=0;key<=8;key++) Check(BreadConsole.Screen().Contains("["+key+"]"),"Home action "+key+" is visible");
+        string before=BreadConsole.Screen(); Changed(before);
+        if(Record) System.Threading.Thread.Sleep(17500); // Reading/idle demonstration, never a production delay.
+        Capture("screen-02-idle");
         BreadConsole.Send("2"); Wait("Breadcrumbs > 2"); before=BreadConsole.Screen(); Changed(before);
         Check(BreadConsole.Line().Contains("Breadcrumbs > 2"),"Partial numeric choice survives live motion");
+        if(homeOnly) {
+            BreadConsole.Send("\x15"); Answer("Breadcrumbs >","0");
+            Check(app.WaitForExit(8000)&&app.ExitCode==0,"Unified Home exits and restores the terminal");
+            Capture("screen-03-home-restored-shell"); return 0;
+        }
         BreadConsole.Send("\r"); Answer("Entry mode:","1"); Wait("Project display name:");
         Check(!BreadConsole.Screen().Contains("Open saved project"),"Home is replaced before setup");
-        BreadConsole.Send("Screen demo"); Wait("Project display name: Screen demo"); before=BreadConsole.Screen();
+        BreadConsole.Send("Campus food drive"); Wait("Project display name: Campus food drive"); before=BreadConsole.Screen();
         System.Threading.Thread.Sleep(900); Check(before==BreadConsole.Screen(),"Free text has no background animation"); BreadConsole.Send("\r");
-        Answer("Project type","1"); Answer("Project goal","Prepare a readable project plan");
-        Answer("Planned deliverable","Planning notes"); Answer("Next action","Review the schedule");
+        Answer("Project type","1"); Answer("Project goal","Coordinate a campus food drive for 120 students");
+        Answer("Planned deliverable","Volunteer roster and collection schedule"); Answer("Next action","Confirm collection points with the student council");
         Answer("Responsible person",""); Answer("Blockers or pending",""); Answer("Optional existing EMPTY","");
         Wait("Overview action:"); Capture("screen-03-overview"); Answer("Overview action:","4");
         Answer("Confirm this starting record","yes"); Answer("Save this project","yes"); Wait("Breadcrumbs >");
-        for(int i=0;i<6;i++) { Arrow(40); System.Threading.Thread.Sleep(40); }
+        for(int i=0;i<10 && !BreadConsole.Line().Contains("Breadcrumbs > 7");i++) { Arrow(40); System.Threading.Thread.Sleep(80); }
         Wait("Breadcrumbs > 7"); BreadConsole.Send("\r"); Wait("Workspace >"); Capture("screen-04-arrow-workspace");
         Check(BreadConsole.Screen().Contains("Project workspace"),"Arrow selection enters the original workspace route");
         Answer("Workspace >","13"); Wait("Map >"); Capture("screen-05-map");
         Check(!BreadConsole.Screen().Contains("Record progress update"),"Workspace is replaced by the map");
-        Answer("Map >","1"); Answer("Section >","1"); Answer("Record >","t"); Wait("Record >"); Capture("screen-06-source-detail");
+        Answer("Map >","1"); Answer("Section >","1"); Wait("Record >"); Capture("screen-06-source-detail");
         Answer("Record >","0"); Answer("Section >","0"); Answer("Map >","0");
-        Answer("Workspace >","2"); Answer("Progress summary:","Completed a synthetic screen check");
-        Answer("Blockers or pending","none"); Answer("Next action:","Inspect the retained evidence");
+        Answer("Workspace >","2"); Wait("Progress summary:"); Capture("screen-06a-progress-form"); Answer("Progress summary:","Confirmed three collection points and drafted the volunteer roster");
+        Answer("Blockers or pending","none"); Answer("Next action:","Confirm volunteer shifts before Friday");
         Answer("Update action:","yes"); Wait("Workspace >"); Capture("screen-07-saved-update");
         Answer("Workspace >","12"); Wait("Workspace >");
         BreadConsole.Resize(80,24);
@@ -270,11 +282,14 @@ public static class BreadPreviewProgram
         System.Threading.Thread.Sleep(250); Answer("Workspace >","?"); Wait("Workspace >"); Capture("screen-08-narrow");
         if(narrow) Check(BreadConsole.Screen().Split('\n')[1].TrimEnd().Length==79,"Narrow viewport is measured and recomposed at 80 columns");
         Answer("Workspace >","0"); Answer("Breadcrumbs >","0"); Check(app.WaitForExit(8000)&&app.ExitCode==0,"Enhanced application exits cleanly"); Capture("screen-09-restored-shell");
-        Console.SetWindowSize(80,24);
+        // Keep a recorded window's capture dimensions stable. The unrecorded
+        // acceptance run still exercises a real80x24 returning process.
+        if(Record) Console.SetWindowSize(Math.Min(160,Console.LargestWindowWidth),Math.Min(52,Console.LargestWindowHeight));
+        else Console.SetWindowSize(80,24);
         Start("--ui=screen --no-animation --storage-root=\""+storage+"\"");
         Answer("Breadcrumbs >","1"); Answer("Project number","1"); Answer("Breadcrumbs >","7"); observedPages.Clear(); Answer("Workspace >","1"); Wait("Workspace >");
         observedPages.AppendLine(BreadConsole.Screen());
-        Check(observedPages.ToString().Contains("Inspect the retained evidence"),"Restart shows the actual saved next action across reachable summary pages"); Capture("screen-10-returning");
+        Check(observedPages.ToString().Contains("Confirm volunteer shifts before Friday"),"Restart shows the actual saved next action across reachable summary pages"); Capture("screen-10-returning");
         System.IO.File.WriteAllText(System.IO.Path.Combine(evidence,"returning-summary-pages.txt"),observedPages.ToString(),Utf8);
         Answer("Workspace >","0"); Answer("Breadcrumbs >","0"); Check(app.WaitForExit(8000)&&app.ExitCode==0,"Reduced motion keeps all navigation and exits cleanly");
         checks.Add("NOT_PROVEN independent human keyboard input, Windows Terminal, VS Code and Linux JVM");
@@ -323,7 +338,8 @@ public static class BreadPreviewProgram
             catch
             {
             }
-            screenAutomated=args.Length>3&&args[3]=="--screen-auto";
+            homeOnly=args.Length>3&&args[3]=="--home-auto";
+            screenAutomated=args.Length>3&&(args[3]=="--screen-auto"||homeOnly);
             automated=args.Length>3&&(args[3]=="--auto"||screenAutomated);
             if(screenAutomated) return ScreenCheck();
             if(!automated)

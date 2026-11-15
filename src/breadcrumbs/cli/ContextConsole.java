@@ -26,6 +26,7 @@ final class ContextConsole {
         this.theme = theme; this.width = width; ui = new TerminalOutput(output, theme, width);
     }
     void perform(String choice) throws IOException {
+        ui.view(switch (choice) { case "10" -> ScreenId.ASSESSMENT; case "11", "12" -> ScreenId.REVIEW_CHANGES; case "14" -> ScreenId.HANDOFF; default -> ScreenId.RESULT; });
         switch (choice) {
             case "9" -> audit(); case "10" -> review(); case "11" -> scan();
             case "12" -> differences(); case "13" -> retrieve(); case "14" -> handoff();

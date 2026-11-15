@@ -15,6 +15,9 @@ final class BreadPortrait {
     private BreadPortrait() { }
 
     static Frame draw(Size size, Mood mood, int pose) {
+        return draw(size, mood, pose, Gaze.LOOK_FORWARD);
+    }
+    static Frame draw(Size size, Mood mood, int pose, Gaze gaze) {
         String[] marks = ReferenceBreadArt.MARKS;
         String[] bands = ReferenceBreadArt.COLORS;
         Features f = FULL;
@@ -72,7 +75,42 @@ final class BreadPortrait {
             text(rows, inks, colors, 2, 18, pose == 7 ? "." : "+", 4);
         }
         Frame frame = new Frame(rows, inks, colors);
-        return frame.width() == size.width() && frame.height() == size.height() ? frame : resize(frame, size);
+        if (frame.width() != size.width() || frame.height() != size.height()) { frame = resize(frame, size); }
+        return gaze == Gaze.LOOK_FORWARD || pose == 1 || pose == 2 ? frame : look(frame, gaze);
+    }
+
+    private static Frame look(Frame frame, Gaze gaze) {
+        // Translate the sampled eye cells, rather than resampling a translated eye.
+        // At 40 columns the latter can drop an entire dark eye edge between samples.
+        int magnitude = gaze == Gaze.LOOK_LEFT || gaze == Gaze.LOOK_RIGHT ? Math.max(1, frame.width() / 28) : 1;
+        int offset = gaze == Gaze.LOOK_LEFT || gaze == Gaze.LOOK_SLIGHT_LEFT ? -magnitude : magnitude;
+        List<String> rows = new ArrayList<>(frame.rows()), inks = new ArrayList<>(frame.inks());
+        List<List<Integer>> colors = new ArrayList<>();
+        for (var line : frame.colors()) { colors.add(new ArrayList<>(line)); }
+        for (int eye : new int[] {FULL.leftEye(), FULL.rightEye() - 1}) {
+            for (int y = 0; y < frame.height(); y++) {
+                int sy = (2 * y + 1) * 22 / (2 * frame.height());
+                if (sy < FULL.eyeY() || sy >= FULL.eyeY() + 2) { continue; }
+                int from = 0, to = frame.width();
+                while ((2 * from + 1) * 64 / (2 * frame.width()) < eye) { from++; }
+                while ((2 * (to - 1) + 1) * 64 / (2 * frame.width()) >= eye + FULL.eyeWidth()) { to--; }
+                for (int x = from; x < to; x++) {
+                    int sx = (2 * x + 1) * 64 / (2 * frame.width());
+                    char grain = ReferenceBreadArt.MARKS[14].charAt(sx);
+                    int fill = ReferenceBreadArt.PALETTE[Character.digit(ReferenceBreadArt.COLORS[14].charAt(sx), 16)];
+                    text(rows, inks, colors, x, y, String.valueOf(grain == ' ' ? '@' : grain), 5);
+                    colors.get(y).set(x, luminance(fill) >= 190 ? fill : ACCENTS[5]);
+                }
+                StringBuilder marks = new StringBuilder(rows.get(y)), bands = new StringBuilder(inks.get(y));
+                for (int x = from; x < to; x++) {
+                    marks.setCharAt(x + offset, frame.rows().get(y).charAt(x));
+                    bands.setCharAt(x + offset, frame.inks().get(y).charAt(x));
+                    colors.get(y).set(x + offset, frame.colors().get(y).get(x));
+                }
+                rows.set(y, marks.toString()); inks.set(y, bands.toString());
+            }
+        }
+        return new Frame(rows, inks, colors);
     }
 
     private static Frame resize(Frame source, Size size) {

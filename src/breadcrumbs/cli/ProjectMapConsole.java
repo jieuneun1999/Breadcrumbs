@@ -29,6 +29,7 @@ final class ProjectMapConsole {
         };
     }
     void overview(ProjectMap map) {
+        ui.view(ScreenId.PROJECT_OVERVIEW);
         ui.heading("\nProject overview / What we found"); ui.line("Project: ", map.project()); ui.line("Profile: ", map.profile().name());
         ui.note(map.draft() ? "Initial review. The starting record has not been confirmed or saved." : "Current view of saved records; historical statements retain their original context.");
         boolean recognizable = Arrays.stream(map.buckets()).flatMap(b -> Arrays.stream(b.items())).anyMatch(i ->
@@ -70,19 +71,20 @@ final class ProjectMapConsole {
     }
     Request run(ProjectMap map) throws IOException {
         while (true) {
+            ui.view(ScreenId.PROJECT_MAP);
             ui.heading("\nProject Map"); ui.line("Project: ", map.project());
             ui.note(map.draft() ? "Unconfirmed proposal. Exploring does not create a project or update." : map.coverage().startsWith("No folder linked")
                     ? "No folder linked. Supplied context and recorded updates remain useful without files." : map.checkedThisSession()
                     ? "The latest file observation was recorded during this project session; it is not continuous monitoring."
                     : "Files have not been checked for changes during this session.");
             if (theme.companion() == null) {
-                for (var bucket : map.buckets()) { ui.menu("[" + (bucket.section().ordinal() + 1) + "] " + bucket.section().title()); ui.note("      " + (bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + " recorded items")); }
+                for (var bucket : map.buckets()) { ui.menu("[" + (bucket.section().ordinal() + 1) + "] " + bucket.section().title()); ui.note("      " + (bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + (bucket.total() == 1 ? " recorded item" : " recorded items"))); }
                 ui.menu("[0] Back to " + (map.draft() ? "overview" : "workspace") + "\n[?] Map help");
             } else {
                 StringBuilder actions = new StringBuilder();
                 for (var bucket : map.buckets()) {
                     actions.append('[').append(bucket.section().ordinal() + 1).append("] ").append(bucket.section().title()).append('\n')
-                            .append("      ").append(bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + " recorded items").append('\n');
+                            .append("      ").append(bucket.total() == 0 ? "Not documented / Unknown" : bucket.total() + (bucket.total() == 1 ? " recorded item" : " recorded items")).append('\n');
                 }
                 actions.append("[0] Back to ").append(map.draft() ? "overview" : "workspace").append("\n[?] Map help");
                 ui.screen(BreadFrames.Mood.CURIOUS, "Want a clearer picture of your recorded project context?", actions.toString(), false);
@@ -98,6 +100,7 @@ final class ProjectMapConsole {
     private Request section(Bucket bucket, boolean draft, boolean grouped) throws IOException {
         int page = 0; Item[] items = bucket.items();
         while (true) {
+            ui.view(ScreenId.PROJECT_MAP_SECTION);
             ui.heading("\n" + bucket.section().title()); ui.note(bucket.section().explanation());
             if (items.length == 0) { ui.note("Not documented / Unknown. You can supply a current assessment without inventing a source statement."); }
             for (int i = page; i < Math.min(page + ProjectMapService.PAGE_SIZE, items.length); i++) {
@@ -121,6 +124,7 @@ final class ProjectMapConsole {
     }
     private Request detail(Item item, boolean draft) throws IOException {
         while (true) {
+            ui.view(ScreenId.PROJECT_MAP_DETAIL);
             ui.heading("\nRecord details"); ui.value("Field / title", item.title()); ui.line("Basis: ", basis(item));
             ui.line("Recorded value (bounded excerpt):", "");
             ui.plain(item.withheld() ? "Text withheld. Use V to display this non-private note locally." : item.value());
@@ -142,6 +146,7 @@ final class ProjectMapConsole {
     }
     private Request sources(Item[] items, boolean draft) throws IOException {
         while (true) {
+            ui.view(ScreenId.PROJECT_MAP_SECTION);
             ui.heading("\nFile sources by role"); ui.note("Role is a classification hint, not proof of contents. Counts cover retained map rows only; excluded names are omitted.");
             for (var group : SourceGroup.values()) { long count = Arrays.stream(items).filter(i -> i.kind() == Kind.FILE && i.sourceGroup() == group).count(); ui.menu("[" + (group.ordinal() + 1) + "] " + groupName(group) + " | " + count + " shown files"); }
             ui.menu("[0] Back to source section"); String choice = input.read("Sources > "); if (choice.equals("0")) { return new Request(Action.BACK, null); }

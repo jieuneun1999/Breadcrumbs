@@ -29,7 +29,7 @@ final class SearchConsole {
     void run() throws IOException {
         boolean showMenu = true;
         while (true) {
-            var ui = new TerminalOutput(out, theme, width);
+            var ui = new TerminalOutput(out, theme, width); ui.view(ScreenId.SEARCH);
             if (showMenu) {
                 ui.heading(technical ? "\nSEARCH PROJECT CONTEXT" : "\nSearch project records");
                 if (technical) { ui.plain(index.status().name()); }

@@ -7,11 +7,14 @@ import java.io.PrintStream;
 final class TerminalOutput {
     private final PrintStream out; private final TerminalTheme theme; private final int requestedWidth;
     TerminalOutput(PrintStream out, TerminalTheme theme, int width) { this.out = out; this.theme = theme; this.requestedWidth = Math.max(28, Math.min(width, 120)); }
-    private int width() { return Math.max(28, Math.min(requestedWidth, theme.companion() == null ? requestedWidth : theme.companion().columns())); }
-    void heading(String trusted) { styled(trusted, TerminalTheme.Tone.BREAD_GOLD); }
+    private int width() { return Math.max(28, Math.min(requestedWidth, theme.companion() == null ? requestedWidth : theme.companion().textColumns())); }
+    boolean enhanced() { return theme.companion() != null && theme.companion().screenBased(); }
+    void view(ScreenId id) { if (theme.companion() != null) { theme.companion().view(id, theme); } }
+    void form(ScreenId id, String message) { view(id); if (enhanced()) { screen(BreadFrames.Mood.ENCOURAGING, message, "", false); } }
+    void heading(String trusted) { if (enhanced() && trusted.strip().equalsIgnoreCase(theme.companion().viewTitle())) { return; } styled(trusted, TerminalTheme.Tone.BREAD_GOLD); }
     void note(String trusted) { styled(trusted, TerminalTheme.Tone.SECONDARY); }
     void warning(String trusted) { styled(trusted, TerminalTheme.Tone.WARNING); }
-    void error(String trusted) { styled(trusted, TerminalTheme.Tone.ERROR); }
+    void error(String trusted) { if (theme.companion() != null) { theme.companion().urgent(); } styled(trusted, TerminalTheme.Tone.ERROR); }
     void success(String trusted) { styled(trusted, TerminalTheme.Tone.SUCCESS); }
     void value(String trustedLabel, String value) {
         out.println(); styled(trustedLabel, TerminalTheme.Tone.BREAD_LIGHT); plain(ContentSafety.terminal(value, 5000));
@@ -25,7 +28,7 @@ final class TerminalOutput {
     void menu(String trustedLines) {
         if (theme.companion() != null) { theme.companion().actions(trustedLines); }
         if (theme.companion() != null && theme.companion().boxedMenus() && trustedLines.contains("\n") && MenuBox.fixedCells(trustedLines)) {
-            for (String line : MenuBox.rows(theme, width(), "", trustedLines)) { out.println(line); }
+            for (String line : enhanced() ? MenuBox.contentRows(theme, width(), "", trustedLines, false) : MenuBox.rows(theme, width(), "", trustedLines)) { out.println(line); }
             return;
         }
         for (String line : trustedLines.split("\n")) {

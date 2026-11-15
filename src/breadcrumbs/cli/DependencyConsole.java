@@ -20,6 +20,7 @@ final class DependencyConsole {
     }
     void run() throws IOException {
         while (true) {
+            ui.view(ScreenId.TASKS);
             ui.heading("PROJECT DEPENDENCIES"); ui.line("Revision: ", state.dependencies().currentId());
             ui.menu("[1] List work items\n[2] Create work item\n[3] Add dependency\n[4] Remove dependency\n[5] Adjacency\n[6] Potential downstream impact\n[7] BFS\n[8] DFS\n[9] Validate\n[0] Back");
             String option = input.read("dependencies > ");

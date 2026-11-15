@@ -9,7 +9,7 @@ final class ProjectAssessmentConsole {
     private ProjectAssessmentConsole() { }
     static ContextReview collect(ContextConsole.Input input, PrintStream out, TerminalTheme theme, int width,
                                  String observation, Instant observedAt, boolean proposed) throws IOException {
-        var ui = new TerminalOutput(out, theme, width);
+        var ui = new TerminalOutput(out, theme, width); ui.view(ScreenId.ASSESSMENT);
         EvidenceClaim.Field[] fields = {EvidenceClaim.Field.OBJECTIVE, EvidenceClaim.Field.CURRENT_STATE, EvidenceClaim.Field.NEXT_ACTION,
                 EvidenceClaim.Field.BLOCKERS, EvidenceClaim.Field.DELIVERABLE, EvidenceClaim.Field.DECISION, EvidenceClaim.Field.RATIONALE, EvidenceClaim.Field.OWNER};
         ui.heading("\nClarify project context");

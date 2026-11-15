@@ -19,6 +19,8 @@ final class StartupRenderer {
     private final PrintStream output;
     private final TerminalTheme theme;
     private final int columns;
+    private int saved, unavailable;
+    private boolean storageAvailable = true;
 
     StartupRenderer(PrintStream output, TerminalTheme theme, int width) {
         this.output = output;
@@ -27,6 +29,8 @@ final class StartupRenderer {
     }
 
     void ready(int saved, int unavailable) {
+        this.saved = saved; this.unavailable = unavailable; storageAvailable = true;
+        if (theme.companion() != null && theme.companion().screenBased()) { return; }
         line(TerminalTheme.Tone.SUCCESS, "[v] Project storage available");
         line(null, "[v] Saved projects: " + saved);
         if (saved == 0) {
@@ -43,11 +47,27 @@ final class StartupRenderer {
     }
 
     void unavailable() {
+        storageAvailable = false;
+        if (theme.companion() != null && theme.companion().screenBased()) { return; }
         line(TerminalTheme.Tone.WARNING, "[!] The save folder is unavailable. You can still work here, but save your changes before closing.");
         sourceNotice();
     }
 
     void menu() {
+        if (theme.companion() != null && theme.companion().screenBased()) {
+            var ui = new TerminalOutput(output, theme, columns); ui.view(ScreenId.HOME);
+            if (!storageAvailable) { ui.error("The save folder is unavailable. Keep changes open until you can save them."); }
+            else {
+                ui.line("Saved projects: ", Integer.toString(saved));
+                if (unavailable > 0) { ui.warning(unavailable + " unreadable saved workspace(s), retained for recovery."); }
+            }
+            ui.plain(saved == 0 ? "Welcome to Breadcrumbs. No saved projects yet." : "Open a saved project to continue where you left off.");
+            ui.note("Opening saved context does not check its files for changes. Local saving is optional.");
+            ui.screen(BreadFrames.Mood.WELCOME,
+                    saved == 0 ? "Keep project context, record progress and return to a clear next action." : "Your recorded context is ready when you are.",
+                    String.join("\n", ACTIONS), true);
+            return;
+        }
         if (theme.companion() != null) {
             new TerminalOutput(output, theme, columns).screen(BreadFrames.Mood.WELCOME,
                     "What would you like to do?", String.join("\n", ACTIONS), true);
@@ -73,6 +93,7 @@ final class StartupRenderer {
     }
 
     void compactMenu() {
+        if (theme.companion() != null && theme.companion().screenBased()) { menu(); return; }
         new TerminalOutput(output, theme, columns).resultScreen(BreadFrames.Mood.IDLE,
                 "Your project context is here when you need it.", String.join("\n", ACTIONS));
     }
