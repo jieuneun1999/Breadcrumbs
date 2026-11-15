@@ -1169,3 +1169,19 @@ GitHub main tree equal to candidate tree and all12 PR heads reachable. CI, owner
 artistic acceptance and actual release/other-host claims remain separate. No new
 code behavior is intended in this publication. Safe independent preparation
 continues under the owner's exact authorization without another permission gate.
+
+
+Integration review boundary finding: the independent native run0ba5cd9c fails the
+unconditional full-B3 assertion in an actually narrower (~120-column) Home. Its
+compact branding and layout are correct for that viewport; full artwork was
+already independently transcribed from native160x52 output in the earlier receipt.
+Apply systematic-debugging: compare measured viewport and the existing product
+fullHomeRoom condition, then repair only the developer assertion. Require full B3
+when measured>=160x52; otherwise verify compact branding and record full-art
+NOT_PROVEN for that run. No application, canonical service or test expectation for
+source truth is changed. The173-input full receipt differs only in tools/bread-preview.cs;
+all application Java sources/classes remain exact. Fresh independent compilation
+and native exercise will cover this harness change. Reuse the full application
+regression explicitly by its identical executable inputs/classes, not by claiming
+the old harness hash is new. The reviewer will bind a fresh verdict to the new
+candidate commit. One root-cause hypothesis/one repair, inside the four-attempt gate.

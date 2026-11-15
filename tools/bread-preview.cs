@@ -239,8 +239,14 @@ public static class BreadPreviewProgram
         Start("--ui=screen --terminal-diagnostics --storage-root=\""+storage+"\"");
         Wait("Breadcrumbs >"); Capture("screen-01-home");
         Check(BreadConsole.Screen().Contains("BREADCRUMBS /"),"Enhanced viewport is active");
-        Check(BreadConsole.Screen().StartsWith("/"),"Full-width Home retains its top border without terminal scrolling");
-        Check(BreadConsole.Screen().Contains("+##%%%%##+"),"Original polished B3 lettering is visible within Home");
+        Check(BreadConsole.Screen().StartsWith("/"),"Home retains its top border without terminal scrolling");
+        var viewport=BreadConsole.State().Window;
+        int columns=viewport.Right-viewport.Left+1,rows=viewport.Bottom-viewport.Top+1;
+        if(columns>=160 && rows>=52) Check(BreadConsole.Screen().Contains("+##%%%%##+"),"Original polished B3 lettering is visible within Home");
+        else {
+            Check(BreadConsole.Screen().Contains("BREADCRUMBS / Home"),"Compact Home retains approved text branding at the measured viewport");
+            checks.Add("NOT_PROVEN full B3 art in this run: measured "+columns+"x"+rows+"; full artwork requires160x52");
+        }
         Check(BreadConsole.Screen().Contains("Leave context behind. Pick up where work stopped."),"Brand tagline shares the Home screen");
         for(int key=0;key<=8;key++) Check(BreadConsole.Screen().Contains("["+key+"]"),"Home action "+key+" is visible");
         string before=BreadConsole.Screen(); Changed(before);
