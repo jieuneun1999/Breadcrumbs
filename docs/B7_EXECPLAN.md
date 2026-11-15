@@ -1143,13 +1143,13 @@ no provider installation, model-sheet rewrite or fallback panel.
 Shipping steps and bounded adaptation:
 - [x] Resolve the forge, repository identity, and both Git remotes.
 - [x] Freeze and disarm the queue before verification.
-- [ ] Re-check that each verdict still describes the patch.
-- [ ] Prepare only the bottom PR.
-- [ ] Land one PR at a time, checked against the current landing SHA and base.
+- [x] Re-check that each verdict still describes the patch.
+- [x] Prepare only the bottom PR.
+- [x] Land one PR at a time, checked against the current landing SHA and base.
 - [x] Do not read GitHub auto-merge or merge-queue state as stack readiness.
-- [ ] Recompute after every merge.
-- [ ] Watch the current frontier until it merges or fails. Do not mutate the stack around it.
-- [ ] Stop at the ceiling.
+- [x] Recompute after every merge.
+- [x] Watch the current frontier until it merges or fails. Do not mutate the stack around it.
+- [x] Stop at the ceiling.
 
 Observed forge state:12 open stacked PRs,1 through12. GraphQL confirms every
 head/base and both autoMergeRequest and mergeQueueEntry null. Origin fetch and
@@ -1185,3 +1185,45 @@ and native exercise will cover this harness change. Reuse the full application
 regression explicitly by its identical executable inputs/classes, not by claiming
 the old harness hash is new. The reviewer will bind a fresh verdict to the new
 candidate commit. One root-cause hypothesis/one repair, inside the four-attempt gate.
+
+
+## Main publication completed (15 November 2026)
+
+Owner-authorized integration PR13 merged to main at
+b000b2a3046b0551e1852a307fed23b424e48fe2, with server-enforced expected head
+7c54c8938fb7e88297103437db38b6cf9c09ef1d. Immediate GitHub readback confirms base
+main, merged state, both expected parents and tree
+a989b656c6d7199741f65778e2052c3ffff25571 equal to the reviewed candidate.
+GitHub also confirms PRs1 through12 closed with non-null merged_at timestamps.
+Their heads were preserved, retargeted to main without rewriting, and incorporated
+by the consolidation merge. No open item remains in the frozen13-PR queue.
+
+Independent read-only Terra verdict: PASS+NOTES at C2 above. Fresh native evidence
+build/bread-cmd-0a8441a1ddae455bb504bbfc81602ed0 passed actual160x52 B3 Home, numbered
+and arrow routes, paused partial/freeform input, Map, save/restart, cleanup and
+reduced motion. All173 current inputs match that fresh run. All190 Java class
+hashes equal the full B1-B7/process/launcher receipt da0354e4. Full-suite application
+evidence is reused by exact byte identity; only the C# native-driver assertion
+changed after that full run, and the new native run compiles/exercises it.
+
+The120x30 reviewer attempt exposed the unconditional full-logo test precondition,
+not an application regression. One harness-only correction now requires the full
+B3 art when it actually fits and otherwise verifies compact branding while marking
+full-art acceptance NOT_PROVEN for that run. The earlier83-second recording still
+shows the exact same application Java bytes. Its historical173-input equality
+predates this single harness change; do not claim that old driver hash is current.
+
+There are zero configured GitHub check runs/statuses. Local regression and the
+fresh independent native run are the verification evidence, not a CI claim.
+Specification and quality review found no material correctness, security, privacy,
+storage or custom-DSA defect. Comment review recorded zero material MUST KILL flags.
+No additional application edits or style churn were made during publication.
+
+Code is now published to main under the owner's exact authorization. Application
+readiness remains DEMO_READY for the exercised Windows/JDK25 scope targetingJava17.
+Live80-column alternate-buffer resize, human usability/Ctrl+C, other terminals and
+actual JDK17 runtime plus owner artistic acceptance remain open. No tag, release,
+deployment, force push, rebase, branch deletion or external team message occurred.
+The primary Windows launcher checkout remains untouched on its existing branch;
+the Orca source worktree advances normally to the merged history. A documentation-
+only receipt commit follows this merge; it leaves all173 executable inputs intact.

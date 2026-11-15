@@ -4,6 +4,9 @@ Status: DEMO_READY for bounded Windows/JDK25 on `codex/breadcrumbs-session`, bas
 `fcbef69`. This guide owns presentation decisions, not canonical project truth.
 Owner visual approval remains pending.
 
+Published to main through PR13 under the owner authorization. See the main
+publication receipt at the end; earlier local-only statements are historical.
+
 ## Design and boundaries
 
 The baseline separate live B3 introduction was erased before Home. Prompt text
@@ -155,3 +158,45 @@ Actual JDK17 runtime, Linux JVM, Windows Terminal, VS Code, independent human in
 Ctrl+C and owner artistic acceptance remain open. Junction fixtures unavailable to
 the runner were skipped, not passed. No RELEASE_READY claim. The owner may CONTINUE,
 CHANGE, RELEASE or STOP; any protected effect still needs its exact authorized scope.
+
+
+## Main publication completed (15 November 2026)
+
+Owner-authorized integration PR13 merged to main at
+b000b2a3046b0551e1852a307fed23b424e48fe2, with server-enforced expected head
+7c54c8938fb7e88297103437db38b6cf9c09ef1d. Immediate GitHub readback confirms base
+main, merged state, both expected parents and tree
+a989b656c6d7199741f65778e2052c3ffff25571 equal to the reviewed candidate.
+GitHub also confirms PRs1 through12 closed with non-null merged_at timestamps.
+Their heads were preserved, retargeted to main without rewriting, and incorporated
+by the consolidation merge. No open item remains in the frozen13-PR queue.
+
+Independent read-only Terra verdict: PASS+NOTES at C2 above. Fresh native evidence
+build/bread-cmd-0a8441a1ddae455bb504bbfc81602ed0 passed actual160x52 B3 Home, numbered
+and arrow routes, paused partial/freeform input, Map, save/restart, cleanup and
+reduced motion. All173 current inputs match that fresh run. All190 Java class
+hashes equal the full B1-B7/process/launcher receipt da0354e4. Full-suite application
+evidence is reused by exact byte identity; only the C# native-driver assertion
+changed after that full run, and the new native run compiles/exercises it.
+
+The120x30 reviewer attempt exposed the unconditional full-logo test precondition,
+not an application regression. One harness-only correction now requires the full
+B3 art when it actually fits and otherwise verifies compact branding while marking
+full-art acceptance NOT_PROVEN for that run. The earlier83-second recording still
+shows the exact same application Java bytes. Its historical173-input equality
+predates this single harness change; do not claim that old driver hash is current.
+
+There are zero configured GitHub check runs/statuses. Local regression and the
+fresh independent native run are the verification evidence, not a CI claim.
+Specification and quality review found no material correctness, security, privacy,
+storage or custom-DSA defect. Comment review recorded zero material MUST KILL flags.
+No additional application edits or style churn were made during publication.
+
+Code is now published to main under the owner's exact authorization. Application
+readiness remains DEMO_READY for the exercised Windows/JDK25 scope targetingJava17.
+Live80-column alternate-buffer resize, human usability/Ctrl+C, other terminals and
+actual JDK17 runtime plus owner artistic acceptance remain open. No tag, release,
+deployment, force push, rebase, branch deletion or external team message occurred.
+The primary Windows launcher checkout remains untouched on its existing branch;
+the Orca source worktree advances normally to the merged history. A documentation-
+only receipt commit follows this merge; it leaves all173 executable inputs intact.
