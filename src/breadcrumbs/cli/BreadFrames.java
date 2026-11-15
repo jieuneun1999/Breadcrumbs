@@ -6,7 +6,7 @@ import java.util.List;
 /** Fixed visible-symbol assets. No blocks, background fills or image protocols. */
 public final class BreadFrames {
     public enum Size {
-        FULL(64, 22), COMPACT(28, 10);
+        REFERENCE(64, 22), FULL(56, 20), MEDIUM(48, 17), COMPACT(40, 14);
         private final int width, height;
         Size(int width, int height) { this.width = width; this.height = height; }
         public int width() { return width; }
@@ -68,7 +68,7 @@ public final class BreadFrames {
                 : phase >= 52 && phase <= 53 || phase >= 56 && phase <= 57 ? 4
                 : phase >= 54 && phase <= 55 ? 5
                 : phase >= 84 && phase <= 85 ? 6
-                : phase >= 86 && phase <= 87 ? 7 : 0;
+                : phase >= 86 && phase <= 87 ? 7 : (phase / 3) % 4 == 1 ? 3 : (phase / 3) % 4 == 3 ? 6 : 0;
         if (mood == Mood.WELCOME && (phase >= 8 && phase <= 13 || phase >= 60 && phase <= 65)) {
             pose = phase % 6 < 2 ? 4 : phase % 6 < 4 ? 5 : 4;
         } else if (mood == Mood.WORKING) {

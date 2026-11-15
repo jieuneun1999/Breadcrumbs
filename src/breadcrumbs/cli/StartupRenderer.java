@@ -50,7 +50,7 @@ final class StartupRenderer {
     void menu() {
         if (theme.companion() != null) {
             new TerminalOutput(output, theme, columns).screen(BreadFrames.Mood.WELCOME,
-                    "Welcome to Breadcrumbs. What would you like to do?", String.join("\n", ACTIONS), true);
+                    "What would you like to do?", String.join("\n", ACTIONS), true);
             return;
         }
         output.println();

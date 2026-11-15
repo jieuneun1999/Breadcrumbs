@@ -9,7 +9,7 @@ public final class BreadPreview {
     private BreadPreview() { }
 
     public static void run(PrintStream out, Reader input, TerminalTheme theme, int width, String mode) throws IOException {
-        if (!java.util.Set.of("all", "full", "compact", "idle").contains(mode)) { throw new IllegalArgumentException("Unknown bread preview mode"); }
+        if (!java.util.Set.of("all", "full", "compact", "reference", "idle").contains(mode)) { throw new IllegalArgumentException("Unknown bread preview mode"); }
         out.println("Bread Support preview. Character artwork only. No project data is opened.");
         if (mode.equals("idle")) {
             new TerminalOutput(out, theme, width).screen(BreadFrames.Mood.IDLE,
@@ -21,6 +21,7 @@ public final class BreadPreview {
             return;
         }
         for (var size : BreadFrames.Size.values()) {
+            if (mode.equals("reference") && size != BreadFrames.Size.REFERENCE) { continue; }
             if (mode.equals("full") && size != BreadFrames.Size.FULL || mode.equals("compact") && size != BreadFrames.Size.COMPACT) { continue; }
             for (var mood : BreadFrames.Mood.values()) {
                 out.println("\n" + size + " / " + mood + " / " + size.width() + " x " + size.height());

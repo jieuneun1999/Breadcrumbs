@@ -4,22 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import static breadcrumbs.cli.BreadFrames.*;
 
-/** Independently composed grids share the approved bread, lighting and facial identity. */
+/** Every viewport scales the same approved full bread, lighting and facial identity. */
 final class BreadPortrait {
     private record Features(int leftEye, int rightEye, int eyeY, int eyeWidth,
                             int mouthX, int mouthY, int mouthWidth, int mouthHeight,
                             int pawX, int pawY, int pawWidth, int pawHeight) { }
     private static final Features FULL = new Features(23, 43, 12, 9, 33, 14, 7, 3, 44, 17, 13, 5);
-    private static final Features COMPACT = new Features(10, 19, 5, 3, 14, 6, 3, 1, 19, 7, 7, 3);
     private static final int[] ACCENTS = {0, 0x83512c, 0xa2632b, 0xbc7830, 0xf4c25c,
             0xffe9b8, 0xfff0ce, 0xe49b9a, 0x9b6b3d};
     private BreadPortrait() { }
 
     static Frame draw(Size size, Mood mood, int pose) {
-        boolean full = size == Size.FULL;
-        String[] marks = full ? ReferenceBreadArt.MARKS : ReferenceCompactBreadArt.MARKS;
-        String[] bands = full ? ReferenceBreadArt.COLORS : ReferenceCompactBreadArt.COLORS;
-        Features f = full ? FULL : COMPACT;
+        String[] marks = ReferenceBreadArt.MARKS;
+        String[] bands = ReferenceBreadArt.COLORS;
+        Features f = FULL;
         List<String> rows = new ArrayList<>(), inks = new ArrayList<>();
         List<List<Integer>> colors = new ArrayList<>();
         for (int y = 0; y < marks.length; y++) {
@@ -32,21 +30,14 @@ final class BreadPortrait {
             }
             rows.add(row); inks.add(ink.toString()); colors.add(paint);
         }
-        if (!full) {
-            text(rows, inks, colors, 11, 5, "^", 8);
-            text(rows, inks, colors, 20, 5, "^", 8);
-            text(rows, inks, colors, 15, 6, mood == Mood.SUCCESS ? "u" : "w", 8);
-            text(rows, inks, colors, 8, 6, "/", 7);
-            text(rows, inks, colors, 23, 6, "/", 7);
-        }
         if (pose == 1 || pose == 2) {
             for (int x : new int[]{f.leftEye(), f.rightEye()}) {
-                int height = full ? 2 : 1;
+                int height = 2;
                 for (int y = f.eyeY(); y < f.eyeY() + height; y++) {
                     for (int dx = 0; dx < f.eyeWidth(); dx++) {
                         int old = colors.get(y).get(x + dx);
                         if (old < 0 || luminance(old) < 170) {
-                            int sampleY = full ? 14 : 4;
+                            int sampleY = 14;
                             char grain = marks[sampleY].charAt(x + dx);
                             if (grain == ' ') { grain = 'O'; }
                             int light = colors.get(sampleY).get(x + dx);
@@ -55,30 +46,47 @@ final class BreadPortrait {
                         }
                     }
                 }
-                text(rows, inks, colors, x + 1, f.eyeY() + (full && pose == 2 ? 1 : 0),
-                        full ? pose == 1 ? ".----." : "______" : pose == 1 ? "--" : "__", 8);
+                text(rows, inks, colors, x + 1, f.eyeY() + (pose == 2 ? 1 : 0),
+                        pose == 1 ? ".----." : "______", 8);
             }
         }
         if ((mood == Mood.CURIOUS || mood == Mood.NEEDS_REVIEW) && pose != 1 && pose != 2) {
             for (int x : new int[]{f.leftEye(), f.rightEye()}) {
-                text(rows, inks, colors, x + (full ? 2 : 1), f.eyeY(), full ? "(o)" : "o", 8);
+                text(rows, inks, colors, x + 2, f.eyeY(), "(o)", 8);
             }
         }
         if (mood == Mood.WORKING || mood == Mood.NEEDS_REVIEW || mood == Mood.CURIOUS || mood == Mood.ERROR) {
             for (int y = f.mouthY(); y < f.mouthY() + f.mouthHeight(); y++) {
                 text(rows, inks, colors, f.mouthX(), y, "@".repeat(f.mouthWidth()), 5);
             }
-            text(rows, inks, colors, f.mouthX() + (full ? 2 : 0), f.mouthY() + (full ? 1 : 0),
+            text(rows, inks, colors, f.mouthX() + 2, f.mouthY() + 1,
                     mood == Mood.WORKING ? "---" : mood == Mood.ERROR ? ".-." : " o ", 8);
         }
         if (pose == 3) {
-            text(rows, inks, colors, full ? 19 : 8, full ? 19 : 9, "O", 5);
-            text(rows, inks, colors, full ? 49 : 22, full ? 19 : 9, "O", 5);
+            text(rows, inks, colors, 19, 19, "O", 5);
+            text(rows, inks, colors, 49, 19, "O", 5);
         }
         if (pose == 4 || pose == 5) { paw(rows, colors, f, pose); }
         if (mood == Mood.SUCCESS || pose == 6 || pose == 7) {
-            text(rows, inks, colors, full ? 57 : 26, 1, pose == 7 ? "+" : "*", 4);
-            text(rows, inks, colors, full ? 2 : 0, full ? 18 : 8, pose == 7 ? "." : "+", 4);
+            text(rows, inks, colors, 57, 1, pose == 7 ? "+" : "*", 4);
+            text(rows, inks, colors, 2, 18, pose == 7 ? "." : "+", 4);
+        }
+        Frame frame = new Frame(rows, inks, colors);
+        return frame.width() == size.width() && frame.height() == size.height() ? frame : resize(frame, size);
+    }
+
+    private static Frame resize(Frame source, Size size) {
+        List<String> rows = new ArrayList<>(), inks = new ArrayList<>();
+        List<List<Integer>> colors = new ArrayList<>();
+        for (int y = 0; y < size.height(); y++) {
+            StringBuilder row = new StringBuilder(), ink = new StringBuilder(); List<Integer> paint = new ArrayList<>();
+            for (int x = 0; x < size.width(); x++) {
+                int sx = Math.min(source.width() - 1, (2 * x + 1) * source.width() / (2 * size.width()));
+                int sy = Math.min(source.height() - 1, (2 * y + 1) * source.height() / (2 * size.height()));
+                row.append(source.rows().get(sy).charAt(sx)); ink.append(source.inks().get(sy).charAt(sx));
+                paint.add(source.colors().get(sy).get(sx));
+            }
+            rows.add(row.toString()); inks.add(ink.toString()); colors.add(paint);
         }
         return new Frame(rows, inks, colors);
     }

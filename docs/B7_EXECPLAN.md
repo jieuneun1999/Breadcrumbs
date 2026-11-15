@@ -703,3 +703,213 @@ verification runs after the last Java change, and native source/class identity
 will be compared with that build. Actual human typing was requested through the
 open preview while independent work continues. No answer is assumed from elapsed
 time. Windows Terminal, VS Code, actual JDK17 and Linux-native JVM remain open.
+
+
+## Active final screen UX packet (15 November 2026)
+
+Owner attachment181ce9a9 plus current steer authorize presentation refinement on
+codex/breadcrumbs-session at352f3df. The WSL worktree is clean; the Windows launcher
+checkout remains ee01d61 and is not the implementation target. STANDARD, one owner
+and writer, six repairs per gate/two per unchanged hypothesis. No agents, new
+worktrees, global installs/configuration, source-project writes, merge or release.
+Local implementation/tests/demo/docs proceed. No new publication is inferred.
+Preserve the accepted64x22/28x10 symbol artwork and B3 branding. Numeric shortcuts
+retain meanings; add actual arrow selection (the old native helper drops arrows).
+
+Loaded Pstack1.21 poteto-mode completely in a dedicated call; Figure it out fully
+read separately. How/architect and selected model/prove/foundation/sequence/trail
+skills were read. Craft single-owner adaptation replaces delegated design/panels
+and cross-model trail review with explicitly labeled owner self-review. No new
+router or skill install. Impeccable4.6 context completed with downloads disabled;
+missing PRODUCT/DESIGN does not block this scoped incumbent refinement. Operate,
+animate, native-adaptation and craft-floor read; mobile/web-specific guidance is
+inapplicable to fixed terminal cells. Canonical relevant Manual risk/boundary,
+Workflow grounding/verification, Routing packet and Craft UI/authority sections
+loaded. Frozen model/storage/security contracts remain unchanged. Existing
+verify-bread-support.py is the project verification route; no project skill exists.
+
+- [x] Read Principles in poteto-mode.
+- [x] Phase A Frame: inspect actual newest art/input/rendering and baseline evidence.
+- [x] Phase B Design workflow: compare below; establish lifecycle/input proof first.
+- [x] Phase C Run loop: screen lifecycle prototype and deterministic tests.
+- [x] Responsive same-character variants and perceptible coherent motion.
+- [x] Integrate shared presentation, arrows, short transitions and fallbacks.
+- [x] Full regressions, native input/resize/cleanup, actual visual demo.
+- [x] Phase D Append decision trail as units finish.
+- [x] Phase E Whole-product verification; separate compliance/quality verdicts.
+
+How: Main owns optional input lifetime; BreadSupport is the only mascot cursor
+owner and menus call it through TerminalOutput/Theme. All production prompts go
+through that same readLine boundary. Current menus print and scroll; operation
+feedback reuses BreadSupport but owns a bounded timer. Current art has a96-tick
+cycle at125ms, with long unchanged spans, 64x22 full and28x10 compact. There is no
+alternate screen, arrow dispatch, or current-screen identity. Free text stays
+static. Source/canonical services are independent of presentation.
+
+Design A: insert clear/reset calls into each menu. Rejected: dozens of repeated
+boundaries, easy result loss, report overflow and competing cursor ownership.
+Design B: one transient TerminalScreenManager stages the existing presentation
+stream until an existing prompt, composes/paginates the complete next screen,
+and exposes a direct live stream for the existing coordinated mascot/operations.
+Selected for prototype. It owns alternate-screen lifecycle, view identity, bounded
+content and short header scanning transitions. BreadSupport remains the sole
+input/animation coordinator; no extra scheduler. Existing Reader/classic paths
+remain. No canonical or exported map truth is introduced.
+
+Data shapes: capture/live/closed presentation lifecycle, bounded screen lines,
+menu keys and current selection, responsive frame size. Show input only after
+screen composition. Operations reveal their real working state immediately;
+free text never receives idle frames. Arrow movement returns the same existing
+key token as numeric input. Screen replacement and reduced motion are independent.
+
+Throughput: blocker is real viewport/input safety, prove it before broad styling.
+No independent writers: screen/output/menu/input share ownership. Build typed
+lifecycle + synthetic keyboard proof, then integrate, then one bounded native
+inspection/correction/confirmation. Done predicate: production navigation replaces
+screens, every route remains reachable, input survives partial numbers/arrows/
+text, original terminal is restored, retained mascot is smaller/livelier, and
+classic/regression/storage behavior passes with source-bound native evidence.
+
+
+Screen prototype checks PASS for capture/replacement, retained paged reports,
+arrow tokens, real-operation reveal and cleanup. Existing BreadSupportTest also
+passes the resized cache, color/plain layout and input lifecycle. First prototype
+assertion assumed LF on Windows; corrected to compare semantic line content.
+Native attempts c505059c and6d2d84a7 selected classic mode. The explicit diagnostic
+shows Portable input selected before helper start, not a successful enhanced run.
+Root cause under test: the old WSL-to-CMD preview launcher inherited redirected
+stdin while showing a native window. Bind CONIN$/CONOUT$ for the owned test console
+before launching the harness, without changing application capability policy.
+No fallback result is claimed as screen-mode acceptance. Owner asked about the
+fallback colors/missing bread; explained that it is a test, not final visual state.
+
+
+Attack the Premise loaded after the same static-mode gate repeated. The original
+stdin hypothesis was not established: native binding did not change the result.
+Direct environment probe showed Windows harness TERM=dumb and NO_COLOR=1; WSL
+TERM=xterm-256color does not remove NO_COLOR from inherited Windows processes.
+The color policy correctly rejects NO_COLOR before attempting the keyboard.
+The owned visual harness now removes NO_COLOR/TERM only in its own process after
+verifying VT on its real console, retaining production NO_COLOR behavior. Previous
+fallback runs are negative evidence, not enhanced-screen acceptance. CMD redirection
+experiment exited without a capture and timed out; removed, no timeout increase.
+
+
+15 November integration checkpoint: full regression7ea311a6 passed before the
+subsequent paging/intro/viewport corrections. Focused TerminalScreenTest and
+BreadSupportTest passed after those changes and the owner mascot correction.
+Earlier e9c6478d failed live resize; a9c11a68 also failed the host resize gate.
+Neither is final acceptance. Paging ticks no longer trigger clear/repaint. The
+approved B3 intro must render live: its relative cursor commands cannot be staged
+and paginated as plain lines. That was the initial extra-Enter/duplicate page
+root cause, not a reason to change logo artwork. Native buffer queries now reopen
+active CONOUT$; managed Console viewport calls may still address the original
+buffer. Host resize claims require actual readback; remaining navigation/save
+checks must continue with explicit NOT_PROVEN scope if the host refuses resize.
+
+Owner visual steer: workspace's28x10 portrait changed the character and became
+too small. All active sizes now derive solely from the original64x22 full mascot:
+56x20,48x17,40x14. The same viewport selects the same size on every screen;
+expression/motion follows the task. The28x10 source remains historical only.
+Existing B3 reference arrays are untouched. A narrow layout keeps every action
+and helpful text rather than drawing a tiny substitute. Source and runtime proof
+for this candidate are pending the frozen-input final runs.
+
+HyperFrames entry and general-video route were read for the demo decision. This
+packet authorizes actual native Java recording, no framework/skill installation.
+A no-install usage probe did not complete and was stopped; usage is UNKNOWN.
+A composed HTML film is not the requested interaction evidence. Adaptation: reuse
+the installed FFmpeg/native developer harness; record actual output with labeled
+scripted pacing, inspect decoded video and keep media local/ignored. Impeccable
+help probe also did not complete; no installation or configuration repair made.
+
+
+Frozen candidate b9242783 native screen check PASS with explicit NOT_PROVEN live
+resize (host stayed160), other hosts and human input. Actual61.08s H264 capture
+was fully decoded; sampled frames show the corrected56x20 full-reference bread.
+CopyFromScreen PNGs are occluded by other windows and are rejected as visual
+acceptance evidence. The FFmpeg window capture is unobstructed and records real
+Java output; it is the visual artifact. Canonical-readback test independently
+loaded the saved demo and confirmed exactly one progress update and its exact
+next action. Source-bound full retry bef1499d found a returning-copy regression:
+newly retained static guidance exposed the unconditional Home Welcome message.
+The existing six-scenario process test correctly failed; keep its expectation.
+Root fix: Home question is neutral; storage's existing first-use-only welcome
+remains. Systematic-debugging and verification-before-completion fully read as
+support to Pstack; no extra router. Removed accidental CRLF-only diff churn from
+Python Windows writes. Final source freeze follows this one-line copy repair.
+
+
+Final integration self-review found one concrete failure-path gap after full
+58f57565 PASS (all groups and exact isolated run.bat/build.bat fallback). Native
+keyboard END inside a report page was interpreted as user EOF before the ordinary
+fallback handler. New pagedFallback test first failed with EOFException; corrected
+handling restores classic mode, retains the entire report, closes the failed
+helper and accepts fresh portable input. IOException follows the same path; user
+Ctrl+D/Z still means EOF. A resize during a report also releases to classic with
+all lines preserved instead of repainting an oversized page. Focused screen/art
+checks PASS after the correction. This is the last review correction batch;
+repeat complete verification/native recording on frozen source, not styling.
+
+Impeccable Linux bundled detector was discovered after the Windows help probe;
+its actual detect src/breadcrumbs/cli command exited0 with no findings. Java/ANSI
+coverage is not inferred from a silent detector. Manual native review uses the
+actual decoded terminal frames; web/mobile-specific craft checks do not apply.
+GitHub readback: PR12 OPEN, unmerged, head ee01d61 on feat/b7e-final-integration;
+this local codex/breadcrumbs-session candidate has not been published into it.
+
+
+Final local milestone: DEMO_READY within the exercised Windows/JDK25 scope,
+compiling forJava17. Full7078d759 PASS includes every existing group, the new
+TerminalScreenTest and exact isolated run.bat/build.bat check. Native6ec48a46
+PASS_NATIVE_AUTOMATED, with169 current source/test/tool hashes identical to the
+full run and186 Java class hashes identical. The optional native helper/driver
+are separately source/binary bound; no reproducible C# binary-build claim.
+Normal exit and reduced-motion restart pass; final read-only canonical load
+confirms one actual progress update and exact next action. All saved demo file
+hashes remain unchanged by reconciliation.
+
+The first final capture decoded but averaged1.48fps; it cannot prove motion.
+One bounded capture retry reused the exact final Java/native binaries with fresh
+synthetic storage. build/final-capture-6ec48a46/reproduction.json binds invocation,
+169 inputs,186 classes, driver hash, saved-state hashes, checks and media probe.
+The55.875s1280x832 H264 recording contains1326 actual frames (about23.73fps),
+passes full decode and was inspected in decoded Home/workspace frames. No mock
+rendering, retiming, generated UI or private source data. Native input remains
+scripted; no independent human interaction claim. A matching Windows review copy
+is build/final-terminal-ux-2026-11-15-7078d759 in the launcher checkout. Only new
+ignored media/README were added there; its working code remains unchanged.
+
+Specification self-review: PASS for exercised presentation/navigation/input,
+all canonical behavior preserved, readable larger same-reference bread and real
+screen replacement. Open acceptance: live80-column resize was refused/retained
+another width by this host; deterministic resize/reports/partial-input tests pass.
+Actual JDK17, other terminal hosts/OSs, real Ctrl+C/human keyboard and owner visual
+acceptance remain NOT_PROVEN. This is bounded demo readiness, not release ready.
+Engineering-quality self-review: PASS after the reproduced report-input fallback
+repair, complete regressions, native lifecycle checks, unchanged reference/domain/
+DSA/storage diffs and clean diff whitespace. These are owner-session self-reviews,
+not independent or cross-model verdicts. No code edits after the final freeze.
+No new dependency/global configuration, delegation, commit, push, merge, release
+or Discord publication. PR12 remains OPEN/unmerged at its existing published head.
+Owner may CONTINUE / CHANGE / RELEASE / STOP; protected effects need exact scope.
+
+
+## Owner-authorized GitHub review snapshot — 15 November 2026
+
+The owner now explicitly requests committing this session to the GitHub repo for
+ChatGPT assessment. This authorizes one scoped local commit and normal push of
+the existing codex/breadcrumbs-session branch to jieuneun1999/Breadcrumbs. Earlier
+no-commit/no-push statements describe the previous checkpoint. No merge, force
+push, tag, release, deployment, PR12 head update or Discord communication is added.
+Keep generated videos, screenshots, synthetic app storage and build outputs local.
+
+Pre-publication source reconciliation confirms all169 current source/test/tool
+inputs still match full7078d759 and native6ec48a46 PASS receipts. These are the
+recorded executions, not new test runs. Only publication documentation changes
+follow that reconciliation. Stage exactly the20 reviewed implementation/test/tool/
+document paths; inspect staged content/whitespace and scan for secret patterns.
+Verify the final staged source against the same169 hashes before committing.
+After normal push, read back the exact remote branch hash. Use existing Windows
+Git transport if the WSL credential-helper environment cannot resolve its Linux
+Git-directory path; do not change credentials or global Git configuration.

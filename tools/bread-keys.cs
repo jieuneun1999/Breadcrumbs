@@ -28,6 +28,7 @@ public static class BreadKeys
     [DllImport("kernel32.dll")]static extern bool AttachConsole(uint id);
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)]static extern IntPtr CreateFile(string name,uint access,uint share,IntPtr security,uint create,uint flags,IntPtr template);
     [DllImport("kernel32.dll")]static extern bool GetConsoleScreenBufferInfo(IntPtr handle,out Info info);
+    [DllImport("kernel32.dll")]static extern bool GetConsoleMode(IntPtr handle,out uint mode);
     [DllImport("kernel32.dll")]static extern bool GetNumberOfConsoleInputEvents(IntPtr handle,out uint count);
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)]static extern bool ReadConsoleInputW(IntPtr handle,out Key key,uint count,out uint read);
     [DllImport("kernel32.dll")]static extern IntPtr GetConsoleWindow();
@@ -44,11 +45,15 @@ public static class BreadKeys
         input=CreateFile("CONIN$",0x80000000,3,IntPtr.Zero,3,0,IntPtr.Zero);
         output=CreateFile("CONOUT$",0x80000000,3,IntPtr.Zero,3,0,IntPtr.Zero);
         if(input==new IntPtr(-1)||output==new IntPtr(-1))throw new Exception("No native console");
+        uint mode;
+        if(!GetConsoleMode(output,out mode)||(mode&4)==0)throw new Exception("VT cursor control unavailable");
     }
     public static string Size()
     {
         Info info;
-        if(!GetConsoleScreenBufferInfo(output,out info))throw new Exception("No console size");
+        var current=CreateFile("CONOUT$",0x80000000,3,IntPtr.Zero,3,0,IntPtr.Zero);
+        try { if(!GetConsoleScreenBufferInfo(current,out info))throw new Exception("No console size"); }
+        finally { CloseHandle(current); }
         return (info.Window.Right-info.Window.Left+1)+" "+(info.Window.Bottom-info.Window.Top+1);
     }
     public static bool Pending()
@@ -62,7 +67,13 @@ public static class BreadKeys
         Key key;
         uint read;
         if(!ReadConsoleInputW(input,out key,1,out read))throw new Exception("Console input failed");
-        if(key.Type!=1||key.Down==0||key.Character==0||key.Virtual==46)return "";
+        if(key.Type!=1||key.Down==0||key.Virtual==46)return "";
+        if(key.Virtual>=37&&key.Virtual<=40)
+        {
+            int code=key.Virtual==38?0xe000:key.Virtual==40?0xe001:key.Virtual==37?0xe002:0xe003;
+            return new string((char)code,Math.Min(128,Math.Max(1,(int)key.Repeat)));
+        }
+        if(key.Character==0)return "";
         return new string(key.Character,Math.Min(128,Math.Max(1,(int)key.Repeat)));
     }
     public static void Close()

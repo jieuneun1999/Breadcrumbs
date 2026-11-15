@@ -19,10 +19,15 @@ RGB PNG. It needs Python's standard library, not Pillow or an image service. The
 runtime needs neither the original image nor Python. Color refinement changes the
 render palette without regenerating the approved symbol geometry.
 
-The compact character is a separate 28-by-10 design with its own rounded contour,
-scoring, face and paw placement. It is not a truncated full frame. Both sizes use
-fixed grids, immutable frames, validated row widths and the existing TerminalTheme
-foreground colors. Every SGR run resets. Monochrome retains all symbols.
+The active layouts all scale that same 64-by-22 reference. A roomy viewport uses
+56 by 20; intermediate space uses 48 by 17; the smallest portrait is 40 by 14.
+Home and workspace select size from the same viewport rules. Screen type changes
+expression and motion, never the underlying character. The former 28-by-10 asset
+is retained as historical source but is no longer selected by the presenter. The
+owner rejected the tiny draft on 15 November: no 20-by-8 portrait remains.
+Fixed grids, immutable frames and row validation keep every variant bounded.
+When a complete menu and recognizable portrait cannot fit, the menu and helpful
+text take priority. No options are hidden to make room for art.
 The classic Windows console uses distinct ANSI cream, gold, crust and rose: its
 observed RGB rendering flattened the companion into yellow. The native helper identifies a visible classic-console window and selects ANSI,
 even if inherited WT_SESSION/COLORTERM variables describe its parent host. A
@@ -41,13 +46,13 @@ NEEDS_REVIEW, ERROR, GOODBYE and CURIOUS. A 96-tick cycle holds the approved res
 closes and reopens the eyes, changes a small paw highlight, lifts the existing
 right paw and varies a few crumbs. It returns to the exact resting frame. There
 is no separate floating third paw. The reserved viewport adds four blank columns:
-the character glides up to two cells left or right, then returns to its baseline.
+the character moves one cell left or right in a coherent 16-tick loop, returning through its baseline.
 The adjacent box and input prompt stay still. Welcome adds a wave; working uses a
 focused mouth and paw highlights; exploration/review use attentive eyes and a
 quieter loop. Success adds crumbs, and errors use a calm concerned mouth.
 
 Supported menu input supplies ticks at a configured interval of 125 milliseconds.
-Unchanged poses emit no output. Stale queued ticks are discarded after operations;
+Idle pose accents now change roughly every three ticks (375ms), with position changes every four ticks (500ms); the old loop could hold an unchanged pose for seconds. Unchanged poses emit no output. Stale queued ticks are discarded after operations;
 old frames cannot play back as a rapid burst. Working feedback keeps its existing
 bounded timer, advancing the same companion region rather than a second spinner.
 No action waits for an animation or celebration to finish.
@@ -86,7 +91,7 @@ The live editor supports number-plus-Enter, backspace, Ctrl+U, Escape cancellati
 and Ctrl+D/Ctrl+Z EOF. It stores bounded input and keeps its visible suffix on one
 row. Ambiguous-width Unicode is preserved in the value but echoed as `?` in this
 optional editor. Ordinary Reader input retains native Unicode line editing.
-Arrow keys and mouse input are not required.
+In enhanced screen mode, Up/Down or Left/Right selects the existing action token and Enter dispatches it. Numeric input, including multi-digit choices, keeps its meaning. Enter alone does not confirm an action; partial text wins over arrows. Classic/portable mode retains numbered input. Mouse input is not required.
 
 ## Menus, truth and preferences
 
@@ -97,9 +102,9 @@ contains fixed UI copy, never confidential source text or inferred project facts
 Saving, failed saving, recovery, source freshness and unsaved-session meaning stay
 with their existing services and written outcomes.
 
-A full welcome needs at least 120 columns and 30 rows. Compact side-by-side menus
-need at least 76 columns and 18 rows, with additional room for every option. If the
-whole group cannot fit, the normal wrapped menu remains. Art never removes choices.
+The roomy portrait uses at least 120 columns and 30 rows; medium needs 100 by 27.
+Smaller portraits need at least 72 by 21 and enough extra rows for every menu
+entry. These are fit conditions, not promises that a crowded card will show art.
 
 Every shared multi-option menu gets an ASCII frame with gold keys, a cream
 context question and neutral action labels. Welcome screens place the bread left
@@ -115,7 +120,7 @@ Forced color does not force live cursor control. No preference schema is added.
 ## Preview and verification
 
 The production entrypoint accepts `--bread-preview=all`, `full`, `compact` and
-`idle`. The atlas contains both sizes, all moods, blink and paw poses. It never
+`idle`, plus `reference` for the untouched original size. The atlas includes all responsive sizes, moods, blink and paw poses. It never
 opens WorkspaceStore or persists project data. Add `--no-color --no-animation`
 for a monochrome atlas. No image file is required at runtime.
 
@@ -141,3 +146,34 @@ JDK17, VS Code, Windows Terminal and other host acceptance are separate claims.
 Results, source binding, owner feedback and remaining limits are recorded in the
 existing B7_EXECPLAN and the current evidence directory. Earlier failed and
 superseded attempts remain local and are not final acceptance evidence.
+
+## Enhanced screen lifecycle (15 November 2026)
+
+`--ui=auto` is the default. `--ui=screen` requests the same capability-gated path;
+`--ui=classic` / `--classic-ui` selects ordinary scrollback. Only a real console
+with the optional native keyboard, verified VT and a usable viewport enters the
+alternate buffer. Color hints alone never grant cursor control. NO_COLOR and
+redirected streams stay portable. `--no-animation` keeps screen replacement and
+arrow navigation while removing motion. `--no-mascot` retains the screen and keys.
+
+TerminalScreenManager stages existing presentation until the existing read
+boundary, enters one alternate screen, replaces its viewport and pages long
+reports. Enter/Right advances pages, Left returns, Escape reaches the action page.
+Every report line remains reachable. A short three-step header scan lasts about
+105ms; it never delays real work or animates individual text lines. The approved
+B3 two-part intro is rendered live before staging starts, preserving its actual
+120ms animation instead of replaying embedded cursor commands inside report pages.
+
+BreadSupport remains the single input/animation coordinator. Free text is static;
+partial numeric input survives ticks. Operations expose their actual progress
+immediately. Resize stops stale mascot movement; the next response / `?` composes
+for observed dimensions. A viewport below 40 by 15 or a report above 1MiB releases
+to classic mode. Close, exceptions and JVM shutdown restore style, cursor and the
+original screen. There is no new canonical project format, service or DSA.
+
+Run `python3 scripts/verify-bread-support.py --screen-check` in WSL for native
+console key injection, report paging, save/restart and cleanup. Add `--record
+--ffmpeg=<existing Windows executable>` for actual window capture. Reading pauses
+are exclusively in the developer driver; no product operation delay is added.
+This is scripted native input, not independent human acceptance. The record and
+hash manifests distinguish successful gates from NOT_PROVEN host behavior.

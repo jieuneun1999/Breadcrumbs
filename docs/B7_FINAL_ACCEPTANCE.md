@@ -359,3 +359,56 @@ unmerged review work. At that earlier checkpoint, Frozen Master/First-Import con
 body were compared against B6 and were unchanged. The later UI-copy migrations
 are listed in the current follow-up above. Earlier branch evidence stays
 available. No merge/release/deployment or external Discord communication occurred.
+
+
+## Final screen UX refinement — 15 November 2026
+
+Review candidate on `codex/breadcrumbs-session`, based on `352f3df`. The owner
+authorized committing/pushing this snapshot for assessment on 15 November 2026.
+The separate Windows launcher checkout remains at `ee01d61`. Current changes are
+not published to [PR12](https://github.com/jieuneun1999/Breadcrumbs/pull/12), which
+was read back OPEN and unmerged. No merge/release is authorized by this result.
+
+The owner rejected the small workspace portrait. All active portraits now scale
+the same original64x22 bread:56x20 in roomy viewports,48x17 or40x14 as space permits.
+Home and workspace use the same size rules; task mood changes expression/motion.
+The former28x10 variant is not selected. Original B3 brand/reference arrays,
+canonical services, storage and four custom DSA implementations are unchanged.
+
+TerminalScreenManager stages existing output until an input boundary, replaces
+one alternate viewport, pages reports and restores the original screen on close.
+BreadSupport coordinates native input, active region and motion. Numeric choices
+retain their meanings; arrows plus Enter resolve to the same action tokens.
+Enter alone never confirms an action. Partial text is preserved and free text is
+static. `--no-animation` keeps replacement/arrows; `--no-mascot` keeps navigation;
+`--classic-ui` and capability/no-color/redirection fallbacks remain available.
+The B3 two-part intro is live, never replayed inside report pages. Header scans
+last about105ms. Native ticks remain125ms; idle accents change about375ms and sway
+about500ms, replacing long unchanged holds. Operations are never artificially delayed.
+
+| Evidence | Observed result |
+| --- | --- |
+| `build/bread-cmd-7078d75981094dc4b5620645e5c68cee` | PASS: all B1-B7 groups/process scenarios, report failure/resize tests and exact isolated production launcher |
+| `build/bread-cmd-6ec48a4625d645d1a6dd0f084a52d03f` | Native screen/input/save/restart/cleanup PASS with explicit host limits |
+| `build/final-capture-6ec48a46` | Same compiled build; actual55.875s1280x832 H264,1326 frames, full decode and inspected output |
+| Reconciliation |169 unchanged inputs;186 matching Java classes; one saved progress update, exact next action and unchanged saved-file bytes |
+
+The demo uses a synthetic project without files. It demonstrates Home, setup,
+overview, workspace, Project Map, explicit technical detail, update/save, exit,
+and a second process reopening saved context with reduced motion. Scripted native
+key injection is developer evidence, not independent participant/human typing.
+Reading pauses are in the driver. The earlier low-frame-rate final capture and
+occluded CopyFromScreen screenshots are not visual motion acceptance evidence.
+
+The Windows review copy is `build/final-terminal-ux-2026-11-15-7078d759/` and contains
+one named MP4, two actual decoded frames, probe and README. No private data or
+external upload. Full reproduction/hashes remain in the source worktree's build.
+
+DEMO_READY for this bounded Windows/JDK25 exercise, targetingJava17. Actual
+JDK17, Unix, Windows Terminal, VS Code, Ctrl+C/independent keyboard, owner visual
+approval and live80-column host resize remain NOT_PROVEN. This runner also skips
+unavailable symbolic-link/junction fixtures; prior results are not new executions.
+A resize during report paging safely releases complete content to classic mode;
+ordinary menu resize stops stale motion and refreshes on the next response/`?`.
+Specification and engineering-quality self-reviews pass within these boundaries;
+no independent-review or RELEASE_READY claim. See B7_EXECPLAN for repairs and limits.

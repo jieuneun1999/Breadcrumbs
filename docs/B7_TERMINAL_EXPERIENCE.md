@@ -14,7 +14,7 @@ checkpoint, Follow, Inbox, Health, audit, rescan/change review, search/results,
 baseline/history/diagnostics, work-item/Graph, Hash, DLL sandbox, recovery, document
 previews and handoff/export. Default legacy constructors still produce plain text;
 the production entrypoint passes one theme through all actual navigation routes,
-including --dsa. No parallel theme, full-screen TUI or new artwork was introduced.
+including --dsa. The optional screen presenter added on 15 November is documented in B7_BREAD_SUPPORT_TERMINAL_COMPANION.md; existing theme and approved artwork remain authoritative.
 
 ## Operation feedback
 
@@ -30,7 +30,7 @@ status row, beginning only after 200ms. A per-operation daemon scheduler redraws
 every120ms; output is synchronized, it pauses before input and shutdown/clear
 occurs on success, warnings, cancellation, exceptions or scope close. Tests verify
 real counters and no surviving scheduler/output after completion. Ordinary lookup
-and menu navigation have no animation. No work is delayed to display a spinner.
+and menu navigation do not simulate operation progress. Capable menus use the coordinated companion and brief screen transitions. No work is delayed to display a spinner.
 The narrow Windows AccessDenied I/O backoff is separate filesystem recovery logic.
 
 Redirected/no-color/NO_COLOR/unknown terminals use one start and one final result,

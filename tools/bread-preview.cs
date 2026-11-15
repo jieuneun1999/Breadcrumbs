@@ -36,11 +36,31 @@ public static class BreadConsole
         public int Left,Top,Right,Bottom;
     }
     [DllImport("kernel32.dll")] public static extern IntPtr GetStdHandle(int value);
+    [DllImport("kernel32.dll",CharSet=CharSet.Unicode)] static extern IntPtr CreateFile(string name,uint access,uint share,IntPtr security,uint create,uint flags,IntPtr template);
+    [DllImport("kernel32.dll")] static extern bool CloseHandle(IntPtr handle);
+    [DllImport("kernel32.dll")] static extern bool SetStdHandle(int kind,IntPtr handle);
+    [DllImport("kernel32.dll")] static extern bool SetHandleInformation(IntPtr handle,uint mask,uint flags);
+    public static void BindConsoleInput() {
+        var input=CreateFile("CONIN$",0xc0000000,3,IntPtr.Zero,3,0,IntPtr.Zero);
+        if(input==new IntPtr(-1)||!SetHandleInformation(input,1,1)||!SetStdHandle(-10,input))throw new Exception("Native input binding failed");
+    }
+    static IntPtr ActiveOutput() { return CreateFile("CONOUT$",0x80000000,3,IntPtr.Zero,3,0,IntPtr.Zero); }
     [DllImport("kernel32.dll")] public static extern bool GetConsoleMode(IntPtr handle,out uint mode);
     [DllImport("kernel32.dll")] public static extern bool SetConsoleMode(IntPtr handle,uint mode);
     [DllImport("kernel32.dll")] public static extern bool GetConsoleScreenBufferInfo(IntPtr handle,out Info info);
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)] public static extern bool ReadConsoleOutputCharacterW(IntPtr handle,StringBuilder text,uint length,Coord point,out uint read);
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)] public static extern bool WriteConsoleInputW(IntPtr handle,Key[] keys,uint length,out uint written);
+    [DllImport("kernel32.dll")] static extern bool SetConsoleWindowInfo(IntPtr handle,bool absolute,ref Rect rect);
+    [DllImport("kernel32.dll")] static extern bool SetConsoleScreenBufferSize(IntPtr handle,Coord size);
+    public static void Resize(short width,short height) {
+        var current=CreateFile("CONOUT$",0xc0000000,3,IntPtr.Zero,3,0,IntPtr.Zero);
+        var rect=new Rect { Left=0,Top=0,Right=(short)(width-1),Bottom=(short)(height-1) };
+        try {
+            if(!SetConsoleWindowInfo(current,true,ref rect))throw new Exception("Active viewport resize failed");
+            SetConsoleScreenBufferSize(current,new Coord(width,height));
+        }
+        finally { CloseHandle(current); }
+    }
     [StructLayout(LayoutKind.Explicit,Size=4,CharSet=CharSet.Unicode)] public struct Cell
     {
         [FieldOffset(0)] public char Character;
@@ -54,14 +74,16 @@ public static class BreadConsole
     public static Info State()
     {
         Info info;
-        if(!GetConsoleScreenBufferInfo(GetStdHandle(-11),out info))throw new Exception("No console buffer");
+        var current=ActiveOutput();
+        try { if(!GetConsoleScreenBufferInfo(current,out info))throw new Exception("No console buffer"); } finally { CloseHandle(current); }
         return info;
     }
     public static string Read(Rect region)
     {
         short width=(short)(region.Right-region.Left+1),height=(short)(region.Bottom-region.Top+1);
         var cells=new Cell[width*height];
-        if(!ReadConsoleOutputW(GetStdHandle(-11),cells,new Coord(width,height),new Coord(0,0),ref region))throw new Exception("Console readback failed");
+        var current=ActiveOutput();
+        try { if(!ReadConsoleOutputW(current,cells,new Coord(width,height),new Coord(0,0),ref region))throw new Exception("Console readback failed"); } finally { CloseHandle(current); }
         var text=new StringBuilder();
         for(int y=0;y<height;y++)
         {
@@ -110,9 +132,22 @@ public static class BreadPreviewProgram
 {
     static string classes,root,evidence;
     static System.Diagnostics.Process app;
-    static bool automated;
+    static System.Diagnostics.Process recording;
+    static bool automated,screenAutomated;
     static System.Collections.Generic.List<string> checks=new System.Collections.Generic.List<string>();
+    static readonly StringBuilder observedPages=new StringBuilder();
+    static int pageCapture;
     static readonly System.Text.Encoding Utf8=new System.Text.UTF8Encoding(false);
+    static bool Record { get { return Environment.GetEnvironmentVariable("BREAD_RECORD")=="1"; } }
+    static void BeginRecording() {
+        if(!Record)return;
+        var info=new System.Diagnostics.ProcessStartInfo(Environment.GetEnvironmentVariable("BREAD_FFMPEG"));
+        info.Arguments="-hide_banner -loglevel warning -f gdigrab -framerate 24 -i \"title=Breadcrumbs - screen acceptance\" -an -c:v libx264 -preset ultrafast -crf 24 -pix_fmt yuv420p -vf \"pad=ceil(iw/2)*2:ceil(ih/2)*2\" \""+System.IO.Path.Combine(evidence,"walkthrough.mp4")+"\"";
+        info.UseShellExecute=false; info.CreateNoWindow=true; info.RedirectStandardInput=true;
+        recording=System.Diagnostics.Process.Start(info);
+        System.Threading.Thread.Sleep(700);
+        if(recording.HasExited)throw new Exception("Native window recording did not start");
+    }
     static void Check(bool value,string message)
     {
         if(!value)throw new Exception(message);
@@ -124,7 +159,19 @@ public static class BreadPreviewProgram
         while(clock.ElapsedMilliseconds<20000)
         {
             if(app.HasExited)throw new Exception("App exited before "+prompt);
-            if(BreadConsole.Line().Contains(prompt))return;
+            if(BreadConsole.Line().Contains(prompt)) {
+                System.Threading.Thread.Sleep(80);
+                if(BreadConsole.Line().Contains(prompt))return;
+            }
+            string line=BreadConsole.Line();
+            if(line.Contains("Enter:next")) {
+                observedPages.AppendLine(BreadConsole.Screen());
+                if(screenAutomated && pageCapture++==0) Capture("screen-00-welcome");
+                BreadConsole.Send("\r");
+                var consumed=System.Diagnostics.Stopwatch.StartNew();
+                while(BreadConsole.Line()==line && consumed.ElapsedMilliseconds<5000) System.Threading.Thread.Sleep(20);
+                if(BreadConsole.Line()==line) throw new Exception("Report page input was not consumed");
+            }
             System.Threading.Thread.Sleep(40);
         }
         throw new Exception("Prompt timeout "+prompt+" / "+BreadConsole.Line());
@@ -134,6 +181,7 @@ public static class BreadPreviewProgram
         Wait(prompt);
         short row = BreadConsole.State().Cursor.Y;
         BreadConsole.Send(value+"\r");
+        if(screenAutomated) { System.Threading.Thread.Sleep(Record?650:200); return; }
         var clock = System.Diagnostics.Stopwatch.StartNew();
         while(BreadConsole.State().Cursor.Y == row)
         {
@@ -153,10 +201,11 @@ public static class BreadPreviewProgram
     }
     static void Capture(string name)
     {
+        if(Record)System.Threading.Thread.Sleep(1600);
         System.IO.File.WriteAllText(System.IO.Path.Combine(evidence,name+".txt"),BreadConsole.Screen(),Utf8);
         var window = BreadConsole.GetConsoleWindow();
         var rect=new BreadConsole.WindowRect();
-        if(!automated && BreadConsole.GetWindowRect(window,out rect)&&rect.Right>rect.Left&&rect.Bottom>rect.Top)
+        if((!automated || screenAutomated) && BreadConsole.GetWindowRect(window,out rect)&&rect.Right>rect.Left&&rect.Bottom>rect.Top)
         {
             using(var bitmap=new System.Drawing.Bitmap(rect.Right-rect.Left,rect.Bottom-rect.Top))
             {
@@ -177,6 +226,59 @@ public static class BreadPreviewProgram
             System.Threading.Thread.Sleep(40);
         }
         throw new Exception("No live frame change observed");
+    }
+    static void Arrow(short code) {
+        uint written; var key=new BreadConsole.Key { Type=1,Down=1,Repeat=1,VirtualKey=code,Character=(char)0 };
+        if(!BreadConsole.WriteConsoleInputW(BreadConsole.GetStdHandle(-10),new[]{key},1,out written))throw new Exception("Arrow key delivery failed");
+    }
+    static int ScreenCheck() {
+        Console.Title="Breadcrumbs - screen acceptance";
+        BeginRecording();
+        string storage=System.IO.Path.Combine(root,"screen-native-storage");
+        Start("--ui=screen --terminal-diagnostics --storage-root=\""+storage+"\"");
+        Wait("Breadcrumbs >"); Capture("screen-01-home");
+        Check(BreadConsole.Screen().Contains("BREADCRUMBS /"),"Enhanced viewport is active");
+        string before=BreadConsole.Screen(); Changed(before); Capture("screen-02-idle");
+        BreadConsole.Send("2"); Wait("Breadcrumbs > 2"); before=BreadConsole.Screen(); Changed(before);
+        Check(BreadConsole.Line().Contains("Breadcrumbs > 2"),"Partial numeric choice survives live motion");
+        BreadConsole.Send("\r"); Answer("Entry mode:","1"); Wait("Project display name:");
+        Check(!BreadConsole.Screen().Contains("Open saved project"),"Home is replaced before setup");
+        BreadConsole.Send("Screen demo"); Wait("Project display name: Screen demo"); before=BreadConsole.Screen();
+        System.Threading.Thread.Sleep(900); Check(before==BreadConsole.Screen(),"Free text has no background animation"); BreadConsole.Send("\r");
+        Answer("Project type","1"); Answer("Project goal","Prepare a readable project plan");
+        Answer("Planned deliverable","Planning notes"); Answer("Next action","Review the schedule");
+        Answer("Responsible person",""); Answer("Blockers or pending",""); Answer("Optional existing EMPTY","");
+        Wait("Overview action:"); Capture("screen-03-overview"); Answer("Overview action:","4");
+        Answer("Confirm this starting record","yes"); Answer("Save this project","yes"); Wait("Breadcrumbs >");
+        for(int i=0;i<6;i++) { Arrow(40); System.Threading.Thread.Sleep(40); }
+        Wait("Breadcrumbs > 7"); BreadConsole.Send("\r"); Wait("Workspace >"); Capture("screen-04-arrow-workspace");
+        Check(BreadConsole.Screen().Contains("Project workspace"),"Arrow selection enters the original workspace route");
+        Answer("Workspace >","13"); Wait("Map >"); Capture("screen-05-map");
+        Check(!BreadConsole.Screen().Contains("Record progress update"),"Workspace is replaced by the map");
+        Answer("Map >","1"); Answer("Section >","1"); Answer("Record >","t"); Wait("Record >"); Capture("screen-06-source-detail");
+        Answer("Record >","0"); Answer("Section >","0"); Answer("Map >","0");
+        Answer("Workspace >","2"); Answer("Progress summary:","Completed a synthetic screen check");
+        Answer("Blockers or pending","none"); Answer("Next action:","Inspect the retained evidence");
+        Answer("Update action:","yes"); Wait("Workspace >"); Capture("screen-07-saved-update");
+        Answer("Workspace >","12"); Wait("Workspace >");
+        BreadConsole.Resize(80,24);
+        var resized=System.Diagnostics.Stopwatch.StartNew();
+        while(BreadConsole.State().Window.Right-BreadConsole.State().Window.Left+1!=80 && resized.ElapsedMilliseconds<5000) System.Threading.Thread.Sleep(20);
+        bool narrow=BreadConsole.State().Window.Right-BreadConsole.State().Window.Left+1==80;
+        if(narrow) Check(true,"Active alternate viewport resized to 80 columns");
+        else checks.Add("NOT_PROVEN live host resize: requested 80 columns, host retained "+(BreadConsole.State().Window.Right-BreadConsole.State().Window.Left+1));
+        System.Threading.Thread.Sleep(250); Answer("Workspace >","?"); Wait("Workspace >"); Capture("screen-08-narrow");
+        if(narrow) Check(BreadConsole.Screen().Split('\n')[1].TrimEnd().Length==79,"Narrow viewport is measured and recomposed at 80 columns");
+        Answer("Workspace >","0"); Answer("Breadcrumbs >","0"); Check(app.WaitForExit(8000)&&app.ExitCode==0,"Enhanced application exits cleanly"); Capture("screen-09-restored-shell");
+        Console.SetWindowSize(80,24);
+        Start("--ui=screen --no-animation --storage-root=\""+storage+"\"");
+        Answer("Breadcrumbs >","1"); Answer("Project number","1"); Answer("Breadcrumbs >","7"); observedPages.Clear(); Answer("Workspace >","1"); Wait("Workspace >");
+        observedPages.AppendLine(BreadConsole.Screen());
+        Check(observedPages.ToString().Contains("Inspect the retained evidence"),"Restart shows the actual saved next action across reachable summary pages"); Capture("screen-10-returning");
+        System.IO.File.WriteAllText(System.IO.Path.Combine(evidence,"returning-summary-pages.txt"),observedPages.ToString(),Utf8);
+        Answer("Workspace >","0"); Answer("Breadcrumbs >","0"); Check(app.WaitForExit(8000)&&app.ExitCode==0,"Reduced motion keeps all navigation and exits cleanly");
+        checks.Add("NOT_PROVEN independent human keyboard input, Windows Terminal, VS Code and Linux JVM");
+        return 0;
     }
     public static int Main(string[] args)
     {
@@ -202,11 +304,14 @@ public static class BreadPreviewProgram
         root=args[1];
         evidence=args[2];
         System.IO.Directory.CreateDirectory(evidence);
+        BreadConsole.BindConsoleInput();
         uint oldMode;
         var handle=BreadConsole.GetStdHandle(-11);
         if(!BreadConsole.GetConsoleMode(handle,out oldMode)||!BreadConsole.SetConsoleMode(handle,oldMode|4))return 3;
         Console.OutputEncoding=Utf8;
         Environment.SetEnvironmentVariable("ANSICON","1");
+        Environment.SetEnvironmentVariable("NO_COLOR",null);
+        Environment.SetEnvironmentVariable("TERM",null);
         Console.Title="Bread Support - reference symbol loaf";
         try
         {
@@ -218,7 +323,9 @@ public static class BreadPreviewProgram
             catch
             {
             }
-            automated=args.Length>3&&args[3]=="--auto";
+            screenAutomated=args.Length>3&&args[3]=="--screen-auto";
+            automated=args.Length>3&&(args[3]=="--auto"||screenAutomated);
+            if(screenAutomated) return ScreenCheck();
             if(!automated)
             {
                 bool integrated = args.Length > 3 && args[3] == "--app";
@@ -231,7 +338,7 @@ public static class BreadPreviewProgram
             }
             Console.Title="Bread Support - CMD acceptance";
             string storage=System.IO.Path.Combine(root,"cmd-native-storage");
-            Start("--storage-root=\""+storage+"\"");
+            Start("--classic-ui --storage-root=\""+storage+"\"");
             Wait("Breadcrumbs >");
             Capture("01-full-main-menu");
             string before=BreadConsole.Screen();
@@ -296,7 +403,7 @@ public static class BreadPreviewProgram
             Check(app.WaitForExit(5000)&&app.ExitCode==0,"First application exits cleanly");
             Capture("11-clean-exit");
             Console.SetWindowSize(Math.Min(160,Console.LargestWindowWidth),Math.Min(52,Console.LargestWindowHeight));
-            Start("--storage-root=\""+storage+"\"");
+            Start("--classic-ui --storage-root=\""+storage+"\"");
             Answer("Breadcrumbs >","1");
             Answer("Project number","1");
             Answer("Breadcrumbs >","7");
@@ -330,6 +437,11 @@ public static class BreadPreviewProgram
                 app.WaitForExit();
             }
             BreadConsole.SetConsoleMode(handle,oldMode);
+            if(recording!=null&&!recording.HasExited) {
+                recording.StandardInput.WriteLine("q"); recording.StandardInput.Flush();
+                if(!recording.WaitForExit(10000))recording.Kill();
+            }
+            System.IO.File.WriteAllText(System.IO.Path.Combine(evidence,"observed-pages.txt"),observedPages.ToString(),Utf8);
             System.IO.File.WriteAllLines(System.IO.Path.Combine(evidence,"checks.txt"),checks,Utf8);
         }
     }

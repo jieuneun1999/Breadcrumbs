@@ -63,5 +63,6 @@ public final class AllTests {
         breadcrumbs.b7.ProjectMapTest.run();
         breadcrumbs.cli.ProjectMapConsoleTest.run();
         breadcrumbs.cli.BreadSupportTest.run();
+        breadcrumbs.cli.TerminalScreenTest.run();
     }
 }

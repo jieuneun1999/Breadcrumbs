@@ -6,6 +6,7 @@ import breadcrumbs.cli.TerminalTheme;
 import breadcrumbs.cli.BreadSupport;
 import breadcrumbs.cli.BreadPreview;
 import breadcrumbs.cli.TerminalKeyboard;
+import breadcrumbs.cli.TerminalScreenManager;
 import breadcrumbs.storage.WorkspaceStore;
 import java.nio.file.Path;
 import java.io.IOException;
@@ -19,6 +20,7 @@ public final class Main {
     public static void main(String[] args) {
         try {
             boolean noColor = false, always = false, dsa = false, richBrand = true, noAnimation = false, noMascot = false;
+            boolean classicUi = false, terminalDiagnostics = false;
             String preview = null;
             Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
             for (String arg : args) {
@@ -28,6 +30,9 @@ public final class Main {
                 else if (arg.equals("--dsa")) { dsa = true; }
                 else if (arg.equals("--no-animation")) { noAnimation = true; }
                 else if (arg.equals("--no-mascot")) { noMascot = true; }
+                else if (arg.equals("--classic-ui") || arg.equals("--ui=classic")) { classicUi = true; }
+                else if (arg.equals("--ui=auto") || arg.equals("--ui=screen")) { classicUi = false; }
+                else if (arg.equals("--terminal-diagnostics")) { terminalDiagnostics = true; }
                 else if (arg.equals("--ascii")) { /* Companion artwork always uses visible ASCII symbols. */ }
                 else if (arg.equals("--bread-preview")) { preview = "all"; }
                 else if (arg.startsWith("--bread-preview=")) { preview = arg.substring(16); }
@@ -52,25 +57,37 @@ public final class Main {
                 int height = 0;
                 try { height = Math.max(0, Math.min(1000, Integer.parseInt(System.getenv("LINES")))); }
                 catch (NumberFormatException ignored) { }
-                TerminalKeyboard keys = preview == null ? TerminalKeyboard.open(animations && !noMascot)
-                        : TerminalKeyboard.open(animations && !noMascot, message -> output.println("Bread Support terminal check: " + message));
+                PrintStream diagnostics = output;
+                boolean diagnosticInput = terminalDiagnostics;
+                TerminalKeyboard keys = preview == null ? TerminalKeyboard.open(color && System.console() != null,
+                        message -> { if (diagnosticInput) { diagnostics.println("Terminal check: " + message); } })
+                        : TerminalKeyboard.open(animations && !noMascot, message -> diagnostics.println("Bread Support terminal check: " + message));
+                TerminalScreenManager screens = preview == null && !classicUi && keys != null && keys.columns() >= 40 && keys.rows() >= 15
+                        ? new TerminalScreenManager(output, keys, animations) : null;
+                if (screens != null) { output = screens.output(); }
                 try (var bread = new BreadSupport(output, keys, width, height,
-                        !noMascot && System.console() != null, animations)) {
+                        !noMascot && System.console() != null, animations, screens)) {
                     if (keys != null) { width = bread.columns(); }
                     boolean companionRgb = keys != null ? keys.rgbSupported() : !System.getProperty("os.name").startsWith("Windows")
                             || System.getenv("WT_SESSION") != null || "truecolor".equalsIgnoreCase(System.getenv("COLORTERM"))
                             || "24bit".equalsIgnoreCase(System.getenv("COLORTERM"));
                     var theme = new TerminalTheme(color, richBrand, animations, bread, companionRgb);
-                    if (preview != null) { BreadPreview.run(output, input, theme, width, preview); }
-                    else if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
-                    else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
+                    Thread cleanup = new Thread(bread::close, "breadcrumbs-terminal-cleanup");
+                    if (screens != null) { Runtime.getRuntime().addShutdownHook(cleanup); }
+                    try {
+                        if (preview != null) { BreadPreview.run(output, input, theme, width, preview); }
+                        else if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
+                        else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
+                    } finally {
+                        if (screens != null) { try { Runtime.getRuntime().removeShutdownHook(cleanup); } catch (IllegalStateException shuttingDown) { } }
+                    }
                 }
             }
         } catch (IOException failure) {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
             System.exit(1);
         } catch (IllegalArgumentException invalid) {
-            System.err.println("Invalid application arguments. Use --no-color, --no-animation, --no-mascot, --ascii, --bread-preview[=all|full|compact|idle], --color=always, --rich-brand, --dsa or --storage-root=<path>.");
+            System.err.println("Invalid application arguments. Use --ui=auto|screen|classic, --classic-ui, --no-color, --no-animation, --no-mascot, --ascii, --bread-preview[=all|reference|full|compact|idle], --terminal-diagnostics, --color=always, --rich-brand, --dsa or --storage-root=<path>.");
             System.exit(1);
         }
     }

@@ -23,6 +23,13 @@ public final class BrandRenderer {
 
     /** Production branding uses only the approved B3 artwork; small terminals get text, never alternate art. */
     public static void renderApproved(PrintStream out, TerminalTheme theme, int width) {
+        BreadSupport bread = theme.companion();
+        if (bread != null) { bread.beginIntro(); }
+        try { approvedFrame(out, theme, width); }
+        finally { if (bread != null) { bread.endIntro(); } }
+    }
+
+    private static void approvedFrame(PrintStream out, TerminalTheme theme, int width) {
         int columns = Math.max(28, width);
         out.println();
         if (columns >= 160) {

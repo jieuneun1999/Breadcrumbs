@@ -11,6 +11,7 @@ import java.util.List;
 
 /** One presentation owner. Menu frames advance inside controlled keyboard reads. */
 public final class BreadSupport implements AutoCloseable {
+    public static final int UP = 0xe000, DOWN = 0xe001, LEFT = 0xe002, RIGHT = 0xe003;
     public enum EventKind { KEY, TICK, END }
     public record Event(EventKind kind, int character, int columns, int rows) { }
     public interface Keyboard extends AutoCloseable {
@@ -20,6 +21,8 @@ public final class BreadSupport implements AutoCloseable {
         @Override void close();
     }
     private final PrintStream out;
+    private final PrintStream visual;
+    private final TerminalScreenManager screens;
     private Keyboard keyboard;
     private final boolean visible, animation;
     private int columns, rows;
@@ -27,7 +30,11 @@ public final class BreadSupport implements AutoCloseable {
     private boolean closed;
 
     public BreadSupport(PrintStream out, Keyboard keyboard, int columns, int rows, boolean visible, boolean animation) {
+        this(out, keyboard, columns, rows, visible, animation, null);
+    }
+    public BreadSupport(PrintStream out, Keyboard keyboard, int columns, int rows, boolean visible, boolean animation, TerminalScreenManager screens) {
         this.out = out; this.keyboard = keyboard;
+        this.screens = screens; visual = screens == null ? out : screens.liveOutput();
         this.columns = keyboard == null ? columns : keyboard.columns();
         this.rows = keyboard == null ? rows : keyboard.rows();
         this.visible = visible; this.animation = animation;
@@ -60,13 +67,13 @@ public final class BreadSupport implements AutoCloseable {
                 List<String> rendered = viewport(next.render(theme), offset);
                 for (int y = 0; y < size.height(); y++) {
                     if (rendered.get(y).equals(previousLines.get(y))) { continue; }
-                    out.print("\u001b7\u001b[" + (distance - y) + "A\r\u001b[" + (column + 1) + "G" + rendered.get(y) + "\u001b8");
+                    visual.print("\u001b7\u001b[" + (distance - y) + "A\r\u001b[" + (column + 1) + "G" + rendered.get(y) + "\u001b8");
                 }
-                out.flush(); previous = next; previousLines = rendered; previousOffset = offset;
+                visual.flush(); previous = next; previousLines = rendered; previousOffset = offset;
             }
         }
         void mood(Mood value) { synchronized (out) { mood = value; tick = 0; } }
-        @Override public void close() { synchronized (out) { stopped = true; if (active == this) { active = null; } } }
+        @Override public void close() { synchronized (out) { stopped = true; if (active == this) { active = null; if (screens != null) { screens.endOperation(); } } } }
     }
 
     boolean present(TerminalTheme theme, Mood mood, String message, String actions, boolean expanded) {
@@ -80,9 +87,10 @@ public final class BreadSupport implements AutoCloseable {
     private boolean present(TerminalTheme theme, Mood mood, String message, String actions, boolean expanded, boolean result) {
         synchronized (out) {
             stop();
-            if (closed || !visible || columns < 76 || rows < 18
+            actions(actions);
+            if (closed || !visible || columns < 72 || rows < 21
                     || !MenuBox.fixedCells(message) || !MenuBox.fixedCells(actions)) { return false; }
-            Size size = !result && columns >= 120 && rows >= 30 ? Size.FULL : Size.COMPACT;
+            Size size = columns >= 120 && rows >= 30 ? Size.FULL : columns >= 100 && rows >= 27 ? Size.MEDIUM : Size.COMPACT;
             List<String> box;
             int regionWidth, right, count;
             while (true) {
@@ -91,7 +99,7 @@ public final class BreadSupport implements AutoCloseable {
                 if (right < 24) { return false; }
                 box = MenuBox.rows(theme, right, message, actions, result);
                 count = Math.max(size.height(), box.size());
-                if (count + 4 <= rows) { break; }
+                if (count + 7 <= rows) { break; }
                 if (size == Size.COMPACT) { return false; }
                 size = Size.COMPACT;
             }
@@ -112,6 +120,8 @@ public final class BreadSupport implements AutoCloseable {
     }
 
     Screen operation(TerminalTheme theme, String message) {
+        stop();
+        if (screens != null) { screens.beginOperation(); }
         if (!present(theme, Mood.WORKING, message, "", false)) { return null; }
         synchronized (out) {
             Screen screen = active;
@@ -125,6 +135,13 @@ public final class BreadSupport implements AutoCloseable {
     String readLine(Reader fallback, TerminalTheme theme, String prompt, int limit) throws IOException {
         try {
             if (keyboard == null || closed) { return readPortable(fallback, limit); }
+            if (screens != null) {
+                screens.endOperation();
+                try { screens.beginRead(prompt); }
+                catch (EOFException end) { throw end; }
+                catch (IOException unavailable) { return portableAfterFailure(fallback, theme, prompt, limit); }
+                if (active != null && !screens.fitsLiveRegion(active.distance + 1)) { stop(); }
+            }
             StringBuilder line = new StringBuilder();
             boolean overflow = false;
             while (true) {
@@ -135,18 +152,26 @@ public final class BreadSupport implements AutoCloseable {
                 if (event.kind() == EventKind.TICK) {
                     if (event.columns() != columns || event.rows() != rows) {
                         stop(); columns = Math.max(1, event.columns()); rows = Math.max(1, event.rows());
+                        if (screens != null) { screens.resize(columns, rows); }
                         paintInput(theme, prompt, line.toString());
                     } else if (active != null) { active.tick(); }
                     continue;
                 }
                 int key = event.character();
+                if (key >= UP && key <= RIGHT) {
+                    if (screens != null && line.isEmpty()) {
+                        String chosen = screens.move(key == UP || key == LEFT ? -1 : 1);
+                        paintInput(theme, prompt, chosen);
+                    }
+                    continue;
+                }
                 if (key == 4 || key == 26) { throw new EOFException(); }
                 if (key == 13 || key == 10) {
-                    out.println(); out.flush();
+                    visual.println(); visual.flush();
                     if (overflow) { throw new IllegalArgumentException("Input exceeds " + limit + " characters."); }
-                    return line.toString();
+                    return line.isEmpty() && screens != null ? screens.selected() : line.toString();
                 }
-                if (key == 27) { out.println(); return "/cancel"; }
+                if (key == 27) { visual.println(); return "/cancel"; }
                 if (key == 8 || key == 127) {
                     if (!line.isEmpty()) { line.delete(line.offsetByCodePoints(line.length(), -1), line.length()); }
                 } else if (key == 21) { line.setLength(0); }
@@ -155,11 +180,16 @@ public final class BreadSupport implements AutoCloseable {
                 }
                 paintInput(theme, prompt, line.toString());
             }
-        } finally { stop(); }
+        } finally { stop(); if (screens != null) { screens.endRead(); } }
     }
+
+    void actions(String actions) { if (screens != null) { screens.actions(actions); } }
+    void beginIntro() { if (screens != null) { screens.beginIntro(); } }
+    void endIntro() { if (screens != null) { screens.endOperation(); } }
 
     private String portableAfterFailure(Reader fallback, TerminalTheme theme, String prompt, int limit) throws IOException {
         stop(); keyboard.close(); keyboard = null;
+        if (screens != null) { screens.fallback(); }
         out.println("\nInput was interrupted. Please enter this answer again.");
         new TerminalOutput(out, theme, columns).prompt(prompt);
         return readPortable(fallback, limit);
@@ -181,7 +211,7 @@ public final class BreadSupport implements AutoCloseable {
             int room = Math.max(0, available - tail.length());
             String text = echo.toString();
             if (text.length() > room) { text = room > 2 ? "< " + text.substring(text.length() - room + 2) : text.substring(text.length() - room); }
-            out.print("\r\u001b[2K" + theme.label(TerminalTheme.Tone.BREAD_GOLD, tail) + text); out.flush();
+            visual.print("\r\u001b[2K" + theme.label(TerminalTheme.Tone.BREAD_GOLD, tail) + text); visual.flush();
         }
     }
 
@@ -199,16 +229,13 @@ public final class BreadSupport implements AutoCloseable {
         return art.stream().map(line -> " ".repeat(2 + offset) + line + " ".repeat(2 - offset)).toList();
     }
     private static int offset(long tick) {
-        int phase = Math.floorMod(tick, 96);
-        if (phase >= 28 && phase <= 31 || phase >= 36 && phase <= 39) { return -1; }
-        if (phase >= 32 && phase <= 35) { return -2; }
-        if (phase >= 44 && phase <= 47 || phase >= 52 && phase <= 55) { return 1; }
-        if (phase >= 48 && phase <= 51) { return 2; }
-        return 0;
+        int phase = Math.floorMod(tick, 16);
+        return phase >= 4 && phase < 8 ? -1 : phase >= 12 ? 1 : 0;
     }
     void stop() { synchronized (out) { if (active != null) { active.close(); } } }
     @Override public void close() {
         synchronized (out) { if (closed) { return; } stop(); closed = true; }
         if (keyboard != null) { keyboard.close(); }
+        if (screens != null) { screens.close(); }
     }
 }
