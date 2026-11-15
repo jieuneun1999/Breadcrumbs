@@ -1,0 +1,51 @@
+PASS: DLL/domain (3721 assertions)
+PASS: CLI (59 assertions)
+PASS: all B1 test groups
+SKIP: symbolic-link creation unavailable: FileSystemException
+PASS: actual Windows ACL read-denial fixture
+SKIP: junction fixture not supplied; run the Windows B2 harness
+PASS: B2 inspector (90 assertions)
+PASS: B2 bootstrap/review (62 assertions)
+PASS: B2 CLI (39 assertions)
+PASS: all B2 test groups
+PASS: B3 actual Windows ACL read/save denial
+SKIP: B3 storage junction fixture not supplied; run B3 Windows harness
+PASS: B3 continuity/storage (64 assertions)
+PASS: B3 CLI/brand (73 assertions)
+PASS: terminal presentation (153 assertions; ASCII and enhanced layouts)
+PASS: all B3 test groups
+PASS: B4 audit policy and scoring
+PASS: B4 drift classification and uncertainty
+SKIP: B4 export junction fixture not supplied; run the Windows B4 harness
+PASS: B4 workflow, references, storage migration and safe export
+PASS: B4 actual project CLI flows
+PASS: all B4 test groups (186 assertions)
+PASS: B5A Graph/domain/storage (31 assertions)
+PASS: B5A actual CLI and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\cli-9640593473360479286
+PASS: B5B custom Hash (1017 assertions)
+PASS: B5B indexes and disabled parity (20 assertions)
+PASS: B5B real Hash CLI | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-fixtures\hash-cli-11773386117065167118
+PASS: B5 bounds and private-pointer corruption checks
+PASS: all B5 groups (1090 assertions)
+PASS: B6 tokenizer and custom Trie
+PASS: B6 canonical search, safety, revisions, coverage and restore | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\index-5457533855034358989
+PASS: B6 collision, limits, cancellation, corruption and privacy boundaries
+PASS: B6 actual search CLI, narrow output and restart | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-fixtures\cli-3205042117922197968
+PASS: all B6 groups (225 assertions)
+PASS: B7A generation recovery and injected failures | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b7-fixtures\recovery-10754310912503142732
+PASS: B7A recovery (69 assertions)
+PASS: B7A interrupted Java process and real recovery CLI | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b7-fixtures\process-recovery-11758717153206817968
+PASS: B6 A-H separate Main processes (21 assertions) | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b6-process\run-7761046155750960909
+PASS: B5 separate Main processes (10 assertions) | C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b5-process\run-13724841843212806283
+B4 A�F process verification
+Started: 2026-10-31T18:35:10.908199400Z
+OS: Windows 10 | Java: 25
+PASS A: new-empty B0, nine-rule audit, baseline-only report, zero checkpoints.
+PASS B: same-ID conflict, both locators, skip/cancel, no fabricated winner/outcome; source hashes unchanged.
+PASS C: native CP save/restart, no automatic scan, consented scans, unrelated FRESH versus referenced STALE; source bytes unchanged by app.
+PASS D: real duplicate-hash two-to-two rename remains AMBIGUOUS_RENAME.
+PASS E: three native DLL checkpoints, deterministic explained ranking and exact preview export with original source references/warnings.
+PASS F: genuine pre-B4 imported v1 fixture, read-only open, explicit v2 save, separate-process restart; B0/CP/evidence/counter retained.
+Assertions: 55
+Fixtures/output: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b4-scenarios\run-15895344265376047186
+Completed: 2026-10-31T18:35:24.143595500Z

@@ -1,0 +1,49 @@
+oops
+4
+
+3
+-1
+6
+7
+8
+9
+10
+11
+12
+12
+6
+7
+4
+DEMO-000003
+8
+2
+DEMO-HEAD
+Synthetic head exercise
+SYNTHETIC list positioning only
+PLANNED
+yes
+3
+3
+DEMO-MIDDLE
+Synthetic middle exercise
+SYNTHETIC list positioning only
+IN_PROGRESS
+yes
+2
+DEMO-HEAD
+Duplicate fixture
+Must be rejected
+UNKNOWN
+yes
+5
+DEMO-MIDDLE
+yes
+1
+Human checkpoint
+Session-only current user statement
+IN_PROGRESS
+yes
+8
+10
+11
+0

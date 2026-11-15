@@ -1,0 +1,14 @@
+B1 reassessment on source commit 6a84b770a259bceee4acf485172a89d79ff997e4
+Tracked source hash manifest matched before and after checks.
+Scratch HardCheck.java SHA256: 6E2F3C977EB391F47226A5590139CD96FE39C9846F7CE72B9C29051DC0924D01
+PASS: 100 seeds, 50000 mixed steps, 9184 drain removals
+PASS: 6188877 independent oracle/state assertions
+PASS: CLI confirmation, ID non-reuse, duplicate immutability, field limits, B0 rejection
+PASS: tests detected missing-append-backlink, exit 1
+PASS: tests detected duplicate-check-disabled, exit 1
+PASS: tests detected wrong-tail-after-delete, exit 1
+PASS: tests detected wrong-insert-backlink, exit 1
+PASS: tests detected integrity-always-true, exit 1
+All five injected copies compiled before the original suite detected faults.
+Counts are repeated assertions over bounded fixtures, not exhaustive proof.
+Owner accepted installed JDK 25 runtime. Actual JDK 17 execution remains unverified.

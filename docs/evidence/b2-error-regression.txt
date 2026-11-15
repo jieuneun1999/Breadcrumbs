@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.AssertionError: project errors are not reported as DLL operations
+	at breadcrumbs.cli.BootstrapConsoleTest.require(BootstrapConsoleTest.java:83)
+	at breadcrumbs.cli.BootstrapConsoleTest.run(BootstrapConsoleTest.java:27)
+	at RegressionProbe.main(RegressionProbe.java:1)

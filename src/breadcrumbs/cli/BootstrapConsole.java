@@ -1,0 +1,260 @@
+package breadcrumbs.cli;
+
+import breadcrumbs.bootstrap.BootstrapDraft;
+import breadcrumbs.bootstrap.BootstrapService;
+import breadcrumbs.bootstrap.CurrentContext;
+import breadcrumbs.domain.BaselineB0;
+import breadcrumbs.domain.EntryMode;
+import breadcrumbs.domain.EvidenceClaim;
+import breadcrumbs.domain.EvidenceClaim.ArtifactRole;
+import breadcrumbs.domain.EvidenceClaim.ReviewDisposition;
+import breadcrumbs.domain.ProjectProfile;
+import breadcrumbs.domain.WorkspaceState;
+import breadcrumbs.inspector.ScanPolicy;
+import breadcrumbs.inspector.SnapshotEntry;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.io.UncheckedIOException;
+import java.nio.file.Path;
+import java.util.Locale;
+
+/** Thin interaction layer. A preview or partial review cannot mutate the active workspace. */
+final class BootstrapConsole {
+    @FunctionalInterface
+    interface Prompt {
+        String read(String prompt) throws IOException;
+    }
+
+    private final Prompt input;
+    private final PrintStream output;
+    private final WorkspaceState workspaceState;
+    private final BootstrapService service;
+    private final BaselineRenderer renderer;
+    private final TerminalTheme theme;
+    private final int width;
+    private final boolean projectShell;
+
+    BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState) {
+        this(input, output, workspaceState, new BootstrapService(ScanPolicy.defaults()), false);
+    }
+
+    BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState,
+                     BootstrapService service, boolean projectShell) {
+        this(input, output, workspaceState, service, projectShell, new TerminalTheme(false), 80);
+    }
+    BootstrapConsole(Prompt input, PrintStream output, WorkspaceState workspaceState,
+                     BootstrapService service, boolean projectShell, TerminalTheme theme, int width) {
+        this.input = input;
+        this.output = output;
+        this.workspaceState = workspaceState;
+        this.service = service;
+        this.projectShell = projectShell;
+        renderer = new BaselineRenderer(output, projectShell, theme, width);
+        this.theme = theme; this.width = width;
+    }
+
+    void bootstrap() throws IOException {
+        var ui = new TerminalOutput(output, theme, width); ui.view(ScreenId.PROJECT_SETUP); ui.heading("\nCreate or import project");
+        ui.screen(BreadFrames.Mood.WELCOME, "Start with a folder, existing notes, or a project without files.",
+                "[1] Create an empty project\n[2] Import an existing folder\n[3] Import existing notes / handoff context\n[0] Back. /cancel at any prompt discards the proposal.", false);
+        String choice = input.read("Entry mode: ");
+        if (choice.equals("0")) {
+            return;
+        }
+        EntryMode mode = switch (choice) {
+            case "1" -> EntryMode.NEW_EMPTY;
+            case "2" -> EntryMode.IMPORT_FOLDER;
+            case "3" -> EntryMode.IMPORT_LEGACY_CONTEXT;
+            default -> throw new IllegalArgumentException("Choose entry mode 0-3.");
+        };
+        ui.form(ScreenId.PROJECT_SETUP, "Add the project details. Nothing is saved until you review and confirm.");
+        String name = input.read("Project display name: ");
+        if (projectShell) {
+            String profiles = "[1] General project\n[2] Academic or research project\n[3] Team or operations project\n[4] Software project";
+            if (ui.enhanced()) { ui.screen(BreadFrames.Mood.ENCOURAGING, "Choose the profile that fits your project. Enter keeps the general profile.", profiles, false); }
+            else { ui.menu(profiles); }
+        }
+        String selectedProfile = input.read(projectShell ? "Project type [Enter = general]: " : "Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: ");
+        selectedProfile = switch (selectedProfile) { case "1" -> "GENERAL"; case "2" -> "ACADEMIC"; case "3" -> "OPERATIONS"; case "4" -> "SOFTWARE"; default -> selectedProfile; };
+        ProjectProfile profile;
+        try {
+            profile = selectedProfile.isEmpty() ? ProjectProfile.GENERAL
+                    : ProjectProfile.valueOf(selectedProfile.toUpperCase(Locale.ROOT));
+        } catch (IllegalArgumentException invalid) {
+            throw new IllegalArgumentException("Choose one of the four listed project profiles.");
+        }
+        ui.form(ScreenId.PROJECT_SETUP, "Continue with your project details. /cancel discards this proposal.");
+        CurrentContext context = CurrentContext.unknown();
+        if (mode == EntryMode.NEW_EMPTY) {
+            context = new CurrentContext(input.read("Project goal [Enter if unknown]: "),
+                    input.read("Planned deliverable [Enter if unknown]: "),
+                    input.read("Next action [Enter if unknown]: "),
+                    input.read("Responsible person [optional]: "),
+                    input.read("Blockers or pending items [none, or Enter if unknown]: "));
+        }
+        String selectedPath = input.read(mode == EntryMode.NEW_EMPTY
+                ? "Optional existing EMPTY directory (blank = no directory observation): "
+                : "Existing local project directory: ");
+        Path root = selectedPath.isEmpty() ? null : Path.of(selectedPath);
+        boolean scanApproved = false;
+        if (root != null) {
+          if (projectShell) {
+            new TerminalOutput(output, theme, width).note("\nBreadcrumbs will read this folder without changing or running its files. Some formats and private/system folders are skipped.\nText notes, selected CSV fields and Word paragraphs can be read within size limits. PDF and other unsupported bodies cannot be read.");
+          } else {
+            output.println("READ-ONLY inspection. Imported files are never executed or written.");
+            output.println("Links/reparse points, sensitive names and generated folders are skipped.");
+            output.println("TXT/Markdown/CSV configured fields and bounded DOCX main paragraphs. Other formats receive metadata/fingerprints, not content understanding.");
+            output.println("Limits: " + ScanPolicy.defaults());
+            output.println("Use a quiescent LOCAL folder. Portable JDK checks are not an OS sandbox against hostile filesystem races.");
+          }
+            if (!input.read("Approve bounded read-only scan? Type yes: ").equalsIgnoreCase("yes")) {
+                output.println("Cancelled before scanning. Active workspace unchanged.");
+                return;
+            }
+            scanApproved = true;
+        }
+        BootstrapDraft draft;
+        if (root == null) {
+            draft = service.prepare(mode, name, profile, null, context, scanApproved, visited -> true);
+        } else try (var progress = new OperationFeedback(output, theme, width, OperationFeedback.Operation.INSPECT)) {
+          try {
+            draft = service.prepare(mode, name, profile, root, context, scanApproved, visited -> {
+                progress.running(visited);
+                // Cancellation occurs at a file boundary, never halfway through committing a baseline.
+                if (visited > 0 && visited % 25 == 0) {
+                    try {
+                        progress.pause();
+                        try { return input.read("Inspected " + visited + " entries. Enter continues; /cancel aborts: ").isEmpty(); }
+                        finally { progress.resume(); }
+                    } catch (IOException failure) {
+                        throw new UncheckedIOException(failure);
+                    }
+                }
+                return true;
+            });
+            progress.complete(!draft.scan().complete(), draft.scan().entries().length + " items checked. " + draft.claims().length + " pieces of context found. " + (draft.scan().complete() ? "Review the details before using them." : "Some content was left out because of the file limits."));
+          } catch (IOException | RuntimeException failure) { progress.failed("Inspection failed or cancelled. Existing active workspace retained."); throw failure; }
+        } catch (UncheckedIOException failure) {
+            throw failure.getCause();
+        } catch (IOException inaccessible) {
+            output.println("Directory inspection failed. Check the local path and access permissions.");
+            return;
+        }
+        if (mode == EntryMode.IMPORT_FOLDER && hasLegacyArtifacts(draft)) {
+            output.println(projectShell ? "Some files look like previous project notes or instructions. Their presence does not prove that work was completed." : "Possible state/handoff/instruction artifacts were found. Their presence proves no progress.");
+            if (input.read(projectShell ? "Treat this folder as existing notes or handoff context? Type yes; Enter keeps the folder import: " : "Select legacy-context review mode? Type yes, or Enter to keep IMPORT_FOLDER: ")
+                    .equalsIgnoreCase("yes")) {
+                draft = new BootstrapDraft(draft.workspaceId(), draft.displayName(), draft.profile(),
+                        EntryMode.IMPORT_LEGACY_CONTEXT, draft.scan(), draft.claims());
+            }
+        }
+        breadcrumbs.domain.ContextReview[] proposed = new breadcrumbs.domain.ContextReview[0];
+        boolean approved;
+        if (projectShell) {
+            var result = new BootstrapReviewConsole(input::read, output, theme, width, this::review).run(draft);
+            draft = result.draft(); proposed = result.proposals(); approved = result.approved();
+        } else {
+            preview(draft);
+            if (mode != EntryMode.NEW_EMPTY) { draft = review(draft); preview(draft); }
+            approved = input.read("Establish B0 from this reviewed proposal? Type yes: ").equalsIgnoreCase("yes");
+        }
+        if (workspaceState.activeBaseline() != null) {
+            output.println("Confirmation replaces the active session workspace; no persistence is available.");
+        }
+        if (service.confirm(workspaceState, draft, approved)) {
+            for (var assessment : proposed) { workspaceState.addReview(assessment); }
+            output.println(projectShell ? "Your starting project record is ready. No progress updates have been recorded yet." : "Baseline B0 established. No native checkpoint was created.");
+            if (!projectShell) { renderer.baseline(workspaceState.activeBaseline(), workspaceState.checkpoints().size()); }
+            else { new TerminalOutput(output, theme, width).note("Detailed file information is available in Open advanced project tools > View B0 / sources."); }
+        } else {
+            output.println("Cancelled. Proposal discarded; active workspace unchanged.");
+        }
+    }
+
+    void showBaseline() throws IOException {
+        BaselineB0 baseline = workspaceState.activeBaseline();
+        if (baseline == null) {
+            output.println("No confirmed B0. Use option 13 to add or create a project.");
+            return;
+        }
+        renderer.baseline(baseline, workspaceState.checkpoints().size());
+        if (!input.read("Show paged file inventory and source claims? Type yes, or Enter to return: ")
+                .equalsIgnoreCase("yes")) {
+            return;
+        }
+        int shown = 0;
+        for (SnapshotEntry entry : baseline.snapshot().entries()) {
+            renderer.entry(entry);
+            if (++shown % 10 == 0 && !input.read("Enter for next inventory page; any text returns: ").isEmpty()) {
+                return;
+            }
+        }
+        shown = 0;
+        for (EvidenceClaim claim : baseline.claims()) {
+            renderer.claim(claim);
+            if (++shown % 5 == 0 && !input.read("Enter for next claims page; any text returns: ").isEmpty()) {
+                return;
+            }
+        }
+    }
+
+    private BootstrapDraft review(BootstrapDraft proposal) throws IOException {
+        BootstrapDraft reviewed = proposal;
+        for (EvidenceClaim candidate : proposal.claims()) {
+            if (!projectShell) { renderer.claim(candidate); }
+            else {
+                var ui = new TerminalOutput(output, theme, width);
+                ui.heading("\nReview document context"); ui.note("This statement comes from a document. Reported work has not been independently verified.");
+                ui.line("Source: ", breadcrumbs.inspector.ContentSafety.terminal(candidate.relativePath(), 180) + " " + candidate.locationUnit() + " " + candidate.line());
+                ui.value(ProjectPresentation.fieldLabel(candidate.field()), breadcrumbs.inspector.ContentSafety.terminal(candidate.literalValue(), 300));
+            }
+            String choice;
+            do {
+                choice = input.read(projectShell ? "Review decision [C = confirm; R = reject; Enter/U = leave unknown; S = defer remaining]: " : "Review [c = confirm present assessment, r = reject, u/Enter = unknown, s = defer remaining]: ")
+                        .toLowerCase(Locale.ROOT);
+            } while (!choice.isEmpty() && !choice.equals("c") && !choice.equals("r")
+                    && !choice.equals("u") && !choice.equals("s"));
+            if (choice.equals("s")) {
+                break;
+            }
+            reviewed = reviewed.review(candidate.evidenceId(), switch (choice) {
+                case "c" -> ReviewDisposition.CONFIRMED;
+                case "r" -> ReviewDisposition.REJECTED;
+                default -> ReviewDisposition.LEFT_UNKNOWN;
+            });
+        }
+        return reviewed;
+    }
+
+    private void preview(BootstrapDraft draft) {
+        if (projectShell) {
+            var ui = new TerminalOutput(output, theme, width); ui.heading("\nProject setup preview");
+            ui.line("Project: ", draft.displayName() + " | " + draft.profile());
+            ui.line("What was read: ", draft.scan().entries().length + " items checked; " + draft.claims().length + " pieces of context found");
+            if (!draft.scan().complete()) { ui.warning("Only part of the folder could be read within the file limits."); }
+            int metadata = 0, failed = 0;
+            for (var entry : draft.scan().entries()) { if (entry.status() == SnapshotEntry.Status.UNSUPPORTED) { metadata++; } if (entry.status() == SnapshotEntry.Status.FAILED || entry.status() == SnapshotEntry.Status.UNSTABLE) { failed++; } }
+            ui.line("Content that could not be read: ", metadata + " unsupported files; " + failed + " files with reading problems");
+            ui.note("This is your starting information. It does not mean any work has been completed.\nReview document notes now, or leave them for later. Full file details remain available in More project tools.");
+            return;
+        }
+        renderer.summary(draft.workspaceId(), draft.displayName(), draft.profile(), draft.entryMode(),
+                draft.scan(), draft.claims(), draft.conflicts(), false, 0);
+        SnapshotEntry[] entries = draft.scan().entries();
+        for (int index = 0; index < Math.min(entries.length, 10); index++) {
+            renderer.entry(entries[index]);
+        }
+        if (entries.length > 10) {
+            output.println((entries.length - 10) + " more inventory entries; option 14 offers paged details after confirmation.");
+        }
+    }
+
+    private boolean hasLegacyArtifacts(BootstrapDraft draft) {
+        for (SnapshotEntry entry : draft.scan().entries()) {
+            if (entry.artifactRole() != ArtifactRole.UNKNOWN) {
+                return true;
+            }
+        }
+        return false;
+    }
+}

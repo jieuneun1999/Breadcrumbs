@@ -1,0 +1,198 @@
+
+       .-~~~~-.         Breadcrumbs / project continuity
+     .' / / /  '.
+    / .-====-.  _)       _   _   _   _   _   _   _            _   __
+   | :######:  (_  .    |_) |_) |_  |_| | \ /   |_) | | |\/| |_) (_
+   | :######:   _)   .  |_) | \ |_  | | |_/ \_  | \ |_| |  | |_) __)
+    '---------'  .  .
+  Leave context behind. Pick up where work stopped.
+
+  [v] Storage: Ready
+  [v] Saved projects: 1
+  [i] Persistence: opt-in per workspace.
+  [i] Opening saved work never scans or executes source projects.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+[5] Inspect / recover saved generations
+[6] Continue active project in memory
+[7] Daily workspace: Follow / Leave a Breadcrumb
+breadcrumbs > [1] Daily workflow | W712
+Project number (0 = cancel): [STARTED] Loading saved workspace
+[COMPLETED] Loading saved workspace
+Operation completed.
+Opened saved workspace. No source rescan. Freshness UNKNOWN for live sources; saved observations can be compared.
+
+ACTIVE PROJECT | Daily workflow | W712
+Storage status: SAVED
+FOLLOW THE BREADCRUMBS
+Project: Daily workflow | W712
+Saved canonical context.
+B0 ONLY. No native checkpoint; not a historical resume.
+WHERE YOU LEFT OFF
+No prior native history.
+Objective: Write report | USER_SUPPLIED / USER_CONFIRMED
+NEXT ACTION
+Review | USER_SUPPLIED / USER_CONFIRMED
+BLOCKERS
+UNKNOWN | USER_SUPPLIED / USER_CONFIRMED
+Saved observation: B0-NO-SCAN at 2026-10-31T18:50:01.610245500Z
+Live source freshness UNKNOWN until a consented rescan. Opening did not read the
+ source folder.
+Referenced saved-observation freshness: NOT_APPLICABLE
+NEEDS ATTENTION
+CTX-STATE (UNKNOWN): Review CTX-STATE; confirm, reject, skip or leave unknown.
+Unsupported/unextracted document portions remain unknown. Source reports do not
+verify project progress.
+
+Choose 7 for the daily workspace, or 3 for the original advanced project tools.
+
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+[5] Inspect / recover saved generations
+[6] Continue active project in memory
+[7] Daily workspace: Follow / Leave a Breadcrumb
+breadcrumbs > BREADCRUMBS / DAILY WORKSPACE
+[1] Follow the Breadcrumbs
+[2] Leave a Breadcrumb
+[3] Continuity Health
+[4] Review changes
+[5] Search context
+[6] Full checkpoint form
+[7] Explore checkpoint history
+[8] Work items / dependencies
+[9] Advanced tools
+[0] Back
+daily > LEAVE A BREADCRUMB
+Record a revision, any reported adviser feedback and the next research step.
+What changed or what did you work on? Anything blocked or awaiting confirmation? [unknown/none/details]: Next concrete action: BREADCRUMB PREVIEW. No history change yet.
+What changed
+Prepared the meeting agenda
+Blocker assessment
+NONE_REPORTED | UNKNOWN
+Next action
+Send the agenda for review
+Proposed carried objective, review before confirming
+Write report
+Proposed carried owner, review before confirming
+UNKNOWN
+Decision / rationale
+UNKNOWN
+Source evidence IDs
+
+Confirming records your present assessment. Source reports and historical tests
+stay independently unverified.
+yes=confirm, e=edit, a=evidence, o=options, d=dependencies, f=full form, 0=cancel: Confirmed CP-000001
+[STARTED] Saving workspace
+[COMPLETED] Saving workspace
+Saved. Verified local file readback.
+BREADCRUMBS / DAILY WORKSPACE
+[1] Follow the Breadcrumbs
+[2] Leave a Breadcrumb
+[3] Continuity Health
+[4] Review changes
+[5] Search context
+[6] Full checkpoint form
+[7] Explore checkpoint history
+[8] Work items / dependencies
+[9] Advanced tools
+[0] Back
+daily > FOLLOW THE BREADCRUMBS
+FOLLOW THE BREADCRUMBS
+Project: Daily workflow | W712
+Saved canonical context.
+Latest checkpoint: CP-000001 at 2026-10-31T18:50:02.454792600Z
+WHERE YOU LEFT OFF
+Prepared the meeting agenda
+USER_CONFIRMED historical present assessment; past outcomes are not independentl
+y verified.
+NEXT ACTION
+Send the agenda for review
+BLOCKERS
+NONE_REPORTED | UNKNOWN
+DECISIONS / RATIONALE
+UNKNOWN
+EVIDENCE
+No source evidence linked. This remains a human assessment.
+Saved observation: B0-NO-SCAN at 2026-10-31T18:50:01.610245500Z
+Live source freshness UNKNOWN until a consented rescan. Opening did not read the
+ source folder.
+Referenced saved-observation freshness: UNKNOWN
+NEEDS ATTENTION
+CTX-STATE (UNKNOWN): Review CTX-STATE; confirm, reject, skip or leave unknown.
+Unsupported/unextracted document portions remain unknown. Source reports do not
+verify project progress.
+
+BREADCRUMBS / DAILY WORKSPACE
+[1] Follow the Breadcrumbs
+[2] Leave a Breadcrumb
+[3] Continuity Health
+[4] Review changes
+[5] Search context
+[6] Full checkpoint form
+[7] Explore checkpoint history
+[8] Work items / dependencies
+[9] Advanced tools
+[0] Back
+daily > CONTINUITY HEALTH
+[STARTED] Checking continuity health
+[COMPLETED] Checking continuity health
+Operation completed.
+CONTINUITY HEALTH
+B4-1 | INSUFFICIENT_EVIDENCE
+Known:
+CTX-PURPOSE | Literal context only; source-reported outcomes remain independentl
+y unverified.
+CTX-DELIV | Literal context only; source-reported outcomes remain independently
+unverified.
+CTX-NEXT | Literal context only; source-reported outcomes remain independently u
+nverified.
+Needs review:
+CTX-STATE | UNKNOWN | No assessable statement. Unrecognized or missing headings
+do not prove absence.
+Next question: Review CTX-STATE; confirm, reject, skip or leave unknown.
+CTX-BLOCK | UNKNOWN | No assessable statement. Unrecognized or missing headings
+do not prove absence.
+Next question: Review CTX-BLOCK; confirm, reject, skip or leave unknown.
+Best next review: CTX-STATE (UNKNOWN): Review CTX-STATE; confirm, reject, skip o
+r leave unknown.
+Assessable context coverage: 38%. UNKNOWN is not MISSING.
+This does not measure project completion or quality.
+
+Detailed findings remain available in Advanced tools, Context audit.
+BREADCRUMBS / DAILY WORKSPACE
+[1] Follow the Breadcrumbs
+[2] Leave a Breadcrumb
+[3] Continuity Health
+[4] Review changes
+[5] Search context
+[6] Full checkpoint form
+[7] Explore checkpoint history
+[8] Work items / dependencies
+[9] Advanced tools
+[0] Back
+daily >
+  /----------------------------------------------------------------------------\
+  | [1]  Open / switch saved project                                         > |
+  | [2]  Create or import project                                            > |
+  | [3]  Active project / history                                            > |
+  | [4]  DSA demonstration                                                   > |
+  | [0]  Exit                                                                > |
+  \----------------------------------------------------------------------------/
+
+[5] Inspect / recover saved generations
+[6] Continue active project in memory
+[7] Daily workspace: Follow / Leave a Breadcrumb
+breadcrumbs > Goodbye.

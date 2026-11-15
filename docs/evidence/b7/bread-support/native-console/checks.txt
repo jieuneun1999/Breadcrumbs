@@ -1,0 +1,8 @@
+PASS Idle frames do not create scrollback rows
+PASS Partially typed number survives animation
+PASS Long input remains static while typing pauses
+PASS One saved workspace with retained recovery generations
+PASS First application exits cleanly
+PASS Returning process shows the actual recorded next step
+PASS Returning application exits cleanly
+NOT_PROVEN human typing and other terminal hosts

@@ -1,0 +1,424 @@
+NOTE: Picked up JDK_JAVA_OPTIONS:  -Dbreadcrumbs.junction.fixture=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container -Dbreadcrumbs.b3Junction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked -Dbreadcrumbs.b4ExportJunction=<repo>\build\b7e-verification-1ec0d658dade4926825118c6e7937cf5\junction-container\linked
+
+  BREADCRUMBS
+  Breadcrumbs / project continuity
+  Leave context behind. Pick up where work stopped.
+  Logo: use COLUMNS=160.
+
+  [v] Project storage available
+  [v] Saved projects: 0
+  Welcome to Breadcrumbs. No saved projects yet.
+  Understand recorded project context, remember progress, and continue later.
+  Choose 2 to import a folder or start a project without files.
+  [i] Local saving is optional for each project.
+  [i] Opening a saved project does not check its files for changes.
+
+  /----------------------------------------------------------------------------------------\
+  | [1]  Open saved project                                                              > |
+  | [2]  Create or import project                                                        > |
+  | [3]  Open advanced project tools                                                     > |
+  | [4]  Run DSA demonstration                                                           > |
+  | [5]  Restore saved project                                                           > |
+  | [6]  Switch to session-only mode                                                     > |
+  | [7]  Open project workspace                                                          > |
+  | [8]  Save active project                                                             > |
+  | [0]  Exit                                                                            > |
+  | [?]  Show menu                                                                       > |
+  \----------------------------------------------------------------------------------------/
+
+
+Breadcrumbs >
+Create or import project
+[1]   Create an empty project
+[2]   Import an existing folder
+[3]   Import existing notes / handoff context
+[0]   Back. /cancel at any prompt discards the proposal.
+
+Entry mode:
+Project display name: [1]   General project
+[2]   Academic or research project
+[3]   Team or operations project
+[4]   Software project
+
+Project type [Enter = general]:
+Project goal [Enter if unknown]:
+Planned deliverable [Enter if unknown]:
+Next action [Enter if unknown]:
+Responsible person [optional]:
+Blockers or pending items [none, or Enter if unknown]:
+Optional existing EMPTY directory (blank = no directory observation):
+Project overview / What we found
+Project: Without files
+Profile: GENERAL
+Initial review. The starting record has not been confirmed or saved.
+
+Project goal
+Prepare community pickup arrangements
+Basis: Supplied by you
+
+Documented current state
+Not documented / Unknown. Add a current assessment if you know it.
+
+Next action
+Ask sponsors
+Basis: Supplied by you
+
+Needs attention
+OWNER not established: Not provided / Unknown.
+
+Inspection coverage
+No folder linked; starting details and project notes are supported.
+Statements describe recorded context, not independently verified work. Original project files are not modified.
+[1]   Review detected context
+[2]   Explore Project Map
+[3]   Add or clarify current context
+[4]   Confirm starting project record
+[0]   Cancel setup
+
+Overview action:
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Purpose
+Project goals and planned deliverables.
+[1]   Project goal
+Prepare community pickup arrangements
+Basis: Supplied by you
+[2]   What you plan to deliver
+Pickup plan
+Basis: Supplied by you
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Current state
+Documented status and current human assessments.
+Not documented / Unknown. You can supply a current assessment without inventing a source statement.
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Progress & history
+The starting observation and recorded updates, not inferred earlier work.
+[1]   Starting record proposal
+Not confirmed. No progress updates or prior history are created.
+Basis: Recorded history; not current verification
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Tasks & next actions
+Tasks mentioned in documents are separate from tasks tracked by Breadcrumbs.
+[1]   Suggested next action
+Ask sponsors
+Basis: Supplied by you
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Decisions
+Reported decisions and explicitly recorded decisions retain their origins.
+Not documented / Unknown. You can supply a current assessment without inventing a source statement.
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Blockers & dependencies
+Reported obstacles and explicitly declared prerequisite relationships.
+Not documented / Unknown. You can supply a current assessment without inventing a source statement.
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Evidence & sources
+Saved source inventory and project notes; no files are moved or copied.
+[1]   No folder linked
+Use supplied starting details, progress updates and project notes without importing files.
+Basis: Derived review finding
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[S]   Group file sources by role
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Unknowns & conflicts
+Missing details, competing statements, coverage limits and stale references.
+[1]   OWNER not established
+Not provided / Unknown.
+Basis: Derived review finding
+[2]   BLOCKERS not established
+Not provided / Unknown.
+Basis: Derived review finding
+[3]   Current project status remains unknown
+Not documented / Unknown. You can add a current assessment without inventing source evidence.
+Basis: Derived review finding
+[N]   Next page
+[P]   Previous page
+[A]   Add current assessment
+[0]   Back to map
+
+Section >
+Project Map
+Project: Without files
+Unconfirmed proposal. Exploring does not create a project or update.
+[1]   Purpose
+      2 recorded items
+[2]   Current state
+      Not documented / Unknown
+[3]   Progress & history
+      1 recorded items
+[4]   Tasks & next actions
+      1 recorded items
+[5]   Decisions
+      Not documented / Unknown
+[6]   Blockers & dependencies
+      Not documented / Unknown
+[7]   Evidence & sources
+      1 recorded items
+[8]   Unknowns & conflicts
+      3 recorded items
+[0]   Back to overview
+[?]   Map help
+
+Map >
+Project overview / What we found
+Project: Without files
+Profile: GENERAL
+Initial review. The starting record has not been confirmed or saved.
+
+Project goal
+Prepare community pickup arrangements
+Basis: Supplied by you
+
+Documented current state
+Not documented / Unknown. Add a current assessment if you know it.
+
+Next action
+Ask sponsors
+Basis: Supplied by you
+
+Needs attention
+OWNER not established: Not provided / Unknown.
+
+Inspection coverage
+No folder linked; starting details and project notes are supported.
+Statements describe recorded context, not independently verified work. Original project files are not modified.
+[1]   Review detected context
+[2]   Explore Project Map
+[3]   Add or clarify current context
+[4]   Confirm starting project record
+[0]   Cancel setup
+
+Overview action:
+Confirm this starting record and proposed assessments? Type yes: Your starting project record is ready. No progress updates have been recorded yet.
+Detailed file information is available in Open advanced project tools > View B0 / sources.
+
+Save this project on this computer? Type yes; Enter keeps it open without saving: Saving your project...
+[Done] Your project is saved on this computer.
+Your latest saved changes will be available when you reopen this project.
+
+Project: Without files
+Saved on this computer.
+
+Project navigation
+[1]   Open saved project                                      [2]   Create or import project
+[3]   Open advanced project tools                             [4]   Run DSA demonstration
+[5]   Restore saved project                                   [6]   Switch to session-only mode
+[7]   Open project workspace                                  [8]   Save active project
+[0]   Exit                                                    [?]   Show menu
+
+Breadcrumbs > Goodbye.

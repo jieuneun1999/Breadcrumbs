@@ -1,0 +1,24 @@
+
+Project workspace
+
+/------------------------------------------\            ,:;;;;:;+*oo+;:  .O..
+| Ready to pick up where you left off?     |     ,.   :;+oO#O@@@@@@O@@O*::..;
+|                                          |     :,  ;,+@O@@@@@@O@@@@@@O@#O;.
+| [1]   View project summary               |      .;+*OO@@@@@O@@@@@@O@@@@@o*;
+| [2]   Record progress update             |     .;:o@@@@@O@@@@@@O@@@@@@O@@++
+| [3]   Assess project context             |     ;,;##@O@@@O^*O@@@@#*^o@@@*+.
+| [4]   Review file changes                |     .:.,o@@@/@O@@#Owo*##@#@/O#+
+| [5]   Search project records             |      ;,+@@@O###@@@O###@@@O##@@o
+| [6]   Create detailed progress update    |     :,:,*OOO#@@OO@@@@@OOO@@@oo+,
+| [7]   View update history                |     ..,,.,.+*oo*:,::::,,*oo*:,..
+| [8]   Manage tasks and dependencies      |
+| [9]   Open advanced project tools        |
+| [10]  Manage project notes               |
+| [11]  Prepare project handoff            |
+| [12]  Save project                       |
+| [13]  Explore Project Map                |
+| [0]   Back to project navigation         |
+| [?]   Show menu                          |
+\------------------------------------------/
+
+Workspace >

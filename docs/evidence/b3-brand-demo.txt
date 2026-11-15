@@ -1,0 +1,76 @@
+Actual separate-process output. ESC bytes below are displayed as literal \u001b; raw output remains under ignored build.
+Captured scenario: f-plain-startup
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+WARNING: an unreadable saved workspace is retained for recovery.
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: f-gold-startup
+
+\u001b[1;38;5;214mo -- . -- o    B R E A D C R U M B S\u001b[0m
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+\u001b[32mStorage: Ready\u001b[0m
+Saved projects: 2
+WARNING: an unreadable saved workspace is retained for recovery.
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+\u001b[1;38;5;214mbreadcrumbs > \u001b[0mGoodbye.
+
+Captured scenario: f-no-color-override
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+WARNING: an unreadable saved workspace is retained for recovery.
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.
+
+Captured scenario: f-no-color-environment
+
+o -- . -- o    B R E A D C R U M B S
+Leave context behind. Pick up where work stopped.
+
+App storage: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b3-verification-f8735aa7d8194cad85e081a0beed495d\app storage
+Storage: Ready
+Saved projects: 2
+WARNING: an unreadable saved workspace is retained for recovery.
+Recent project: no selection record. Choose Open to resume.
+Opening saved work never scans or executes source projects.
+
+[1] Open / switch saved project
+[2] Create or import project
+[3] Active project / history
+[4] DSA demonstration
+[0] Exit
+breadcrumbs > Goodbye.

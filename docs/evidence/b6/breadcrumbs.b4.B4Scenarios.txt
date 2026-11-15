@@ -1,0 +1,12 @@
+B4 A�F process verification
+Started: 2026-10-31T18:06:02.180710500Z
+OS: Windows 10 | Java: 25
+PASS A: new-empty B0, nine-rule audit, baseline-only report, zero checkpoints.
+PASS B: same-ID conflict, both locators, skip/cancel, no fabricated winner/outcome; source hashes unchanged.
+PASS C: native CP save/restart, no automatic scan, consented scans, unrelated FRESH versus referenced STALE; source bytes unchanged by app.
+PASS D: real duplicate-hash two-to-two rename remains AMBIGUOUS_RENAME.
+PASS E: three native DLL checkpoints, deterministic explained ranking and exact preview export with original source references/warnings.
+PASS F: genuine pre-B4 imported v1 fixture, read-only open, explicit v2 save, separate-process restart; B0/CP/evidence/counter retained.
+Assertions: 55
+Fixtures/output: C:\Users\Papa\Desktop\Knowledgebase\Projects\Breadcrumbs\build\b4-scenarios\run-7206889004466675942
+Completed: 2026-10-31T18:06:06.815450700Z

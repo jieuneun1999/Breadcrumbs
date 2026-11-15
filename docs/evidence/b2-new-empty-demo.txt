@@ -1,0 +1,181 @@
+B1 session-local DSA foundation. Checkpoints are not saved between runs.
+B2 bootstrap is available in option 13. Full B3 persistence/continuity is not implemented.
+Options 1-12 are the B1 checkpoint sandbox, separate from the active project's B0/history.
+DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append session-only CP (B1 sandbox)
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[13] Add or create a project / establish B0
+[14] View B0 and paged inventory / claims
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option:
+ADD OR CREATE PROJECT
+[1] Start a new empty project
+[2] Import an existing folder
+[3] Import existing notes / handoff context
+[0] Back. /cancel at any prompt discards the proposal.
+Entry mode: Project display name: Profile [GENERAL, ACADEMIC, OPERATIONS, SOFTWARE; blank = GENERAL]: Objective (blank = UNKNOWN): Intended deliverable (blank = UNKNOWN): Current next action (blank = UNKNOWN): Optional owner (blank = UNKNOWN): Optional blockers (blank = UNKNOWN; enter none only if stated): Optional existing EMPTY directory (blank = no directory observation):
+BREADCRUMBS - INITIAL PROJECT BASELINE PREVIEW
+Workspace: W001 | New study planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Plan weekly study [USER_SUPPLIED, PENDING, EV-W001-000001]
+  DELIVERABLE: Course report [USER_SUPPLIED, PENDING, EV-W001-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review requirements [USER_SUPPLIED, PENDING, EV-W001-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Session-local: not saved after exit. No automatic CP-000001 or imported history.
+Establish B0 from this reviewed proposal? Type yes: Baseline B0 established. No native checkpoint was created.
+
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W001 | New study planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Plan weekly study [USER_SUPPLIED, CONFIRMED, EV-W001-000001]
+  DELIVERABLE: Course report [USER_SUPPLIED, CONFIRMED, EV-W001-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review requirements [USER_SUPPLIED, CONFIRMED, EV-W001-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Session-local: not saved after exit. No automatic CP-000001 or imported history.
+Confirmed at: 2026-10-30T09:51:58.251197500Z
+
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append session-only CP (B1 sandbox)
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[13] Add or create a project / establish B0
+[14] View B0 and paged inventory / claims
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option:
+BREADCRUMBS - INITIAL PROJECT BASELINE B0
+Workspace: W001 | New study planner
+Entry mode: NEW_EMPTY | Profile: ACADEMIC
+Observed at: 2026-10-30T09:51:58.157676900Z | Scan: NONE
+Policy: B2-1 | ScanPolicy[maxDepth=5, maxEntries=300, maxFileBytes=65536, maxTotalBytes=2097152, maxTextCharacters=65536, maxLineLength=1000, maxClaims=200, maxCsvColumns=16, maxDurationMillis=5000]
+Inventory entries: 0 (files and skipped directories)
+SUPPORTED: 0
+SKIPPED: 0
+UNSUPPORTED: 0
+FAILED: 0
+UNSTABLE: 0
+Bytes read: 0 | Traversal complete: true
+Supported means adapter processed bounded text, not that the project is correct.
+Excluded directories hide descendants; unvisited coverage is UNKNOWN.
+Limit/coverage: No directory was supplied; no file observation is claimed.
+Documented context and present assessments:
+  OBJECTIVE: Plan weekly study [USER_SUPPLIED, CONFIRMED, EV-W001-000001]
+  DELIVERABLE: Course report [USER_SUPPLIED, CONFIRMED, EV-W001-000002]
+  CURRENT_STATE: UNKNOWN (no accepted current fact is inferred)
+  NEXT_ACTION: Review requirements [USER_SUPPLIED, CONFIRMED, EV-W001-000003]
+  OWNER: UNKNOWN (no accepted current fact is inferred)
+  BLOCKERS: UNKNOWN (no accepted current fact is inferred)
+Explicit-ID conflicts: 0; unresolved: 0
+Project native checkpoints: 0
+B0 is the first observed baseline. This is not a historical resume.
+Human confirmation does not independently verify source claims or past tests.
+Session-local: not saved after exit. No automatic CP-000001 or imported history.
+Confirmed at: 2026-10-30T09:51:58.251197500Z
+Show paged file inventory and source claims? Type yes, or Enter to return: EV-W001-000001 | OBJECTIVE |
+  USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
+  Source: (user input) line 0 [Guided present assessment] | UNKNOWN
+  Literal: Plan weekly study
+EV-W001-000002 | DELIVERABLE |
+  USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
+  Source: (user input) line 0 [Guided present assessment] | UNKNOWN
+  Literal: Course report
+EV-W001-000003 | NEXT_ACTION |
+  USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
+  Source: (user input) line 0 [Guided present assessment] | UNKNOWN
+  Literal: Review requirements
+EV-W001-000004 | OWNER |
+  USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
+  Source: (user input) line 0 [Guided present assessment] | UNKNOWN
+  Literal: UNKNOWN
+EV-W001-000005 | BLOCKERS |
+  USER_SUPPLIED | EXPLICIT | source verification: USER_CONFIRMED | review: CONFIRMED
+  Source: (user input) line 0 [Guided present assessment] | UNKNOWN
+  Literal: UNKNOWN
+Enter for next claims page; any text returns:
+========================================
+              BREADCRUMBS
+       Project Checkpoint Management
+========================================
+[1] Create / append session-only CP (B1 sandbox)
+[2] Prepend SYNTHETIC checkpoint
+[3] Insert SYNTHETIC checkpoint at position
+[4] Search checkpoint by ID
+[5] Delete checkpoint by ID
+[6] Traverse forward
+[7] Traverse backward
+[8] View latest checkpoint (tail)
+[9] Display DLL structure
+[10] View list size
+[11] Validate DLL integrity
+[12] Load five SYNTHETIC DEMO checkpoints
+[13] Add or create a project / establish B0
+[14] View B0 and paged inventory / claims
+[0] Exit
+Enter /cancel at any prompt to return here. Confirmations accept only yes.
+Choose an option: Goodbye. Session-local records are discarded.

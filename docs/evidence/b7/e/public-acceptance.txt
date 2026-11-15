@@ -1,0 +1,3 @@
+PASS: authorized public DOCX first import, exact paragraph, approved search, checkpoint/restart and unchanged original
+SHA256 437972d69ad2e86137e62f9551689ec7247a253dacff83b11ad54645d2ea92c0 | bytes 90770 | 6 assertions
+NOT COMPLETE: 453 source paragraphs; 200 total claim budget; fields/TOC and unsupported PDF body omitted. Full representative-format/owner acceptance remains pending.

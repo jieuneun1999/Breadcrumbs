@@ -1,0 +1,52 @@
+Record progress, blockers and the next action. Review the update before confirming it.
+
+Progress summary: Recorded a synthetic console check
+
+Blockers or pending items [none, or Enter if unknown]: none
+
+Next action: Read the evidence
+
+Review progress update
+
+Progress summary
+Recorded a synthetic console check
+
+Blockers or pending items
+Nothing reported
+
+Next action
+Read the evidence
+
+Proposed project goal; review before confirming
+Inspect the symbol mascot
+
+Proposed responsible person; review before confirming
+Demo owner
+This records your account of the work. Breadcrumbs does not check whether the work happened.
+
+Update actions
+
+/--------------------------------------------------------------------------------------\                                       ,;;++;+++:.           :@@:
+| Review your update. Only Confirm adds it to your history.                            |                       :;oo**+**o+,.+*O***;+++**+***+,       *@;   ,*
+|                                                                                      |                   .;**+;::;**OOOOO##***oOo@@@##O#Oo**o:     *:  .+##
+| [YES] Confirm update                                                                 |       :         ,**+:;+oO#@@@#O@@@@@@O@@@@@@O@@@@@@O@o**::.    .o*:
+| [E]   Edit progress details                                                          |     .;O*,      ;o;,;+o#@@@@O@@@@@@O@@@@@@O#@@@@@O@@@@@OOooOO*:    ,:
+| [A]   Attach document references                                                     |       *,  .   ;o,,:o#@@@O@@@#@@O@@@@@@O@@@@@@O@@@@@@O##@@@@OOOo:  ::
+| [M]   Attach project notes                                                           |       .     .:O+::,*#O@@@#@@O@@@@@#O@@@@@@O@@@@@@O@@@@@@O@OO**OO*.
+| [O]   Edit goal, owner and decisions                                                 |          .+oo*ooO#OOO@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O+**o*
+| [D]   Manage tasks and dependencies                                                  |     .  .+o;,+;**o#@@@#O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@#***O:
+| [F]   Open detailed update form                                                      |        o;::,+#@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O#*;*+
+| [0]   Cancel update                                                                  |       o;,;;+#@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@+:o,
+| [?]   Show update options                                                            |      ,*,:::o@O@@@@@@O@@@@@@O@@#O#@O@@@@@@O@@@@@@O##@@@@O@@@@#O+;O:
+\--------------------------------------------------------------------------------------/      :;.:+;+#@@##O@@@@@@O@@@o::::,+@@@O@@@@@@OO;:,,:+@@@@@@OO,O;
+                                                                                              .o,.:::+;+O@@@@@O@@@@@O:O@@@O;o@@@@@@O#@@+*@O@O;o@@O@@@@OO+   .
+                                                                                               ,*:.. .;#@@@O@@@@@@O@@@@@@O@@@@+.;:::.O@O@@@@@@O@@@@@@O@*o.
+                                                                                             ,   o;,.;#@O@@@@@@O@@@@@@O@@@@@@O#+////;@@@@@@O@@@@@@O@@@@O*;
+                                                                                                .o,,,;#@@@@@O@@@@@@O#@@@@@O@@@@@OOOO@@@@O@@@@@#O#@@@@@O@;*
+                                                                                                .o,,,;o##O@@@@#OoOO#OOoo#@@@@@O@@@@@@O@@@@@OoO#O#ooO@@@#;O
+                                                                                             *;  +:,,::*O#@@@**@@@@@O@@@oO@O@@@@@@O@@@@@@O*#@@@@O@@O+#O+*: :*
+                                                                                             ::.  ++,,,::;+;:+@@@O@@@@@@O;OO###O######OO*;@@@O@@@@@@:::*: .;:
+                                                                                             ,.,....,:,.,,:,.+oO#@@@@O@#*.:,:,:,,:,:,,,,.;oO@@@@@Oo;.:,.....,
+                                                                                                .....,.,..,.,.,,,::::,,..........,.,..,,...,,,:,,.,..,..... .
+
+Update action:

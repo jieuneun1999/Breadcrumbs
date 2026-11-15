@@ -11,6 +11,16 @@ This guide translates the M0–M10 product milestone roadmap into **reviewable C
 
 **Current observed repository status (2026-10-30):** documentation-only: README, master Markdown/PDF, first-import contract. No Java source, tests, or launch scripts were present at assessment. All batches below are **NOT_STARTED** until code/tests/evidence establish otherwise.
 
+**B1 implementation update (2026-10-30):** session-local Java CLI, custom DLL,
+five synthetic records, tests, and Windows launchers are implemented.
+Windows/JDK 25 execution passes 3,780 assertions with `--release 17` compilation.
+Result is **B1 PASS / DEMO_READY** for that environment. On 2026-10-30 the owner
+accepted use of the installed JDK 25 runtime. Actual JDK 17 runtime execution is
+still unverified, but is no longer a B2 blocker under that explicit adaptation.
+Fresh mixed-operation, CLI-state, and test-sensitivity checks passed. See the
+[execution record and source-bound evidence](B1_EXECUTION.md). At that B1
+checkpoint, B2-B7 remained NOT_STARTED.
+
 **Academic delivery:** Java 17+, CLI/terminal-only, JDK-only launchable core, no IDE/database/internet/Docker required. All **graded DSA operations** must use manually written node/algorithm implementations; do not delegate to `LinkedList`, `HashMap`, `TreeMap`, a graph package, a Trie package, or a search engine. Standard JDK primitives, arrays, strings and I/O utilities are for supporting operations, not substitutes for DSAs. Validate Windows CMD portability. The team has chosen to pursue the full architecture; this is **not an assertion of formal instructor authorization**. Protect a compliant, independent DLL-based academic core if permitted scope later changes.
 
 ## Batch order at a glance
@@ -41,16 +51,22 @@ This guide translates the M0–M10 product milestone roadmap into **reviewable C
 5. Tests for empty/single/multi-node, head/middle/tail insertion and deletion, duplicate IDs, missing IDs, both traversal orders, null boundary links, size, no cycles, invalid console input.
 6. Document precise `javac`/`java` commands and demonstrate a **clean JDK 17 Windows CMD launch**. Compile/run and tests must be reported with actual commands and outcomes, not assumed.
 
+**Owner-approved B1 runtime adaptation (2026-10-30):** the owner stated "its fine
+that we have the latest version" during B1 acceptance review. The available JDK
+25 runtime is accepted with Java 17-target compilation. This satisfies the B1
+runtime gate for proceeding to B2. It does not assert execution on JDK 17 or the
+instructor's machine, or change either frozen v1.2 specification.
+
 **Do not implement in B1:** folder ingestion, legacy parsing, storage/persistence, PDFs, external Java dependencies, Directed Graph, Hash Table, Trie, voice AI, network services, or a huge framework. Interfaces may be documented but avoid nonfunctional placeholder subsystems.
 
 **B1 acceptance checklist:**
-- [ ] Clean JDK 17 compile and execution without Maven/Gradle, database, network, or IDE.
-- [ ] All required DLL node/link logic is custom; no built-in collection replaces required operations.
-- [ ] Five synthetic records with >=3 fields; >=6 CLI DSA operations.
-- [ ] Visible structure + accurate complexity after operations.
-- [ ] All specified edge-case tests pass; actual output/screenshots are recorded.
-- [ ] No claim of directory import, B0 persistence, or resume functionality yet.
-- [ ] Codex opens a reviewable PR instead of directly pushing the implementation into `main`.
+- [x] JDK-only compile and execution under the owner-approved runtime adaptation above. Java 17 target compilation and Windows execution on accepted JDK 25 pass; actual JDK 17 runtime is unverified.
+- [x] All required DLL node/link logic is custom; no built-in collection replaces required operations.
+- [x] Five synthetic records with >=3 fields; >=6 CLI DSA operations.
+- [x] Visible structure + accurate complexity after operations. Duplicate checks make public append/prepend O(n); full pairwise uniqueness diagnostics are O(n²).
+- [x] All specified edge-case tests pass; actual output is recorded in [B1 evidence](B1_EXECUTION.md).
+- [x] No claim of directory import, B0 persistence, or resume functionality yet.
+- [x] Codex opens a reviewable PR instead of directly pushing the implementation into `main`. [PR #1](https://github.com/jieuneun1999/Breadcrumbs/pull/1), unmerged.
 
 ## B2 — Project entry and safe inspector
 
@@ -58,11 +74,37 @@ Implement the three explicit entry modes and record a **B0 first-observation bas
 
 **Exit:** Empty folder, README-only, mixed files, symlink traversal, secrets, and legacy handoff fixtures produce truthful, source-located output. First scan creates B0 but **not CP-000001**.
 
+**B2 implementation update (2026-10-30): DEMO_READY on owner-accepted Windows/JDK
+25 with Java 17-target compilation.** All three console routes converge on one
+confirmed WorkspaceState/B0. The original B1 suite passes unchanged, plus 192 B2
+assertions in the junction-enabled run. Actual new-empty, README-only and legacy
+conflict imports pass; imported fixture bytes remain unchanged and no native
+checkpoint is created. Actual Windows junction/ACL tests pass. Symbolic-link
+creation was denied by the environment and remains unverified; portable traversal
+is not an OS sandbox against hostile concurrent filesystem changes. See
+[B2 execution, commands, source hashes and limits](B2_EXECUTION.md).
+[PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) targets the still-unmerged
+B1 branch. Neither PR is merged. B3-B7 remain NOT_STARTED.
+
 ## B3 — Checkpoint creation, TXT persistence and restart
 
 After B0 and core DLL contracts stabilize, add explicit user-reviewed first native `CP-000001`; checkpoint insertion remains DLL-owned. Define a documented, escaped/versioned local text storage codec and safe application data directory separate from the read-only imported root. Read checkpoints from files and **rebuild the custom DLL** on startup; never use storage records as the in-memory DSA. Test empty state, ordered round-trip, duplicate/corrupt rows, partial files and error reporting. B3 provides basic working continuity, but does **not** promise crash-safe atomic multi-file transactions (B7).
 
 **Exit:** Create → close → relaunch → restore → traverse/resume with identical checkpoint order; no evidence claims invented.
+
+**B3 implementation update (2026-10-30): DEMO_READY on owner-accepted Windows/JDK
+25 with Java 17-target compilation.** Branded startup, optional bread-gold ANSI,
+saved-workspace discovery, explicitly confirmed project checkpoints, versioned
+UTF-8 state, custom DLL reconstruction and safe switching are implemented.
+The junction-enabled run passes 3,780 B1 + 192 B2 + 138 B3 assertions. Separate
+Java-process demos prove B0/CP restart, source-gone README restoration, workspace
+isolation and corrupt-load preservation. Source claims retain original provenance.
+No source rescan or auto-imported history occurs. Atomic single-file replacement
+is required; unsupported providers fail closed. This is basic B3 storage, not
+full M8 recovery or release acceptance. [B3 execution and evidence](B3_EXECUTION.md)
+and [format/limits](B3_STORAGE_FORMAT.md) record the boundary.
+[PR #3](https://github.com/jieuneun1999/Breadcrumbs/pull/3) is open/unmerged,
+stacked on B2. B4-B7 remain NOT_STARTED.
 
 ## B4 — Audits, drift and handoffs
 
@@ -70,13 +112,49 @@ Combine M2/M4/M5 only once inspection and durable checkpoints exist. Reconcile l
 
 **Exit:** Deterministic fixtures with conflicting same-ID status, unknowns, drift, and handoff provenance.
 
+**B4 implementation update (2026-10-31): DEMO_READY on Windows/JDK 25 with
+Java 17-target compilation.** Nine-rule audit and separate coverage/readiness,
+guided present reviews, immutable consented later observations, reliable/ambiguous/
+unknown drift, checkpoint-referenced freshness, explained native DLL retrieval
+and previewed create-only Markdown/text handoff are implemented. Version 1 remains
+readable; genuine pre-B4 fixtures prove explicit version-2 upgrade without reference
+or high-water loss. Final Windows verification passes 4,450 suite assertions
+(4,263 unchanged B1–B3 + 187 B4), plus 55 assertions across separate-process A–F
+scenarios. Junction/ACL and external-directory CMD launch pass. Symbolic-link
+creation, JDK 17 runtime, Unix and instructor-machine execution remain unverified.
+Accepted branding and frozen v1.2 specs are unchanged. [B4 execution](B4_EXECUTION.md),
+[policy/schema](B4_POLICY_AND_STORAGE.md) and [evidence](evidence/b4/README.md) record
+decisions and limitations. B5–B7 remain NOT_STARTED; no release/merge acceptance.
+[PR #4](https://github.com/jieuneun1999/Breadcrumbs/pull/4) is open/unmerged and
+stacked on B3. Functional commit `e981c5b`; source-bound evidence/session `9b52a98`.
+
 ## B5 — Graph and Hash (separate internal PRs)
 
 Implement custom Graph nodes, directed adjacency, declared task dependencies, BFS/DFS, cycle handling, and impact analyses. Test isolated/disconnected/diamond/cycle/cross-workspace cases. Then implement custom Hash Table buckets and chaining, collision, negative hashing, resize, lookup/removal, and index rebuild. Graph/Hash are derived/support structures: they must not diverge from canonical workspace/checkpoint state. **Do not merge both untested implementations into a single opaque Codex change.**
 
 ## B6 — Trie + inverted index
 
+B5 update (2026-10-31): B5A independently passed Graph/provenance/v3 storage and
+full prior regression before B5B began. PR5 targets unmerged B4 at B5A5b44fbb.
+B5B adds custom separate-chaining Hash, canonical derived indexes and disabled-mode
+parity. Final direct Windows/JDK25 Java17-target verification passes5540 suite
+assertions plus10 B5/55 B4 separate-process assertions. See B5A_EXECUTION.md,
+B5B_EXECUTION.md, B5_STORAGE.md and evidence/b5. Native junction/ACL pass; actual JDK17 runtime, Unix/instructor device and symbolic-link
+creation remain unverified. Both stages DEMO_READY for direct JDK invocation;
+no merge/release or B6/B7 completion claim.
+
 Custom prefix-tree nodes and custom Hash-backed term-to-source postings; bound suggestions and extractable text. Index only evidence actually extracted; source locator and checkpoint ID must resolve to current canonical data. Require index versioning/rebuilding when files/checkpoints change and secret exclusion. This is **lexical/prefix search**, not semantic retrieval.
+
+B6 update (2026-11-01): DEMO_READY on Windows/JDK 25, Java 17 target.
+Project option 18 combines a manual code-point Trie, the B5 Hash Table and manual
+posting chains. Captured fields only; source-policy consent, canonical resolution,
+revision invalidation, atomic candidate publication and coverage disclosure apply.
+Native verification passes 5,765 suite assertions, including 225 B6, plus 21 B6,
+10 B5 and 55 B4 separate-process assertions. Native ACL/junction checks and the
+external-directory launcher pass. See [execution](B6_EXECUTION.md),
+[search contract](B6_SEARCH_POLICY.md), [evidence](evidence/b6/README.md) and
+[future real-document gate](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md).
+Real-document extraction, advanced format parsers and B7 recovery remain pending.
 
 ## B7 — Delivery hardening and optional enhancements
 
@@ -96,12 +174,12 @@ Complete M8 staging/backups/recovery and M9 four-profile/Windows demo, screensho
 
 | Batch | Status | Evidence |
 | --- | --- | --- |
-| B1 | NOT_STARTED | Documentation-approved scope only |
-| B2 | NOT_STARTED | — |
-| B3 | NOT_STARTED | — |
-| B4 | NOT_STARTED | — |
-| B5 | NOT_STARTED | — |
-| B6 | NOT_STARTED | — |
-| B7 | NOT_STARTED | — |
+| B1 | COMPLETE for B1 scope / DEMO_READY on owner-accepted Windows/JDK 25 | [Fresh tests, mixed-operation/fault-injection checks, source hashes and owner runtime acceptance](B1_EXECUTION.md) |
+| B2 | DEMO_READY on Windows/JDK 25; platform limits disclosed | [192 B2 assertions, 3,780 B1 regressions, actual imports and read-only evidence](B2_EXECUTION.md), [stacked PR #2](https://github.com/jieuneun1999/Breadcrumbs/pull/2) |
+| B3 | DEMO_READY on Windows/JDK 25; basic persistence and branded CLI | [138 B3 assertions, B1/B2 regressions and separate-process restart demos](B3_EXECUTION.md) |
+| B4 | DEMO_READY on Windows/JDK 25; evidence-driven context, drift and handoff | [4,450 suite + 55 A–F assertions, original v1 compatibility and platform limits](B4_EXECUTION.md) |
+| B5 | B5A/B5B DEMO_READY on direct Windows/JDK25 invocation; shell limit disclosed | [B5A](B5A_EXECUTION.md), [B5B](B5B_EXECUTION.md), [source-bound evidence](evidence/b5/README.md) |
+| B6 | DEMO_READY on Windows/JDK 25; captured-context lexical search | [5,765 suite and 86 separate-process assertions](B6_EXECUTION.md), [stacked PR #7](https://github.com/jieuneun1999/Breadcrumbs/pull/7), [policy](B6_SEARCH_POLICY.md), [real-file gate pending](DOCUMENT_COMPATIBILITY_AND_REAL_FILE_TEST_PLAN.md) |
+| B7 | Implementation DEMO_READY on Windows/JDK25; public DOCX partial; full owner/runtime gates open | [Final acceptance](B7_FINAL_ACCEPTANCE.md), [terminal refinement](B7_TERMINAL_EXPERIENCE.md), [native gate](evidence/b7/e/summary.txt) |
 
 Update this log only with actual verified PRs/commits/tests. Post concise implementation changes in Breadcrumbs **#dev-updates**; use **#current-milestone** for current goals and acceptance state.

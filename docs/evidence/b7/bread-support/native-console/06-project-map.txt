@@ -1,0 +1,52 @@
+| Ready to pick up where you left off?                                                 |                       :;oo**+**o+,.+*O***;+++**+***+,       *@;   ,*
+|                                                                                      |                   .;**+;::;**OOOOO##***oOo@@@##O#Oo**o:     *:  .+##
+| [1]   View project summary                                                           |       :         ,**+:;+oO#@@@#O@@@@@@O@@@@@@O@@@@@@O@o**::.    .o*:
+| [2]   Record progress update                                                         |     .;O*,      ;o;,;+o#@@@@O@@@@@@O@@@@@@O#@@@@@O@@@@@OOooOO*:    ,:
+| [3]   Assess project context                                                         |       *,  .   ;o,,:o#@@@O@@@#@@O@@@@@@O@@@@@@O@@@@@@O##@@@@OOOo:  ::
+| [4]   Review file changes                                                            |       .     .:O+::,*#O@@@#@@O@@@@@#O@@@@@@O@@@@@@O@@@@@@O@OO**OO*.
+| [5]   Search project records                                                         |          .+oo*ooO#OOO@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O+**o*
+| [6]   Create detailed progress update                                                |     .  .+o;,+;**o#@@@#O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@#***O:
+| [7]   View update history                                                            |        o;::,+#@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O#*;*+
+| [8]   Manage tasks and dependencies                                                  |       o;,;;+#@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@+:o,
+| [9]   Open advanced project tools                                                    |      ,*,:::o@O@@@@@@O@@@@@@O@@#O#@O@@@@@@O@@@@@@O##@@@@O@@@@#O+;O:
+| [10]  Manage project notes                                                           |      :;.:+;+#@@##O@@@@@@O@@@o::::,+@@@O@@@@@@OO;:,,:+@@@@@@OO,O;
+| [11]  Prepare project handoff                                                        |      .o,.:::+;+O@@@@@O@@@@@O:O@@@O;o@@@@@@O#@@+*@O@O;o@@O@@@@OO+   .
+| [12]  Save project                                                                   |       ,*:.. .;#@@@O@@@@@@O@@@@@@O@@@@+.;:::.O@O@@@@@@O@@@@@@O@*o.
+| [13]  Explore Project Map                                                            |     ,   o;,.;#@O@@@@@@O@@@@@@O@@@@@@O#+////;@@@@@@O@@@@@@O@@@@O*;
+| [0]   Back to project navigation                                                     |        .o,,,;#@@@@@O@@@@@@O#@@@@@O@@@@@OOOO@@@@O@@@@@#O#@@@@@O@;*
+| [?]   Show menu                                                                      |        .o,,,;o##O@@@@#OoOO#OOoo#@@@@@O@@@@@@O@@@@@OoO#O#ooO@@@#;O
+\--------------------------------------------------------------------------------------/     *;  +:,,::*O#@@@**@@@@@O@@@oO@O@@@@@@O@@@@@@O*#@@@@O@@O+#O+*: :*
+                                                                                             ::.  ++,,,::;+;:+@@@O@@@@@@O;OO###O######OO*;@@@O@@@@@@:::*: .;:
+                                                                                             ,.,....,:,.,,:,.+oO#@@@@O@#*.:,:,:,,:,:,,,,.;oO@@@@@Oo;.:,.....,
+                                                                                                .....,.,..,.,.,,,::::,,..........,.,..,,...,,,:,,.,..,..... .
+
+Workspace > 13
+
+Project Map
+Project: Symbol bread demo
+No folder linked. Supplied context and recorded updates remain useful without files.
+
+/--------------------------------------------------------------------------------------\                                       ,;;++;+++:.           :@@:
+| Want a clearer picture of your recorded project context?                             |                       :;oo**+**o+,.+*O***;+++**+***+,       *@;   ,*
+|                                                                                      |                   .;**+;::;**OOOOO##***oOo@@@##O#Oo**o:     *:  .+##
+| [1]   Purpose                                                                        |       :         ,**+:;+oO#@@@#O@@@@@@O@@@@@@O@@@@@@O@o**::.    .o*:
+|       2 recorded items                                                               |     .;O*,      ;o;,;+o#@@@@O@@@@@@O@@@@@@O#@@@@@O@@@@@OOooOO*:    ,:
+| [2]   Current state                                                                  |       *,  .   ;o,,:o#@@@O@@@#@@O@@@@@@O@@@@@@O@@@@@@O##@@@@OOOo:  ::
+|       1 recorded items                                                               |       .     .:O+::,*#O@@@#@@O@@@@@#O@@@@@@O@@@@@@O@@@@@@O@OO**OO*.
+| [3]   Progress & history                                                             |          .+oo*ooO#OOO@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O+**o*
+|       1 recorded items                                                               |     .  .+o;,+;**o#@@@#O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@#***O:
+| [4]   Tasks & next actions                                                           |        o;::,+#@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O#*;*+
+|       1 recorded items                                                               |       o;,;;+#@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@@@O@@@@+:o,
+| [5]   Decisions                                                                      |      ,*,:::o@O@@@@@@O@@@@@@O@@#O#@O@@@@@@O@@@@@@O##@@@@O@@@@#O+;O:
+|       Not documented / Unknown                                                       |      :;.:+;+#@@##O@@@@@@O@@@o(o):,+@@@O@@@@@@OO;:(o)+@@@@@@OO,O;
+| [6]   Blockers & dependencies                                                        |      .o,.:::+;+O@@@@@O@@@@@O:O@@@O;o@@@@@@O#@@+*@O@O;o@@O@@@@OO+   .
+|       1 recorded items                                                               |       ,*:.. .;#@@@O@@@@@@O@@@@@@O@@@@@@@@@@@O@O@@@@@@O@@@@@@O@*o.
+| [7]   Evidence & sources                                                             |     ,   o;,.;#@O@@@@@@O@@@@@@O@@@@@@O@@ o @@@@@@@@O@@@@@@O@@@@O*;
+|       1 recorded items                                                               |        .o,,,;#@@@@@O@@@@@@O#@@@@@O@@@@@@@@@@@@@O@@@@@#O#@@@@@O@;*
+| [8]   Unknowns & conflicts                                                           |        .o,,,;o##O@@@@#OoOO#OOoo#@@@@@O@@@@@@O@@@@@OoO#O#ooO@@@#;O
+|       4 recorded items                                                               |     *;  +:,,::*O#@@@**@@@@@O@@@oO@O@@@@@@O@@@@@@O*#@@@@O@@O+#O+*: :*
+| [0]   Back to workspace                                                              |     ::.  ++,,,::;+;:+@@@O@@@@@@O;OO###O######OO*;@@@O@@@@@@:::*: .;:
+| [?]   Map help                                                                       |     ,.,....,:,.,,:,.+oO#@@@@O@#*.:,:,:,,:,:,,,,.;oO@@@@@Oo;.:,.....,
+\--------------------------------------------------------------------------------------/        .....,.,..,.,.,,,::::,,..........,.,..,,...,,,:,,.,..,..... .
+
+Map >

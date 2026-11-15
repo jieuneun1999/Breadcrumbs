@@ -1,0 +1,14 @@
+{
+  "command": [
+    "/mnt/c/Program Files/Java/jdk-25/bin/java.exe",
+    "-cp",
+    "C:\\Users\\Papa\\AppData\\Local\\Temp\\breadcrumbs-symbol-215ab4e20bc746da846cb21d369fc0ff\\build\\app",
+    "breadcrumbs.Main",
+    "--bread-preview=all",
+    "--no-color",
+    "--no-animation"
+  ],
+  "class_source": "docs/evidence/b7/bread-support/regression/run.json",
+  "exit_code": 0,
+  "stderr": ""
+}

@@ -1,0 +1,4 @@
+B7E | Started 2026-11-01T05:39:00.3284046+08:00 | Completed 2026-11-01T05:40:53.3821425+08:00
+OS Microsoft Windows NT 10.0.19045.0
+Exit 0 | 147 input hashes unchanged
+NativeWindows=True | junctions/ACL and unrelated-cwd space-path launcher exercised only when True

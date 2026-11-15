@@ -1,0 +1,70 @@
+package breadcrumbs;
+
+import breadcrumbs.cli.ConsoleMenuTest;
+import breadcrumbs.dsa.dll.CheckpointListTest;
+import breadcrumbs.inspector.ProjectInspectorTest;
+import breadcrumbs.bootstrap.BootstrapTest;
+import breadcrumbs.cli.BootstrapConsoleTest;
+
+public final class AllTests {
+    private AllTests() { }
+
+    public static void main(String[] args) throws Exception {
+        CheckpointListTest.run();
+        ConsoleMenuTest.run();
+        System.out.println("PASS: all B1 test groups");
+        ProjectInspectorTest.run();
+        BootstrapTest.run();
+        BootstrapConsoleTest.run();
+        System.out.println("PASS: all B2 test groups");
+        breadcrumbs.storage.ContinuityTest.run();
+        breadcrumbs.cli.ProjectConsoleTest.run();
+        breadcrumbs.cli.StartupRendererTest.run();
+        System.out.println("PASS: all B3 test groups");
+        breadcrumbs.b4.AuditPolicyTest.run();
+        breadcrumbs.b4.DriftTest.run();
+        breadcrumbs.b4.WorkflowTest.run();
+        breadcrumbs.b4.ContextConsoleTest.run();
+        System.out.println("PASS: all B4 test groups (" + breadcrumbs.b4.Checks.count() + " assertions)");
+        int b5Start = breadcrumbs.b4.Checks.count();
+        breadcrumbs.b5.GraphTest.run();
+        breadcrumbs.b5.GraphCliTest.run();
+        breadcrumbs.b5.HashTest.run();
+        breadcrumbs.b5.IndexTest.run();
+        breadcrumbs.b5.HashCliTest.run();
+        breadcrumbs.b5.CorruptionTest.run();
+        System.out.println("PASS: all B5 groups (" + (breadcrumbs.b4.Checks.count() - b5Start) + " assertions)");
+        int b6Start = breadcrumbs.b4.Checks.count();
+        breadcrumbs.b6.TrieTest.run();
+        breadcrumbs.b6.SearchTest.run();
+        breadcrumbs.b6.BoundsTest.run();
+        breadcrumbs.b6.SearchCliTest.run();
+        System.out.println("PASS: all B6 groups (" + (breadcrumbs.b4.Checks.count() - b6Start) + " assertions)");
+        int b7Start = breadcrumbs.b4.Checks.count();
+        breadcrumbs.storage.B7RecoveryTest.run();
+        System.out.println("PASS: B7A recovery (" + (breadcrumbs.b4.Checks.count() - b7Start) + " assertions)");
+        int b7bStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.cli.OperationFeedbackTest.run();
+        breadcrumbs.b7.ContinuityWorkflowTest.run();
+        System.out.println("PASS: B7B continuity and terminal feedback (" + (breadcrumbs.b4.Checks.count() - b7bStart) + " assertions)");
+        int b7cStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.b7.ManualContextTest.run();
+        breadcrumbs.storage.B7ArtifactTest.run();
+        breadcrumbs.b7.InboxArtifactsCliTest.run();
+        System.out.println("PASS: B7C Inbox, artifacts and CLI (" + (breadcrumbs.b4.Checks.count() - b7cStart) + " assertions)");
+        int b7dStart = breadcrumbs.b4.Checks.count();
+        breadcrumbs.inspector.DocxTest.run();
+        breadcrumbs.storage.B7ArtifactLockTest.run();
+        System.out.println("PASS: B7D bounded document compatibility (" + (breadcrumbs.b4.Checks.count() - b7dStart) + " assertions)");
+        breadcrumbs.cli.TerminalConsistencyTest.run();
+        breadcrumbs.cli.CalmConsoleTest.run();
+        breadcrumbs.cli.BeginnerExperienceTest.run();
+        breadcrumbs.cli.ProfessionalNavigationTest.run();
+        breadcrumbs.b7.ProjectMapTest.run();
+        breadcrumbs.cli.ProjectMapConsoleTest.run();
+        breadcrumbs.cli.BreadSupportTest.run();
+        breadcrumbs.cli.TerminalScreenTest.run();
+        breadcrumbs.cli.BreadGazeTest.run();
+        breadcrumbs.cli.UnifiedExperienceTest.run();
+    }
+}

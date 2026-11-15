@@ -1,0 +1,18 @@
+PASS: first-run replay shows actual empty storage
+PASS: previous disabled at first step
+PASS: Next reaches B0 saved
+PASS: Next reaches Checkpoint confirmed
+PASS: checkpoint replay contains actual confirmation
+PASS: Next reaches Restart
+PASS: restart replay contains one saved workspace
+PASS: Next reaches Resume checkpoint
+PASS: resume replay shows original checkpoint and next action
+PASS: Next reaches DLL integrity
+PASS: diagnostic replay contains valid restored DLL
+PASS: Next reaches Plain-text fallback
+PASS: Next reaches Narrow terminal
+PASS: narrow fallback contains no escape codes
+PASS: next disabled at final step
+PASS: Left arrow navigates the actual browser replay
+PASS: step button returns to launch
+PASS: replay has no external media/script/style dependencies

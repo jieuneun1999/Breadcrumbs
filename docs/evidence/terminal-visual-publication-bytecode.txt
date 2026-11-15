@@ -1,0 +1,5 @@
+2026-10-31 publication checks.
+PASS: all 53 pre/post-normalization application class SHA-256 hashes match.
+PASS: reference recipe regenerates byte-identical LF Java artwork.
+Only line-ending/EOF normalization changed application source bytes. Glyph data and compiled behavior are unchanged.
+The developer recipe now writes UTF-8 bytes to prevent Windows newline translation.
