@@ -2,7 +2,7 @@
 setlocal
 pushd "%~dp0.." || exit /b 1
 set "BREAD_BUILD=build\app"
-if "%BREAD_DEMO_WIDE%"=="1" set "BREAD_BUILD=build\demo"
+if "%BREAD_FULL_UI%"=="1" set "BREAD_BUILD=build\demo"
 where java >nul 2>nul
 if errorlevel 1 goto missing_java
 where javac >nul 2>nul
@@ -24,6 +24,7 @@ if errorlevel 1 (
 )
 rem A previous helper must never survive a skipped or failed optional rebuild.
 if exist "%BREAD_BUILD%\bread-keys.exe" del /q "%BREAD_BUILD%\bread-keys.exe"
+if exist "%BREAD_BUILD%\bread-keys.exe" goto helper_locked
 if "%BREAD_SKIP_NATIVE%"=="1" goto portable
 set "BREAD_CSC=%SystemRoot%\Microsoft.NET\Framework64\v4.0.30319\csc.exe"
 if not exist "%BREAD_CSC%" set "BREAD_CSC=%SystemRoot%\Microsoft.NET\Framework\v4.0.30319\csc.exe"
@@ -31,14 +32,25 @@ if not exist "%BREAD_CSC%" goto portable
 "%BREAD_CSC%" /nologo /optimize+ /warnaserror+ /target:exe /out:"%BREAD_BUILD%\bread-keys.exe" tools\bread-keys.cs
 if errorlevel 1 (
     if exist "%BREAD_BUILD%\bread-keys.exe" del /q "%BREAD_BUILD%\bread-keys.exe"
+    if "%BREAD_FULL_UI%"=="1" goto helper_failed
     echo Optional keyboard helper could not be built. Using portable numbered input. 1>&2
 )
 popd
 exit /b 0
 :portable
+if "%BREAD_FULL_UI%"=="1" goto helper_failed
 echo Optional keyboard helper unavailable or skipped. Portable numbered input remains available.
 popd
 exit /b 0
+
+:helper_locked
+echo Close any open Breadcrumbs window and try again. The keyboard helper is in use. 1>&2
+popd
+exit /b 1
+:helper_failed
+echo The colored interface needs the Windows keyboard helper. Enable the Windows .NET Framework 4.x or contact your administrator, then try again. 1>&2
+popd
+exit /b 1
 :missing_java
 echo Java tools were not found. Install a JDK 17 or newer and add its bin folder to PATH. 1>&2
 echo Both java and javac are required; a JRE alone is not enough. 1>&2

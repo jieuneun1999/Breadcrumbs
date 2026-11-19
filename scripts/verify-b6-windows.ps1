@@ -2,7 +2,7 @@ $ErrorActionPreference = 'Stop'
 $repository = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $fixtures = Join-Path $repository ('build/b6-verification-' + [Guid]::NewGuid().ToString('N'))
 [IO.Directory]::CreateDirectory($fixtures) | Out-Null
-$inputs = @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -File -Recurse) + (Get-Item -LiteralPath (Join-Path $repository 'run.bat'))
+$inputs = @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -File -Recurse)
 $before = @($inputs | Sort-Object FullName | Get-FileHash -Algorithm SHA256)
 $report = [Collections.Generic.List[string]]::new()
 $report.Add("Started: $([DateTimeOffset]::Now.ToString('o'))")
@@ -39,7 +39,7 @@ try {
     [IO.File]::WriteAllText($exitInput, "0`n")
     Push-Location $fixtures
     try {
-        & $env:ComSpec /d /c "`"$repository\run.bat`" --no-color --storage-root=`"$fixtures\launcher-storage`" < `"$exitInput`"" > (Join-Path $fixtures 'launcher.txt')
+        & $env:ComSpec /d /c "`"$repository\scripts\run-test-console.bat`" --no-color --storage-root=`"$fixtures\launcher-storage`" < `"$exitInput`"" > (Join-Path $fixtures 'launcher.txt')
         Check-Exit 'External-directory Windows launcher'
     } finally { Pop-Location }
     $after = @($inputs | Sort-Object FullName | Get-FileHash -Algorithm SHA256)

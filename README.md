@@ -26,9 +26,9 @@ over captured search terms.
 2. Open Command Prompt and run `java --version` and `javac --version`. Both tools
    need to be available from a **JDK 17 or newer**. If either command is missing,
    add the JDK's `bin` folder to PATH and open a new Command Prompt.
-3. Open the extracted folder in File Explorer and double-click **DEMO.bat**.
-   At a menu, type the displayed number and press Enter. In enhanced mode, you
-   can also use the arrow keys and Enter.
+3. Open the extracted folder in File Explorer and double-click [**run.bat**](run.bat).
+   It opens the colored Breadcrumbs Home with the large B3 wordmark and animated
+   mascot. Navigate with the arrow keys and Enter or type a displayed number.
 
 ## Your first project
 
@@ -45,7 +45,7 @@ over captured search terms.
    (`Ask the delivery company for a quote`). Review the preview and type `yes`.
    Look for the saved confirmation. You can also use **12 Save project** in the
    workspace before closing.
-4. To pick up where you left off, launch **DEMO.bat** again. On Home select
+4. To pick up where you left off, launch **run.bat** again. On Home select
    **1 Open saved project** and choose your project. Select **7 Open project
    workspace**, then **1 View project summary**. You'll see the next action and
    any blockers from your last saved update.
@@ -59,7 +59,7 @@ show the full menu. Use `0` to go back or exit.
 
 ## Try the doubly linked list demo
 
-Double-click **DSA_DEMO.bat**. The five synthetic checkpoints are ready on
+Double-click **scripts/DSA_DEMO.bat**. The five synthetic checkpoints are ready on
 startup. Choose **9 Display structure** to see the links, **1 Append at tail**
 to add a checkpoint, **6 Traverse forward** or **7 Traverse backward** to read
 the list, and **0 Exit** to end the demo. Results show what happened and the
@@ -70,32 +70,17 @@ Context Management System*.
 
 ## Command-line and test options
 
-Both launchers build locally and keep the window open if startup or compilation
-fails. The app needs only the installed JDK. When the optional native keyboard
-helper is unavailable, numbered input remains available.
+From the repository folder, run `run.bat` in Command Prompt or
+`.\run.bat` in PowerShell. It compiles locally and enables terminal colors
+automatically. The Windows keyboard helper builds with the compiler included
+with .NET Framework 4.x. No package downloads or color settings are needed.
 
-From the repository folder in CMD:
+The full Home needs at least **160 columns × 52 rows**. The launcher tries to
+fit the window automatically. If your terminal controls the window size,
+maximize it or reduce the font size before retrying. Startup failures leave
+the window open with an explanation.
 
-```bat
-run.bat
-run.bat --classic-ui --no-color --no-animation
-run.bat --classroom "--group-name=The Bread"
-run.bat --dsa
-scripts\test-b7.bat
-```
-
-PowerShell users should prefix local scripts with `.\`. The enhanced full app
-supports arrow keys and Enter where the native helper is available. Printed menu
-numbers also work. Use `--no-color` or `NO_COLOR` for plain output and
-`--no-animation` to disable movement. `--classic-ui` keeps the classic interface.
-
-For a direct JDK build, create the output directory first:
-
-```bat
-mkdir build\manual
-javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build\manual -sourcepath src src\breadcrumbs\Main.java
-java -cp build\manual breadcrumbs.Main --classic-ui
-```
+For regression testing from Command Prompt, run `scripts\test-b7.bat`.
 
 Native Windows verification with junction and access-denial fixtures uses
 `pwsh -NoProfile -File scripts/verify-b7-stage.ps1 -Stage B7E -NativeWindows`.
@@ -161,17 +146,16 @@ files and absolute source roots are not copied into portable packages.
 
 ## Terminal and repository
 
-The enhanced layout uses the approved loaf and wordmark with written status
-labels. Capable Windows terminals can show the animated intro and keyboard
-navigation. Small, redirected or unsupported terminals use a more compact
-presentation. `COLUMNS` requests a width when adjustment is needed.
+The colored layout pairs the approved loaf and wordmark with a moving mascot,
+written status labels, and keyboard navigation. Run the full app through
+[`run.bat`](run.bat) in an interactive Windows console.
 
 | Folder or file | Purpose |
 | --- | --- |
 | [src/breadcrumbs](src/breadcrumbs/) | Java application and custom structures |
 | [tests](tests/) | Unit, integration, process tests and controlled fixtures |
 | [scripts](scripts/) | Build and verification wrappers |
-| [tools](tools/) | Optional native keyboard helper and developer evidence tooling |
+| [tools](tools/) | Windows keyboard helper and developer evidence tooling |
 | [docs](docs/README.md) | Source guide, classroom checklist, verification and preserved history |
 
 See [the classroom demo walkthrough](docs/B7_CLASSROOM_DELIVERY.md) for the

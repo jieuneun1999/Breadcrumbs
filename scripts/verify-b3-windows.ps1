@@ -7,7 +7,7 @@ $report = [Collections.Generic.List[string]]::new()
 $report.Add("Started: $([DateTimeOffset]::Now.ToString('o'))")
 $report.Add("OS: $([Environment]::OSVersion.VersionString)")
 $inputs = @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'),
-    (Join-Path $repository 'scripts') -File -Recurse) + (Get-Item -LiteralPath (Join-Path $repository 'run.bat'))
+    (Join-Path $repository 'scripts') -File -Recurse)
 $before = @($inputs | Sort-Object FullName | Get-FileHash -Algorithm SHA256)
 
 function Require-Text([string] $Text, [string] $Fragment) {
@@ -142,13 +142,13 @@ try {
     Push-Location $fixtures
     try {
         $launcherLog = Join-Path $fixtures 'launcher-project.txt'
-        & $env:ComSpec /d /c "`"$repository\run.bat`" `"--storage-root=$storage`" --no-color < `"$exitInput`" > `"$launcherLog`" 2>&1"
+        & $env:ComSpec /d /c "`"$repository\scripts\run-test-console.bat`" `"--storage-root=$storage`" --no-color < `"$exitInput`" > `"$launcherLog`" 2>&1"
         if ($LASTEXITCODE -ne 0) { throw 'External-path project launcher failed' }
         $launcherText = [IO.File]::ReadAllText($launcherLog)
         Require-Text $launcherText "App storage: $storage"
         Require-Text $launcherText 'Saved projects: 2'
         Require-Text $launcherText 'Goodbye.'
-        $report.Add('PASS: actual run.bat from external directory with quoted storage path and --no-color.')
+        $report.Add('PASS: actual scripts\run-test-console.bat from external directory with quoted storage path and --no-color.')
     } finally { Pop-Location }
     foreach ($file in @(Get-ChildItem -LiteralPath $fixtures -Filter '*.txt' -File)) {
         if ([IO.File]::ReadAllText($file.FullName).Contains('must-not-copy')) { throw 'Sensitive fixture value reached output' }

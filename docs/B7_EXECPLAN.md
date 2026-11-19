@@ -1355,3 +1355,15 @@ The delivery report links the evidence, checklist, cleanup manifest and Mae's
 handoff notes. Cleanup removed two ignored bytecode caches, with captured
 preflight and readback. Formal report content and submission details remain
 owner inputs. The finalization work stayed local and uncommitted.
+
+### Windows colored launcher follow-up
+
+Owner scope is the root Windows launcher and current getting-started steps.
+GitHub main and the Desktop checkout matched at `8294b4f`. The previous
+`run.bat` could start without the keyboard helper and did not request the
+wide Home viewport. The existing DOCX demo input stays local.
+
+Pstack's bug-fix playbook was used with one writer and focused launcher checks.
+The user-facing root launcher requires the colored Home and reports an error
+when it cannot open it. Classroom and redirected regression entry points
+live under `scripts/`. Existing storage and terminal artwork are reused.

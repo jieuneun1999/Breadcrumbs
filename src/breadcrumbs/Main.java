@@ -19,6 +19,7 @@ public final class Main {
 
     public static void main(String[] args) {
         try {
+            boolean fullUi = Boolean.getBoolean("breadcrumbs.fullUi");
             boolean noColor = false, always = false, dsa = false, richBrand = true, noAnimation = false, noMascot = false;
             boolean classicUi = false, terminalDiagnostics = false;
             String preview = null, group = "The Bread";
@@ -41,6 +42,11 @@ public final class Main {
                 else if (arg.startsWith("--bread-preview=")) { preview = arg.substring(16); }
                 else if (arg.startsWith("--storage-root=") && arg.length() > 15) { storage = Path.of(arg.substring(15)); }
                 else { throw new IllegalArgumentException("Unknown option."); }
+            }
+            if (fullUi && (classicUi || noColor || noMascot || noAnimation || classroom || dsa || preview != null)) {
+                System.err.println("Run run.bat without display overrides to open the full colored Breadcrumbs interface.");
+                System.exit(1);
+                return;
             }
             if (classroom) { classicUi = true; }
             var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
@@ -66,6 +72,18 @@ public final class Main {
                 TerminalKeyboard keys = preview == null ? TerminalKeyboard.open(color && System.console() != null,
                         message -> { if (diagnosticInput) { diagnostics.println("Terminal check: " + message); } })
                         : TerminalKeyboard.open(animations && !noMascot, message -> diagnostics.println("Bread Support terminal check: " + message));
+                if (fullUi && (keys == null || !animations)) {
+                    if (keys != null) { keys.close(); }
+                    System.err.println("Breadcrumbs could not connect its Windows keyboard helper. Reopen run.bat in Command Prompt.");
+                    System.exit(1);
+                    return;
+                }
+                if (fullUi && (keys.columns() < 160 || keys.rows() < 52)) {
+                    keys.close();
+                    System.err.println("The full Breadcrumbs Home needs a terminal at least 160 columns wide and 52 rows tall. Maximize the window or reduce its font size, then reopen run.bat.");
+                    System.exit(1);
+                    return;
+                }
                 TerminalScreenManager screens = preview == null && !classicUi && keys != null && keys.columns() >= 40 && keys.rows() >= 15
                         ? new TerminalScreenManager(output, keys, animations) : null;
                 if (screens != null) { output = screens.output(); }

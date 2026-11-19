@@ -6,7 +6,7 @@ $report = [Collections.Generic.List[string]]::new()
 $report.Add("Started: $([DateTimeOffset]::Now.ToString('o'))")
 $report.Add("OS: $([Environment]::OSVersion.VersionString)")
 $inputs = @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'),
-    (Join-Path $repository 'scripts') -File -Recurse) + (Get-Item -LiteralPath (Join-Path $repository 'run.bat'))
+    (Join-Path $repository 'scripts') -File -Recurse)
 $before = @($inputs | Sort-Object FullName | Get-FileHash -Algorithm SHA256)
 function Check-Exit([string] $Name) {
     if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit $LASTEXITCODE. Retained output: $fixtures" }
@@ -39,12 +39,12 @@ try {
     [IO.File]::WriteAllText((Join-Path $fixtures 'scenarios.txt'), ($scenarios -join "`n"))
     if ($scenarioExit -ne 0) { throw ($scenarios -join "`n") }
     $report.Add($scenarios -join "`n")
-    # Launch run.bat through its absolute path from outside the repository.
+    # Launch scripts\run-test-console.bat through its absolute path from outside the repository.
     $exitInput = Join-Path $fixtures 'exit-input.txt'
     [IO.File]::WriteAllText($exitInput, "0`n")
     Push-Location $fixtures
     try {
-        & $env:ComSpec /d /c "`"$repository\run.bat`" --no-color --storage-root=`"$fixtures\launcher-storage`" < `"$exitInput`"" > (Join-Path $fixtures 'launcher.txt')
+        & $env:ComSpec /d /c "`"$repository\scripts\run-test-console.bat`" --no-color --storage-root=`"$fixtures\launcher-storage`" < `"$exitInput`"" > (Join-Path $fixtures 'launcher.txt')
         Check-Exit 'Windows launcher by absolute path from external directory'
     } finally { Pop-Location }
     $after = @($inputs | Sort-Object FullName | Get-FileHash -Algorithm SHA256)

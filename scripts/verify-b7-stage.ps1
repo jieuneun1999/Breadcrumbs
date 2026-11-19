@@ -4,7 +4,7 @@ $repository = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot '..'))
 $destination = Join-Path $repository ('build/' + $Stage.ToLowerInvariant() + '-verification-' + [Guid]::NewGuid().ToString('N'))
 [IO.Directory]::CreateDirectory($destination) | Out-Null
 function Read-Inputs {
-    @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -Recurse -File) + @(Get-Item -LiteralPath (Join-Path $repository 'run.bat')) | Where-Object { $_.Extension -ne '.pyc' -and $_.DirectoryName -notmatch '[\\/]__pycache__([\\/]|$)' } | Sort-Object FullName | Get-FileHash -Algorithm SHA256
+    @(Get-ChildItem -LiteralPath (Join-Path $repository 'src'), (Join-Path $repository 'tests'), (Join-Path $repository 'scripts') -Recurse -File) | Where-Object { $_.Extension -ne '.pyc' -and $_.DirectoryName -notmatch '[\\/]__pycache__([\\/]|$)' } | Sort-Object FullName | Get-FileHash -Algorithm SHA256
 }
 $before = @(Read-Inputs)
 $started = [DateTimeOffset]::Now.ToString('o')
@@ -30,12 +30,12 @@ try {
         [IO.Directory]::CreateDirectory((Join-Path $package 'scripts')) | Out-Null
         Copy-Item -LiteralPath (Join-Path $repository 'src') -Destination $package -Recurse
         Copy-Item -LiteralPath (Join-Path $repository 'scripts/build.bat') -Destination (Join-Path $package 'scripts/build.bat')
-        Copy-Item -LiteralPath (Join-Path $repository 'run.bat') -Destination $package
+        Copy-Item -LiteralPath (Join-Path $repository 'scripts\run-test-console.bat') -Destination (Join-Path $package 'scripts')
         $exitInput = Join-Path $destination 'exit.txt'
         [IO.File]::WriteAllText($exitInput, "0`n")
         Push-Location $destination
         try {
-            $command = "`"$package\run.bat`" --no-color --storage-root=`"$destination\launcher storage`" < `"$exitInput`""
+            $command = "`"$package\scripts\run-test-console.bat`" --no-color --storage-root=`"$destination\launcher storage`" < `"$exitInput`""
             $launcher = & $env:ComSpec /d /c $command 2>&1
             $launcherExit = $LASTEXITCODE
             [IO.File]::WriteAllText((Join-Path $destination 'launcher.txt'), ($launcher -join "`n") + "`n")

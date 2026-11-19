@@ -1,6 +1,6 @@
 # Classroom requirements checklist
 
-Use `DSA_DEMO.bat` for the professor-facing session. `ClassroomConsoleTest` is
+Use `scripts/DSA_DEMO.bat` for the professor-facing session. `ClassroomConsoleTest` is
 included in `AllTests`. Results and screenshot locations are in the
 [local delivery report](CLASSROOM_FINALIZATION_REPORT.md).
 
@@ -16,7 +16,7 @@ included in `AllTests`. Results and screenshot locations are in the
 | Per-operation complexity | `ConsoleMenu.report` and DLL operation JavaDocs | Classroom checks assert traversal space and integrity time | Compare **8**, **9**, **11** | PASS |
 | Comments above operations | JavaDocs on `CheckpointList`, `TaskDependencyGraph`, `CustomHashTable`, `PrefixTrie` | Source review and strict build | Open DSA sources | PASS |
 | Clean compile | `scripts/build.bat` | `--release 17 -Xlint:all -Werror` | Launch or run the build | PASS |
-| Windows one-click launch | `DEMO.bat`, `DSA_DEMO.bat` and `run.bat` | See launcher evidence and machine-specific limits in the delivery report | Open in Explorer | NOT VERIFIED |
+| Windows one-click launch | `run.bat` and `scripts/DSA_DEMO.bat` | See launcher evidence and machine-specific limits in the delivery report | Open in Explorer | NOT VERIFIED |
 | Actual group name and six real screenshots | `Main.main`, `ConsoleMenu.menu` | Four normal and two error captures, view source-bound evidence | Show menu title and screenshots | PASS |
 | Actual Java 17 runtime | JDK 17 minimum, Java 17 class target | Local Windows runtime was JDK 25 | Check classroom `java --version` | NOT VERIFIED |
 | Report, individual contributions and named submission archive | [Mae's documentation notes](MAE_DOCUMENTATION_HANDOFF.md) | Formal report and packaging happen after owner supplies details | Prepare for live questions | NEEDS OWNER INPUT |

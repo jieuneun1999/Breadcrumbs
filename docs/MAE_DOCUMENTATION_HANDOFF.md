@@ -7,10 +7,10 @@ menu adds “We are the bread and we ain't letting no crumbs”.
 
 ## Try the app before writing the report
 
-- Open **DEMO.bat** with JDK 17 or newer. Follow the
+- Open **run.bat** with JDK 17 or newer. Follow the
   [first-project walkthrough](../README.md#your-first-project) to create a
   practice project, save an update, close Breadcrumbs, and reopen its summary.
-- Open **DSA_DEMO.bat** and choose **9 Display structure**. The five seeded
+- Open **scripts/DSA_DEMO.bat** and choose **9 Display structure**. The five seeded
   checkpoints make the head, tail and links visible immediately. See the
   [ten-minute classroom plan](B7_CLASSROOM_DELIVERY.md#ten-minute-classroom-plan)
   for what to present and which error cases to show.

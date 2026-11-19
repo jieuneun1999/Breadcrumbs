@@ -54,17 +54,17 @@ try {
     $summary.Add($withJunction.Trim())
     $newInput = Join-Path $evidence 'new-input.txt'
     Write-Fixture $newInput "13`n1`nNew study planner`nACADEMIC`nPlan weekly study`nCourse report`nReview requirements`n`n`n`nyes`n14`nyes`n`n0`n"
-    $new = Invoke-CommandCheck 'new-empty-demo' "run.bat --dsa < `"$newInput`""
+    $new = Invoke-CommandCheck 'new-empty-demo' "scripts\run-test-console.bat --dsa < `"$newInput`""
     Require-Output $new 'Baseline B0 established'
     Require-Output $new 'Project native checkpoints: 0'
     $readmeInput = Join-Path $evidence 'readme-input.txt'
     Write-Fixture $readmeInput "13`n2`nReading tracker`nGENERAL`n$readmeRoot`nyes`ns`nyes`n14`nyes`n0`n"
-    $readme = Invoke-CommandCheck 'readme-demo' "run.bat --dsa < `"$readmeInput`""
+    $readme = Invoke-CommandCheck 'readme-demo' "scripts\run-test-console.bat --dsa < `"$readmeInput`""
     Require-Output $readme 'Source: README.md line 2'
     Require-Output $readme 'CURRENT_STATE: UNKNOWN'
     $legacyInput = Join-Path $evidence 'legacy-input.txt'
     Write-Fixture $legacyInput "13`n3`nLegacy study planner`nSOFTWARE`n$legacyRoot`nyes`ns`nyes`n14`nyes`n0`n"
-    $legacy = Invoke-CommandCheck 'legacy-demo' "run.bat --dsa < `"$legacyInput`""
+    $legacy = Invoke-CommandCheck 'legacy-demo' "scripts\run-test-console.bat --dsa < `"$legacyInput`""
     foreach ($expected in @('TASK-12 TASK_STATUS - CONFLICTING', 'Source: state.md line 2',
             'Source: tasks.md line 2', 'SOURCE_REPORTED', '2018-01-01', 'Project native checkpoints: 0')) {
         Require-Output $legacy $expected

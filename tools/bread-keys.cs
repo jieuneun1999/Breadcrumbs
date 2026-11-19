@@ -87,28 +87,26 @@ public static class BreadKeys
         bool virtualTerminal = GetConsoleMode(GetStdHandle(-10), out inputMode)
             && GetConsoleMode(outputHandle, out originalMode)
             && SetConsoleMode(outputHandle, originalMode | ProcessedOutput | VirtualTerminal);
+        if (!virtualTerminal)
+        {
+            Console.Error.WriteLine("The colored Breadcrumbs interface needs an interactive Windows console. Open run.bat directly or run it from Command Prompt.");
+            return 1;
+        }
         try
         {
+            if (IsWindowVisible(GetConsoleWindow())) FitDemoWindow();
             var java = new System.Diagnostics.ProcessStartInfo("java.exe");
             java.UseShellExecute = false;
             string classes = System.IO.Path.GetDirectoryName(typeof(BreadKeys).Assembly.Location);
-            java.Arguments = "-cp " + QuoteArgument(classes) + " breadcrumbs.Main";
+            java.Arguments = "-Dbreadcrumbs.fullUi=true -cp " + QuoteArgument(classes) + " breadcrumbs.Main";
             for (int index = 1; index < args.Length; index++)
             {
                 java.Arguments += " " + QuoteArgument(args[index]);
             }
-            if (virtualTerminal)
-            {
-                java.EnvironmentVariables["ANSICON"] = "1";
-                if (Environment.GetEnvironmentVariable("BREAD_DEMO_WIDE") == "1"
-                    && Environment.GetEnvironmentVariable("NO_COLOR") == null
-                    && IsWindowVisible(GetConsoleWindow())
-                    && !Array.Exists(args, option => option == "--classroom" || option == "--dsa"
-                        || option == "--classic-ui" || option == "--ui=classic" || option == "--no-color"))
-                {
-                    FitDemoWindow();
-                }
-            }
+            java.EnvironmentVariables["ANSICON"] = "1";
+            java.EnvironmentVariables.Remove("NO_COLOR");
+            if (String.Equals(java.EnvironmentVariables["TERM"], "dumb", StringComparison.OrdinalIgnoreCase))
+                java.EnvironmentVariables.Remove("TERM");
             using (var child = System.Diagnostics.Process.Start(java))
             {
                 child.WaitForExit();
@@ -122,7 +120,7 @@ public static class BreadKeys
         }
         finally
         {
-            if (virtualTerminal) SetConsoleMode(outputHandle, originalMode);
+            SetConsoleMode(outputHandle, originalMode);
         }
     }
     static void FitDemoWindow()

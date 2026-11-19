@@ -56,7 +56,7 @@ for source-bound original tests and detailed costs.
 
 ## Ten-minute classroom plan
 
-Double-click `DSA_DEMO.bat` in File Explorer. The title identifies The Bread.
+Double-click `scripts/DSA_DEMO.bat` in File Explorer. The title identifies The Bread.
 Type the displayed number and press Enter. All positions are zero-based.
 
 | Time | What to show |
@@ -66,7 +66,7 @@ Type the displayed number and press Enter. All positions are zero-based.
 | 2:00–4:00 | Use **1** to append a title/summary and note the generated ID. Use **2** with a unique ID to prepend. Use **3** with position `2` and another unique ID to insert in the middle. |
 | 4:00–6:00 | **4** searches for `DEMO-000003`. **6** and **7** show opposite orders. **8** reads the tail. **5** deletes by ID. **10** shows size and **11** verifies links. |
 | 6:00–7:30 | Search for `MISSING-DEMO` with **4**. Use **3** with position `99`. Explain that an invalid position leaves the list as it was and brings back the menu. |
-| 7:30–9:00 | Exit with **0**. If time permits, open `DEMO.bat` on approved disposable data to show where the real checkpoint workflow lives. |
+| 7:30–9:00 | Exit with **0**. If time permits, open `run.bat` on approved disposable data to show where the real checkpoint workflow lives. |
 | 9:00–10:00 | Explain the DLL trade-off. Two links support both directions and O(1) relinking after a node is found. The extra pointer costs memory, and position and ID lookup remain linear. |
 
 **12** reloads any missing seed records. Insertion, search and removal report DLL

@@ -124,19 +124,19 @@ def main():
             for name in ['src', 'tools']:
                 shutil.copytree(REPO / name, launcher / name)
             (launcher / 'scripts').mkdir()
-            for name in ['run.bat', 'scripts/build.bat']:
+            for name in ['scripts/run-test-console.bat', 'scripts/build.bat']:
                 shutil.copyfile(REPO / name, launcher / name)
             launcher_win = windows + r'\launcher-test'
             environment = os.environ.copy()
             environment['PATH'] = str(JDK).replace('/mnt/c/', 'C:\\').replace('/', '\\') + ';' + environment.get('PATH', '')
             environment['NO_COLOR'] = '1'
-            command = [CMD, '/d', '/c', launcher_win + r'\run.bat', '--no-color', '--no-animation',
+            command = [CMD, '/d', '/c', launcher_win + r'\scripts\run-test-console.bat', '--no-color', '--no-animation',
                        '--storage-root=' + launcher_win + r'\isolated-storage']
             result = subprocess.run(command, cwd=launcher, env=environment, input=b'0\r\n',
                                     stdout=subprocess.PIPE, stderr=subprocess.STDOUT, timeout=120, check=False)
             (evidence / 'production-launcher.txt').write_bytes(result.stdout)
             if result.returncode or b'Goodbye.' not in result.stdout or b'\x1b[' in result.stdout:
-                raise RuntimeError('Exact run.bat/build.bat isolated fallback check failed')
+                raise RuntimeError('Scripted console launch from the isolated build failed')
             manifest['commands'].append(list(map(str, command)))
         if before != inputs():
             raise RuntimeError('Source inputs changed during verification; this run does not certify final inputs')
