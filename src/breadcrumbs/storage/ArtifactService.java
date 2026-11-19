@@ -13,6 +13,7 @@ import breadcrumbs.handoff.HandoffService;
 import breadcrumbs.continuity.ContinuityService;
 import breadcrumbs.search.ContextSearchIndex;
 
+/** Builds disposable continuity views; canonical save success remains separate from later document-generation failure. */
 public final class ArtifactService {
     public enum Point { WRITING_STATE, BEFORE_PUBLISH, DIRECTORY_BUSY }
     @FunctionalInterface public interface Fault { void at(Point point) throws IOException; }

@@ -7,8 +7,16 @@ public final class CheckpointList {
     private CheckpointNode tail;
     private int size;
     private long modification;
+    /**
+     * Returns the mutation revision used to invalidate disposable indexes.
+     * Time: O(1). Auxiliary space: O(1).
+     */
     public long modification() { return modification; }
 
+    /**
+     * Adds a unique checkpoint at TAIL.
+     * Time: O(n) duplicate-ID search; tail linking is O(1). Auxiliary space: O(1).
+     */
     public void append(Checkpoint checkpoint) {
         // Finding a duplicate is O(n); the following tail-link changes are O(1).
         requireUnique(checkpoint);
@@ -24,6 +32,10 @@ public final class CheckpointList {
         modification++;
     }
 
+    /**
+     * Adds a unique checkpoint at HEAD and repairs its previous link.
+     * Time: O(n) duplicate-ID search; head linking is O(1). Auxiliary space: O(1).
+     */
     public void prepend(Checkpoint checkpoint) {
         requireUnique(checkpoint);
         CheckpointNode node = new CheckpointNode(checkpoint);
@@ -39,6 +51,10 @@ public final class CheckpointList {
         modification++;
     }
 
+    /**
+     * Inserts at a zero-based position in [0, size], including both endpoints.
+     * Time: O(n) uniqueness/position search. Auxiliary space: O(1).
+     */
     public void insertAt(int index, Checkpoint checkpoint) {
         if (index < 0 || index > size) {
             throw new IllegalArgumentException("Position must be between 0 and " + size + ".");
@@ -66,11 +82,19 @@ public final class CheckpointList {
         modification++;
     }
 
+    /**
+     * Returns a matching checkpoint, or null without changing links.
+     * Time: O(n) bounded ID comparisons. Auxiliary space: O(1).
+     */
     public Checkpoint findById(String checkpointId) {
         CheckpointNode node = findNode(checkpointId);
         return node == null ? null : node.checkpoint;
     }
 
+    /**
+     * Finds an ID, repairs both neighbors and detaches the removed node.
+     * Time: O(n) search, then O(1) unlinking. Auxiliary space: O(1).
+     */
     public boolean removeById(String checkpointId) {
         CheckpointNode node = findNode(checkpointId);
         if (node == null) {
@@ -95,6 +119,10 @@ public final class CheckpointList {
         return true;
     }
 
+    /**
+     * Returns references from HEAD to TAIL without changing nodes.
+     * Time: O(n). Auxiliary/result space: O(n) for the returned array.
+     */
     public Checkpoint[] traverseForward() {
         Checkpoint[] result = new Checkpoint[size];
         CheckpointNode node = head;
@@ -105,6 +133,10 @@ public final class CheckpointList {
         return result;
     }
 
+    /**
+     * Returns references from TAIL to HEAD through previous links.
+     * Time: O(n). Auxiliary/result space: O(n) for the returned array.
+     */
     public Checkpoint[] traverseBackward() {
         Checkpoint[] result = new Checkpoint[size];
         CheckpointNode node = tail;
@@ -115,22 +147,39 @@ public final class CheckpointList {
         return result;
     }
 
+    /**
+     * Reads TAIL or null when empty; latest means list position, not timestamp.
+     * Time: O(1). Auxiliary space: O(1).
+     */
     public Checkpoint getLatest() {
         return tail == null ? null : tail.checkpoint;
     }
 
+    /**
+     * Reads HEAD or null when empty. Time: O(1). Auxiliary space: O(1).
+     */
     public Checkpoint getOldest() {
         return head == null ? null : head.checkpoint;
     }
 
+    /**
+     * Returns maintained count without traversal. Time: O(1). Auxiliary space: O(1).
+     */
     public int size() {
         return size;
     }
 
+    /**
+     * Tests the maintained count. Time: O(1). Auxiliary space: O(1).
+     */
     public boolean isEmpty() {
         return size == 0;
     }
 
+    /**
+     * Renders ID links of an intact list; validate before untrusted diagnostics.
+     * Time: O(n) for bounded IDs. Auxiliary/output space: O(n) for the chain.
+     */
     public String displayStructure() {
         if (head == null) {
             return "NULL (empty)";
@@ -143,6 +192,10 @@ public final class CheckpointList {
         return output.toString();
     }
 
+    /**
+     * Checks endpoints, cycles, reciprocal links, count and pairwise ID uniqueness.
+     * Time: O(n^2) uniqueness plus O(n) link checks. Auxiliary space: O(1).
+     */
     public boolean validateIntegrity() {
         if (size < 0) {
             return false;

@@ -23,6 +23,12 @@ public final class ContextSearchIndex {
         return state.activeBaseline() == null ? null : new Revision(state.activeBaseline().workspaceId(), state.currentObservationId(),
                 state.epoch(), state.checkpoints().modification(), state.dependencies().currentId(), policy);
     }
+    /**
+     * Publishes a detached Trie/Hash/posting candidate only after canonical validation.
+     * Time: candidate build plus full validation; see SearchIndexBuilder.
+     * Space: O(N+P+F+T) candidate slots/nodes plus per-field tokenization.
+     * Failures never publish partial candidates or mutate canonical project records.
+     */
     public boolean rebuild(SearchPolicy policy, BooleanSupplier cancelled) {
         setPolicy(policy); Revision requested = currentRevision();
         try {
@@ -30,7 +36,7 @@ public final class ContextSearchIndex {
             SearchIndexBuilder candidate = SearchIndexBuilder.build(state, policy, cancelled);
             if (!requested.equals(currentRevision())) { throw new IllegalArgumentException("Canonical state changed during build."); }
             active = candidate; revision = requested; invalid = false;
-            notice = "READY for captured indexed fields. TXT/MD/CSV captured fields only. Unsupported bodies not searched. Scan complete="
+            notice = "READY for captured indexed fields. Search uses eligible captured fields. Unsupported bodies are excluded. Scan complete="
                     + state.currentObservation().complete() + ". Live source freshness UNKNOWN; no source reread. Checkpoints are historical assessments.";
             return true;
         } catch (IllegalArgumentException failure) {
@@ -48,6 +54,11 @@ public final class ContextSearchIndex {
         return invalid || !revision.equals(currentRevision()) ? SearchReport.Status.INDEX_OUTDATED : SearchReport.Status.READY;
     }
     public boolean isCurrent(WorkspaceState candidate) { return candidate == state && status() == SearchReport.Status.READY; }
+    /**
+     * Resolves and retokenizes fields to reject stale or inconsistent indexes.
+     * Time: full canonical validation, not merely result count.
+     * Space: per-field tokens/counts and Trie visited/path storage; see builder.validate.
+     */
     public boolean validateAgainstCanonicalState() {
         if (!isCurrent(state)) { return false; }
         try {
@@ -55,6 +66,11 @@ public final class ContextSearchIndex {
             if (!valid) { invalidate("Canonical search validation failed."); } return valid;
         } catch (IllegalArgumentException failure) { invalidate("Canonical search validation failed."); return false; }
     }
+    /**
+     * Finds a term, validates its whole posting chain, then resolves bounded hits.
+     * Time: O(L*T+P+R*S) worst case; T terms, P postings, R hits and resolution cost S.
+     * Auxiliary space: O(R) hits plus tokenizer/resolution temporaries.
+     */
     public SearchReport searchExact(String term, int limit) {
         String normalized = Tokenizer.query(term, policy);
         if (limit < 1) { throw new IllegalArgumentException("Positive result limit required."); }
@@ -74,12 +90,20 @@ public final class ContextSearchIndex {
     private SearchReport unavailable(String term) {
         return new SearchReport(status(), term, new SearchReport.Hit[0], 0, false, "Search incomplete/unavailable. Rebuild required. " + notice);
     }
+    /**
+     * Suggests from a current Trie without rereading source files.
+     * Time: O(L*C+K) visits plus query normalization. Space: O(L+R) path/results.
+     */
     public PrefixTrie.Suggestions suggestTerms(String prefix, int limit) {
         String normalized = Tokenizer.query(prefix, policy);
         if (limit < 1) { throw new IllegalArgumentException("Positive suggestion limit required."); }
         return isCurrent(state) ? active.trie.suggest(normalized, Math.min(limit, policy.maxSuggestions()), policy.maxVisits())
                 : new PrefixTrie.Suggestions(new String[0], true, 0);
     }
+    /**
+     * Resolves an explicitly approved confirmed field into a safe bounded excerpt.
+     * Time: O(S+M), canonical resolution S and excerpt M. Space: O(M) output.
+     */
     public String viewField(SearchLocation location, boolean approved) {
         if (!approved || !isCurrent(state)) { return ""; }
         SearchFields.Field field = SearchFields.resolve(state, policy, location);
@@ -113,7 +137,7 @@ public final class ContextSearchIndex {
         }
         return "Search status " + status() + ". Observation " + state.currentObservationId()
                 + "\nDiscovered entries=" + scan.entries().length + "; fingerprinted=" + fingerprinted + "; sensitivity-skipped=" + sensitive
-                + "\nTXT/MD/CSV: captured fields only; supported files=" + supported
+                + "\nSearch uses captured fields only; supported files=" + supported
                 + "; eligible evidence fields=" + eligible[0] + "; policy-excluded/unindexed evidence fields="
                 + (state.claimsAt(state.currentObservationId()).length - eligible[0])
                 + "\nmetadata-only files=" + metadata + "; unsupported=" + unsupported + "; skipped=" + skipped

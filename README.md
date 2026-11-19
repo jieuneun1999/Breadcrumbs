@@ -1,106 +1,94 @@
 # Breadcrumbs
 
-**Leave context behind. Pick up where work stopped.**
+**Breadcrumbs: An Evidence-Driven Project Continuity and Context Management System**
 
-Breadcrumbs is a local, offline Java console application for project continuity.
-Import a folder or start empty, review what is actually known, record a confirmed
-checkpoint, and return later to its next action, blockers and original references.
-No imported folder needs an existing Breadcrumbs session. First import establishes
-B0, an observation; native history begins only when you confirm a checkpoint.
+**The Bread** · Leave context behind. Pick up where work stopped.
 
-B7 implementation is under final acceptance on Windows/JDK 25, targeting Java 17.
-Recovery, daily workflows, manual Evidence Inbox, generated Markdown, portable
-packages and bounded DOCX extraction are implemented. See [B7 acceptance](docs/B7_FINAL_ACCEPTANCE.md)
-for exact observed gates and remaining limits. Full representative-document/owner
-acceptance, actual Java 17 runtime and instructor hardware remain pending. No
-release or merge is implied. Frozen v1.2 specifications and prior evidence remain
-available in [docs](docs/).
+Breadcrumbs is an offline Java console app for picking up a project after time
+away or handing it to a teammate. It brings confirmed checkpoints, next actions,
+blockers and source references together. A custom **doubly linked list** (DLL)
+stores the checkpoint timeline. A directed graph supports declared dependencies,
+a custom hash table supports record lookup, and a custom trie supports prefix
+suggestions over eligible search terms.
 
-The new [Project Map and onboarding](docs/B7_PROJECT_MAP_AND_ONBOARDING.md) show
-actual captured goals, documented state, next actions and uncertainty before you
-confirm the starting record. Eight common sections work for every profile and
-for projects without files. Source reports, your assessments and historical work
-stay distinct; conflicting candidates remain unresolved until reviewed.
+## Start on Windows
 
-## Run and verify
+1. Download or clone this repository. If you downloaded a ZIP, extract it first.
+2. Open Command Prompt and run `java --version` and `javac --version`. Both tools
+   need to be available from a **JDK 17 or newer**. If either command is missing,
+   add the JDK's `bin` folder to PATH and open a new Command Prompt.
+3. Open the extracted folder in File Explorer and double-click **DEMO.bat**.
+   At a menu, type the displayed number and press Enter. In enhanced mode, you
+   can also use the arrow keys and Enter.
 
-Use an existing **JDK 17+** with `java` and `javac` on PATH. The application needs
-no Maven, Gradle, Office, Python, database, network or third-party parser library.
-From Windows CMD or PowerShell:
+## Your first project
 
-```text
+1. On Home, select **2 Create or import project**, then **1 Create an empty
+   project**. Name it `Community food drive`. Press Enter for the General
+   project type, then enter any starting details you know. Press Enter to skip
+   optional details or the empty-folder prompt.
+2. Review the starting overview. Select **4 Confirm starting project record**,
+   type `yes` to confirm, then type `yes` at **Save this project on this
+   computer?**. Saving lets you reopen this project after closing the app.
+3. On Home, select **7 Open project workspace**, then **2 Record progress
+   update**. For a practice update, enter what changed (`Booked the hall`),
+   what's in the way (`Waiting for the delivery quote`), and what comes next
+   (`Ask the delivery company for a quote`). Review the preview and type `yes`.
+   Look for the saved confirmation. You can also use **12 Save project** in the
+   workspace before closing.
+4. To pick up where you left off, launch **DEMO.bat** again. On Home select
+   **1 Open saved project** and choose your project. Select **7 Open project
+   workspace**, then **1 View project summary**. You'll see the next action and
+   any blockers from your last saved update.
+
+To bring in existing files, choose **2 Import an existing folder** during
+setup and enter the path to a local folder. Approve the read-only scan and
+review the starting overview before confirming. Later, use **13 Explore Project
+Map** to review sources, **4 Review file changes** to request a fresh check, or
+**11 Prepare project handoff** to preview and export a summary. Type `?` to
+show the full menu. Use `0` to go back or exit.
+
+## Try the doubly linked list demo
+
+Double-click **DSA_DEMO.bat**. The five synthetic checkpoints are ready on
+startup. Choose **9 Display structure** to see the links, **1 Append at tail**
+to add a checkpoint, **6 Traverse forward** or **7 Traverse backward** to read
+the list, and **0 Exit** to end the demo. Results show what happened and the
+operation cost. These practice records are discarded on exit.
+
+## Command-line and test options
+
+Both launchers build locally and keep the window open if startup or compilation
+fails. The app needs only the installed JDK. When the optional native keyboard
+helper is unavailable, numbered input remains available.
+
+From the repository folder in CMD:
+
+```bat
 run.bat
-run.bat --no-color
-run.bat "--storage-root=C:\Temp\Breadcrumbs Demo" --color=always
+run.bat --classic-ui --no-color --no-animation
+run.bat --classroom "--group-name=The Bread"
+run.bat --dsa
 scripts\test-b7.bat
 ```
 
-The launcher compiles with `--release 17 -Xlint:all -Werror`, resolves its own path
-and stops on build failure. An unrelated working directory and paths with spaces
-are covered by the native verification command:
+PowerShell users should prefix local scripts with `.\`. The enhanced full app
+supports arrow keys and Enter where the native helper is available. Printed menu
+numbers also work. Use `--no-color` or `NO_COLOR` for plain output and
+`--no-animation` to disable movement. `--classic-ui` keeps the classic interface.
 
-```powershell
-pwsh -NoProfile -File scripts/verify-b7-stage.ps1 -Stage B7E -NativeWindows
+For a direct JDK build, create the output directory first:
+
+```bat
+mkdir build\manual
+javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build\manual -sourcepath src src\breadcrumbs\Main.java
+java -cp build\manual breadcrumbs.Main --classic-ui
 ```
 
-Native verification creates disposable junctions and a runnable copy under build,
-exercises ACL/path guards, runs the complete regression/process scenarios and
-records unchanged input hashes. Tests do not use your normal storage. Actual JDK
-17 execution must be run separately when that runtime is available.
-
-Equivalent JDK-only build:
-
-```text
-javac --release 17 -encoding UTF-8 -Xlint:all -Werror -d build/manual -sourcepath src src/breadcrumbs/Main.java
-java -cp build/manual breadcrumbs.Main
-```
-
-Tests use `-sourcepath "src;tests"` on Windows (`"src:tests"` on Unix). Unix
-execution is not verified. Source files are complete; no external runtime adapter
-is downloaded or activated.
-
-## A useful first session
-
-1. Choose **2 Create or import project**. Choose a personal, study, team or
-   software project. If you import a folder, approve reading it and review the
-   initial overview. Explore its map, review individual source statements or add
-   proposed current details, then choose **4 Confirm starting project record**.
-   Cancel discards the proposal. This establishes starting information without
-   inventing earlier progress.
-2. Choose to save the project on this computer. Then choose **7 Open project workspace**
-   and **1 View project summary** to see where you left off, your next step and
-   anything you are waiting for. Use **13 Explore Project Map** for the eight
-   sections, source details and review actions. Saved notes work even when the
-   project folder is offline.
-3. Choose **2 Record progress update**. Answer what changed, what is in the way and what
-   to do next. Review the answers before typing `yes`. Use `e` to edit, `?` for
-   references and other options, or `0` to cancel.
-4. Use **10 Manage project notes** for an observation, meeting report or decision.
-   A note about what someone said remains a report. You separately choose whether
-   its words can appear in search and whether its body can be exported. Private
-   notes stay out of search and handoff files.
-5. Use **11 Prepare project handoff** to preview readable summary files or export
-   a new folder outside the project and save folders. You can also choose to refresh
-   these files after saving. Review the files before sharing them.
-6. Exit and reopen the saved project. Its summary appears without rereading the
-   original folder. Choose **4 Review file changes** when you want a new file
-   check. **Technical details** shows the original hashes and reference impact.
-   Marking changes as reviewed does not confirm that work is complete.
-
-Menus use a complete compact action list after each result, with aligned columns
-when the terminal is wide enough. Every accepted menu action stays visible.
-Type `?` to show the full menu again. Options retain their established numbers
-and appear in numeric order. Use workspace **12 Save project** or home **8 Save
-active project** to save a session-only project; this asks before enabling local
-storage. Import shows a source-linked overview; the map progressively reveals
-bounded details, original record links and role-grouped sources. Full inventory
-remains under View B0 / sources. Reports separate sections with whitespace.
-
-The daily menu also offers attention checks, search, saved updates and dependencies.
-Advanced project option **3** preserves the original numbered paths: **9** audit,
-**10** current review, **11** rescan, **12** compare, **13** retrieval, **14** handoff,
-**16** work items/Graph, **17** Hash and **18** search. Startup **4** is an isolated
-DSA classroom sandbox, also available with `--dsa`. Demo data stays synthetic.
+Native Windows verification with junction and access-denial fixtures uses
+`pwsh -NoProfile -File scripts/verify-b7-stage.ps1 -Stage B7E -NativeWindows`.
+See the [delivery report](docs/CLASSROOM_FINALIZATION_REPORT.md) for observed
+results, runtime version and classroom hardware gates.
 
 ## Search and document coverage
 
@@ -159,27 +147,23 @@ universal personal-data/secret detector. Manual sensitive bodies remain local-on
 ordinary exported context is INTERNAL. Do not capture credentials. Original source
 files and absolute source roots are not copied into portable packages.
 
-## Terminal and classroom delivery
+## Terminal and repository
 
-The accepted loaf, wordmark and bread-gold identity are preserved. Shared theme
-labels and operation feedback now reach ordinary/advanced workflows. Untrusted
-values stay sanitized in default foreground. Color never replaces written statuses.
-`--no-color`, `NO_COLOR`, redirected input/output and uncertain terminals fall back
-to concise start/final messages. Animation is limited to capable interactive
-terminals; no fake percentage/count, per-frame history spam or operation delay.
-`COLUMNS` requests width (minimum 28); it is not live size detection. The approved B3 polished logo is the only production artwork. Default requested
-layout is160columns; set COLUMNS to the actual width. Smaller layouts show a text
-label rather than substituting different artwork. --rich-brand remains accepted
-for launcher compatibility; it is no longer needed to select the approved logo.
+The enhanced layout uses the approved loaf and wordmark with written status
+labels. Capable Windows terminals can show the animated intro and keyboard
+navigation. Small, redirected or unsupported terminals use a more compact
+presentation. `COLUMNS` requests a width when adjustment is needed.
 
-[Terminal enhancement](docs/B7_TERMINAL_EXPERIENCE.md),
-[classroom API/complexity and security inventory](docs/B7_CLASSROOM_DELIVERY.md),
-[final evidence and walkthrough](docs/B7_FINAL_ACCEPTANCE.md).
-The approved intro uses two grouped frames (loaf, then complete wordmark) over
-120ms on capable interactive terminals, then stays static. No per-line or
-per-character logo animation. It appears once per application launch.
+| Folder or file | Purpose |
+| --- | --- |
+| [src/breadcrumbs](src/breadcrumbs/) | Java application and custom structures |
+| [tests](tests/) | Unit, integration, process tests and controlled fixtures |
+| [scripts](scripts/) | Build and verification wrappers |
+| [tools](tools/) | Optional native keyboard helper and developer evidence tooling |
+| [docs](docs/README.md) | Source guide, classroom checklist, verification and preserved history |
 
-Python and FFmpeg are optional **developer evidence tools only** for the scripted
-native recording. The recording uses real Main output and a downloaded public
-project-plan template; scripted input, synthetic companion notes and omitted
-content are labeled. The offline HTML transcript and MP4 are distinct artifacts.
+See [the classroom demo walkthrough](docs/B7_CLASSROOM_DELIVERY.md) for the
+full numbered DLL menu and a ten-minute presentation. For available full-app
+actions, follow the on-screen menu and type `?` to display it again. Supporting
+implementation details and the current evidence are linked from the
+[documentation index](docs/README.md).

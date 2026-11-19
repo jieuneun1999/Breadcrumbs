@@ -24,6 +24,7 @@ public final class ProjectMapService {
         b.missing();
         return b.finish(draft.displayName(), draft.profile(), true, draft.scan().root() != null);
     }
+    /** Projects recorded state only. Freshness labels distinguish a saved observation from a new source scan. */
     public ProjectMap fromState(WorkspaceState state) { return fromState(state, false); }
     public ProjectMap fromState(WorkspaceState state, boolean checkedThisSession) {
         if (state.activeBaseline() == null) { throw new IllegalArgumentException("Open or confirm a project first."); }

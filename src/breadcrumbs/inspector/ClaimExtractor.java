@@ -16,7 +16,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** Pure conversion of bounded bytes into literal, source-located candidates. No filesystem or execution APIs. */
+/** Pure conversion of bounded bytes into literal, source-located candidates. No filesystem or execution APIs.
+ * Extraction creates source-reported candidates, never instructions to execute or independent proof that reported work happened. */
 final class ClaimExtractor {
     record Extraction(EvidenceClaim[] claims, SnapshotEntry.Status status, String reason, boolean limited) { }
     private static final Pattern TASK_STATUS = Pattern.compile(

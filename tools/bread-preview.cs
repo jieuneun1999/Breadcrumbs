@@ -116,7 +116,7 @@ public static class BreadConsole
         {
             var key=new Key
             {
-                Type=1,Down=1,Repeat=1,VirtualKey=(short)(c=='\r'?13:char.ToUpperInvariant(c)),Character=c
+                Type=1,Down=1,Repeat=1,VirtualKey=(short)(c=='\r'?13:c=='-'?0xBD:char.ToUpperInvariant(c)),Character=c
             }
             ;
             uint count;
@@ -301,6 +301,51 @@ public static class BreadPreviewProgram
         checks.Add("NOT_PROVEN independent human keyboard input, Windows Terminal, VS Code and Linux JVM");
         return 0;
     }
+    static int ClassroomCheck()
+    {
+        Console.Title="Breadcrumbs - The Bread classroom acceptance";
+        Start("--classroom");
+        ClassroomCapture("01-start", "Records: 5");
+        BreadConsole.Send("9\r");
+        ClassroomCapture("02-structure", "HEAD=DEMO-000001 | TAIL=DEMO-000005");
+        Answer("Choose an option:", "1");
+        Answer("Title (required", "Review room layout");
+        Answer("Summary (blank", "Draft the layout for the demonstration.");
+        Answer("Status [", "PLANNED");
+        Answer("Confirm creation?", "yes");
+        ClassroomCapture("03-tail-insert", "Success: DEMO-NEW-000001");
+        Answer("Choose an option:", "4");
+        Answer("Checkpoint ID:", "DEMO-000003");
+        ClassroomCapture("04-found-record", "Found DEMO-000003");
+        Answer("Choose an option:", "5");
+        Answer("Checkpoint ID to delete:", "DEMO-MISSING");
+        ClassroomCapture("05-missing-id", "Not found");
+        Answer("Choose an option:", "3");
+        Answer("Position (0-based", "999");
+        ClassroomCapture("06-invalid-position", "Position must be between");
+        BreadConsole.Send("0\r");
+        Check(app.WaitForExit(8000) && app.ExitCode==0,"Classroom app exits cleanly");
+        return 0;
+    }
+    static void ClassroomCapture(string name, string expected)
+    {
+        var clock=System.Diagnostics.Stopwatch.StartNew();
+        while(clock.ElapsedMilliseconds<10000 && !app.HasExited)
+        {
+            string screen=BreadConsole.Screen();
+            if(BreadConsole.Line().Contains("Choose an option:") && screen.Contains(expected)
+                && screen.Contains("BREADCRUMBS | The Bread | DOUBLY LINKED LIST"))
+            {
+                System.Threading.Thread.Sleep(180); // Allow the on-screen console to paint the verified buffer.
+                Capture(name);
+                Check(true,name+" shows "+expected+" with the actual group title");
+                return;
+            }
+            System.Threading.Thread.Sleep(40);
+        }
+        throw new Exception("Classroom viewport did not show "+name+" and "+expected+" together with group title.");
+    }
+
     public static int Main(string[] args)
     {
         if(args.Length==2 && args[0]=="--close-preview")
@@ -347,6 +392,7 @@ public static class BreadPreviewProgram
             homeOnly=args.Length>3&&args[3]=="--home-auto";
             screenAutomated=args.Length>3&&(args[3]=="--screen-auto"||homeOnly);
             automated=args.Length>3&&(args[3]=="--auto"||screenAutomated);
+            if(args.Length>3 && args[3]=="--classroom-auto") return ClassroomCheck();
             if(screenAutomated) return ScreenCheck();
             if(!automated)
             {

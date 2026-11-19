@@ -91,6 +91,7 @@ public final class TerminalScreenManager extends OutputStream {
     }
     @Override public void flush() { if (fallback) { raw.flush(); } }
 
+    /** Composes staged output once at an existing input boundary. Text pages independently of the docked portrait and complete action group. */
     void beginRead(String prompt) throws IOException {
         if (!enabled()) { return; }
         List<String> original = pending.toString(StandardCharsets.UTF_8).lines().toList(); pending.reset();

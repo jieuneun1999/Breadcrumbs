@@ -1227,3 +1227,131 @@ deployment, force push, rebase, branch deletion or external team message occurre
 The primary Windows launcher checkout remains untouched on its existing branch;
 the Orca source worktree advances normally to the merged history. A documentation-
 only receipt commit follows this merge; it leaves all173 executable inputs intact.
+
+
+## Active classroom finalization packet (19 November 2026)
+
+Owner attachment c8f01056 plus the direct group-name/no-push steer authorizes local
+code/classroom/launcher/documentation finalization. Group display name: The Bread.
+The two Downloads DOCX inputs are supporting classroom/report context; sample
+student identities, language, contributions and project content are not ours.
+Do not generate the final report. Prepare a concise documentation-source handoff
+for Mae per the direct request, with missing section/group number/member details
+explicit. No Discord send, commit, push, merge, release, global install/config,
+new parser or broad rewrite. Prior publication authorization was already fulfilled.
+
+Baseline verified local HEAD and origin/main a3f727f, clean Orca source worktree
+/home/papa/orca/workspaces/Breadcrumbs/breadcrumbs-session. Windows launcher checkout
+is separate at ee01d616 on feat/b7e-final-integration and will not be overwritten.
+Use existing source worktree, one writer, no agents/new worktrees by implication.
+STANDARD local/test risk, six repairs per gate, maximum two same-hypothesis failures.
+High-risk persistence/inspection/keyboard algorithms stay unchanged absent a proven
+bug. Existing original art and canonical data formats are preserved.
+
+Pstack poteto-mode1.21 fully read in a dedicated call; figure-it-out fully read in
+its own call. Selected how/model-domain/prove/sequence/trail instructions and
+canonical Manual risk/envelope, Workflow STANDARD, Routing one-writer and Craft
+adaptation/source-evidence sections read. Single-owner adaptation performs the
+focused analysis and separate spec/quality self-reviews directly; no silent model
+substitution or independent-review claim. DOCX skill loaded; ZIP/XML paragraph
+inspection used because pandoc availability is not assumed. Files remain unchanged.
+Classroom operation JavaDocs are explicit owner/instructor acceptance, overriding
+comment-minimization defaults. No generic comment deletion pass.
+
+- [x] Read the Principles section of poteto-mode.
+- [x] Phase A: Frame.
+- [ ] Phase B: Design the workflow.
+- [ ] Phase C: Run the loop.
+- [ ] Capture instructor requirements and accurate repository/cleanup baseline.
+- [ ] Prove then repair classroom startup, operation output and safe group title.
+- [ ] Add accurate operation comments and bounded readability improvements.
+- [ ] Prove reliable launchers and optional-helper fallback in isolated copies.
+- [ ] Verify all existing import/extractor contracts and full B1-B7 behavior.
+- [ ] Inspect actual Windows launch/menus and capture six classroom screenshots.
+- [ ] Apply only manifest-proven generated cleanup after verification.
+- [ ] Update README/index/code guide/compliance/demo/Mae-source handoff/report.
+- [ ] Phase D: Keep the audit trail.
+- [ ] Phase E: Verify and hand back.
+
+Data shape/ownership: retain CheckpointList/Checkpoint and DemoData. A classroom
+presentation mode on the existing ConsoleMenu owns only its isolated demo list,
+group label and focused menu. Full application and original --dsa routes retain
+all options. Launch wrappers reuse run.bat and build.bat; failure pauses belong
+only to double-click wrappers. A deterministic isolated launcher harness owns
+missing-Java/compiler/helper/error fixtures, never global PATH or real project data.
+Choose this over a separate miniature app or rewriting canonical services.
+
+Done predicate: five synthetic records before the first focused DLL menu, The Bread
+visible in screenshot titles, accurate per-operation time/space and explicit
+HEAD/TAIL links, all normal/error cases, required DSA JavaDocs, verified strict
+build/full regressions, exact batch/error/space-path tests and genuine Explorer
+launch where supported. Preserve import bytes and truthful metadata-only formats.
+Cleanup must be narrowly generated and source/evidence references protected.
+A source-bound report lists actual results and any unavailable JDK17/human gates.
+No remote side effects; final source is baseline plus an explicit uncommitted diff.
+
+
+Classroom unit: baseline Main --classroom rejects the unknown flag (recorded RED).
+The bounded implementation adds an existing-ConsoleMenu classroom factory, safe
+group argument, automatic DemoData load and focused0-12 routes. Full --dsa keeps
+its0-14 sandbox unchanged. New tail inserts in classroom mode use DEMO-NEW IDs
+and DEMO origin. The Bread title and owner fun tagline are visible; product brand
+and tagline stay unchanged. New ClassroomConsoleTest passes startup, every core
+operation, missing/duplicate/invalid inputs, synthetic isolation and empty/single
+endpoints. Classroom diagnostics validate before rendering links and disclose their
+extra quadratic cost. Purpose/time/space JavaDocs now cover all public DSA operations;
+only documentation changes touch their algorithms. Graph Hash-collision validation
+and Trie retained recursive paths are described conservatively rather than claiming
+pointer-only costs. Major high-risk files receive boundary responsibility notes,
+not byte-order/algorithm rewrites.97 Java application files were audited for density;
+readability inventory is local evidence. Large classes alone did not justify churn.
+
+Windows launcher harness1a495c1f passes9 isolated CMD scenarios in a copied path
+with spaces: run/DEMO/DSA_DEMO, different cwd, numbered fallback, missing tools,
+readable wrapper failure, actual installedJava8 rejection, stale-class compile
+failure and failed optional C# helper. No global PATH/config change. RuntimeJDK25;
+no installedJDK17 identified. Actual Explorer double-click remains a separate gate.
+The harness records inputs; source will be frozen for final reruns after docs/tests
+are ready. Source files and original classroom DOCX remain protected. No publication.
+
+
+### Classroom finalization closeout — 2026-11-19
+
+Local status: **DEMO_READY** for observed Windows CMD and JDK 25, targeting Java
+17. The verified GitHub main and checked-out HEAD both resolve to a3f727f.
+The working-tree diff remains local. The older Windows checkout is a separate
+baseline and was inventoried read-only.
+
+Authority and method: the Manual, Workflow, Routing and Craft guidance were
+loaded for this packet. Pstack poteto-mode and its figure-it-out playbook were
+read from the installed catalog in separate complete reads. Their application
+was a single-writer audit, bounded classroom/launcher changes, separate observable
+checks and an evidence-bound handoff. The project verification path used the
+existing B7 and native console runners. The classroom capture path was added
+to that harness. The DOCX skill guided inspection of the instructor-provided
+references for the later Markdown handoff. The computer-use route attempted
+Explorer with the exact copied inputs. Window geometry and cursor availability
+prevented an observed double-click, so the gate remains open.
+
+The review found a strict-build Javadoc failure, an automatic synthetic ID
+collision path, a stale DOCX search label and a classroom capture driver that
+discarded a hyphen. The corrected classroom mode preloads five records and
+uses the approved gold palette and B3 startup artwork on a compatible viewport.
+Its compact numbered menu pairs actions at wide sizes. The full app retained
+its integrated art, motion and arrow/numeric input in native checks. No changes
+to storage serialization, DSA algorithms or extraction rules were needed.
+
+Specification review: the focused DLL, all required operations, real group
+title and tagline, six actual captures, launcher fallback and report inputs
+are supported by direct evidence. Explorer double-click, actual Java 17,
+host-disconnected and classroom acceptance remain open. Engineering review:
+strict compile, final B1–B7 suite and separate process tests passed. The real
+Windows ACL and junction cases passed, while symbolic-link creation and live
+narrow native resize were unavailable. The public DOCX gate passed on final
+classes with its exact hash. The historical public PDF gate has synthetic-only
+current coverage. Source/test manifests and visual class hashes are reconciled.
+
+The delivery report links the evidence, checklist, cleanup manifest and Mae's
+handoff notes. Cleanup removed two ignored bytecode caches, with captured
+preflight and readback. Formal report content and submission details remain
+owner inputs. The finalization work stayed local and uncommitted.

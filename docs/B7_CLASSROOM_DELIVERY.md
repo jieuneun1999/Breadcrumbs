@@ -28,22 +28,23 @@ Fixed classroom capacity bounds do not justify claiming every operation O(1).
 | DLL validateIntegrity | O(n²) uniqueness plus O(n) links/cycle/count; O(1) extra |
 | Graph constructor/counts/setIndexed | O(1); bounded vertex/slot storage |
 | Graph contains/addWorkItem | Expected indexed O(1) lookup excluding key length, collision worst O(V); unindexed O(V). Slot insertion may resize. |
-| Graph addDependency | Endpoint lookup plus adjacency duplicate scan O(d) and cycle-prevention traversal/validation O(V+E); O(V) traversal arrays |
+| Graph addDependency | Endpoint lookup plus adjacency duplicate scan O(d) and cycle-prevention traversal with prevalidation. Worst O(V²·L + E·L + b), O(V) traversal arrays |
 | Graph removeDependency | Endpoint lookup plus O(d); O(1) extra |
-| Graph breadthFirst/depthFirst, hasCycle/validate | O(V+E) plus selected start lookup; O(V) arrays. Traversal validates first. |
+| Graph breadthFirst/depthFirst/validate | Worst O(V²·L + E·L + b) with colliding ID lookups. The BFS/DFS loop itself is O(V+E), with O(V) arrays. |
+| Graph hasCycle | O(V+E) time and O(V) visited flags and stack. |
 | Graph displayAdjacencyList | O(V+E) time/output |
-| Graph rebuild | Repeated vertex/edge additions and validation; includes per-edge cycle checks, bounded by O(V² + E(V+E)) without favorable indexes, plus key costs. Not one linear pass. |
+| Graph rebuild | Repeated vertex/edge additions and validation; includes per-edge cycle checks, bounded by O(V²·L + (E+1)(V²·L + E·L + b)) as a conservative collision bound. Not one linear pass. |
 | Graph clear | O(V+b) bounded arrays/slot reset |
 | Hash get/containsKey/put/remove | Expected O(1) bucket work excluding O(L) hashing, worst O(h) collision chain; put includes possible O(h) rehash/resize; amortized expected O(1) insertion |
 | Hash size/capacity | O(1) |
 | Hash bucketIndex | O(L) hashing |
 | Hash clear/displayBuckets | O(b), O(b+h) respectively; display has output space |
 | Hash validate | Worst O(h²) duplicate/chain consistency plus bucket/key costs |
-| Trie insert/contains | O(L*C), manually linked sorted siblings; insertion stores at most O(L) new nodes |
-| Trie suggest | O(prefix length*C + K), visit/result capped; O(L) recursive path plus returned terms |
+| Trie insert/contains | O(L*C), manually linked sorted siblings; O(L) code-point array. Insertion stores at most O(L) new nodes |
+| Trie suggest | O(prefix length*C + K), visit/result capped; O(L + R) code points, recursion and R returned terms |
 | Trie termCount/nodeCount | O(1) |
 | Trie clear | O(1) root replacement; old nodes become eligible for GC |
-| Trie validate | O(N*L) path construction, O(N) visited storage and bounded O(L) recursive depth |
+| Trie validate | O(N*L) path construction, O(N + L²) visited flags and retained recursive path strings |
 
 Search exact Hash lookup then scans the full term posting chain before bounded
 results resolve canonical records: expected O(L+P+R*resolution), not merely O(R).
@@ -53,19 +54,37 @@ duplicate checks; no unmeasured speedup is claimed. Generation saves validate an
 serialize the complete bounded canonical state. See B1/B5/B6 execution documents
 for source-bound original tests and detailed costs.
 
-## Four-DSA live defense script
+## Ten-minute classroom plan
 
-1. Startup 4: load five SYNTHETIC DEMO records, traverse both directions, show
-   latest, search/delete one ID, inspect DLL links and validate. These records are
-   session-local and never become project progress.
-2. Open/create a project, advanced 16: create two explicitly declared work items,
+Double-click `DSA_DEMO.bat` in File Explorer. The title identifies The Bread.
+Type the displayed number and press Enter. All positions are zero-based.
+
+| Time | What to show |
+| --- | --- |
+| 0:00–1:00 | Explain that Breadcrumbs helps resume a project from confirmed checkpoints and references. Open the focused DLL demo. |
+| 1:00–2:00 | Choose **9**. Start with the five seeded synthetic records. Point out HEAD, TAIL, previous/next links and the null endpoints. |
+| 2:00–4:00 | Use **1** to append a title/summary and note the generated ID. Use **2** with a unique ID to prepend. Use **3** with position `2` and another unique ID to insert in the middle. |
+| 4:00–6:00 | **4** searches for `DEMO-000003`. **6** and **7** show opposite orders. **8** reads the tail. **5** deletes by ID. **10** shows size and **11** verifies links. |
+| 6:00–7:30 | Search for `MISSING-DEMO` with **4**. Use **3** with position `99`. Explain that an invalid position leaves the list as it was and brings back the menu. |
+| 7:30–9:00 | Exit with **0**. If time permits, open `DEMO.bat` on approved disposable data to show where the real checkpoint workflow lives. |
+| 9:00–10:00 | Explain the DLL trade-off. Two links support both directions and O(1) relinking after a node is found. The extra pointer costs memory, and position and ID lookup remain linear. |
+
+**12** reloads any missing seed records. Insertion, search and removal report DLL
+costs. Automatic rendering after an operation adds linear output, and the
+classroom diagnostic adds O(n²) uniqueness checking. For selected operations
+that only read a cached value or relink an already located node, explain those
+costs apart from rendering and validation.
+
+## Further questions on the full app
+
+1. Open/create a project, advanced 16: create two explicitly declared work items,
    add prerequisite T-000001 -> T-000002 after preview, show adjacency/BFS/DFS and
    potential downstream impact. Try the reverse edge; cycle prevention rejects it.
    Dependencies never auto-complete/block tasks or infer causality from prose.
-3. Advanced 17: fixture Aa/BB proves collision chaining, more inserts demonstrate
+2. Advanced 17: fixture Aa/BB proves collision chaining, more inserts demonstrate
    resizing, then show buckets/get/remove/validate. Compare indexed/canonical
    checkpoint lookup, disable and rebuild the disposable index.
-4. Daily Search or advanced 18: rebuild eligible fields; prefix `meth` shows
+3. Daily Search or advanced 18: rebuild eligible fields; prefix `meth` shows
    deterministic Trie suggestions. Exact selection resolves a manual posting
    chain and canonical field/locator. Show stale-index rejection after a review
    or rescan, rebuild and inspect coverage. Missing hits are not source absence.
@@ -102,9 +121,8 @@ Canonical checksums are integrity checks, not authentication/encryption. Manual
 SENSITIVE capture cannot flow into exportable present-context reviews through the
 Inbox convenience action. No universal PII classifier is promised.
 
-Windows native junction, ACL, file-lock, recovery and space-path launcher tests are
-observed. Symbolic-link creation, Unix and instructor hardware remain NOT_PROVEN.
-Actual runtime is JDK25; Java17-target compilation is not actual JDK17 execution.
+See the [local delivery report](CLASSROOM_FINALIZATION_REPORT.md) for current
+Windows coverage and gaps. The build targets Java 17.
 Single process per storage root; quiescent local input. No hostile-race sandbox,
 power-loss durability, directory-fsync or distributed/concurrent-writer claim.
 Final source/expected-observed results and remaining gates are in B7_FINAL_ACCEPTANCE.

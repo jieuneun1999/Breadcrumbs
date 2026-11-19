@@ -180,6 +180,7 @@ public final class BreadSupport implements AutoCloseable {
         }
     }
 
+    /** Coordinates native input and animation under one owner. Free text stays static; ticks cannot consume or mutate typed input. */
     String readLine(Reader fallback, TerminalTheme theme, String prompt, int limit) throws IOException {
         try {
             if (keyboard == null || closed) { return readPortable(fallback, limit); }

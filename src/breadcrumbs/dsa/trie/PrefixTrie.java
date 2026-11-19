@@ -10,6 +10,9 @@ public final class PrefixTrie {
     private final int maxTerms, maxNodes, maxLength;
     private TrieNode root = new TrieNode(0, -1);
     private int terms, nodes = 1;
+    /**
+     * Creates an empty bounded root. Time: O(1). Auxiliary/storage space: O(1).
+     */
     public PrefixTrie(int maxTerms, int maxNodes, int maxLength) {
         if (maxTerms < 1 || maxTerms > 50000 || maxNodes < 2 || maxNodes > 500000 || maxLength < 1 || maxLength > 128) {
             throw new IllegalArgumentException("Bounded Trie capacity required.");
@@ -34,6 +37,11 @@ public final class PrefixTrie {
         }
         return null;
     }
+    /**
+     * Adds Unicode terms through manually linked sorted children/siblings.
+     * Time: O(L*C), maximum sibling scan C and term length L.
+     * Auxiliary space: O(L) code points; at most O(L) new stored nodes.
+     */
     public void insert(String term) {
         int[] points = points(term); TrieNode node = root; int matched = 0;
         while (matched < points.length) {
@@ -51,14 +59,32 @@ public final class PrefixTrie {
         }
         node.term = term; terms++;
     }
+    /**
+     * Tests a whole term rather than only prefix existence.
+     * Time: O(L*C). Auxiliary space: O(L) code-point array.
+     */
     public boolean contains(String term) {
         TrieNode node = root;
         for (int point : points(term)) { node = child(node, point); if (node == null) { return false; } }
         return term.equals(node.term);
     }
+    /**
+     * Returns whole-term count. Time: O(1). Auxiliary space: O(1).
+     */
     public int termCount() { return terms; }
+    /**
+     * Returns node count. Time: O(1). Auxiliary space: O(1).
+     */
     public int nodeCount() { return nodes; }
+    /**
+     * Replaces the root; old nodes are left to GC. Time: O(1). Space: O(1).
+     */
     public void clear() { root = new TrieNode(0, -1); nodes = 1; terms = 0; }
+    /**
+     * Collects lexical matches under explicit result and visit budgets.
+     * Time: O(L*C+K), K visited nodes. Auxiliary space: O(L+R) stack/results.
+     * Budget exhaustion is reported as limited rather than complete coverage.
+     */
     public Suggestions suggest(String prefix, int limit, int maxVisits) {
         int[] points = points(prefix);
         if (limit < 1 || limit > 50 || maxVisits < 1 || maxVisits > 500000) { throw new IllegalArgumentException("Bounded suggestion limits required."); }
@@ -84,6 +110,11 @@ public final class PrefixTrie {
             if (walk.limited) { return; } collect(child, walk, depth + 1);
         }
     }
+    /**
+     * Checks node identity, sorted siblings, whole-term paths and counts.
+     * Time: O(N*L) path copying. Auxiliary space: O(N+L^2) visited flags
+     * and retained recursive path strings.
+     */
     public boolean validate() {
         if (nodes < 1 || nodes > maxNodes || terms < 0 || terms > maxTerms || root.id != 0 || root.point != -1 || root.nextSibling != null) { return false; }
         int[] counts = new int[2]; boolean[] seen = new boolean[nodes];

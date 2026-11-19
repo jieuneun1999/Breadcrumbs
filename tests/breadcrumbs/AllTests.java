@@ -12,6 +12,7 @@ public final class AllTests {
     public static void main(String[] args) throws Exception {
         CheckpointListTest.run();
         ConsoleMenuTest.run();
+        breadcrumbs.cli.ClassroomConsoleTest.run();
         System.out.println("PASS: all B1 test groups");
         ProjectInspectorTest.run();
         BootstrapTest.run();

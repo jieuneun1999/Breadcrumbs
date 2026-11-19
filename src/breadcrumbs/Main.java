@@ -21,13 +21,16 @@ public final class Main {
         try {
             boolean noColor = false, always = false, dsa = false, richBrand = true, noAnimation = false, noMascot = false;
             boolean classicUi = false, terminalDiagnostics = false;
-            String preview = null;
+            String preview = null, group = "The Bread";
+            boolean classroom = false;
             Path storage = Path.of(System.getProperty("user.home"), ".breadcrumbs");
             for (String arg : args) {
                 if (arg.equals("--no-color")) { noColor = true; }
                 else if (arg.equals("--color=always")) { always = true; }
                 else if (arg.equals("--rich-brand")) { richBrand = true; }
                 else if (arg.equals("--dsa")) { dsa = true; }
+                else if (arg.equals("--classroom")) { classroom = true; }
+                else if (arg.startsWith("--group-name=")) { group = arg.substring(13); }
                 else if (arg.equals("--no-animation")) { noAnimation = true; }
                 else if (arg.equals("--no-mascot")) { noMascot = true; }
                 else if (arg.equals("--classic-ui") || arg.equals("--ui=classic")) { classicUi = true; }
@@ -39,13 +42,14 @@ public final class Main {
                 else if (arg.startsWith("--storage-root=") && arg.length() > 15) { storage = Path.of(arg.substring(15)); }
                 else { throw new IllegalArgumentException("Unknown option."); }
             }
+            if (classroom) { classicUi = true; }
             var input = new InputStreamReader(System.in, StandardCharsets.UTF_8);
             {
                 boolean color = TerminalTheme.enabled(noColor, always, System.console() != null,
                         System.getenv().containsKey("NO_COLOR"), System.getenv("TERM"),
                         System.getProperty("os.name").startsWith("Windows"), System.getenv("WT_SESSION") != null
                                 || System.getenv("ANSICON") != null);
-                int width = 160;
+                int width = classroom ? 80 : 160;
                 try { width = Math.max(28, Integer.parseInt(System.getenv("COLUMNS"))); }
                 catch (NumberFormatException ignored) { /* The approved B3 artwork needs 160 columns; COLUMNS can request a smaller text-only layout. */ }
                 // Context reports and source locators use UTF-8 in plain and colored modes alike.
@@ -76,6 +80,7 @@ public final class Main {
                     if (screens != null) { Runtime.getRuntime().addShutdownHook(cleanup); }
                     try {
                         if (preview != null) { BreadPreview.run(output, input, theme, width, preview); }
+                        else if (classroom) { ConsoleMenu.classroom(input, output, theme, width, group).run(); }
                         else if (dsa) { new ConsoleMenu(input, output, theme, width).run(); }
                         else { new ProjectConsole(input, output, new WorkspaceStore(storage), theme, width).run(); }
                     } finally {
@@ -87,7 +92,7 @@ public final class Main {
             System.err.println("Console input failed. Unsaved session records may be lost; reopen saved app storage.");
             System.exit(1);
         } catch (IllegalArgumentException invalid) {
-            System.err.println("Invalid application arguments. Use --ui=auto|screen|classic, --classic-ui, --no-color, --no-animation, --no-mascot, --ascii, --bread-preview[=all|reference|full|compact|idle], --terminal-diagnostics, --color=always, --rich-brand, --dsa or --storage-root=<path>.");
+            System.err.println("Invalid application arguments. Use --ui=auto|screen|classic, --classic-ui, --no-color, --no-animation, --no-mascot, --ascii, --bread-preview[=all|reference|full|compact|idle], --terminal-diagnostics, --color=always, --rich-brand, --dsa, --classroom, --group-name=<name> or --storage-root=<path>.");
             System.exit(1);
         }
     }

@@ -7,6 +7,7 @@ import java.io.PrintStream;
 import java.util.Arrays;
 import static breadcrumbs.continuity.ProjectMap.*;
 
+/** Presents bounded evidence and original locators. Selecting a view never confirms a source statement or changes history. */
 final class ProjectMapConsole {
     enum Action { BACK, REVIEW_SOURCE, REVIEW_NOTE, CLARIFY }
     record Request(Action action, Item item) { }

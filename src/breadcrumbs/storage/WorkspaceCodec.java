@@ -28,6 +28,7 @@ public final class WorkspaceCodec {
     private int cursor;
     private int fieldCount;
 
+    /** Serializes a validated canonical state in version-specific field order. Field order and checksum bytes are part of compatibility. */
     public static byte[] encode(WorkspaceState state) throws IOException {
         try {
             validate(state);
@@ -44,6 +45,7 @@ public final class WorkspaceCodec {
         } catch (RuntimeException invalid) { throw new IOException("Workspace data is invalid or exceeds storage limits."); }
     }
 
+    /** Validates the checksum and complete schema before returning an activatable state; no partial decoded state escapes. */
     public static WorkspaceState decode(byte[] bytes) throws IOException {
         try {
             if (bytes.length == 0 || bytes.length > MAX_BYTES) { throw new IllegalArgumentException(); }
@@ -155,6 +157,7 @@ public final class WorkspaceCodec {
         return claims;
     }
 
+    /** Writes fields in wire order. Keep this order paired with read; readability changes must not change serialized bytes. */
     private void write(WorkspaceState state) {
         BaselineB0 baseline = state.activeBaseline();
         ScanResult snapshot = baseline.snapshot();
@@ -241,6 +244,7 @@ public final class WorkspaceCodec {
         }
     }
 
+    /** Reads into a detached candidate. Parsing does not publish or replace the caller active workspace. */
     private WorkspaceState read() throws IOException {
         String id = get("workspace"), name = get("name");
         ProjectProfile profile = choice("profile", ProjectProfile.class);

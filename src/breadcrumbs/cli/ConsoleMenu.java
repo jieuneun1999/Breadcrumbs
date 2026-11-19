@@ -1,11 +1,13 @@
 package breadcrumbs.cli;
 
+import breadcrumbs.bootstrap.BootstrapService;
 import breadcrumbs.demo.DemoData;
 import breadcrumbs.domain.Checkpoint;
 import breadcrumbs.domain.Checkpoint.Origin;
 import breadcrumbs.domain.Checkpoint.Status;
 import breadcrumbs.domain.WorkspaceState;
 import breadcrumbs.dsa.dll.CheckpointList;
+import breadcrumbs.inspector.ScanPolicy;
 import java.io.BufferedReader;
 import java.io.EOFException;
 import java.io.IOException;
@@ -19,26 +21,53 @@ public final class ConsoleMenu {
     private final PrintStream output;
     // This classroom sandbox is not the active project's source-linked checkpoint history.
     private final CheckpointList list = new CheckpointList();
-    private final WorkspaceState workspaceState = new WorkspaceState();
     private final BootstrapConsole bootstrapConsole;
-    private final TerminalTheme theme; private final TerminalOutput ui;
+    private final TerminalTheme theme;
+    private final TerminalOutput ui;
     private int nextNativeId = 1;
+    private final String classroomGroup;
+    private final int width;
+
+    /** Uses the real DLL in an isolated, preloaded classroom session; no storage is opened. */
+    public static ConsoleMenu classroom(Reader input, PrintStream output, TerminalTheme theme, int width, String group) {
+        if (group == null || group.isBlank() || group.length() > 60
+                || group.chars().anyMatch(c -> Character.isISOControl(c) || Character.getType(c) == Character.FORMAT)) {
+            throw new IllegalArgumentException("Group name must contain 1-60 printable characters.");
+        }
+        return new ConsoleMenu(input, output, theme, width, group.strip());
+    }
 
     public ConsoleMenu(Reader input, PrintStream output) {
         this(input, output, new TerminalTheme(false), 80);
     }
     public ConsoleMenu(Reader input, PrintStream output, TerminalTheme theme, int width) {
+        this(input, output, theme, width, null);
+    }
+    private ConsoleMenu(Reader input, PrintStream output, TerminalTheme theme, int width, String classroomGroup) {
+        this.classroomGroup = classroomGroup;
+        this.width = width;
         this.input = input instanceof BufferedReader buffered ? buffered : new BufferedReader(input);
         this.output = output;
-        this.theme = theme; ui = new TerminalOutput(output, theme, width);
-        bootstrapConsole = new BootstrapConsole(this::read, output, workspaceState, new breadcrumbs.bootstrap.BootstrapService(breadcrumbs.inspector.ScanPolicy.defaults()), false, theme, width);
+        this.theme = theme;
+        ui = new TerminalOutput(output, theme, width);
+        bootstrapConsole = classroomGroup == null
+                ? new BootstrapConsole(this::read, output, new WorkspaceState(),
+                        new BootstrapService(ScanPolicy.defaults()), false, theme, width)
+                : null;
     }
 
     public void run() throws IOException {
-        output.println("B1 session-local DSA foundation. Checkpoints are not saved between runs.");
-        output.println("B2 bootstrap is available in option 13. Use the project shell for B3 persistence/continuity.");
-        output.println("Options 1-12 are the B1 checkpoint sandbox, separate from the active project's B0/history.");
-        output.println("DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.");
+        if (classroomGroup != null) {
+            DemoData.load(list);
+            if (theme.colorEnabled() && width >= 160) { BrandRenderer.renderApproved(output, theme, width); }
+            output.println("Five SYNTHETIC demo records loaded before the first menu. No real project storage is used.");
+            output.println("Primary structure: custom Doubly Linked List. Records are discarded on exit.");
+        } else {
+            output.println("B1 session-local DSA foundation. Checkpoints are not saved between runs.");
+            output.println("B2 bootstrap is available in option 13. Use the project shell for B3 persistence/continuity.");
+            output.println("Options 1-12 are the B1 checkpoint sandbox, separate from the active project's B0/history.");
+            output.println("DEMO records are SYNTHETIC, not evidence of Breadcrumbs project progress.");
+        }
         try {
             boolean running = true;
             while (running) {
@@ -47,6 +76,9 @@ public final class ConsoleMenu {
                 String operation = "Menu input";
                 try {
                     String choice = read("Choose an option: ");
+                    if (classroomGroup != null && (choice.equals("13") || choice.equals("14"))) {
+                        throw new IllegalArgumentException("Choose a listed DLL operation (0-12).");
+                    }
                     operation = operationName(choice);
                     switch (choice) {
                         case "0" -> running = false;
@@ -90,13 +122,15 @@ public final class ConsoleMenu {
                         }
                         case "13" -> bootstrapConsole.bootstrap();
                         case "14" -> bootstrapConsole.showBaseline();
-                        default -> throw new IllegalArgumentException("Invalid menu option. Choose 0-14.");
+                        default -> throw new IllegalArgumentException(classroomGroup == null ? "Invalid menu option. Choose 0-14." : "Invalid menu option. Choose 0-12.");
                     }
                 } catch (IllegalArgumentException invalid) {
                     if (operation.equals("Project bootstrap") || operation.equals("View project baseline")) {
                         // Bootstrap is not a DLL operation, so a rejected form must not claim DLL complexity.
                         output.println("Project operation rejected: " + invalid.getMessage());
                         output.println("Returned to the main menu.");
+                    } else if (classroomGroup != null && operation.equals("Menu input")) {
+                        report(operation, "Rejected: " + invalid.getMessage(), "O(1)", "Check menu choice without accessing the DLL.");
                     } else {
                         report(operation, "Rejected: " + invalid.getMessage(), "O(n) upper bound",
                                 "Validation rejects the request before mutation; duplicate lookup can scan the list.");
@@ -125,7 +159,10 @@ public final class ConsoleMenu {
             throw new IllegalArgumentException("Native ID range exhausted for this session.");
         }
         String id = demo ? read("Synthetic checkpoint ID (DEMO-*): ")
-                : String.format(Locale.ROOT, "CP-%06d", nextNativeId);
+                : String.format(Locale.ROOT, classroomGroup == null ? "CP-%06d" : "DEMO-NEW-%06d", nextNativeId);
+        if (classroomGroup != null && demo && id.startsWith("DEMO-NEW-")) {
+            throw new IllegalArgumentException("DEMO-NEW- is reserved for automatically numbered tail inserts.");
+        }
         String title = read("Title (required, max 120): ");
         if (title.isBlank()) {
             throw new IllegalArgumentException("Title must not be blank.");
@@ -139,7 +176,7 @@ public final class ConsoleMenu {
             throw new IllegalArgumentException("Invalid status. Use one of the listed values.");
         }
         Checkpoint checkpoint = new Checkpoint(id, title, summary, status, Instant.now(),
-                demo ? Origin.DEMO : Origin.USER_CONFIRMED);
+                demo || classroomGroup != null ? Origin.DEMO : Origin.USER_CONFIRMED);
         output.println("Preview. User statements only; no file evidence or baseline is attached.");
         show(checkpoint);
         String operation = positional ? "Insert at position" : demo ? "Prepend checkpoint" : "Append checkpoint";
@@ -184,12 +221,29 @@ public final class ConsoleMenu {
     }
 
     private void report(String operation, String result, String complexity, String explanation) {
+        if (classroomGroup != null) { output.println(); }
         ui.line("Operation: ", operation);
         ui.line("Result: ", result);
-        output.println("DLL structure: " + list.displayStructure());
+        if (classroomGroup == null) { output.println("DLL structure: " + list.displayStructure()); }
+        else if (!list.validateIntegrity()) { output.println("Integrity FAILED. Structure is not displayed as valid."); }
+        else {
+            String head = list.getOldest() == null ? "NULL" : list.getOldest().checkpointId();
+            String tail = list.getLatest() == null ? "NULL" : list.getLatest().checkpointId();
+            output.println("HEAD=" + head + " | TAIL=" + tail + " | previous <- -> next");
+            output.println("DLL structure: " + list.displayStructure());
+        }
         output.println("Time complexity: " + complexity);
+        if (classroomGroup != null) {
+            String space = switch (operation) {
+                case "Traverse forward", "Traverse backward" -> "O(n) returned array";
+                case "Display structure" -> "O(n) output";
+                default -> "O(1) core operation";
+            };
+            output.println("Auxiliary space: " + space);
+        }
         output.println("Explanation: " + explanation);
         output.println("Structure diagnostic: O(n) time and O(n) output space, additional to the core operation.");
+        if (classroomGroup != null) { output.println("Classroom safety diagnostic also validates links/uniqueness: O(n^2) time, O(1) auxiliary space."); }
     }
 
     private String read(String prompt) throws IOException {
@@ -260,6 +314,21 @@ public final class ConsoleMenu {
     }
 
     private void menu() {
+        if (classroomGroup != null) {
+            output.println();
+            ui.heading("BREADCRUMBS | " + classroomGroup + " | DOUBLY LINKED LIST");
+            output.println("We are the bread and we ain't letting no crumbs");
+            output.println("SYNTHETIC classroom session | Records: " + list.size());
+            String actions = "[1] Append at tail\n[2] Prepend at head\n[3] Insert at position\n[4] Search by ID\n[5] Delete by ID\n[6] Traverse forward\n[7] Traverse backward\n[8] Get latest (tail)\n[9] Display structure\n[10] Count records\n[11] Validate integrity\n[12] Reload missing demo records\n[0] Exit";
+            if (theme.companion() != null && theme.companion().boxedMenus()) {
+                int menuWidth = Math.min(theme.companion().columns(), 80);
+                MenuBox.rows(theme, menuWidth, "", actions, true).forEach(output::println);
+            } else {
+                ui.choices(actions);
+            }
+            output.println("/cancel returns without mutation. Confirmations require yes.");
+            return;
+        }
         output.println("\n========================================");
         ui.heading("              BREADCRUMBS");
         output.println("       Project Checkpoint Management");

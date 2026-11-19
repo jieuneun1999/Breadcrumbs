@@ -25,6 +25,7 @@ final class ContextConsole {
         this.input = input; this.output = output; this.state = state; this.storage = storage;
         this.theme = theme; this.width = width; ui = new TerminalOutput(output, theme, width);
     }
+    /** Routes explicit audit/review/rescan/export actions; each canonical service retains its own consent and validation rules. */
     void perform(String choice) throws IOException {
         ui.view(switch (choice) { case "10" -> ScreenId.ASSESSMENT; case "11", "12" -> ScreenId.REVIEW_CHANGES; case "14" -> ScreenId.HANDOFF; default -> ScreenId.RESULT; });
         switch (choice) {
