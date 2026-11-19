@@ -1,15 +1,24 @@
 # Breadcrumbs
 
-**Breadcrumbs: An Evidence-Driven Project Continuity and Context Management System**
+> Leave context behind. Pick up where work stopped.
 
-**The Bread** · Leave context behind. Pick up where work stopped.
+Breadcrumbs is an offline Java command-line app for recording project progress
+and picking up where you left off. Keep what changed, what's blocking progress,
+and what to do next in a local workspace you can reopen or hand off to a teammate.
 
-Breadcrumbs is an offline Java console app for picking up a project after time
-away or handing it to a teammate. It brings confirmed checkpoints, next actions,
-blockers and source references together. A custom **doubly linked list** (DLL)
-stores the checkpoint timeline. A directed graph supports declared dependencies,
-a custom hash table supports record lookup, and a custom trie supports prefix
-suggestions over eligible search terms.
+[Quick start](#start-on-windows) · [Classroom demo](#try-the-doubly-linked-list-demo) · [Codebase guide](docs/CODEBASE_GUIDE.md)
+
+- **Capture checkpoints.** Record updates as work happens and reopen a project at
+  its latest saved state.
+- **Review local files.** Import a project folder with your approval. Review
+  supported fields in the Project Map and follow their source references.
+- **Share a handoff.** Preview and export Markdown with the project's recorded
+  progress, open blockers, next actions, and supporting references.
+
+**Built for Java 17+ with the JDK standard library.** A custom doubly linked list
+stores checkpoint history. A directed graph represents declared dependencies, a
+custom hash table indexes records, and a custom trie powers prefix suggestions
+over captured search terms.
 
 ## Start on Windows
 
@@ -55,6 +64,9 @@ startup. Choose **9 Display structure** to see the links, **1 Append at tail**
 to add a checkpoint, **6 Traverse forward** or **7 Traverse backward** to read
 the list, and **0 Exit** to end the demo. Results show what happened and the
 operation cost. These practice records are discarded on exit.
+
+The Bread developed Breadcrumbs as *An Evidence-Driven Project Continuity and
+Context Management System*.
 
 ## Command-line and test options
 
