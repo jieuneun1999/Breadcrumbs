@@ -1,5 +1,6 @@
 @echo off
 setlocal
+set "BREAD_DEMO_WIDE=1"
 call "%~dp0run.bat" %*
 set "BREAD_DEMO_EXIT=%errorlevel%"
 if not "%BREAD_DEMO_EXIT%"=="0" (

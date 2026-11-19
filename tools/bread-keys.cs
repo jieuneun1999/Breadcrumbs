@@ -29,6 +29,8 @@ public static class BreadKeys
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)]static extern IntPtr CreateFile(string name,uint access,uint share,IntPtr security,uint create,uint flags,IntPtr template);
     [DllImport("kernel32.dll")]static extern bool GetConsoleScreenBufferInfo(IntPtr handle,out Info info);
     [DllImport("kernel32.dll")]static extern bool GetConsoleMode(IntPtr handle,out uint mode);
+    [DllImport("kernel32.dll")]static extern IntPtr GetStdHandle(int standardHandle);
+    [DllImport("kernel32.dll")]static extern bool SetConsoleMode(IntPtr handle,uint mode);
     [DllImport("kernel32.dll")]static extern bool GetNumberOfConsoleInputEvents(IntPtr handle,out uint count);
     [DllImport("kernel32.dll",CharSet=CharSet.Unicode)]static extern bool ReadConsoleInputW(IntPtr handle,out Key key,uint count,out uint read);
     [DllImport("kernel32.dll")]static extern IntPtr GetConsoleWindow();
@@ -76,6 +78,82 @@ public static class BreadKeys
         if(key.Character==0)return "";
         return new string(key.Character,Math.Min(128,Math.Max(1,(int)key.Repeat)));
     }
+    internal static int Launch(string[] args)
+    {
+        const uint ProcessedOutput = 0x0001;
+        const uint VirtualTerminal = 0x0004;
+        var outputHandle = GetStdHandle(-11);
+        uint originalMode = 0, inputMode;
+        bool virtualTerminal = GetConsoleMode(GetStdHandle(-10), out inputMode)
+            && GetConsoleMode(outputHandle, out originalMode)
+            && SetConsoleMode(outputHandle, originalMode | ProcessedOutput | VirtualTerminal);
+        try
+        {
+            var java = new System.Diagnostics.ProcessStartInfo("java.exe");
+            java.UseShellExecute = false;
+            string classes = System.IO.Path.GetDirectoryName(typeof(BreadKeys).Assembly.Location);
+            java.Arguments = "-cp " + QuoteArgument(classes) + " breadcrumbs.Main";
+            for (int index = 1; index < args.Length; index++)
+            {
+                java.Arguments += " " + QuoteArgument(args[index]);
+            }
+            if (virtualTerminal)
+            {
+                java.EnvironmentVariables["ANSICON"] = "1";
+                if (Environment.GetEnvironmentVariable("BREAD_DEMO_WIDE") == "1"
+                    && Environment.GetEnvironmentVariable("NO_COLOR") == null
+                    && IsWindowVisible(GetConsoleWindow())
+                    && !Array.Exists(args, option => option == "--classroom" || option == "--dsa"
+                        || option == "--classic-ui" || option == "--ui=classic" || option == "--no-color"))
+                {
+                    FitDemoWindow();
+                }
+            }
+            using (var child = System.Diagnostics.Process.Start(java))
+            {
+                child.WaitForExit();
+                return child.ExitCode;
+            }
+        }
+        catch (System.ComponentModel.Win32Exception error)
+        {
+            Console.Error.WriteLine("Breadcrumbs could not start Java. " + error.Message);
+            return 1;
+        }
+        finally
+        {
+            if (virtualTerminal) SetConsoleMode(outputHandle, originalMode);
+        }
+    }
+    static void FitDemoWindow()
+    {
+        // Keep this in step with TerminalScreenManager's full Home viewport.
+        const int HomeColumns = 160, HomeRows = 52;
+        try
+        {
+            int width = Math.Max(HomeColumns, Console.WindowWidth);
+            int height = Math.Max(HomeRows, Console.WindowHeight);
+            if (width == Console.WindowWidth && height == Console.WindowHeight) return;
+            if (width > Console.LargestWindowWidth || height > Console.LargestWindowHeight) return;
+            Console.SetBufferSize(Math.Max(width, Console.BufferWidth), Math.Max(height, Console.BufferHeight));
+            Console.SetWindowSize(width, height);
+        }
+        catch (System.IO.IOException)
+        {
+            // Some Windows hosts own their viewport. The app composes for the measured size.
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            // The console may have moved to a smaller display during startup.
+        }
+    }
+    static string QuoteArgument(string value)
+    {
+        string escaped = System.Text.RegularExpressions.Regex.Replace(value, @"(\\*)(""|$)",
+            match => match.Groups[1].Value + match.Groups[1].Value
+                + (match.Groups[2].Value.Length == 0 ? "" : "\\\""));
+        return "\"" + escaped + "\"";
+    }
     public static void Close()
     {
         CloseHandle(input);
@@ -86,6 +164,7 @@ public static class BreadKeyProgram
 {
     public static int Main(string[] args)
     {
+        if (args.Length > 0 && args[0] == "--launch") return BreadKeys.Launch(args);
         uint parent;
         if(args.Length!=1 || !uint.TryParse(args[0],out parent))return 2;
         using(var events=new System.IO.StreamWriter(System.Console.OpenStandardOutput(),new System.Text.UTF8Encoding(false)))

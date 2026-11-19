@@ -210,7 +210,18 @@ public final class TerminalScreenManager extends OutputStream {
         if (motion && transition) { pause(60); }
     }
     private void shell() {
-        border(1); row(2, theme.label(TerminalTheme.Tone.BREAD_GOLD, "BREADCRUMBS") + " / " + view.title());
+        border(1);
+        String title = theme.label(TerminalTheme.Tone.BREAD_GOLD, "BREADCRUMBS") + " / " + view.title();
+        if (view == ScreenId.HOME) {
+            String group = "The Bread";
+            String credit = group + " | We are the bread and we ain't letting no crumbs";
+            int room = contentColumns() - plain(title).length();
+            if (room < credit.length() + 4) { credit = group; }
+            if (room >= credit.length() + 4) {
+                title += " ".repeat(room - credit.length() - 2) + theme.label(TerminalTheme.Tone.BREAD_LIGHT, credit);
+            }
+        }
+        row(2, title);
         String context = view == ScreenId.HOME && !fullBrand ? "Leave context behind. Pick up where work stopped." : "Recorded context. Clear next actions.";
         row(3, theme.label(TerminalTheme.Tone.SECONDARY, fit(context))); border(4); border(frameRows() - 3); border(frameRows());
     }
